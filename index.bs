@@ -1,0 +1,537 @@
+<pre class='metadata'>
+Title: SOLID-OIDC
+Boilerplate: issues-index no
+Shortname: solid-oidc
+Level: 1
+Status: w3c/ED
+Group: Solid Community Group
+ED: https://solid.github.io/authentication-panel/solid-oidc/
+URL: https://solid.github.io/specification/solid-oidc/
+Repository: https://github.com/solid/specification
+Markup Shorthands: markdown yes
+Max ToC Depth: 2
+Editor: [Aaron Coburn](https://people.apache.org/~acoburn/#i) ([Inrupt](https://inrupt.com))
+Editor: [elf Pavlik](https://elf-pavlik.hackers4peace.net/)
+Editor: [Dmitri Zagidulin](http://computingjoy.com/)
+Former Editor: [Adam Migus](https://migusgroup.com/about/) ([The Migus Group](https://migusgroup.com/))
+Former Editor: [Ricky White](https://endlesstrax.com) ([The Migus Group](https://migusgroup.com/))
+Abstract:
+  A key challenge on the path toward re-decentralizing user data on the Worldwide Web is the need to
+  access multiple potentially untrusted resources servers securely. This document aims to address that
+  challenge by building on top of current and future web standards, to allow entities to authenticate
+  within a Solid ecosystem.
+Status Text:
+  This section describes the status of this document at the time of its publication. Other documents
+  may supersede this document. A list of current W3C publications and the latest revision of this
+  technical report can be found in the [W3C technical reports index](https://www.w3.org/TR/) at
+  https://www.w3.org/TR/.
+
+  This document is produced from work by
+  the [Solid Community Group](https://www.w3.org/community/solid/). It is a draft document that may,
+  or may not, be officially published. It may be updated, replaced, or obsoleted by other documents at
+  any time. It is inappropriate to cite this document as anything other than work in progress. The
+  source code for this document is available at the following
+  URI: [https://github.com/solid/authentication-panel](https://github.com/solid/authentication-panel)
+
+  This document was published by the
+  [Solid Authentication Panel](https://github.com/solid/process/blob/master/panels.md#authentication)
+  as a First Draft.
+
+  [GitHub Issues](https://github.com/solid/authentication-panel/issues) are preferred for discussion
+  of this specification. Alternatively, you can send comments to our mailing list. Please send them to
+  [public-solid@w3.org](mailto:public-solid@w3.org)
+  ([archives](https://lists.w3.org/Archives/Public/public-solid/))
+</pre>
+
+# Introduction # {#intro}
+
+*This section is non-normative*
+
+The [Solid project](https://solidproject.org/) aims to change the way web applications work today to
+improve privacy and user control of personal data by utilizing current standards, protocols, and
+tools, to facilitate building extensible and modular decentralized applications based on
+[Linked Data](https://www.w3.org/standards/semanticweb/data) principles.
+
+This specification is written for Authorization and Resource Server owners intending to implement
+Solid-OIDC. It is also useful to Solid application developers charged with implementing a Solid-OIDC
+client.
+
+The [OAuth 2.0](https://tools.ietf.org/html/rfc6749) and
+[OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html) web standards were
+published in October 2012 and November 2014, respectively. Since publication they've seen rapid and
+widespread adoption across the industry, in turn gaining extensive *"real-world"* data and
+experience. The strengths of the protocols are now clear; however, in a changing eco-system where
+privacy and control of digital identities are becoming more pressing concerns, it is also clear
+that additional functionality is required.
+
+The additional functionality documented herein aims to address:
+
+1. Resource servers having no existing trust relationship with identity providers.
+2. Ephemeral Clients as a first-order use-case.
+
+## Out of Scope ## {#intro-out-of-scope}
+
+*This section is non-normative*
+
+At the time of writing, there is no demonstrated use case for a strongly asserted identity; however,
+it is likely that authorization requirements will necessitate it.
+
+# Terminology # {#terms}
+
+*This section is non-normative*
+
+This specification uses the terms "access token", "authorization server", "resource server" (RS),
+"authorization endpoint", "token endpoint", "grant type", "access token request", "access token
+response", and "client" defined by The OAuth 2.0 Authorization Framework
+[[!RFC6749]].
+
+Throughout this specification, we will use the term Identity Provider (IdP) in line with the
+terminology used in the
+[Open ID Connect Core 1.0 specification](https://openid.net/specs/openid-connect-core-1_0.html)
+(OIDC). It should be noted that
+[The OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749) (OAuth) refers to this
+same entity as an Authorization Server.
+
+This specification also uses the following terms:
+
+<dl>
+<dt>*WebID* as defined in the [WebID 1.0 Editors Draft](https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html)
+<dd>
+    A WebID is a URI with an HTTP or HTTPS scheme which denotes an Agent (Person, Organization, Group,
+    Device, etc.)
+
+<dt>*JSON Web Token (JWT)* as defined by [[!RFC7519]]
+<dd>
+    A string representing a set of claims as a JSON object that is encoded in a JWS or JWE, enabling the
+    claims to be digitally signed or MACed and/or encrypted.
+
+<dt>*JSON Web Key (JWK)* as defined by [[!RFC7517]]
+<dd>
+    A JSON object that represents a cryptographic key. The members of the object represent properties of
+    the key, including its value.
+
+<dt>*Demonstration of Proof-of-Possession at the Application Layer (DPoP)* as defined in the
+[DPoP Internet-Draft](https://tools.ietf.org/html/draft-ietf-oauth-dpop-03)
+<dd>
+    A mechanism for sender-constraining OAuth tokens via a proof-of-possession mechanism on the
+    application level.
+
+<dt>*DPoP Proof* as defined by [[!DPOP]]
+<dd>
+    A DPoP proof is a JWT that is signed (using JWS) using a private key chosen by the client.
+
+<dt>*Proof Key for Code Exchange (PKCE)* as defined by [[!RFC7636]]
+<dd>
+    An extension to the Authorization Code flow which mitigates the risk of an authorization code
+    interception attack.
+</dl>
+
+# Core Concepts # {#concepts}
+
+*This section is non-normative*
+
+In a decentralized ecosystem, such as Solid, an IdP may be an identity-as-a-service vendor or, at
+the other end of the spectrum, a user-controlled IdP. In any case, the user may be authenticating
+from a browser or an application.
+
+Therefore, this specification assumes the use of the
+[Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowSteps) with
+PKCE, in accordance with OAuth and OIDC best practices. It is also assumed that there are no
+preexisting trust relationships with the IdP. This means that client registration, whether dynamic,
+or static, is entirely optional.
+
+## WebIDs ## {#concepts-webids}
+
+*This section is non-normative*
+
+In line with Linked Data principles, a
+[WebID](https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html) is a HTTP URI that,
+when dereferenced, resolves to a profile document that is structured data in an
+[RDF 1.1 format](https://www.w3.org/TR/rdf11-concepts/). This profile document allows
+people to link with others to grant access to identity resources as they see fit. WebIDs underpin
+Solid and are used as a primary identifier for Users and Client applications in this specification.
+
+# Basic Flow # {#basic-flow}
+
+*This section is non-normative*
+
+The basic authentication and authorization flow is as follows:
+
+1. The Client requests a non-public resource from the RS.
+2. The RS returns a 401 with a `WWW-Authenticate` HTTP header containing parameters that inform the
+    Client that a DPoP-bound Access Token is required.
+3. The Client presents its Client Identifier and the associated Secret to the IdP and requests an
+    Authorization Code.
+4. If granted, the Client presents the Authorization Code and a DPoP proof, to the Token Endpoint.
+5. The Token Endpoint returns a DPoP-bound Access Token and OIDC ID Token, to the Client.
+6. The Client presents the DPoP-bound Access Token and DPoP proof, to the RS.
+7. The RS gets the public key from the IdP and uses it to validate the signature on the DPoP-bound Access Token (JWS).
+8. If the DPoP proof and Access Token are valid, then the RS returns the requested resource.
+
+<figure id="fig-signature">
+    <img src="basic-flow-diagram.png" />
+    <figcaption>Basic flow of authentication and authorization as described above.</figcaption>
+</figure>
+
+# Client Identifiers # {#clientids}
+
+OAuth and OIDC require the Client application to identify itself to the IdP and RS by presenting a
+[client identifier](https://tools.ietf.org/html/rfc6749#section-2.2) (Client ID). Solid applications
+SHOULD use a WebID as their Client ID.
+
+## WebID ## {#clientids-webid}
+
+A client's WebID resource MUST be serialized as an `application/ld+json` document
+unless content negotiation requires a different outcome.
+
+The serialized JSON form of a client WebID SHOULD use the normative JSON-LD `@context`
+provided at `https://www.w3.org/ns/solid/oidc-context.jsonld` such that the resulting
+document produces a JSON serialization of an OIDC client registration, per the
+definition of client registration metadata from [[!RFC7591]] section 2.
+
+Issue: [Related Issue](https://github.com/solid/authentication-panel/issues/75)
+Solid-OIDC client description in WebID document
+
+Also, the IdP MUST dereference the Client's WebID document and match any Client-supplied parameters,
+with the values in the Client's WebID document.
+
+Further, the `redirect_uri` provided by the Client MUST be included in the registration `redirect_uris`
+list.
+
+NOTE: the method by which the IdP resolves the WebID to an RDF document, is defined in
+[WebID 1.0](https://www.w3.org/2005/Incubator/webid/spec/identity/#processing-the-webid-profile).
+This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/):
+
+<div class='example'>
+    <p>https://app.example/webid#id
+
+    <pre>
+        {
+          "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
+
+          "client_id": "https://app.example/webid#id",
+          "client_name": "Solid Application Name",
+          "redirect_uris": ["https://app.example/callback"],
+          "client_uri": "https://app.example/",
+          "logo_uri" : "https://app.example/logo.png",
+          "tos_uri" : "https://app.example/tos.html",
+          "scope" : "openid profile offline_access",
+          "grant_types" : ["refresh_token","authorization_code"],
+          "response_types" : ["code"],
+          "default_max_age" : 3600,
+          "require_auth_time" : true
+        }
+    </pre>
+</div>
+
+### JSON-LD context ### {#jsonld-context}
+
+This specification defines a JSON-LD context for use with OIDC client identifiers. This context is
+available at `https://www.w3.org/ns/solid/oidc-context.jsonld`. Client identifier documents that reference
+this JSON-LD context MUST use the HTTPS scheme.
+
+NOTE: the `oidc` vocabulary that is part of this context uses the HTTP scheme.
+
+The JSON-LD context is defined as:
+
+<div class='example'>
+    <pre>
+        {
+          "@context": {
+            "@version": 1.1,
+            "@protected": true,
+            "oidc": "http://www.w3.org/ns/solid/oidc#",
+            "xsd": "http://www.w3.org/2001/XMLSchema#",
+            "client_id": {
+              "@id": "@id",
+              "@type": "@id"
+            },
+            "client_uri": {
+              "@id": "oidc:client_uri",
+              "@type": "@id"
+            },
+            "logo_uri": {
+              "@id": "oidc:logo_uri",
+              "@type": "@id"
+            },
+            "policy_uri": {
+              "@id": "oidc:policy_uri",
+              "@type": "@id"
+            },
+            "tos_uri": {
+              "@id": "oidc:tos_uri",
+              "@type": "@id"
+            },
+            "redirect_uris": {
+              "@id": "oidc:redirect_uris",
+              "@type": "@id",
+              "@container": [
+                "@id",
+                "@set"
+              ]
+            },
+            "require_auth_time": {
+              "@id": "oidc:require_auth_time",
+              "@type": "xsd:boolean"
+            },
+            "default_max_age": {
+              "@id": "oidc:default_max_age",
+              "@type": "xsd:integer"
+            },
+            "application_type": {
+              "@id": "oidc:application_type"
+            },
+            "client_name": {
+              "@id": "oidc:client_name"
+            },
+            "contacts": {
+              "@id": "oidc:contacts"
+            },
+            "grant_types": {
+              "@id": "oidc:grant_types"
+            },
+            "response_types": {
+              "@id": "oidc:response_types"
+            },
+            "scope": {
+              "@id": "oidc:scope"
+            },
+            "token_endpoint_auth_method": {
+              "@id": "oidc:token_endpoint_auth_method"
+            }
+          }
+        }
+    </pre>
+</div>
+
+## The Public WebID ## {#clientids-public-webid}
+
+Ephemeral Clients MAY use the identifier `http://www.w3.org/ns/solid/terms#PublicOidcClient`. If the
+Client uses this identifier then the IdP MAY accept any `redirect_uri` as valid. Since it is public, the
+Client is effectively anonymous to the RS.
+
+## OIDC Registration ## {#clientids-oidc}
+
+If the Client does not use a WebID as the client identifier, then it MUST present a client identifier
+registered with the IdP via either OIDC dynamic or static registration.
+See also [[!OpenIDConnectDynamicClientRegistration]].
+
+# Token Instantiation # {#tokens}
+
+Assuming one of the following options
+ - Client ID and Secret, and valid DPoP Proof (for dynamic and static registration)
+ - Client WebID with a proper registration and valid DPoP Proof (for a client webid)
+ - A client id of `http://www.w3.org/ns/solid/terms#PublicOidcClient` (for a public WebId)
+
+the IdP MUST return two tokens to the Client:
+
+1. A DPoP-bound Access Token
+2. An OIDC ID Token
+
+## DPoP-bound Access Token ## {#tokens-access}
+
+The DPoP-bound Access Token MUST be a valid JWT. See also: [[!RFC7519]].
+
+When requesting a DPoP-bound Access Token, the Client MUST send a DPoP proof JWT
+that is valid according to the [[DPOP#section-5]]. The DPoP proof JWT is used to
+bind the access token to a public key. See also: [[!DPOP]].
+
+The DPoP-bound Access Token payload MUST contain these claims:
+ * `webid` — The WebID claim MUST be the user's WebID.
+ * `iss` — The issuer claim MUST be a valid URL of the IdP
+    instantiating this token.
+ * `aud` — The audience claim MUST either be the string `solid` or be an array
+    of values, one of which is the string `solid`. In the decentralized world
+    of Solid OIDC, the principal of an access token is not a specific endpoint,
+    but rather the Solid API; that is, any Solid server at any accessible address
+    on the world wide web. See also: [[RFC7519#section-4.1.3]].
+ * `iat` — The issued-at claim is the time at which the DPoP-bound
+    Access Token was issued.
+ * `exp` — The expiration claim is the time at which the DPoP-bound
+    Access Token becomes invalid.
+ * `cnf` — The confirmation claim is used to identify the DPoP Public
+    Key bound to the Access Token. See also: [[DPOP#section-7]].
+ * `client_id` - The ClientID claim is used to identify the client. See also:
+    [section 5. Client Identifiers](#clientids).
+
+<div class="example">
+    <p>An example DPoP-bound Access Token:
+
+    <pre>
+    {
+        "webid": "https://janedoe.com/web#id",
+        "iss": "https://idp.example.com",
+        "aud": "solid",
+        "iat": 1541493724,
+        "exp": 1573029723,
+        "cnf":{
+          "jkt":"0ZcOCORZNYy-DWpqq30jZyJGHTN0d2HglBV3uiguA4I"
+        },
+        "client_id": "https://client.example.com/web#id"
+    }
+    </pre>
+</div>
+
+## OIDC ID Token ## {#tokens-id}
+
+The user's WebID MUST be present in the ID Token as the `webid` claim.
+
+<div class="example">
+    <p>An example OIDC ID Token:
+
+    <pre>
+        {
+            "webid": "https://janedoe.com/web#id",
+            "iss": "https://idp.example.com",
+            "sub": "janedoe",
+            "aud": "https://client.example.com/web#id",
+            "nonce": "n-0S6_WzA2Mj",
+            "exp": 1311281970,
+            "iat": 1311280970,
+        }
+    </pre>
+</div>
+
+# Resource Access # {#resource}
+
+## DPoP Proof Validation ## {#resource-dpop-validation}
+
+A DPoP Proof that is valid according to
+[DPoP Internet-Draft, Section 4.3](https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-4.3),
+MUST be present when a DPoP-bound Access Token is used.
+
+## Access Token Validation ## {#resource-access-validation}
+
+The DPoP-bound Access Token MUST be validated according to
+[DPoP Internet-Draft, Section 6](https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-6),
+but the RS MAY perform additional verification in order to determine whether to grant access to the
+requested resource.
+
+The user's WebID in the `webid` claim MUST be dereferenced and checked against the `iss` claim in the
+Access Token. If the `iss` claim is different from the domain of the WebID, then the RS MUST check
+the WebID document for the existence of a statement matching `?webid <http://www.w3.org/ns/solid/terms#oidcIssuer> ?iss.`,
+where `?webid` and `?iss` are the values of the `webid` and `iss` claims respectively.
+This prevents a malicious identity provider from issuing valid Access Tokens for arbitrary WebIDs.
+
+Unless the RS acquires IdP keys through some other means, or the RS chooses to reject tokens issued by this IdP,
+the RS MUST follow OpenID Connect Discovery 1.0 [[!OpenID.Discovery]] to find an IdP's signing keys (JWK).
+
+# Solid-OIDC Conformance Discovery # {#discovery}
+
+An Identity Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
+Discovery 1.0 [[!OpenID.Discovery]] resource. An Identity Provider would indicate this support by using the
+`solid_oidc_supported` metadata property, referencing the Solid-OIDC specification URL.
+
+<div class="example">
+    <pre>
+        {
+            "solid_oidc_supported": "https://solidproject.org/TR/solid-oidc"
+        }
+    </pre>
+</div>
+
+# Security Considerations # {#security}
+
+*This section is non-normative*
+
+As this specification builds upon existing web standards, security considerations from OAuth, OIDC,
+PKCE, and the DPoP specifications may also apply unless otherwise indicated. The following
+considerations should be reviewed by implementors and system/s architects of this specification.
+
+Some of the references within this specification point to documents with a
+Living Standard or Draft status, meaning their contents can still change over
+time. It is advised to monitor these documents, as such changes might have
+security implications.
+
+In addition to above considerations, implementors should consider the Security
+Considerations in context of the [Solid
+Protocol](https://solidproject.org/TR/).
+
+## TLS Requirements ## {#security-tls}
+
+All TLS requirements outlined in [[BCP195](https://tools.ietf.org/html/bcp195)] apply to this
+specification.
+
+All tokens, Client, and User credentials MUST only be transmitted over TLS.
+
+## Client IDs ## {#security-client-ids}
+
+An RS SHOULD assign a fixed set of low trust policies to any client identified as anonymous.
+
+Implementors SHOULD expire Client IDs that are kept in server storage to mitigate the potential for
+a bad actor to fill server storage with unexpired or otherwise useless Client IDs.
+
+## Client Secrets ## {#security-client-secrets}
+
+Client secrets SHOULD NOT be stored in browser local storage. Doing so will increase the risk of
+data leaks should an attacker gain access to Client credentials.
+
+## Client Trust ## {#security-client-trust}
+
+*This section is non-normative*
+
+Clients are ephemeral, client registration is optional, and most Clients cannot keep secrets. These,
+among other factors, are what makes Client trust challenging.
+
+# Privacy Considerations # {#privacy}
+
+## Access Token Reuse ## {#privacy-token-reuse}
+
+*This section is non-normative*
+
+With JWTs being extendable by design, there is potential for a privacy breach if Access Tokens get
+reused across multiple resource servers. It is not unimaginable that a custom claim is added to the
+Access Token on instantiation. This addition may unintentionally give other resource servers
+consuming the Access Token information about the user that they may not wish to share outside of the
+intended RS.
+
+# Acknowledgments # {#acknowledgments}
+
+*This section is non-normative*
+
+The Solid Community Group would like to thank the following individuals for reviewing and providing
+feedback on the specification (in alphabetical order):
+
+Tim Berners-Lee, Justin Bingham, Sarven Capadisli, Aaron Coburn, Matthias Evering, Jamie Fiedler,
+Michiel de Jong, Ted Thibodeau Jr, Kjetil Kjernsmo, Mitzi László, Pat McBennett, Adam Migus, Jackson Morgan, Davi
+Ottenheimer, Justin Richer, severin-dsr, Henry Story, Michael Thornburgh, Emmet Townsend, Ruben
+Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.
+
+<pre class=biblio>
+{
+    "DPOP": {
+        "authors": [
+            "D. Fett",
+            "B. Campbell",
+            "J. Bradley",
+            "T. Lodderstedt",
+            "M. Jones",
+            "D. Waite"
+        ],
+        "href": "https://tools.ietf.org/html/draft-ietf-oauth-dpop-03",
+        "title": "OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)",
+        "publisher": "IETF"
+    },
+    "OpenID.Discovery": {
+        "authors": [
+            "N. Sakimura",
+            "J. Bradley",
+            "M. Jones",
+            "E. Jay"
+        ],
+        "href": "https://openid.net/specs/openid-connect-discovery-1_0.html",
+        "title": "OpenID Connect Discovery 1.0",
+        "publisher": "The OpenID Foundation"
+    },
+    "OpenIDConnectDynamicClientRegistration": {
+        "authors": [
+            "N. Sakimura",
+            "J. Bradley",
+            "M.B. Jones"
+        ],
+        "href": "https://openid.net/specs/openid-connect-registration-1_0.html",
+        "title": "OpenID Connect Dynamic Client Registration 1.0",
+        "publisher": "The OpenID Foundation"
+    }
+}
+</pre>
