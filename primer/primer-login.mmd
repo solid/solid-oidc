@@ -1,0 +1,30 @@
+sequenceDiagram
+    participant RP
+    participant Alice's OP
+    participant Alice's WebID
+    participant RP's WebID
+    note over RP: 1. Alice uses the decentphotos app
+    note over RP: 2. Alice selects her OP or WebID
+    RP->>Alice's WebID: 2.1 Retrieve Profile
+    Alice's WebID->>RP: Alice's WebID Profile
+    RP->>Alice's OP: 3. Retrieves OP configuration
+    Alice's OP->>RP: OP configuration
+    note over RP: 4. Generates PKCE code and code verifier
+    note over RP: 5. Saves code verifier to session storage
+    RP->>Alice's OP: 6. Authorization Request
+    Alice's OP->>RP's WebID: 7. Fetch RP WebID
+    RP's WebID->>Alice's OP: RP's WebID Profile
+    note over Alice's OP: 8. Validates redirect url with WebID
+    note over Alice's OP: 9. Alice Logs In
+    note over Alice's OP: 10. Generates a code
+    Alice's OP->>RP: 11. Send code to redirect url
+    note over RP: 12. Generates DPoP Client Key Pair
+    note over RP: 13. Generates a DPoP Header
+    RP->>Alice's OP: 14. Token request with code and code verifier
+    note over Alice's OP: 15. Validates code verifier
+    note over Alice's OP: 16. Validates DPoP Token signature
+    note over Alice's OP: 17. Converts the DPoP public key to a JWK thumbprint
+    note over Alice's OP: 18. Generates access token
+    note over Alice's OP: 19. Generates id token
+    note over Alice's OP: 20. Generates refresh token
+    Alice's OP->>RP: 21. Send tokens
