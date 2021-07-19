@@ -1,6 +1,7 @@
 <pre class='metadata'>
 Title: SOLID-OIDC
 Boilerplate: issues-index no
+Boilerplate: style-darkmode off
 Shortname: solid-oidc
 Level: 1
 Status: w3c/ED
