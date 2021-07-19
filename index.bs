@@ -304,7 +304,7 @@ The JSON-LD context is defined as:
     </pre>
 </div>
 
-## The Public OIDC Client URI ## {#clientids-public-webid}
+## The Public OIDC Client URI ## {#clientids-public-uri}
 
 Ephemeral Clients MAY use the identifier `http://www.w3.org/ns/solid/terms#PublicOidcClient`. If the
 Client uses this identifier then the IdP MAY accept any `redirect_uri` as valid. Since it is public, the
