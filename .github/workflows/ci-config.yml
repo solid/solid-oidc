@@ -1,12 +1,8 @@
-# Workflow for processing and publishing bikeshed proposals to github pages
+# Workflow for verifying bikeshed documents processing
 
-name: verify proposals
+name: verify processing
 on:
-  push:
-    # only concerned with changes in the main branch
-    branches: [ main ]
-    # only invoke when a bikeshed document is updated
-    # paths: [ '*.bs' ]
+  # only concerned with gating PRs to the main branch
   pull_request:
     branches: [ main ]
 
