@@ -1,6 +1,6 @@
 # Workflow for verifying bikeshed documents processing
 
-name: verify processing
+name: Verify processing
 on:
   # only concerned with gating PRs to the main branch
   pull_request:
@@ -10,27 +10,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: setup python
+      - name: Setup Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
 
-      - name: upgrade pip
+      - name: Upgrade pip
         run: python3 -m pip install --upgrade pip
 
-      - name: install bikeshed
+      - name: Install Bikeshed
         run: |
           python3 -m pip install --upgrade bikeshed
           bikeshed update
 
-      - name: generate html
-        run: |
-          for bsdoc in *.bs; do bikeshed spec $bsdoc; done
-          for bsdoc in primer/*.bs; do bikeshed spec $bsdoc; done
+      - name: Generate HTML
+        run: for bsdoc in ./*.bs ./**/*.bs; do bikeshed spec $bsdoc; done
 
-      - name: generate svg
-        run: for diagram in primer/*.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
+      - name: Generate SVG
+        run: for diagram in ./*.mmd ./**/*.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
 
