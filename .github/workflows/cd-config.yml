@@ -34,8 +34,15 @@ jobs:
       - name: generate svg
         run: for diagram in primer/*.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
 
-      - name: deploy
+      - name: create dist
+        run: |
+          mkdir dist
+          for file in index.html basic-flow-diagram.png; do cp $file ./dist/; done
+          cp -R ./primer dist/
+          for file in ./dist/primer/*.{mmd,bs}; do rm $file; done
+
+      - name: publish GitHub pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: .
+          publish_dir: ./dist
           personal_token: ${{ secrets.GITHUB_TOKEN }}
