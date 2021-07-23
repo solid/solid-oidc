@@ -80,8 +80,8 @@ it is likely that authorization requirements will necessitate it.
 
 *This section is non-normative*
 
-This specification uses the terms "access token", "resource server" (RS), "grant type", and "client"
-as defined by The OAuth 2.0 Authorization Framework [[!RFC6749]].
+This specification uses the terms "access token", "authorization server", "resource server" (RS), "token endpoint",
+"grant type", and "client" as defined by The OAuth 2.0 Authorization Framework [[!RFC6749]].
 
 Throughout this specification, we will use the term Identity Provider (IdP) in line with the
 terminology used in the Open ID Connect Core 1.0 specification (OIDC) [[!OIDC.Core]]. It should be noted that
@@ -105,7 +105,7 @@ This specification also uses the following terms:
     A JSON object that represents a cryptographic key. The members of the object represent properties of
     the key, including its value.
 
-<dt>*Demonstration of Proof-of-Possession at the Application Layer (DPoP)* as defined in the DPoP Internet-Draft [[!DPOP]]
+<dt>*Demonstration of Proof-of-Possession at the Application Layer (DPoP)* as defined by [[!DPOP]]
 <dd>
     A mechanism for sender-constraining OAuth tokens via a proof-of-possession mechanism on the
     application level.
