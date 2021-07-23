@@ -138,8 +138,7 @@ or static, is entirely optional.
 
 *This section is non-normative*
 
-In line with Linked Data principles, a
-[WebID](https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html) is a HTTP URI that,
+In line with Linked Data principles, a WebID is a HTTP URI that,
 when dereferenced, resolves to a profile document that is structured data in an
 [RDF 1.1 format](https://www.w3.org/TR/rdf11-concepts/). This profile document allows
 people to link with others to grant access to identity resources as they see fit. WebIDs underpin
@@ -192,8 +191,7 @@ with the values in the Client's WebID document.
 Further, the `redirect_uri` provided by the Client MUST be included in the registration `redirect_uris`
 list.
 
-NOTE: the method by which the IdP resolves the WebID to an RDF document, is defined in
-[WebID 1.0](https://www.w3.org/2005/Incubator/webid/spec/identity/#processing-the-webid-profile).
+NOTE: the method by which the IdP resolves the WebID to an RDF document, is defined in [[WebID#processing-the-webid-profile]].
 This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/):
 
 <div class='example'>
