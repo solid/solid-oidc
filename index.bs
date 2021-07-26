@@ -6,9 +6,8 @@ Shortname: solid-oidc
 Level: 1
 Status: w3c/ED
 Group: Solid Community Group
-ED: https://solid.github.io/authentication-panel/solid-oidc/
-URL: https://solid.github.io/specification/solid-oidc/
-Repository: https://github.com/solid/specification
+ED: https://solid.github.io/solid-oidc/
+Repository: https://github.com/solid/solid-oidc
 Markup Shorthands: markdown yes
 Max ToC Depth: 2
 Editor: [Aaron Coburn](https://people.apache.org/~acoburn/#i) ([Inrupt](https://inrupt.com))
