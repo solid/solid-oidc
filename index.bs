@@ -455,6 +455,8 @@ specification.
 
 All tokens, Client, and User credentials MUST only be transmitted over TLS.
 
+All resources required to verify claims: Issuer, WebID and Client WebID; MUST only be transmitted over TLS.
+
 ## Client IDs ## {#security-client-ids}
 
 An RS SHOULD assign a fixed set of low trust policies to any client identified as anonymous.
