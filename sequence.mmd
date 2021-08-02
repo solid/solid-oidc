@@ -1,0 +1,17 @@
+sequenceDiagram
+  participant RC as Resource Client
+  participant RS as Resource Server
+  participant OP as OpenID Provider
+  participant WebID as User's WebID Document
+  RC ->> RS: 1. unauthenticated request
+  RS ->> RC: 2. 401 with a WWW-Authenticate HTTP header
+  RC ->> OP: 3. start Authorization Code grant
+  OP ->> RC: return Authorization Code
+  RC ->> OP: 4. present Authorization Code and DPoP proof
+  OP ->> RC: 5. return DPoP bound Access Token and OIDC ID Token
+  RC ->> RS: 6. Access Token + DPoP proof
+  RS ->> WebID: 7. get WebID document to verify Issuer
+  WebID ->> RS: WebID document
+  RS ->> OP: 8. get OP's public key to verify Access Token (JWS)
+  OP ->> RS: JWKS
+  RS ->> RC: 9. if all checks pass respond with representation

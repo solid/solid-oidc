@@ -30,5 +30,4 @@ jobs:
         run: for bsdoc in ./*.bs ./**/*.bs; do bikeshed spec $bsdoc; done
 
       - name: Generate SVG
-        run: for diagram in primer/*.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
-
+        run: for diagram in ./*.mmd primer/*.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done

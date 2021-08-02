@@ -152,12 +152,13 @@ The basic authentication and authorization flow is as follows:
 4. If granted, the Client presents the Authorization Code and a DPoP proof, to the Token Endpoint.
 5. The Token Endpoint returns a DPoP-bound Access Token and OIDC ID Token, to the Client.
 6. The Client presents the DPoP-bound Access Token and DPoP proof, to the RS.
-7. The RS gets the public key from the IdP and uses it to validate the signature on the DPoP-bound Access Token (JWS).
-8. If the DPoP proof and Access Token are valid, then the RS returns the requested resource.
+7. The RS gets user's WebID Document and check for designated OIDC issuers
+8. The RS gets the public key from the IdP and uses it to validate the signature on the DPoP-bound Access Token (JWS).
+9. If IdP is designated by the user and Access Token is valid, then the RS returns the requested resource.
 
 <figure id="fig-signature">
-    <img src="basic-flow-diagram.png" />
-    <figcaption>Basic flow of authentication and authorization as described above.</figcaption>
+    <img src="sequence.mmd.svg" />
+    <figcaption>Basic sequence of authentication and authorization as described above.</figcaption>
 </figure>
 
 # Client Identifiers # {#clientids}
