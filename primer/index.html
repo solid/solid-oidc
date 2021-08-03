@@ -7,8 +7,8 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 59d067506, updated Fri Jul 23 15:43:29 2021 -0700" name="generator">
-  <link href="https://solid.github.io/authentication-panel/solid-oidc/" rel="canonical">
-  <meta content="5cef497c18a5a0cc1f03c7bc5d0b2e281fc6440c" name="document-revision">
+  <link href="https://solid.github.io/solid-oidc/primer/" rel="canonical">
+  <meta content="6d364540fab3073b3be995ee9370fbea7558de97" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -338,11 +338,9 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
-     <dd><a class="u-url" href="https://solid.github.io/authentication-panel/solid-oidc/primer.html">https://solid.github.io/authentication-panel/solid-oidc/primer.html</a>
-     <dt>Latest published version:
-     <dd><a href="https://solid.github.io/authentication-panel/solid-oidc/">https://solid.github.io/authentication-panel/solid-oidc/</a>
+     <dd><a class="u-url" href="https://solid.github.io/solid-oidc/primer/">https://solid.github.io/solid-oidc/primer/</a>
      <dt>Issue Tracking:
-     <dd><a href="https://github.com/solid/specification/issues/">GitHub Issues</a>
+     <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
      <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard"><span class="p-name fn"><a href="https://github.com/jaxoncreed">Jackson Morgan</a></span>
      <dd class="editor p-author h-card vcard"><span class="p-name fn"><a href="https://github.com/acoburn">Aaron Coburn</a></span>
@@ -401,7 +399,7 @@ Bob’s Solid Data Pods (resource servers).</p>
    <h2 class="heading settled" data-level="2" id="definitions"><span class="secno">2. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
    <dl>
     <dt id="openid-provider"><a class="self-link" href="#openid-provider"></a>OpenID Provider (OP)
-    <dd>An OAuth 2.0 authorization server implementing OpenID Connect as defined in the OpenID Connect Core 1.0 specification. <a data-link-type="biblio" href="#biblio-openidconnect">[OpenIDConnect]</a>
+    <dd>An OAuth 2.0 authorization server implementing OpenID Connect as <a href="https://openid.net/specs/openid-connect-core-1_0.html">defined in the OpenID Connect Core 1.0 specification</a>. <a data-link-type="biblio" href="#biblio-oidccore">[OIDC.Core]</a>
     <dt id="relying-party"><a class="self-link" href="#relying-party"></a>Relying Party (RP)
     <dd>A client application using OpenID Connect to make resource requests on behalf of the resource owner. Client is one of the four roles <a href="https://tools.ietf.org/html/rfc6749#section-1.1">defined in the OAuth 2.0 specification</a>. <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>
     <dt id="resource"><a class="self-link" href="#resource"></a>Resource
@@ -411,9 +409,9 @@ Bob’s Solid Data Pods (resource servers).</p>
     <dt id="resource-server"><a class="self-link" href="#resource-server"></a>Resource Server (RS)
     <dd>A server hosting resources, capable of accepting and responding to protected resource requests using access tokens. RS is one of the four roles <a href="https://tools.ietf.org/html/rfc6749#section-1.1">defined in the OAuth 2.0 specification</a>. <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>
     <dt id="solid-data-pod"><a class="self-link" href="#solid-data-pod"></a>Solid Data Pod (Pod)
-    <dd>A Solid compliant Resource Server as <a href="https://solid.github.io/specification/#data-pod">defined in the Solid Specification</a>. <a data-link-type="biblio" href="#biblio-solid">[Solid]</a>
+    <dd>A Solid compliant Resource Server as <a href="https://solidproject.org/TR/protocol#data-pod">defined in the Solid Protocol</a>. <a data-link-type="biblio" href="#biblio-solidprotocol">[Solid.Protocol]</a>
     <dt id="solid-oidc"><a class="self-link" href="#solid-oidc"></a>Solid OpenID Connect (Solid OIDC)
-    <dd>The specification defining authentication in the Solid ecosystem. <a data-link-type="biblio" href="#biblio-solidoidc">[SolidOIDC]</a>
+    <dd>The specification defining authentication in the Solid ecosystem. <a data-link-type="biblio" href="#biblio-solidoidc">[Solid.OIDC]</a>
     <dt id="webid"><a class="self-link" href="#webid"></a>WebID
     <dd>A WebID is an HTTP URI which refers to an Agent (Person, Organization, Group, Device, etc.) as <a href="https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html#introduction">defined in the WebID 1.0 specification</a>. <a data-link-type="biblio" href="#biblio-webid">[WebID]</a>
    </dl>
@@ -1192,7 +1190,7 @@ request was made. Using that information, the RS performs authorization.</p>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
-   <dt id="biblio-openidconnect">[OpenIDConnect]
+   <dt id="biblio-oidccore">[OIDC.Core]
    <dd>N. Sakimura; et al. <a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect Core 1.0</a>. URL: <a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>
    <dt id="biblio-rdf11-concepts">[RDF11-CONCEPTS]
    <dd>Richard Cyganiak; David Wood; Markus Lanthaler. <a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1 Concepts and Abstract Syntax</a>. 25 February 2014. REC. URL: <a href="https://www.w3.org/TR/rdf11-concepts/">https://www.w3.org/TR/rdf11-concepts/</a>
@@ -1202,10 +1200,10 @@ request was made. Using that information, the RS performs authorization.</p>
    <dd>D. Hardt, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc6749">The OAuth 2.0 Authorization Framework</a>. October 2012. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>
    <dt id="biblio-rfc7636">[RFC7636]
    <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/rfc/rfc7636">Proof Key for Code Exchange by OAuth Public Clients</a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7636">https://www.rfc-editor.org/rfc/rfc7636</a>
-   <dt id="biblio-solid">[Solid]
-   <dd><a href="https://solid.github.io/specification/">The Solid Ecosystem</a>. URL: <a href="https://solid.github.io/specification/">https://solid.github.io/specification/</a>
-   <dt id="biblio-solidoidc">[SolidOIDC]
-   <dd>A. Migus; R. White. <a href="https://solid.github.io/authentication-panel/solid-oidc/">Solid OIDC</a>. URL: <a href="https://solid.github.io/authentication-panel/solid-oidc/">https://solid.github.io/authentication-panel/solid-oidc/</a>
+   <dt id="biblio-solidoidc">[Solid.OIDC]
+   <dd>Aaron Coburn; elf Pavlik ; Dmitri Zagidulin. <a href="https://solid.github.io/solid-oidc/">Solid OIDC</a>. URL: <a href="https://solid.github.io/solid-oidc/">https://solid.github.io/solid-oidc/</a>
+   <dt id="biblio-solidprotocol">[Solid.Protocol]
+   <dd>Sarven Capadisli; et al. <a href="https://solidproject.org/TR/protocol">Solid Protocol</a>. URL: <a href="https://solidproject.org/TR/protocol">https://solidproject.org/TR/protocol</a>
    <dt id="biblio-webid">[WebID]
-   <dd>A. Sambra; H. Story; T. Berners-Lee. <a href="https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html">WebID 1.0</a>. URL: <a href="https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html">https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html</a>
+   <dd>Andrei Sambra; Henry Story; Tim Berners-Lee. <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">WebID 1.0</a>. URL: <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">https://www.w3.org/2005/Incubator/webid/spec/identity/</a>
   </dl>
