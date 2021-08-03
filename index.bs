@@ -161,7 +161,7 @@ The basic authentication and authorization flow is as follows:
 1. The Client requests a non-public resource from the RS.
 2. The RS returns a 401 with a `WWW-Authenticate` HTTP header containing parameters that inform the
     Client that a DPoP-bound Access Token is required.
-3. The Client presents its Client Identifier and the associated Secret to the IdP and requests an
+3. The Client presents its Client Identifier and the associated Secret, if any, to the IdP and requests an
     Authorization Code.
 4. If granted, the Client presents the Authorization Code and a DPoP proof, to the Token Endpoint.
 5. The Token Endpoint returns a DPoP-bound Access Token and OIDC ID Token, to the Client.
@@ -305,7 +305,7 @@ The JSON-LD context is defined as:
     </pre>
 </div>
 
-## The Public WebID ## {#clientids-public-webid}
+## The Public OIDC Client URI ## {#clientids-public-uri}
 
 Ephemeral Clients MAY use the identifier `http://www.w3.org/ns/solid/terms#PublicOidcClient`. If the
 Client uses this identifier then the IdP MAY accept any `redirect_uri` as valid. Since it is public, the
@@ -313,7 +313,7 @@ Client is effectively anonymous to the RS.
 
 ## OIDC Registration ## {#clientids-oidc}
 
-If the Client does not use a WebID as the client identifier, then it MUST present a client identifier
+If the Client does not use a WebID or the public OIDC client URI as identifier, then it MUST present a client identifier
 registered with the IdP via either OIDC dynamic or static registration.
 See also [[!OpenIDConnectDynamicClientRegistration]].
 
