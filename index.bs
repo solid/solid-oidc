@@ -57,8 +57,7 @@ This specification is written for Authorization and Resource Server owners inten
 Solid-OIDC. It is also useful to Solid application developers charged with implementing a Solid-OIDC
 client.
 
-The [OAuth 2.0](https://tools.ietf.org/html/rfc6749) and
-[OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html) web standards were
+The OAuth 2.0 [[!RFC6749]] and OpenID Connect Core 1.0 [[!OIDC.Core]] web standards were
 published in October 2012 and November 2014, respectively. Since publication they've seen rapid and
 widespread adoption across the industry, in turn gaining extensive *"real-world"* data and
 experience. The strengths of the protocols are now clear; however, in a changing eco-system where
@@ -81,25 +80,20 @@ it is likely that authorization requirements will necessitate it.
 
 *This section is non-normative*
 
-This specification uses the terms "access token", "authorization server", "resource server" (RS),
-"authorization endpoint", "token endpoint", "grant type", "access token request", "access token
-response", and "client" defined by The OAuth 2.0 Authorization Framework
-[[!RFC6749]].
+This specification uses the terms "access token", "authorization server", "resource server" (RS), "token endpoint",
+"grant type", and "client" as defined by The OAuth 2.0 Authorization Framework [[!RFC6749]].
 
 Throughout this specification, we will use the term Identity Provider (IdP) in line with the
-terminology used in the
-[Open ID Connect Core 1.0 specification](https://openid.net/specs/openid-connect-core-1_0.html)
-(OIDC). It should be noted that
-[The OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749) (OAuth) refers to this
-same entity as an Authorization Server.
+terminology used in the Open ID Connect Core 1.0 specification (OIDC) [[!OIDC.Core]]. It should be noted that
+The OAuth 2.0 Authorization Framework (OAuth) [[!RFC6749]] refers to this same entity as an Authorization Server.
 
 This specification also uses the following terms:
 
 <dl>
-<dt>*WebID* as defined in the [WebID 1.0 Editors Draft](https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html)
+<dt>*WebID* as defined by [[!WebID]]
 <dd>
     A WebID is a URI with an HTTP or HTTPS scheme which denotes an Agent (Person, Organization, Group,
-    Device, etc.)
+    Device, etc.).
 
 <dt>*JSON Web Token (JWT)* as defined by [[!RFC7519]]
 <dd>
@@ -111,8 +105,7 @@ This specification also uses the following terms:
     A JSON object that represents a cryptographic key. The members of the object represent properties of
     the key, including its value.
 
-<dt>*Demonstration of Proof-of-Possession at the Application Layer (DPoP)* as defined in the
-[DPoP Internet-Draft](https://tools.ietf.org/html/draft-ietf-oauth-dpop-03)
+<dt>*Demonstration of Proof-of-Possession at the Application Layer (DPoP)* as defined by [[!DPOP]]
 <dd>
     A mechanism for sender-constraining OAuth tokens via a proof-of-possession mechanism on the
     application level.
@@ -145,8 +138,7 @@ or static, is entirely optional.
 
 *This section is non-normative*
 
-In line with Linked Data principles, a
-[WebID](https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html) is a HTTP URI that,
+In line with Linked Data principles, a WebID is a HTTP URI that,
 when dereferenced, resolves to a profile document that is structured data in an
 [RDF 1.1 format](https://www.w3.org/TR/rdf11-concepts/). This profile document allows
 people to link with others to grant access to identity resources as they see fit. WebIDs underpin
@@ -199,8 +191,7 @@ with the values in the Client's WebID document.
 Further, the `redirect_uri` provided by the Client MUST be included in the registration `redirect_uris`
 list.
 
-NOTE: the method by which the IdP resolves the WebID to an RDF document, is defined in
-[WebID 1.0](https://www.w3.org/2005/Incubator/webid/spec/identity/#processing-the-webid-profile).
+NOTE: the method by which the IdP resolves the WebID to an RDF document, is defined in [[WebID#processing-the-webid-profile]].
 This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/):
 
 <div class='example'>
@@ -315,7 +306,7 @@ Client is effectively anonymous to the RS.
 
 If the Client does not use a WebID or the public OIDC client URI as identifier, then it MUST present a client identifier
 registered with the IdP via either OIDC dynamic or static registration.
-See also [[!OpenIDConnectDynamicClientRegistration]].
+See also [[!OIDC.DynamicClientRegistration]].
 
 # Token Instantiation # {#tokens}
 
@@ -415,12 +406,12 @@ where `?webid` and `?iss` are the values of the `webid` and `iss` claims respect
 This prevents a malicious identity provider from issuing valid Access Tokens for arbitrary WebIDs.
 
 Unless the RS acquires IdP keys through some other means, or the RS chooses to reject tokens issued by this IdP,
-the RS MUST follow OpenID Connect Discovery 1.0 [[!OpenID.Discovery]] to find an IdP's signing keys (JWK).
+the RS MUST follow OpenID Connect Discovery 1.0 [[!OIDC.Discovery]] to find an IdP's signing keys (JWK).
 
 # Solid-OIDC Conformance Discovery # {#discovery}
 
 An Identity Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
-Discovery 1.0 [[!OpenID.Discovery]] resource. An Identity Provider would indicate this support by using the
+Discovery 1.0 [[!OIDC.Discovery]] resource. An Identity Provider would indicate this support by using the
 `solid_oidc_supported` metadata property, referencing the Solid-OIDC specification URL.
 
 <div class="example">
@@ -445,8 +436,7 @@ time. It is advised to monitor these documents, as such changes might have
 security implications.
 
 In addition to above considerations, implementors should consider the Security
-Considerations in context of the [Solid
-Protocol](https://solidproject.org/TR/).
+Considerations in context of the Solid Protocol [[!Solid.Protocol]].
 
 ## TLS Requirements ## {#security-tls}
 
@@ -513,7 +503,19 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.
         "title": "OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)",
         "publisher": "IETF"
     },
-    "OpenID.Discovery": {
+    "OIDC.Core": {
+        "authors": [
+            "N. Sakimura",
+            "J. Bradley",
+            "M. Jones",
+            "B. de Medeiros",
+            "C. Mortimore"
+        ],
+        "href": "https://openid.net/specs/openid-connect-core-1_0.html",
+        "title": "OpenID Connect Core 1.0",
+        "publisher": "The OpenID Foundation"
+    },
+    "OIDC.Discovery": {
         "authors": [
             "N. Sakimura",
             "J. Bradley",
@@ -524,7 +526,7 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.
         "title": "OpenID Connect Discovery 1.0",
         "publisher": "The OpenID Foundation"
     },
-    "OpenIDConnectDynamicClientRegistration": {
+    "OIDC.DynamicClientRegistration": {
         "authors": [
             "N. Sakimura",
             "J. Bradley",
@@ -533,6 +535,29 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.
         "href": "https://openid.net/specs/openid-connect-registration-1_0.html",
         "title": "OpenID Connect Dynamic Client Registration 1.0",
         "publisher": "The OpenID Foundation"
+    },
+    "Solid.Protocol": {
+        "authors": [
+            "Sarven Capadisli",
+            "Tim Berners-Lee",
+            "Ruben Verborgh",
+            "Kjetil Kjernsmo",
+            "Justin Bingham",
+            "Dmitri Zagidulin"
+        ],
+        "href": "https://solidproject.org/TR/protocol",
+        "title": "Solid Protocol",
+        "publisher": "W3C Solid Community Group"
+    },
+    "WebID": {
+        "authors": [
+            "Andrei Sambra",
+            "Henry Story",
+            "Tim Berners-Lee"
+        ],
+        "href": "https://www.w3.org/2005/Incubator/webid/spec/identity/",
+        "title": "WebID 1.0",
+        "publisher": "WebID Incubator Group"
     }
 }
 </pre>
