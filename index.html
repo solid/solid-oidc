@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version bb6b91100, updated Mon Jul 12 16:52:37 2021 -0700" name="generator">
+  <meta content="Bikeshed version 59d067506, updated Fri Jul 23 15:43:29 2021 -0700" name="generator">
   <link href="https://solid.github.io/specification/solid-oidc/" rel="canonical">
-  <meta content="a861a0a81af1826d8794956c2783898c3f110db4" name="document-revision">
+  <meta content="5cef497c18a5a0cc1f03c7bc5d0b2e281fc6440c" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -275,7 +275,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref allcaps" id="title">SOLID-OIDC</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-07-21">21 July 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-08-03">3 August 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -343,7 +343,7 @@ of this specification. Alternatively, you can send comments to our mailing list.
      <a href="#clientids"><span class="secno">5</span> <span class="content">Client Identifiers</span></a>
      <ol class="toc">
       <li><a href="#clientids-webid"><span class="secno">5.1</span> <span class="content">WebID</span></a>
-      <li><a href="#clientids-public-webid"><span class="secno">5.2</span> <span class="content">The Public WebID</span></a>
+      <li><a href="#clientids-public-uri"><span class="secno">5.2</span> <span class="content">The Public OIDC Client URI</span></a>
       <li><a href="#clientids-oidc"><span class="secno">5.3</span> <span class="content">OIDC Registration</span></a>
      </ol>
     <li>
@@ -395,7 +395,7 @@ tools, to facilitate building extensible and modular decentralized applications 
    <p>This specification is written for Authorization and Resource Server owners intending to implement
 Solid-OIDC. It is also useful to Solid application developers charged with implementing a Solid-OIDC
 client.</p>
-   <p>The <a href="https://tools.ietf.org/html/rfc6749">OAuth 2.0</a> and <a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect Core 1.0</a> web standards were
+   <p>The OAuth 2.0 <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a> and OpenID Connect Core 1.0 <a data-link-type="biblio" href="#biblio-oidccore">[OIDC.Core]</a> web standards were
 published in October 2012 and November 2014, respectively. Since publication they’ve seen rapid and
 widespread adoption across the industry, in turn gaining extensive <em>"real-world"</em> data and
 experience. The strengths of the protocols are now clear; however, in a changing eco-system where
@@ -414,24 +414,23 @@ that additional functionality is required.</p>
 it is likely that authorization requirements will necessitate it.</p>
    <h2 class="heading settled" data-level="2" id="terms"><span class="secno">2. </span><span class="content">Terminology</span><a class="self-link" href="#terms"></a></h2>
    <p><em>This section is non-normative</em></p>
-   <p>This specification uses the terms "access token", "authorization server", "resource server" (RS),
-"authorization endpoint", "token endpoint", "grant type", "access token request", "access token
-response", and "client" defined by The OAuth 2.0 Authorization Framework <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>.</p>
+   <p>This specification uses the terms "access token", "authorization server", "resource server" (RS), "token endpoint",
+"grant type", and "client" as defined by The OAuth 2.0 Authorization Framework <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>.</p>
    <p>Throughout this specification, we will use the term Identity Provider (IdP) in line with the
-terminology used in the <a href="https://openid.net/specs/openid-connect-core-1_0.html">Open ID Connect Core 1.0 specification</a> (OIDC). It should be noted that <a href="https://tools.ietf.org/html/rfc6749">The OAuth 2.0 Authorization Framework</a> (OAuth) refers to this
-same entity as an Authorization Server.</p>
+terminology used in the Open ID Connect Core 1.0 specification (OIDC) <a data-link-type="biblio" href="#biblio-oidccore">[OIDC.Core]</a>. It should be noted that
+The OAuth 2.0 Authorization Framework (OAuth) <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a> refers to this same entity as an Authorization Server.</p>
    <p>This specification also uses the following terms:</p>
    <dl>
-    <dt><em>WebID</em> as defined in the <a href="https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html">WebID 1.0 Editors Draft</a> 
+    <dt><em>WebID</em> as defined by <a data-link-type="biblio" href="#biblio-webid">[WebID]</a> 
     <dd> A WebID is a URI with an HTTP or HTTPS scheme which denotes an Agent (Person, Organization, Group,
-    Device, etc.) 
+    Device, etc.). 
     <dt><em>JSON Web Token (JWT)</em> as defined by <a data-link-type="biblio" href="#biblio-rfc7519">[RFC7519]</a> 
     <dd> A string representing a set of claims as a JSON object that is encoded in a JWS or JWE, enabling the
     claims to be digitally signed or MACed and/or encrypted. 
     <dt><em>JSON Web Key (JWK)</em> as defined by <a data-link-type="biblio" href="#biblio-rfc7517">[RFC7517]</a> 
     <dd> A JSON object that represents a cryptographic key. The members of the object represent properties of
     the key, including its value. 
-    <dt><em>Demonstration of Proof-of-Possession at the Application Layer (DPoP)</em> as defined in the <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03">DPoP Internet-Draft</a> 
+    <dt><em>Demonstration of Proof-of-Possession at the Application Layer (DPoP)</em> as defined by <a data-link-type="biblio" href="#biblio-dpop">[DPOP]</a> 
     <dd> A mechanism for sender-constraining OAuth tokens via a proof-of-possession mechanism on the
     application level. 
     <dt><em>DPoP Proof</em> as defined by <a data-link-type="biblio" href="#biblio-dpop">[DPOP]</a> 
@@ -451,7 +450,7 @@ preexisting trust relationships with the IdP. This means that client registratio
 or static, is entirely optional.</p>
    <h3 class="heading settled" data-level="3.1" id="concepts-webids"><span class="secno">3.1. </span><span class="content">WebIDs</span><a class="self-link" href="#concepts-webids"></a></h3>
    <p><em>This section is non-normative</em></p>
-   <p>In line with Linked Data principles, a <a href="https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html">WebID</a> is a HTTP URI that,
+   <p>In line with Linked Data principles, a WebID is a HTTP URI that,
 when dereferenced, resolves to a profile document that is structured data in an <a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1 format</a>. This profile document allows
 people to link with others to grant access to identity resources as they see fit. WebIDs underpin
 Solid and are used as a primary identifier for Users and Client applications in this specification.</p>
@@ -465,7 +464,7 @@ Solid and are used as a primary identifier for Users and Client applications in 
      <p>The RS returns a 401 with a <code>WWW-Authenticate</code> HTTP header containing parameters that inform the
 Client that a DPoP-bound Access Token is required.</p>
     <li data-md>
-     <p>The Client presents its Client Identifier and the associated Secret to the IdP and requests an
+     <p>The Client presents its Client Identifier and the associated Secret, if any, to the IdP and requests an
 Authorization Code.</p>
     <li data-md>
      <p>If granted, the Client presents the Authorization Code and a DPoP proof, to the Token Endpoint.</p>
@@ -495,7 +494,7 @@ definition of client registration metadata from <a data-link-type="biblio" href=
    <p>Also, the IdP MUST dereference the Client’s WebID document and match any Client-supplied parameters,
 with the values in the Client’s WebID document.</p>
    <p>Further, the <code>redirect_uri</code> provided by the Client MUST be included in the registration <code>redirect_uris</code> list.</p>
-   <p class="note" role="note"><span>NOTE:</span> the method by which the IdP resolves the WebID to an RDF document, is defined in <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/#processing-the-webid-profile">WebID 1.0</a>.
+   <p class="note" role="note"><span>NOTE:</span> the method by which the IdP resolves the WebID to an RDF document, is defined in <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/#processing-the-webid-profile">WebID 1.0 §processing-the-webid-profile</a>.
 This example uses <a href="https://www.w3.org/TR/json-ld11/">JSON-LD </a>:</p>
    <div class="example" id="example-63768537">
     <a class="self-link" href="#example-63768537"></a> 
@@ -592,14 +591,14 @@ this JSON-LD context MUST use the HTTPS scheme.</p>
 }
 </pre>
    </div>
-   <h3 class="heading settled" data-level="5.2" id="clientids-public-webid"><span class="secno">5.2. </span><span class="content">The Public WebID</span><a class="self-link" href="#clientids-public-webid"></a></h3>
+   <h3 class="heading settled" data-level="5.2" id="clientids-public-uri"><span class="secno">5.2. </span><span class="content">The Public OIDC Client URI</span><a class="self-link" href="#clientids-public-uri"></a></h3>
    <p>Ephemeral Clients MAY use the identifier <code>http://www.w3.org/ns/solid/terms#PublicOidcClient</code>. If the
 Client uses this identifier then the IdP MAY accept any <code>redirect_uri</code> as valid. Since it is public, the
 Client is effectively anonymous to the RS.</p>
    <h3 class="heading settled" data-level="5.3" id="clientids-oidc"><span class="secno">5.3. </span><span class="content">OIDC Registration</span><a class="self-link" href="#clientids-oidc"></a></h3>
-   <p>If the Client does not use a WebID as the client identifier, then it MUST present a client identifier
+   <p>If the Client does not use a WebID or the public OIDC client URI as identifier, then it MUST present a client identifier
 registered with the IdP via either OIDC dynamic or static registration.
-See also <a data-link-type="biblio" href="#biblio-openidconnectdynamicclientregistration">[OpenIDConnectDynamicClientRegistration]</a>.</p>
+See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration">[OIDC.DynamicClientRegistration]</a>.</p>
    <h2 class="heading settled" data-level="6" id="tokens"><span class="secno">6. </span><span class="content">Token Instantiation</span><a class="self-link" href="#tokens"></a></h2>
    <p>Assuming one of the following options</p>
    <ul>
@@ -693,10 +692,10 @@ the WebID document for the existence of a statement matching <code>?webid &lt;ht
 where <code>?webid</code> and <code>?iss</code> are the values of the <code>webid</code> and <code>iss</code> claims respectively.
 This prevents a malicious identity provider from issuing valid Access Tokens for arbitrary WebIDs.</p>
    <p>Unless the RS acquires IdP keys through some other means, or the RS chooses to reject tokens issued by this IdP,
-the RS MUST follow OpenID Connect Discovery 1.0 <a data-link-type="biblio" href="#biblio-openiddiscovery">[OpenID.Discovery]</a> to find an IdP’s signing keys (JWK).</p>
+the RS MUST follow OpenID Connect Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> to find an IdP’s signing keys (JWK).</p>
    <h2 class="heading settled" data-level="8" id="discovery"><span class="secno">8. </span><span class="content">Solid-OIDC Conformance Discovery</span><a class="self-link" href="#discovery"></a></h2>
    <p>An Identity Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
-Discovery 1.0 <a data-link-type="biblio" href="#biblio-openiddiscovery">[OpenID.Discovery]</a> resource. An Identity Provider would indicate this support by using the <code>solid_oidc_supported</code> metadata property, referencing the Solid-OIDC specification URL.</p>
+Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> resource. An Identity Provider would indicate this support by using the <code>solid_oidc_supported</code> metadata property, referencing the Solid-OIDC specification URL.</p>
    <div class="example" id="example-489f4248">
     <a class="self-link" href="#example-489f4248"></a> 
 <pre>{
@@ -714,8 +713,7 @@ Living Standard or Draft status, meaning their contents can still change over
 time. It is advised to monitor these documents, as such changes might have
 security implications.</p>
    <p>In addition to above considerations, implementors should consider the Security
-Considerations in context of the <a href="https://solidproject.org/TR/">Solid
-Protocol</a>.</p>
+Considerations in context of the Solid Protocol <a data-link-type="biblio" href="#biblio-solidprotocol">[Solid.Protocol]</a>.</p>
    <h3 class="heading settled" data-level="9.1" id="security-tls"><span class="secno">9.1. </span><span class="content">TLS Requirements</span><a class="self-link" href="#security-tls"></a></h3>
    <p>All TLS requirements outlined in <a href="https://tools.ietf.org/html/bcp195">[BCP195</a>] apply to this
 specification.</p>
@@ -795,12 +793,14 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
   <dl>
    <dt id="biblio-dpop">[DPOP]
    <dd>D. Fett; et al. <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)</a>. URL: <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03">https://tools.ietf.org/html/draft-ietf-oauth-dpop-03</a>
-   <dt id="biblio-openiddiscovery">[OpenID.Discovery]
+   <dt id="biblio-oidccore">[OIDC.Core]
+   <dd>N. Sakimura; et al. <a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect Core 1.0</a>. URL: <a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>
+   <dt id="biblio-oidcdiscovery">[OIDC.Discovery]
    <dd>N. Sakimura; et al. <a href="https://openid.net/specs/openid-connect-discovery-1_0.html">OpenID Connect Discovery 1.0</a>. URL: <a href="https://openid.net/specs/openid-connect-discovery-1_0.html">https://openid.net/specs/openid-connect-discovery-1_0.html</a>
-   <dt id="biblio-openidconnectdynamicclientregistration">[OpenIDConnectDynamicClientRegistration]
+   <dt id="biblio-oidcdynamicclientregistration">[OIDC.DynamicClientRegistration]
    <dd>N. Sakimura; J. Bradley; M.B. Jones. <a href="https://openid.net/specs/openid-connect-registration-1_0.html">OpenID Connect Dynamic Client Registration 1.0</a>. URL: <a href="https://openid.net/specs/openid-connect-registration-1_0.html">https://openid.net/specs/openid-connect-registration-1_0.html</a>
    <dt id="biblio-rfc2119">[RFC2119]
-   <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-rfc6749">[RFC6749]
    <dd>D. Hardt, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc6749">The OAuth 2.0 Authorization Framework</a>. October 2012. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>
    <dt id="biblio-rfc7517">[RFC7517]
@@ -811,4 +811,8 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
    <dd>J. Richer, Ed.; et al. <a href="https://www.rfc-editor.org/rfc/rfc7591">OAuth 2.0 Dynamic Client Registration Protocol</a>. July 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7591">https://www.rfc-editor.org/rfc/rfc7591</a>
    <dt id="biblio-rfc7636">[RFC7636]
    <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/rfc/rfc7636">Proof Key for Code Exchange by OAuth Public Clients</a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7636">https://www.rfc-editor.org/rfc/rfc7636</a>
+   <dt id="biblio-solidprotocol">[Solid.Protocol]
+   <dd>Sarven Capadisli; et al. <a href="https://solidproject.org/TR/protocol">Solid Protocol</a>. URL: <a href="https://solidproject.org/TR/protocol">https://solidproject.org/TR/protocol</a>
+   <dt id="biblio-webid">[WebID]
+   <dd>Andrei Sambra; Henry Story; Tim Berners-Lee. <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">WebID 1.0</a>. URL: <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">https://www.w3.org/2005/Incubator/webid/spec/identity/</a>
   </dl>
