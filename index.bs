@@ -21,26 +21,21 @@ Abstract:
   challenge by building on top of current and future web standards, to allow entities to authenticate
   within a Solid ecosystem.
 Status Text:
-  This section describes the status of this document at the time of its publication. Other documents
-  may supersede this document. A list of current W3C publications and the latest revision of this
-  technical report can be found in the [W3C technical reports index](https://www.w3.org/TR/) at
-  https://www.w3.org/TR/.
+  This section describes the status of this document at the time of its publication.
 
-  This document is produced from work by
-  the [Solid Community Group](https://www.w3.org/community/solid/). It is a draft document that may,
-  or may not, be officially published. It may be updated, replaced, or obsoleted by other documents at
-  any time. It is inappropriate to cite this document as anything other than work in progress. The
-  source code for this document is available at the following
-  URI: [https://github.com/solid/authentication-panel](https://github.com/solid/authentication-panel)
+  This document was published by the [Solid Community Group](https://www.w3.org/community/solid/) as
+  an Editor’s Draft. The sections that have been incorporated have been reviewed following the
+  [Solid process](https://github.com/solid/process). However, the information in this document is
+  still subject to change. You are invited to [contribute](https://github.com/solid/solid-oidc/issues)
+  any feedback, comments, or questions you might have.
 
-  This document was published by the
-  [Solid Authentication Panel](https://github.com/solid/process/blob/master/panels.md#authentication)
-  as a First Draft.
+  Publication as an Editor’s Draft does not imply endorsement by the W3C Membership. This is a draft
+  document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate
+  to cite this document as other than work in progress.
 
-  [GitHub Issues](https://github.com/solid/authentication-panel/issues) are preferred for discussion
-  of this specification. Alternatively, you can send comments to our mailing list. Please send them to
-  [public-solid@w3.org](mailto:public-solid@w3.org)
-  ([archives](https://lists.w3.org/Archives/Public/public-solid/))
+  This document was produced by a group operating under the [W3C Community Contributor License Agreement
+  (CLA)](https://www.w3.org/community/about/process/cla/). A human-readable
+  [summary](https://www.w3.org/community/about/process/cla-deed/) is available.
 </pre>
 
 # Introduction # {#intro}
