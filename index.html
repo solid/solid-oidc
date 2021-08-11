@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version 59d067506, updated Fri Jul 23 15:43:29 2021 -0700" name="generator">
+  <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
-  <meta content="6d364540fab3073b3be995ee9370fbea7558de97" name="document-revision">
+  <meta content="792232c26cdaf924d8cb0e28c49247ba8bcfa71d" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -275,7 +275,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref allcaps" id="title">SOLID-OIDC</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-08-03">3 August 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-08-11">11 August 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -306,22 +306,18 @@ dfn > a.self-link::before      { content: "#"; }
   <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
    <p></p>
-   <p>This section describes the status of this document at the time of its publication. Other documents
+   <p>This section describes the status of this document at the time of its publication.</p>
+   <p>This document was published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a> as
 
-may supersede this document. A list of current W3C publications and the latest revision of this
-technical report can be found in the <a href="https://www.w3.org/TR/">W3C technical reports index</a> at
-https://www.w3.org/TR/.</p>
-   <p>This document is produced from work by
+an Editor’s Draft. The sections that have been incorporated have been reviewed following the <a href="https://github.com/solid/process">Solid process</a>. However, the information in this document is
+still subject to change. You are invited to <a href="https://github.com/solid/solid-oidc/issues">contribute</a> any feedback, comments, or questions you might have.</p>
+   <p>Publication as an Editor’s Draft does not imply endorsement by the W3C Membership. This is a draft
 
-the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>. It is a draft document that may,
-or may not, be officially published. It may be updated, replaced, or obsoleted by other documents at
-any time. It is inappropriate to cite this document as anything other than work in progress. The
-source code for this document is available at the following
-URI: <a href="https://github.com/solid/authentication-panel">https://github.com/solid/authentication-panel</a></p>
-   <p>This document was published by the <a href="https://github.com/solid/process/blob/master/panels.md#authentication">Solid Authentication Panel</a> as a First Draft.</p>
-   <p><a href="https://github.com/solid/authentication-panel/issues">GitHub Issues</a> are preferred for discussion
+document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate
+to cite this document as other than work in progress.</p>
+   <p>This document was produced by a group operating under the <a href="https://www.w3.org/community/about/process/cla/">W3C Community Contributor License Agreement
 
-of this specification. Alternatively, you can send comments to our mailing list. Please send them to <a href="mailto:public-solid@w3.org">public-solid@w3.org</a> (<a href="https://lists.w3.org/Archives/Public/public-solid/">archives</a>)</p>
+(CLA)</a>. A human-readable <a href="https://www.w3.org/community/about/process/cla-deed/">summary</a> is available.</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
@@ -494,7 +490,7 @@ definition of client registration metadata from <a data-link-type="biblio" href=
    <p>Also, the IdP MUST dereference the Client’s WebID document and match any Client-supplied parameters,
 with the values in the Client’s WebID document.</p>
    <p>Further, the <code>redirect_uri</code> provided by the Client MUST be included in the registration <code>redirect_uris</code> list.</p>
-   <p class="note" role="note"><span>NOTE:</span> the method by which the IdP resolves the WebID to an RDF document, is defined in <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/#processing-the-webid-profile">WebID 1.0 §processing-the-webid-profile</a>.
+   <p class="note" role="note"><span>NOTE:</span> the method by which the IdP resolves the WebID to an RDF document, is defined in <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/#processing-the-webid-profile">WebID 1.0 § processing-the-webid-profile</a>.
 This example uses <a href="https://www.w3.org/TR/json-ld11/">JSON-LD </a>:</p>
    <div class="example" id="example-63768537">
     <a class="self-link" href="#example-63768537"></a> 
@@ -619,7 +615,7 @@ See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration"
    <h3 class="heading settled" data-level="6.1" id="tokens-access"><span class="secno">6.1. </span><span class="content">DPoP-bound Access Token</span><a class="self-link" href="#tokens-access"></a></h3>
    <p>The DPoP-bound Access Token MUST be a valid JWT. See also: <a data-link-type="biblio" href="#biblio-rfc7519">[RFC7519]</a>.</p>
    <p>When requesting a DPoP-bound Access Token, the Client MUST send a DPoP proof JWT
-that is valid according to the <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-5">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) §section-5</a>. The DPoP proof JWT is used to
+that is valid according to the <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-5">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) § section-5</a>. The DPoP proof JWT is used to
 bind the access token to a public key. See also: <a data-link-type="biblio" href="#biblio-dpop">[DPOP]</a>.</p>
    <p>The DPoP-bound Access Token payload MUST contain these claims:</p>
    <ul>
@@ -633,7 +629,7 @@ instantiating this token.</p>
 of values, one of which is the string <code>solid</code>. In the decentralized world
 of Solid OIDC, the principal of an access token is not a specific endpoint,
 but rather the Solid API; that is, any Solid server at any accessible address
-on the world wide web. See also: <a href="https://www.rfc-editor.org/rfc/rfc7519#section-4.1.3">JSON Web Token (JWT) §section-4.1.3</a>.</p>
+on the world wide web. See also: <a href="https://www.rfc-editor.org/rfc/rfc7519#section-4.1.3">JSON Web Token (JWT) § section-4.1.3</a>.</p>
     <li data-md>
      <p><code>iat</code> — The issued-at claim is the time at which the DPoP-bound
 Access Token was issued.</p>
@@ -642,7 +638,7 @@ Access Token was issued.</p>
 Access Token becomes invalid.</p>
     <li data-md>
      <p><code>cnf</code> — The confirmation claim is used to identify the DPoP Public
-Key bound to the Access Token. See also: <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-7">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) §section-7</a>.</p>
+Key bound to the Access Token. See also: <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-7">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) § section-7</a>.</p>
     <li data-md>
      <p><code>client_id</code> - The ClientID claim is used to identify the client. See also: <a href="#clientids">section 5. Client Identifiers</a>.</p>
    </ul>
@@ -792,27 +788,27 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-dpop">[DPOP]
-   <dd>D. Fett; et al. <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)</a>. URL: <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03">https://tools.ietf.org/html/draft-ietf-oauth-dpop-03</a>
+   <dd>D. Fett; et al. <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03"><cite>OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)</cite></a>. URL: <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03">https://tools.ietf.org/html/draft-ietf-oauth-dpop-03</a>
    <dt id="biblio-oidccore">[OIDC.Core]
-   <dd>N. Sakimura; et al. <a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect Core 1.0</a>. URL: <a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>
+   <dd>N. Sakimura; et al. <a href="https://openid.net/specs/openid-connect-core-1_0.html"><cite>OpenID Connect Core 1.0</cite></a>. URL: <a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>
    <dt id="biblio-oidcdiscovery">[OIDC.Discovery]
-   <dd>N. Sakimura; et al. <a href="https://openid.net/specs/openid-connect-discovery-1_0.html">OpenID Connect Discovery 1.0</a>. URL: <a href="https://openid.net/specs/openid-connect-discovery-1_0.html">https://openid.net/specs/openid-connect-discovery-1_0.html</a>
+   <dd>N. Sakimura; et al. <a href="https://openid.net/specs/openid-connect-discovery-1_0.html"><cite>OpenID Connect Discovery 1.0</cite></a>. URL: <a href="https://openid.net/specs/openid-connect-discovery-1_0.html">https://openid.net/specs/openid-connect-discovery-1_0.html</a>
    <dt id="biblio-oidcdynamicclientregistration">[OIDC.DynamicClientRegistration]
-   <dd>N. Sakimura; J. Bradley; M.B. Jones. <a href="https://openid.net/specs/openid-connect-registration-1_0.html">OpenID Connect Dynamic Client Registration 1.0</a>. URL: <a href="https://openid.net/specs/openid-connect-registration-1_0.html">https://openid.net/specs/openid-connect-registration-1_0.html</a>
+   <dd>N. Sakimura; J. Bradley; M.B. Jones. <a href="https://openid.net/specs/openid-connect-registration-1_0.html"><cite>OpenID Connect Dynamic Client Registration 1.0</cite></a>. URL: <a href="https://openid.net/specs/openid-connect-registration-1_0.html">https://openid.net/specs/openid-connect-registration-1_0.html</a>
    <dt id="biblio-rfc2119">[RFC2119]
-   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
+   <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-rfc6749">[RFC6749]
-   <dd>D. Hardt, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc6749">The OAuth 2.0 Authorization Framework</a>. October 2012. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>
+   <dd>D. Hardt, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc6749"><cite>The OAuth 2.0 Authorization Framework</cite></a>. October 2012. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>
    <dt id="biblio-rfc7517">[RFC7517]
-   <dd>M. Jones. <a href="https://www.rfc-editor.org/rfc/rfc7517">JSON Web Key (JWK)</a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7517">https://www.rfc-editor.org/rfc/rfc7517</a>
+   <dd>M. Jones. <a href="https://www.rfc-editor.org/rfc/rfc7517"><cite>JSON Web Key (JWK)</cite></a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7517">https://www.rfc-editor.org/rfc/rfc7517</a>
    <dt id="biblio-rfc7519">[RFC7519]
-   <dd>M. Jones; J. Bradley; N. Sakimura. <a href="https://www.rfc-editor.org/rfc/rfc7519">JSON Web Token (JWT)</a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>
+   <dd>M. Jones; J. Bradley; N. Sakimura. <a href="https://www.rfc-editor.org/rfc/rfc7519"><cite>JSON Web Token (JWT)</cite></a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>
    <dt id="biblio-rfc7591">[RFC7591]
-   <dd>J. Richer, Ed.; et al. <a href="https://www.rfc-editor.org/rfc/rfc7591">OAuth 2.0 Dynamic Client Registration Protocol</a>. July 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7591">https://www.rfc-editor.org/rfc/rfc7591</a>
+   <dd>J. Richer, Ed.; et al. <a href="https://www.rfc-editor.org/rfc/rfc7591"><cite>OAuth 2.0 Dynamic Client Registration Protocol</cite></a>. July 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7591">https://www.rfc-editor.org/rfc/rfc7591</a>
    <dt id="biblio-rfc7636">[RFC7636]
-   <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/rfc/rfc7636">Proof Key for Code Exchange by OAuth Public Clients</a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7636">https://www.rfc-editor.org/rfc/rfc7636</a>
+   <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/rfc/rfc7636"><cite>Proof Key for Code Exchange by OAuth Public Clients</cite></a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7636">https://www.rfc-editor.org/rfc/rfc7636</a>
    <dt id="biblio-solidprotocol">[Solid.Protocol]
-   <dd>Sarven Capadisli; et al. <a href="https://solidproject.org/TR/protocol">Solid Protocol</a>. URL: <a href="https://solidproject.org/TR/protocol">https://solidproject.org/TR/protocol</a>
+   <dd>Sarven Capadisli; et al. <a href="https://solidproject.org/TR/protocol"><cite>Solid Protocol</cite></a>. URL: <a href="https://solidproject.org/TR/protocol">https://solidproject.org/TR/protocol</a>
    <dt id="biblio-webid">[WebID]
-   <dd>Andrei Sambra; Henry Story; Tim Berners-Lee. <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">WebID 1.0</a>. URL: <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">https://www.w3.org/2005/Incubator/webid/spec/identity/</a>
+   <dd>Andrei Sambra; Henry Story; Tim Berners-Lee. <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/"><cite>WebID 1.0</cite></a>. URL: <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">https://www.w3.org/2005/Incubator/webid/spec/identity/</a>
   </dl>
