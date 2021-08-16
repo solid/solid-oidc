@@ -10,6 +10,11 @@ This specification has been incubated by the
 
 Anyone is welcome to join the [weekly meetings](https://github.com/solid/authentication-panel#meetings).
 
+The Solid Authentication Panel meetings and associated communication channels are open to all
+to participate. It is expected that everyone will abide by the
+[Solid Code of Conduct](https://github.com/solid/process/blob/main/code-of-conduct.md)
+in all of these interactions.
+
 ## Editor's Drafts
 
 * [Specification](https://solid.github.io/solid-oidc/)
