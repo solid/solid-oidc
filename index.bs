@@ -1,5 +1,5 @@
 <pre class='metadata'>
-Title: SOLID-OIDC
+Title: Solid-OIDC
 Boilerplate: issues-index no
 Boilerplate: style-darkmode off
 Shortname: solid-oidc
