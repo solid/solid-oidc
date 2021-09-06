@@ -35,7 +35,7 @@ jobs:
       - name: Create publication
         run: |
           mkdir publish
-          for file in index.html *./svg; do cp $file ./publish/; done
+          for file in index.html *.svg; do cp $file ./publish/; done
           cp -R ./primer publish/
           for file in ./publish/primer/*.{mmd,bs}; do rm $file; done
 
