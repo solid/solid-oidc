@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
-  <meta content="563802c0cc1c40c9e395fd08b0ed39dd917665d0" name="document-revision">
+  <meta content="5ff534765a3b28a7140439e5e2f619293c2261dc" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -275,7 +275,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-08-16">16 August 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-08">8 September 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -469,13 +469,15 @@ Authorization Code.</p>
     <li data-md>
      <p>The Client presents the DPoP-bound Access Token and DPoP proof, to the RS.</p>
     <li data-md>
+     <p>The RS gets user’s WebID Document and check for designated OIDC issuers</p>
+    <li data-md>
      <p>The RS gets the public key from the IdP and uses it to validate the signature on the DPoP-bound Access Token (JWS).</p>
     <li data-md>
-     <p>If the DPoP proof and Access Token are valid, then the RS returns the requested resource.</p>
+     <p>If IdP is designated by the user and Access Token is valid, then the RS returns the requested resource.</p>
    </ol>
    <figure id="fig-signature">
-     <img height="751" src="basic-flow-diagram.png" width="1021"> 
-    <figcaption>Basic flow of authentication and authorization as described above.</figcaption>
+     <img src="sequence.mmd.svg"> 
+    <figcaption>Basic sequence of authentication and authorization as described above.</figcaption>
    </figure>
    <h2 class="heading settled" data-level="5" id="clientids"><span class="secno">5. </span><span class="content">Client Identifiers</span><a class="self-link" href="#clientids"></a></h2>
    <p>OAuth and OIDC require the Client application to identify itself to the IdP and RS by presenting a <a href="https://tools.ietf.org/html/rfc6749#section-2.2">client identifier</a> (Client ID). Solid applications
