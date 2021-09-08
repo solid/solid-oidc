@@ -165,23 +165,23 @@ The basic authentication and authorization flow is as follows:
 
 OAuth and OIDC require the Client application to identify itself to the IdP and RS by presenting a
 [client identifier](https://tools.ietf.org/html/rfc6749#section-2.2) (Client ID). Solid applications
-SHOULD use a WebID as their Client ID.
+SHOULD use a URI that can be dereferenced as a [Client ID Document](#clientids-document).
 
-## WebID ## {#clientids-webid}
+## Client ID Document ## {#clientids-document}
 
-A client's WebID resource MUST be serialized as an `application/ld+json` document
+When a Client Identifier is dereferenced, the resource MUST be serialized as an `application/ld+json` document
 unless content negotiation requires a different outcome.
 
-The serialized JSON form of a client WebID SHOULD use the normative JSON-LD `@context`
+The serialized JSON form of a Client ID Document SHOULD use the normative JSON-LD `@context`
 provided at `https://www.w3.org/ns/solid/oidc-context.jsonld` such that the resulting
 document produces a JSON serialization of an OIDC client registration, per the
 definition of client registration metadata from [[!RFC7591]] section 2.
 
 Issue: [Related Issue](https://github.com/solid/authentication-panel/issues/75)
-Solid-OIDC client description in WebID document
+Solid-OIDC requirements for client description document
 
-Also, the IdP MUST dereference the Client's WebID document and match any Client-supplied parameters,
-with the values in the Client's WebID document.
+Also, the IdP MUST dereference the Client ID Document and match any Client-supplied parameters
+with the values in the Client ID Document.
 
 Further, the `redirect_uri` provided by the Client MUST be included in the registration `redirect_uris`
 list.
@@ -444,8 +444,8 @@ All tokens, Client, and User credentials MUST only be transmitted over TLS.
 
 An RS SHOULD assign a fixed set of low trust policies to any client identified as anonymous.
 
-Implementors SHOULD expire Client IDs that are kept in server storage to mitigate the potential for
-a bad actor to fill server storage with unexpired or otherwise useless Client IDs.
+Implementors SHOULD expire ephemeral Client IDs that are kept in server storage to mitigate the
+potential for a bad actor to fill server storage with unexpired or otherwise useless Client IDs.
 
 ## Client Secrets ## {#security-client-secrets}
 
