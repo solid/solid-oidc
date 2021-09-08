@@ -189,13 +189,13 @@ list.
 This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/) for the Client ID Document:
 
 <div class='example'>
-    <p>https://app.example/solid#id
+    <p>https://app.example/id
 
     <pre>
         {
           "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
 
-          "client_id": "https://app.example/solid#id",
+          "client_id": "https://app.example/id",
           "client_name": "Solid Application Name",
           "redirect_uris": ["https://app.example/callback"],
           "client_uri": "https://app.example/",
