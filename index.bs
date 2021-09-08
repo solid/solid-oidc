@@ -136,7 +136,7 @@ In line with Linked Data principles, a WebID is a HTTP URI that,
 when dereferenced, resolves to a profile document that is structured data in an
 [RDF 1.1 format](https://www.w3.org/TR/rdf11-concepts/). This profile document allows
 people to link with others to grant access to identity resources as they see fit. WebIDs underpin
-Solid and are used as a primary identifier for Users and Client applications in this specification.
+Solid and are used as a primary identifier for Users in this specification.
 
 # Basic Flow # {#basic-flow}
 
@@ -186,17 +186,16 @@ with the values in the Client ID Document.
 Further, the `redirect_uri` provided by the Client MUST be included in the registration `redirect_uris`
 list.
 
-NOTE: the method by which the IdP resolves the WebID to an RDF document, is defined in [[WebID#processing-the-webid-profile]].
-This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/):
+This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/) for the Client ID Document:
 
 <div class='example'>
-    <p>https://app.example/webid#id
+    <p>https://app.example/solid#id
 
     <pre>
         {
           "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
 
-          "client_id": "https://app.example/webid#id",
+          "client_id": "https://app.example/solid#id",
           "client_name": "Solid Application Name",
           "redirect_uris": ["https://app.example/callback"],
           "client_uri": "https://app.example/",
@@ -213,8 +212,8 @@ This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/):
 
 ### JSON-LD context ### {#jsonld-context}
 
-This specification defines a JSON-LD context for use with OIDC client identifiers. This context is
-available at `https://www.w3.org/ns/solid/oidc-context.jsonld`. Client identifier documents that reference
+This specification defines a JSON-LD context for use with OIDC Client ID Documents. This context is
+available at `https://www.w3.org/ns/solid/oidc-context.jsonld`. Client ID Documents that reference
 this JSON-LD context MUST use the HTTPS scheme.
 
 NOTE: the `oidc` vocabulary that is part of this context uses the HTTP scheme.
@@ -299,7 +298,7 @@ Client is effectively anonymous to the RS.
 
 ## OIDC Registration ## {#clientids-oidc}
 
-If the Client does not use a WebID or the public OIDC client URI as identifier, then it MUST present a client identifier
+If the Client does not use an identifier that can be dereferenced, then it MUST present a client identifier
 registered with the IdP via either OIDC dynamic or static registration.
 See also [[!OIDC.DynamicClientRegistration]].
 
@@ -307,8 +306,8 @@ See also [[!OIDC.DynamicClientRegistration]].
 
 Assuming one of the following options
  - Client ID and Secret, and valid DPoP Proof (for dynamic and static registration)
- - Client WebID with a proper registration and valid DPoP Proof (for a client webid)
- - A client id of `http://www.w3.org/ns/solid/terms#PublicOidcClient` (for a public WebId)
+ - Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)
+ - A client id of `http://www.w3.org/ns/solid/terms#PublicOidcClient` (for a public identifier)
 
 the IdP MUST return two tokens to the Client:
 
