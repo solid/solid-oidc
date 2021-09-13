@@ -136,7 +136,7 @@ In line with Linked Data principles, a WebID is a HTTP URI that,
 when dereferenced, resolves to a profile document that is structured data in an
 [RDF 1.1 format](https://www.w3.org/TR/rdf11-concepts/). This profile document allows
 people to link with others to grant access to identity resources as they see fit. WebIDs underpin
-Solid and are used as a primary identifier for Users and Client applications in this specification.
+Solid and are used as a primary identifier for Users in this specification.
 
 # Basic Flow # {#basic-flow}
 
@@ -165,38 +165,37 @@ The basic authentication and authorization flow is as follows:
 
 OAuth and OIDC require the Client application to identify itself to the IdP and RS by presenting a
 [client identifier](https://tools.ietf.org/html/rfc6749#section-2.2) (Client ID). Solid applications
-SHOULD use a WebID as their Client ID.
+SHOULD use a URI that can be dereferenced as a [Client ID Document](#clientids-document).
 
-## WebID ## {#clientids-webid}
+## Client ID Document ## {#clientids-document}
 
-A client's WebID resource MUST be serialized as an `application/ld+json` document
+When a Client Identifier is dereferenced, the resource MUST be serialized as an `application/ld+json` document
 unless content negotiation requires a different outcome.
 
-The serialized JSON form of a client WebID SHOULD use the normative JSON-LD `@context`
+The serialized JSON form of a Client ID Document SHOULD use the normative JSON-LD `@context`
 provided at `https://www.w3.org/ns/solid/oidc-context.jsonld` such that the resulting
 document produces a JSON serialization of an OIDC client registration, per the
 definition of client registration metadata from [[!RFC7591]] section 2.
 
 Issue: [Related Issue](https://github.com/solid/authentication-panel/issues/75)
-Solid-OIDC client description in WebID document
+Solid-OIDC requirements for client description document
 
-Also, the IdP MUST dereference the Client's WebID document and match any Client-supplied parameters,
-with the values in the Client's WebID document.
+Also, the IdP MUST dereference the Client ID Document and match any Client-supplied parameters
+with the values in the Client ID Document.
 
 Further, the `redirect_uri` provided by the Client MUST be included in the registration `redirect_uris`
 list.
 
-NOTE: the method by which the IdP resolves the WebID to an RDF document, is defined in [[WebID#processing-the-webid-profile]].
-This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/):
+This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/) for the Client ID Document:
 
 <div class='example'>
-    <p>https://app.example/webid#id
+    <p>https://app.example/id
 
     <pre>
         {
           "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
 
-          "client_id": "https://app.example/webid#id",
+          "client_id": "https://app.example/id",
           "client_name": "Solid Application Name",
           "redirect_uris": ["https://app.example/callback"],
           "client_uri": "https://app.example/",
@@ -213,8 +212,8 @@ This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/):
 
 ### JSON-LD context ### {#jsonld-context}
 
-This specification defines a JSON-LD context for use with OIDC client identifiers. This context is
-available at `https://www.w3.org/ns/solid/oidc-context.jsonld`. Client identifier documents that reference
+This specification defines a JSON-LD context for use with OIDC Client ID Documents. This context is
+available at `https://www.w3.org/ns/solid/oidc-context.jsonld`. Client ID Documents that reference
 this JSON-LD context MUST use the HTTPS scheme.
 
 NOTE: the `oidc` vocabulary that is part of this context uses the HTTP scheme.
@@ -299,7 +298,7 @@ Client is effectively anonymous to the RS.
 
 ## OIDC Registration ## {#clientids-oidc}
 
-If the Client does not use a WebID or the public OIDC client URI as identifier, then it MUST present a client identifier
+If the Client does not use an identifier that can be dereferenced, then it MUST present a client identifier
 registered with the IdP via either OIDC dynamic or static registration.
 See also [[!OIDC.DynamicClientRegistration]].
 
@@ -307,8 +306,8 @@ See also [[!OIDC.DynamicClientRegistration]].
 
 Assuming one of the following options
  - Client ID and Secret, and valid DPoP Proof (for dynamic and static registration)
- - Client WebID with a proper registration and valid DPoP Proof (for a client webid)
- - A client id of `http://www.w3.org/ns/solid/terms#PublicOidcClient` (for a public WebId)
+ - Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)
+ - A client id of `http://www.w3.org/ns/solid/terms#PublicOidcClient` (for a public identifier)
 
 the IdP MUST return two tokens to the Client:
 
@@ -444,8 +443,8 @@ All tokens, Client, and User credentials MUST only be transmitted over TLS.
 
 An RS SHOULD assign a fixed set of low trust policies to any client identified as anonymous.
 
-Implementors SHOULD expire Client IDs that are kept in server storage to mitigate the potential for
-a bad actor to fill server storage with unexpired or otherwise useless Client IDs.
+Implementors SHOULD expire ephemeral Client IDs that are kept in server storage to mitigate the
+potential for a bad actor to fill server storage with unexpired or otherwise useless Client IDs.
 
 ## Client Secrets ## {#security-client-secrets}
 
