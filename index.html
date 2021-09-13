@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version 4f053d00e, updated Tue Aug 10 14:13:32 2021 -0700" name="generator">
+  <meta content="Bikeshed version e8cbf4ed2, updated Fri Sep 10 10:21:28 2021 -0700" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
-  <meta content="5ff534765a3b28a7140439e5e2f619293c2261dc" name="document-revision">
+  <meta content="9388877900bc24c9b805cb4c513562d8bbe7e006" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -275,7 +275,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-08">8 September 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-13">13 September 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -338,7 +338,7 @@ to cite this document as other than work in progress.</p>
     <li>
      <a href="#clientids"><span class="secno">5</span> <span class="content">Client Identifiers</span></a>
      <ol class="toc">
-      <li><a href="#clientids-webid"><span class="secno">5.1</span> <span class="content">WebID</span></a>
+      <li><a href="#clientids-document"><span class="secno">5.1</span> <span class="content">Client ID Document</span></a>
       <li><a href="#clientids-public-uri"><span class="secno">5.2</span> <span class="content">The Public OIDC Client URI</span></a>
       <li><a href="#clientids-oidc"><span class="secno">5.3</span> <span class="content">OIDC Registration</span></a>
      </ol>
@@ -449,7 +449,7 @@ or static, is entirely optional.</p>
    <p>In line with Linked Data principles, a WebID is a HTTP URI that,
 when dereferenced, resolves to a profile document that is structured data in an <a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1 format</a>. This profile document allows
 people to link with others to grant access to identity resources as they see fit. WebIDs underpin
-Solid and are used as a primary identifier for Users and Client applications in this specification.</p>
+Solid and are used as a primary identifier for Users in this specification.</p>
    <h2 class="heading settled" data-level="4" id="basic-flow"><span class="secno">4. </span><span class="content">Basic Flow</span><a class="self-link" href="#basic-flow"></a></h2>
    <p><em>This section is non-normative</em></p>
    <p>The basic authentication and authorization flow is as follows:</p>
@@ -481,26 +481,25 @@ Authorization Code.</p>
    </figure>
    <h2 class="heading settled" data-level="5" id="clientids"><span class="secno">5. </span><span class="content">Client Identifiers</span><a class="self-link" href="#clientids"></a></h2>
    <p>OAuth and OIDC require the Client application to identify itself to the IdP and RS by presenting a <a href="https://tools.ietf.org/html/rfc6749#section-2.2">client identifier</a> (Client ID). Solid applications
-SHOULD use a WebID as their Client ID.</p>
-   <h3 class="heading settled" data-level="5.1" id="clientids-webid"><span class="secno">5.1. </span><span class="content">WebID</span><a class="self-link" href="#clientids-webid"></a></h3>
-   <p>A client’s WebID resource MUST be serialized as an <code>application/ld+json</code> document
+SHOULD use a URI that can be dereferenced as a <a href="#clientids-document">Client ID Document</a>.</p>
+   <h3 class="heading settled" data-level="5.1" id="clientids-document"><span class="secno">5.1. </span><span class="content">Client ID Document</span><a class="self-link" href="#clientids-document"></a></h3>
+   <p>When a Client Identifier is dereferenced, the resource MUST be serialized as an <code>application/ld+json</code> document
 unless content negotiation requires a different outcome.</p>
-   <p>The serialized JSON form of a client WebID SHOULD use the normative JSON-LD <code>@context</code> provided at <code>https://www.w3.org/ns/solid/oidc-context.jsonld</code> such that the resulting
+   <p>The serialized JSON form of a Client ID Document SHOULD use the normative JSON-LD <code>@context</code> provided at <code>https://www.w3.org/ns/solid/oidc-context.jsonld</code> such that the resulting
 document produces a JSON serialization of an OIDC client registration, per the
 definition of client registration metadata from <a data-link-type="biblio" href="#biblio-rfc7591">[RFC7591]</a> section 2.</p>
-   <p class="issue" id="issue-0446db61"><a class="self-link" href="#issue-0446db61"></a> <a href="https://github.com/solid/authentication-panel/issues/75">Related Issue</a> Solid-OIDC client description in WebID document</p>
-   <p>Also, the IdP MUST dereference the Client’s WebID document and match any Client-supplied parameters,
-with the values in the Client’s WebID document.</p>
+   <p class="issue" id="issue-44efea0f"><a class="self-link" href="#issue-44efea0f"></a> <a href="https://github.com/solid/authentication-panel/issues/75">Related Issue</a> Solid-OIDC requirements for client description document</p>
+   <p>Also, the IdP MUST dereference the Client ID Document and match any Client-supplied parameters
+with the values in the Client ID Document.</p>
    <p>Further, the <code>redirect_uri</code> provided by the Client MUST be included in the registration <code>redirect_uris</code> list.</p>
-   <p class="note" role="note"><span>NOTE:</span> the method by which the IdP resolves the WebID to an RDF document, is defined in <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/#processing-the-webid-profile">WebID 1.0 § processing-the-webid-profile</a>.
-This example uses <a href="https://www.w3.org/TR/json-ld11/">JSON-LD </a>:</p>
-   <div class="example" id="example-63768537">
-    <a class="self-link" href="#example-63768537"></a> 
-    <p>https://app.example/webid#id </p>
+   <p>This example uses <a href="https://www.w3.org/TR/json-ld11/">JSON-LD </a> for the Client ID Document:</p>
+   <div class="example" id="example-ec3d44cd">
+    <a class="self-link" href="#example-ec3d44cd"></a> 
+    <p>https://app.example/id </p>
 <pre>{
   "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
 
-  "client_id": "https://app.example/webid#id",
+  "client_id": "https://app.example/id",
   "client_name": "Solid Application Name",
   "redirect_uris": ["https://app.example/callback"],
   "client_uri": "https://app.example/",
@@ -515,8 +514,8 @@ This example uses <a href="https://www.w3.org/TR/json-ld11/">JSON-LD </a>:</p>
 </pre>
    </div>
    <h4 class="heading settled" data-level="5.1.1" id="jsonld-context"><span class="secno">5.1.1. </span><span class="content">JSON-LD context</span><a class="self-link" href="#jsonld-context"></a></h4>
-   <p>This specification defines a JSON-LD context for use with OIDC client identifiers. This context is
-available at <code>https://www.w3.org/ns/solid/oidc-context.jsonld</code>. Client identifier documents that reference
+   <p>This specification defines a JSON-LD context for use with OIDC Client ID Documents. This context is
+available at <code>https://www.w3.org/ns/solid/oidc-context.jsonld</code>. Client ID Documents that reference
 this JSON-LD context MUST use the HTTPS scheme.</p>
    <p class="note" role="note"><span>NOTE:</span> the <code>oidc</code> vocabulary that is part of this context uses the HTTP scheme.</p>
    <p>The JSON-LD context is defined as:</p>
@@ -594,7 +593,7 @@ this JSON-LD context MUST use the HTTPS scheme.</p>
 Client uses this identifier then the IdP MAY accept any <code>redirect_uri</code> as valid. Since it is public, the
 Client is effectively anonymous to the RS.</p>
    <h3 class="heading settled" data-level="5.3" id="clientids-oidc"><span class="secno">5.3. </span><span class="content">OIDC Registration</span><a class="self-link" href="#clientids-oidc"></a></h3>
-   <p>If the Client does not use a WebID or the public OIDC client URI as identifier, then it MUST present a client identifier
+   <p>If the Client does not use an identifier that can be dereferenced, then it MUST present a client identifier
 registered with the IdP via either OIDC dynamic or static registration.
 See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration">[OIDC.DynamicClientRegistration]</a>.</p>
    <h2 class="heading settled" data-level="6" id="tokens"><span class="secno">6. </span><span class="content">Token Instantiation</span><a class="self-link" href="#tokens"></a></h2>
@@ -603,9 +602,9 @@ See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration"
     <li data-md>
      <p>Client ID and Secret, and valid DPoP Proof (for dynamic and static registration)</p>
     <li data-md>
-     <p>Client WebID with a proper registration and valid DPoP Proof (for a client webid)</p>
+     <p>Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)</p>
     <li data-md>
-     <p>A client id of <code>http://www.w3.org/ns/solid/terms#PublicOidcClient</code> (for a public WebId)</p>
+     <p>A client id of <code>http://www.w3.org/ns/solid/terms#PublicOidcClient</code> (for a public identifier)</p>
    </ul>
    <p>the IdP MUST return two tokens to the Client:</p>
    <ol>
@@ -718,8 +717,8 @@ specification.</p>
    <p>All tokens, Client, and User credentials MUST only be transmitted over TLS.</p>
    <h3 class="heading settled" data-level="9.2" id="security-client-ids"><span class="secno">9.2. </span><span class="content">Client IDs</span><a class="self-link" href="#security-client-ids"></a></h3>
    <p>An RS SHOULD assign a fixed set of low trust policies to any client identified as anonymous.</p>
-   <p>Implementors SHOULD expire Client IDs that are kept in server storage to mitigate the potential for
-a bad actor to fill server storage with unexpired or otherwise useless Client IDs.</p>
+   <p>Implementors SHOULD expire ephemeral Client IDs that are kept in server storage to mitigate the
+potential for a bad actor to fill server storage with unexpired or otherwise useless Client IDs.</p>
    <h3 class="heading settled" data-level="9.3" id="security-client-secrets"><span class="secno">9.3. </span><span class="content">Client Secrets</span><a class="self-link" href="#security-client-secrets"></a></h3>
    <p>Client secrets SHOULD NOT be stored in browser local storage. Doing so will increase the risk of
 data leaks should an attacker gain access to Client credentials.</p>
