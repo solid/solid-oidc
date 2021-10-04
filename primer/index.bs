@@ -75,10 +75,11 @@ Several actors are at play in our example Solid OIDC authentication flows:
  Decent Photos web app allows its users to view photos they have access to. For
  example, Alice's and her friend Bob's photos. In our example, Decent Photos is
  hosted at `https://decentphotos.example`.</dd>
-  <dt id="decentphotos-rp-webid">RP's WebID</dt>
-  <dd>Decent Photos is a Solid compliant application and has a WebID of its own. An
- RP's WebID contains information identifying them as a registered OAuth 2.0 client
- application. Decent Photo's WebID is `https://decentphotos.example/webid#this`</dd>
+  <dt id="decentphotos-rp-webid">RP's Client ID Document</dt>
+  <dd>Decent Photos is a Solid compliant application and has a URI of its own,
+ which resolves to Client ID Document. An RP's Client ID Document
+ contains information identifying them as a registered OAuth 2.0 client
+ application. Decent Photo's URI is `https://decentphotos.example/webid#this`</dd>
   <dt id="bob-pod">Bob's Pod</dt>
   <dd>We will be trying to access photos stored in Bob's Pod. In our example, Bob
  is a friend of Alice and has previously indicated via access control that Alice
@@ -90,8 +91,8 @@ Several actors are at play in our example Solid OIDC authentication flows:
 
 ## Authorization Code Grant with PKCE Authorization Flow ## {#authorization-code-pkce-flow}
 
-The Authorization Code grant with PKCE is the primary OAuth 2.0 authorization flow 
-recommended by the Solid OIDC. It is defined by the PKCE RFC [[!RFC7636]] and 
+The Authorization Code grant with PKCE is the primary OAuth 2.0 authorization flow
+recommended by the Solid OIDC. It is defined by the PKCE RFC [[!RFC7636]] and
 described here in the Solid OIDC context.
 
 <img src="primer-login.mmd.svg" width="980" />
@@ -260,59 +261,57 @@ That URL might look a little complex, but it's essentially a request to
 - `response_type=code` indicates the desired response data.
 - `redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback`:
     The url that the OP will redirect to once the user has logged in (`https://decentphotos.example/callback`).
-- `scope=openid%20profile%20offline_access`: a list of [OIDC scopes](https://auth0.com/docs/scopes/current/oidc-scopes) 
-    (attributes of the RS to which this token should have access) separated by spaces (%20). 
+- `scope=openid%20profile%20offline_access`: a list of [OIDC scopes](https://auth0.com/docs/scopes/current/oidc-scopes)
+    (attributes of the RS to which this token should have access) separated by spaces (%20).
     - `openid` is a scope that is needed to verify Alice's identity.
     - `profile` is required by the Solid OIDC specification to denote a WebID login.
     - `offline_access`: Is required to get a refresh token.
-- `client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this`: Usually the client id of a Solid 
-    application is the app's WebID (in our case `https://decentphotos.example/webid#this`) as seen here.
+- `client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this`: Usually the client id of a Solid
+    application is the app's URI (in our case `https://decentphotos.example/webid#this`) as seen here.
 - `code_challenge_method=S256`: Tells the OP that our code challenge was transformed using SHA-256.
 - `code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0`: The code challenge we generated before.
 
-Note: If the app doesn't have a WebID, you can either register an app using static registration
-via some UI on the OP or [dynamic registration](https://openid.net/specs/openid-connect-registration-1_0.html).
-You may also use `http://www.w3.org/ns/solid/terms#PublicOidcClient` as your client id. This will designate the
-client as a public client. Doing this may cause the RS to provide less access to your app.
+Note: If the app doesn't have a URI, you can either register an app using static registration
+via some UI on the OP or use [dynamic registration](https://openid.net/specs/openid-connect-registration-1_0.html).
 
-<h4 id="authorization-code-pkce-flow-step-7" class="no-num">7. Fetch RP WebID</h4>
+<h4 id="authorization-code-pkce-flow-step-7" class="no-num">7. Fetch RP Client ID Document</h4>
 
-If an app WebID is provided as the client id (see note above to see other options), we must
-fetch that app WebID to confirm its validity.
+If an app URI is provided as the client id (see note above to see other options), we must
+fetch that app URI to confirm its validity.
 
-For the WebID `https://decentphotos.example/webid#this`, request the WebID Profile with:
+For the URI `https://decentphotos.example/webid#this`, request the Client ID Document with:
 ```http
 GET https://decentphotos.example/webid
 ```
 
 Response:
-```ttl
-@prefix solid:  .
+```jsonld
+{
+  "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
 
-<#this> solid:oidcRegistration """{
-    "client_id": "https://decentphtos.example/webid#this",
-    "redirect_uris": [ "https://decentphotos.example/callback" ],
-    "client_name": "DecentPhotos",
-    "client_uri": "https://decentphotos.example/",
-    "logo_uri": "https://decentphotos.example/logo.png",
-    "tos_uri": "https://decentphotos.example/tos.html",
-    "scope": "openid profile offline_access",
-    "grant_types": [ "refresh_token", "authorization_code" ],
-    "response_types": [ "code" ],
-    "default_max_age": 60000,
-    "require_auth_time": true
-    }""" .
+  "client_id": "https://decentphtos.example/webid#this",
+  "client_name": "DecentPhotos",
+  "redirect_uris": [ "https://decentphotos.example/callback" ],
+  "client_uri": "https://decentphotos.example/",
+  "logo_uri": "https://decentphotos.example/logo.png",
+  "tos_uri": "https://decentphotos.example/tos.html",
+  "scope": "openid profile offline_access",
+  "grant_types": [ "refresh_token", "authorization_code" ],
+  "response_types": [ "code" ],
+  "default_max_age": 3600,
+  "require_auth_time": true
+}
 ```
 
-Notice that the application WebID contains one required triple `?webid solid:oidcRegistration 
-jsonRegistration`. This is a JSON representation of an
+Notice that the application Client ID Document contains JSON-LD representation of an
 [OIDC Client Registration](https://tools.ietf.org/html/rfc7591#section-2).
+It also have to use specific <code>"@context": "https://www.w3.org/ns/solid/oidc-context.jsonld"</code>.
 
-<h4 id="authorization-code-pkce-flow-step-8" class="no-num">8. Validate redirect url with WebID</h4>
+<h4 id="authorization-code-pkce-flow-step-8" class="no-num">8. Validate redirect url with Client ID Document</h4>
 
 Check to be sure that the `redirect_uri` value provided in the auth request
 (`https://decentphotos.example/callback`) is listed in the `redirect_uris` array in the
-oidcRegistration. If it is not, the OP MUST reject the request with a `403`. In our case, it
+Client ID Document. If it is not, the OP MUST reject the request with a `403`. In our case, it
 is, so we may continue.
 
 <h4 id="authorization-code-pkce-flow-step-9" class="no-num">9. Alice Logs In</h4>
@@ -418,7 +417,7 @@ Token Header:
 }
 ```
 
-- `"alg": "ES256"`: The signing algorithm used in this token. In this case, `ES256` 
+- `"alg": "ES256"`: The signing algorithm used in this token. In this case, `ES256`
     because we generated the keys using eliptic curves.
 - `"typ": "dpop+jwt"`: The type of token. All DPoP Tokens should have a type of "dpop+jwt"
 - `"jwk": { "kty": "EC" ... }`: The client's public key.
@@ -435,7 +434,7 @@ Token Body:
 
 - `"htu": "https://secureauth.example/token"`: htu limits the token for use only on the given url.
 - `"htm": "POST"`: htm limits the token for use only on a specific http method, in this case `POST`.
-- `"jti": "4ba3e9ef-e98d-4644-9878-7160fa7d3eb8"`: jti is a unique identifier for the DPoP token 
+- `"jti": "4ba3e9ef-e98d-4644-9878-7160fa7d3eb8"`: jti is a unique identifier for the DPoP token
     that can optionally be used by the server to defend against replay attacks
 - `"iat": 1603306128`: The date the token was issued, in this case October 21, 2020 15:52:33 GMT.
 
@@ -482,7 +481,7 @@ id in the keystore corresponds to the client id from the request. If it does not
 reject the request with a 403.
 
 The OP then verifies that the code verifier [corresponds with the code challenge]
-(https://tools.ietf.org/html/rfc7636#section-4.6) stored in the keystore. 
+(https://tools.ietf.org/html/rfc7636#section-4.6) stored in the keystore.
 
 ```bash
 BASE64URL-ENCODE(SHA256(ASCII(code_verifier))) == code_challenge
@@ -508,7 +507,7 @@ Our JWK thumbprint looks more like:
 <h4 id="authorization-code-pkce-flow-step-18" class="no-num">18. Generates access token</h4>
 
 The OP generates an access token. To do so it constructs a JSON Web Token and signs it using
-its own keys. The access token could look like (remember you can decode it using 
+its own keys. The access token could look like (remember you can decode it using
 [https://jwt.io](https://jwt.io/#debugger-io?token=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwiYXVkIjoic29saWQiLCJjbmYiOnsiamt0IjoiOVhtd0s4bVEzSDUtUG56QXQzbEZIeldCV192NVFoWXluZXpiYml0NGtDOCJ9LCJjbGllbnRfaWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJqdGkiOiJmZDBhMTM1My0yNWYzLTRjN2UtOGY4Yi1jMTQyNjRmMWMxMmUiLCJpYXQiOjE2MDMzODUyNjEsImV4cCI6MTYwMzM4NTg2MX0.HIIYiovILPvsdkD3s3xomR1MkA_Ir8Mx_C-eHxbWEnw9Z2rv2rOWbvMPZ--BqH3qVSupgYTZZsTDbZXA8giCLA)):
 
 ```text
