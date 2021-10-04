@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version e8cbf4ed2, updated Fri Sep 10 10:21:28 2021 -0700" name="generator">
+  <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
   <link href="https://solid.github.io/solid-oidc/primer/" rel="canonical">
-  <meta content="9388877900bc24c9b805cb4c513562d8bbe7e006" name="document-revision">
+  <meta content="6ba10ebfa44331116b0894f94e4e2c6210494f37" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -334,7 +334,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid OIDC Primer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-13">13 September 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-04">4 October 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -438,10 +438,11 @@ Bob’s Solid Data Pods (resource servers).</p>
  Decent Photos web app allows its users to view photos they have access to. For
  example, Alice’s and her friend Bob’s photos. In our example, Decent Photos is
  hosted at <code>https://decentphotos.example</code>.
-    <dt id="decentphotos-rp-webid"><a class="self-link" href="#decentphotos-rp-webid"></a>RP’s WebID
-    <dd>Decent Photos is a Solid compliant application and has a WebID of its own. An
- RP’s WebID contains information identifying them as a registered OAuth 2.0 client
- application. Decent Photo’s WebID is <code>https://decentphotos.example/webid#this</code>
+    <dt id="decentphotos-rp-webid"><a class="self-link" href="#decentphotos-rp-webid"></a>RP’s Client ID Document
+    <dd>Decent Photos is a Solid compliant application and has a URI of its own,
+ which resolves to Client ID Document. An RP’s Client ID Document
+ contains information identifying them as a registered OAuth 2.0 client
+ application. Decent Photo’s URI is <code>https://decentphotos.example/webid#this</code>
     <dt id="bob-pod"><a class="self-link" href="#bob-pod"></a>Bob’s Pod
     <dd>We will be trying to access photos stored in Bob’s Pod. In our example, Bob
  is a friend of Alice and has previously indicated via access control that Alice
@@ -450,7 +451,7 @@ Bob’s Solid Data Pods (resource servers).</p>
    <h2 class="heading settled" data-level="4" id="solid-oidc-flow"><span class="secno">4. </span><span class="content">Solid OIDC Flow</span><a class="self-link" href="#solid-oidc-flow"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="authorization-code-pkce-flow"><span class="secno">4.1. </span><span class="content">Authorization Code Grant with PKCE Authorization Flow</span><a class="self-link" href="#authorization-code-pkce-flow"></a></h3>
    <p>The Authorization Code grant with PKCE is the primary OAuth 2.0 authorization flow
-recommended by the Solid OIDC. It is defined by the PKCE RFC <a data-link-type="biblio" href="#biblio-rfc7636">[RFC7636]</a> and 
+recommended by the Solid OIDC. It is defined by the PKCE RFC <a data-link-type="biblio" href="#biblio-rfc7636">[RFC7636]</a> and
 described here in the Solid OIDC context.</p>
    <p><img src="primer-login.mmd.svg" width="980"></p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-1"><span class="content">1. Alice uses the Decent Photos web app</span><a class="self-link" href="#authorization-code-pkce-flow-step-1"></a></h4>
@@ -593,45 +594,43 @@ The url that the OP will redirect to once the user has logged in (<code>https://
      </ul>
     <li data-md>
      <p><code>client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this</code>: Usually the client id of a Solid
-application is the app’s WebID (in our case <code>https://decentphotos.example/webid#this</code>) as seen here.</p>
+application is the app’s URI (in our case <code>https://decentphotos.example/webid#this</code>) as seen here.</p>
     <li data-md>
      <p><code>code_challenge_method=S256</code>: Tells the OP that our code challenge was transformed using SHA-256.</p>
     <li data-md>
      <p><code>code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0</code>: The code challenge we generated before.</p>
    </ul>
-   <p class="note" role="note"><span>Note:</span> If the app doesn’t have a WebID, you can either register an app using static registration
-via some UI on the OP or <a href="https://openid.net/specs/openid-connect-registration-1_0.html">dynamic registration</a>.
-You may also use <code>http://www.w3.org/ns/solid/terms#PublicOidcClient</code> as your client id. This will designate the
-client as a public client. Doing this may cause the RS to provide less access to your app.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-7"><span class="content">7. Fetch RP WebID</span><a class="self-link" href="#authorization-code-pkce-flow-step-7"></a></h4>
-   <p>If an app WebID is provided as the client id (see note above to see other options), we must
-fetch that app WebID to confirm its validity.</p>
-   <p>For the WebID <code>https://decentphotos.example/webid#this</code>, request the WebID Profile with:</p>
+   <p class="note" role="note"><span>Note:</span> If the app doesn’t have a URI, you can either register an app using static registration
+via some UI on the OP or use <a href="https://openid.net/specs/openid-connect-registration-1_0.html">dynamic registration</a>.</p>
+   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-7"><span class="content">7. Fetch RP Client ID Document</span><a class="self-link" href="#authorization-code-pkce-flow-step-7"></a></h4>
+   <p>If an app URI is provided as the client id (see note above to see other options), we must
+fetch that app URI to confirm its validity.</p>
+   <p>For the URI <code>https://decentphotos.example/webid#this</code>, request the Client ID Document with:</p>
 <pre class="language-http highlight">GET https://decentphotos.example/webid
 </pre>
    <p>Response:</p>
-<pre class="language-ttl highlight">@<c- g>prefix</c-> <c- g>solid</c->:  .
+<pre class="language-jsonld highlight"><c- p>{</c->
+  <c- nd>"@context"</c-><c- p>:</c-> <c- u>"https://www.w3.org/ns/solid/oidc-context.jsonld"</c-><c- p>,</c->
 
-<c- o>&lt;</c->#<c- g>this</c-><c- o>></c-> <c- g>solid</c->:<c- g>oidcRegistration</c-> <c- u>"""</c-><c- s>{</c->
-    <c- u>"</c-><c- s>client_id</c-><c- u>"</c->: <c- u>"</c-><c- s>https://decentphtos.example/webid#this</c-><c- u>"</c->,
-    <c- u>"</c-><c- s>redirect_uris</c-><c- u>"</c->: [ <c- u>"</c-><c- s>https://decentphotos.example/callback</c-><c- u>"</c-> ],
-    <c- u>"</c-><c- s>client_name</c-><c- u>"</c->: <c- u>"</c-><c- s>DecentPhotos</c-><c- u>"</c->,
-    <c- u>"</c-><c- s>client_uri</c-><c- u>"</c->: <c- u>"</c-><c- s>https://decentphotos.example/</c-><c- u>"</c->,
-    <c- u>"</c-><c- s>logo_uri</c-><c- u>"</c->: <c- u>"</c-><c- s>https://decentphotos.example/logo.png</c-><c- u>"</c->,
-    <c- u>"</c-><c- s>tos_uri</c-><c- u>"</c->: <c- u>"</c-><c- s>https://decentphotos.example/tos.html</c-><c- u>"</c->,
-    <c- u>"</c-><c- s>scope</c-><c- u>"</c->: <c- u>"</c-><c- s>openid profile offline_access</c-><c- u>"</c->,
-    <c- u>"</c-><c- s>grant_types</c-><c- u>"</c->: [ <c- u>"</c-><c- s>refresh_token</c-><c- u>"</c->, <c- u>"</c-><c- s>authorization_code</c-><c- u>"</c-> ],
-    <c- u>"</c-><c- s>response_types</c-><c- u>"</c->: [ <c- u>"</c-><c- s>code</c-><c- u>"</c-> ],
-    <c- u>"</c-><c- s>default_max_age</c-><c- u>"</c->: <c- mi>60000</c->,
-    <c- u>"</c-><c- s>require_auth_time</c-><c- u>"</c->: <c- g>true</c->
-    }<c- u>"""</c-><c- s> .</c->
+  <c- f>"client_id"</c-><c- p>:</c-> <c- u>"https://decentphtos.example/webid#this"</c-><c- p>,</c->
+  <c- f>"client_name"</c-><c- p>:</c-> <c- u>"DecentPhotos"</c-><c- p>,</c->
+  <c- f>"redirect_uris"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"https://decentphotos.example/callback"</c-> <c- p>],</c->
+  <c- f>"client_uri"</c-><c- p>:</c-> <c- u>"https://decentphotos.example/"</c-><c- p>,</c->
+  <c- f>"logo_uri"</c-><c- p>:</c-> <c- u>"https://decentphotos.example/logo.png"</c-><c- p>,</c->
+  <c- f>"tos_uri"</c-><c- p>:</c-> <c- u>"https://decentphotos.example/tos.html"</c-><c- p>,</c->
+  <c- f>"scope"</c-><c- p>:</c-> <c- u>"openid profile offline_access"</c-><c- p>,</c->
+  <c- f>"grant_types"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"refresh_token"</c-><c- p>,</c-> <c- u>"authorization_code"</c-> <c- p>],</c->
+  <c- f>"response_types"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"code"</c-> <c- p>],</c->
+  <c- f>"default_max_age"</c-><c- p>:</c-> <c- mi>3600</c-><c- p>,</c->
+  <c- f>"require_auth_time"</c-><c- p>:</c-> <c- kc>true</c->
+<c- p>}</c->
 </pre>
-   <p>Notice that the application WebID contains one required triple <code>?webid solid:oidcRegistration
-jsonRegistration</code>. This is a JSON representation of an <a href="https://tools.ietf.org/html/rfc7591#section-2">OIDC Client Registration</a>.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-8"><span class="content">8. Validate redirect url with WebID</span><a class="self-link" href="#authorization-code-pkce-flow-step-8"></a></h4>
+   <p>Notice that the application Client ID Document contains JSON-LD representation of an <a href="https://tools.ietf.org/html/rfc7591#section-2">OIDC Client Registration</a>.
+It also have to use specific <code>"@context": "https://www.w3.org/ns/solid/oidc-context.jsonld"</code>.</p>
+   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-8"><span class="content">8. Validate redirect url with Client ID Document</span><a class="self-link" href="#authorization-code-pkce-flow-step-8"></a></h4>
    <p>Check to be sure that the <code>redirect_uri</code> value provided in the auth request
 (<code>https://decentphotos.example/callback</code>) is listed in the <code>redirect_uris</code> array in the
-oidcRegistration. If it is not, the OP MUST reject the request with a <code>403</code>. In our case, it
+Client ID Document. If it is not, the OP MUST reject the request with a <code>403</code>. In our case, it
 is, so we may continue.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-9"><span class="content">9. Alice Logs In</span><a class="self-link" href="#authorization-code-pkce-flow-step-9"></a></h4>
    <p>The OP should redirect to its login screen. The actual implementation of this is completely up

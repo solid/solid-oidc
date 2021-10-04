@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version e8cbf4ed2, updated Fri Sep 10 10:21:28 2021 -0700" name="generator">
+  <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
-  <meta content="9388877900bc24c9b805cb4c513562d8bbe7e006" name="document-revision">
+  <meta content="6ba10ebfa44331116b0894f94e4e2c6210494f37" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -271,11 +271,70 @@ a.self-link::before            { content: "¶"; }
 .heading > a.self-link::before { content: "§"; }
 dfn > a.self-link::before      { content: "#"; }
 </style>
+<style>/* style-syntax-highlighting */
+
+code.highlight { padding: .1em; border-radius: .3em; }
+pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
+
+.highlight:not(.idl) { background: rgba(0, 0, 0, .03); }
+c-[a] { color: #990055 } /* Keyword.Declaration */
+c-[b] { color: #990055 } /* Keyword.Type */
+c-[c] { color: #708090 } /* Comment */
+c-[d] { color: #708090 } /* Comment.Multiline */
+c-[e] { color: #0077aa } /* Name.Attribute */
+c-[f] { color: #669900 } /* Name.Tag */
+c-[g] { color: #222222 } /* Name.Variable */
+c-[k] { color: #990055 } /* Keyword */
+c-[l] { color: #000000 } /* Literal */
+c-[m] { color: #000000 } /* Literal.Number */
+c-[n] { color: #0077aa } /* Name */
+c-[o] { color: #999999 } /* Operator */
+c-[p] { color: #999999 } /* Punctuation */
+c-[s] { color: #a67f59 } /* Literal.String */
+c-[t] { color: #a67f59 } /* Literal.String.Single */
+c-[u] { color: #a67f59 } /* Literal.String.Double */
+c-[cp] { color: #708090 } /* Comment.Preproc */
+c-[c1] { color: #708090 } /* Comment.Single */
+c-[cs] { color: #708090 } /* Comment.Special */
+c-[kc] { color: #990055 } /* Keyword.Constant */
+c-[kn] { color: #990055 } /* Keyword.Namespace */
+c-[kp] { color: #990055 } /* Keyword.Pseudo */
+c-[kr] { color: #990055 } /* Keyword.Reserved */
+c-[ld] { color: #000000 } /* Literal.Date */
+c-[nc] { color: #0077aa } /* Name.Class */
+c-[no] { color: #0077aa } /* Name.Constant */
+c-[nd] { color: #0077aa } /* Name.Decorator */
+c-[ni] { color: #0077aa } /* Name.Entity */
+c-[ne] { color: #0077aa } /* Name.Exception */
+c-[nf] { color: #0077aa } /* Name.Function */
+c-[nl] { color: #0077aa } /* Name.Label */
+c-[nn] { color: #0077aa } /* Name.Namespace */
+c-[py] { color: #0077aa } /* Name.Property */
+c-[ow] { color: #999999 } /* Operator.Word */
+c-[mb] { color: #000000 } /* Literal.Number.Bin */
+c-[mf] { color: #000000 } /* Literal.Number.Float */
+c-[mh] { color: #000000 } /* Literal.Number.Hex */
+c-[mi] { color: #000000 } /* Literal.Number.Integer */
+c-[mo] { color: #000000 } /* Literal.Number.Oct */
+c-[sb] { color: #a67f59 } /* Literal.String.Backtick */
+c-[sc] { color: #a67f59 } /* Literal.String.Char */
+c-[sd] { color: #a67f59 } /* Literal.String.Doc */
+c-[se] { color: #a67f59 } /* Literal.String.Escape */
+c-[sh] { color: #a67f59 } /* Literal.String.Heredoc */
+c-[si] { color: #a67f59 } /* Literal.String.Interpol */
+c-[sx] { color: #a67f59 } /* Literal.String.Other */
+c-[sr] { color: #a67f59 } /* Literal.String.Regex */
+c-[ss] { color: #a67f59 } /* Literal.String.Symbol */
+c-[vc] { color: #0077aa } /* Name.Variable.Class */
+c-[vg] { color: #0077aa } /* Name.Variable.Global */
+c-[vi] { color: #0077aa } /* Name.Variable.Instance */
+c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
+</style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-09-13">13 September 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-04">4 October 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -496,21 +555,21 @@ with the values in the Client ID Document.</p>
    <div class="example" id="example-ec3d44cd">
     <a class="self-link" href="#example-ec3d44cd"></a> 
     <p>https://app.example/id </p>
-<pre>{
-  "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
+<pre class="highlight"><c- p>{</c->
+  <c- nd>"@context"</c-><c- p>:</c-> <c- u>"https://www.w3.org/ns/solid/oidc-context.jsonld"</c-><c- p>,</c->
 
-  "client_id": "https://app.example/id",
-  "client_name": "Solid Application Name",
-  "redirect_uris": ["https://app.example/callback"],
-  "client_uri": "https://app.example/",
-  "logo_uri" : "https://app.example/logo.png",
-  "tos_uri" : "https://app.example/tos.html",
-  "scope" : "openid profile offline_access",
-  "grant_types" : ["refresh_token","authorization_code"],
-  "response_types" : ["code"],
-  "default_max_age" : 3600,
-  "require_auth_time" : true
-}
+  <c- f>"client_id"</c-><c- p>:</c-> <c- u>"https://app.example/id"</c-><c- p>,</c->
+  <c- f>"client_name"</c-><c- p>:</c-> <c- u>"Solid Application Name"</c-><c- p>,</c->
+  <c- f>"redirect_uris"</c-><c- p>:</c-> <c- p>[</c-><c- u>"https://app.example/callback"</c-><c- p>],</c->
+  <c- f>"client_uri"</c-><c- p>:</c-> <c- u>"https://app.example/"</c-><c- p>,</c->
+  <c- f>"logo_uri"</c-> <c- p>:</c-> <c- u>"https://app.example/logo.png"</c-><c- p>,</c->
+  <c- f>"tos_uri"</c-> <c- p>:</c-> <c- u>"https://app.example/tos.html"</c-><c- p>,</c->
+  <c- f>"scope"</c-> <c- p>:</c-> <c- u>"openid profile offline_access"</c-><c- p>,</c->
+  <c- f>"grant_types"</c-> <c- p>:</c-> <c- p>[</c-><c- u>"refresh_token"</c-><c- p>,</c-><c- u>"authorization_code"</c-><c- p>],</c->
+  <c- f>"response_types"</c-> <c- p>:</c-> <c- p>[</c-><c- u>"code"</c-><c- p>],</c->
+  <c- f>"default_max_age"</c-> <c- p>:</c-> <c- mi>3600</c-><c- p>,</c->
+  <c- f>"require_auth_time"</c-> <c- p>:</c-> <c- kc>true</c->
+<c- p>}</c->
 </pre>
    </div>
    <h4 class="heading settled" data-level="5.1.1" id="jsonld-context"><span class="secno">5.1.1. </span><span class="content">JSON-LD context</span><a class="self-link" href="#jsonld-context"></a></h4>
@@ -521,71 +580,71 @@ this JSON-LD context MUST use the HTTPS scheme.</p>
    <p>The JSON-LD context is defined as:</p>
    <div class="example" id="example-f06d2853">
     <a class="self-link" href="#example-f06d2853"></a> 
-<pre>{
-  "@context": {
-    "@version": 1.1,
-    "@protected": true,
-    "oidc": "http://www.w3.org/ns/solid/oidc#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "client_id": {
-      "@id": "@id",
-      "@type": "@id"
-    },
-    "client_uri": {
-      "@id": "oidc:client_uri",
-      "@type": "@id"
-    },
-    "logo_uri": {
-      "@id": "oidc:logo_uri",
-      "@type": "@id"
-    },
-    "policy_uri": {
-      "@id": "oidc:policy_uri",
-      "@type": "@id"
-    },
-    "tos_uri": {
-      "@id": "oidc:tos_uri",
-      "@type": "@id"
-    },
-    "redirect_uris": {
-      "@id": "oidc:redirect_uris",
-      "@type": "@id",
-      "@container": [
-        "@id",
-        "@set"
-      ]
-    },
-    "require_auth_time": {
-      "@id": "oidc:require_auth_time",
-      "@type": "xsd:boolean"
-    },
-    "default_max_age": {
-      "@id": "oidc:default_max_age",
-      "@type": "xsd:integer"
-    },
-    "application_type": {
-      "@id": "oidc:application_type"
-    },
-    "client_name": {
-      "@id": "oidc:client_name"
-    },
-    "contacts": {
-      "@id": "oidc:contacts"
-    },
-    "grant_types": {
-      "@id": "oidc:grant_types"
-    },
-    "response_types": {
-      "@id": "oidc:response_types"
-    },
-    "scope": {
-      "@id": "oidc:scope"
-    },
-    "token_endpoint_auth_method": {
-      "@id": "oidc:token_endpoint_auth_method"
-    }
-  }
-}
+<pre class="highlight"><c- p>{</c->
+  <c- nd>"@context"</c-><c- p>:</c-> <c- p>{</c->
+    <c- nd>"@version"</c-><c- p>:</c-> <c- mf>1.1</c-><c- p>,</c->
+    <c- nd>"@protected"</c-><c- p>:</c-> <c- kc>true</c-><c- p>,</c->
+    <c- f>"oidc"</c-><c- p>:</c-> <c- u>"http://www.w3.org/ns/solid/oidc#"</c-><c- p>,</c->
+    <c- f>"xsd"</c-><c- p>:</c-> <c- u>"http://www.w3.org/2001/XMLSchema#"</c-><c- p>,</c->
+    <c- f>"client_id"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"@id"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
+    <c- p>},</c->
+    <c- f>"client_uri"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:client_uri"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
+    <c- p>},</c->
+    <c- f>"logo_uri"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:logo_uri"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
+    <c- p>},</c->
+    <c- f>"policy_uri"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:policy_uri"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
+    <c- p>},</c->
+    <c- f>"tos_uri"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:tos_uri"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
+    <c- p>},</c->
+    <c- f>"redirect_uris"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:redirect_uris"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c-><c- p>,</c->
+      <c- nd>"@container"</c-><c- p>:</c-> <c- p>[</c->
+        <c- u>"@id"</c-><c- p>,</c->
+        <c- u>"@set"</c->
+      <c- p>]</c->
+    <c- p>},</c->
+    <c- f>"require_auth_time"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:require_auth_time"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"xsd:boolean"</c->
+    <c- p>},</c->
+    <c- f>"default_max_age"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:default_max_age"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"xsd:integer"</c->
+    <c- p>},</c->
+    <c- f>"application_type"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:application_type"</c->
+    <c- p>},</c->
+    <c- f>"client_name"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:client_name"</c->
+    <c- p>},</c->
+    <c- f>"contacts"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:contacts"</c->
+    <c- p>},</c->
+    <c- f>"grant_types"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:grant_types"</c->
+    <c- p>},</c->
+    <c- f>"response_types"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:response_types"</c->
+    <c- p>},</c->
+    <c- f>"scope"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:scope"</c->
+    <c- p>},</c->
+    <c- f>"token_endpoint_auth_method"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:token_endpoint_auth_method"</c->
+    <c- p>}</c->
+  <c- p>}</c->
+<c- p>}</c->
 </pre>
    </div>
    <h3 class="heading settled" data-level="5.2" id="clientids-public-uri"><span class="secno">5.2. </span><span class="content">The Public OIDC Client URI</span><a class="self-link" href="#clientids-public-uri"></a></h3>
@@ -646,17 +705,17 @@ Key bound to the Access Token. See also: <a href="https://tools.ietf.org/html/dr
    <div class="example" id="example-908dd023">
     <a class="self-link" href="#example-908dd023"></a> 
     <p>An example DPoP-bound Access Token: </p>
-<pre>{
-    "webid": "https://janedoe.com/web#id",
-    "iss": "https://idp.example.com",
-    "aud": "solid",
-    "iat": 1541493724,
-    "exp": 1573029723,
-    "cnf":{
-      "jkt":"0ZcOCORZNYy-DWpqq30jZyJGHTN0d2HglBV3uiguA4I"
-    },
-    "client_id": "https://client.example.com/web#id"
-}
+<pre class="highlight"><c- p>{</c->
+    <c- f>"webid"</c-><c- p>:</c-> <c- u>"https://janedoe.com/web#id"</c-><c- p>,</c->
+    <c- f>"iss"</c-><c- p>:</c-> <c- u>"https://idp.example.com"</c-><c- p>,</c->
+    <c- f>"aud"</c-><c- p>:</c-> <c- u>"solid"</c-><c- p>,</c->
+    <c- f>"iat"</c-><c- p>:</c-> <c- mi>1541493724</c-><c- p>,</c->
+    <c- f>"exp"</c-><c- p>:</c-> <c- mi>1573029723</c-><c- p>,</c->
+    <c- f>"cnf"</c-><c- p>:{</c->
+      <c- f>"jkt"</c-><c- p>:</c-><c- u>"0ZcOCORZNYy-DWpqq30jZyJGHTN0d2HglBV3uiguA4I"</c->
+    <c- p>},</c->
+    <c- f>"client_id"</c-><c- p>:</c-> <c- u>"https://client.example.com/web#id"</c->
+<c- p>}</c->
 </pre>
    </div>
    <h3 class="heading settled" data-level="6.2" id="tokens-id"><span class="secno">6.2. </span><span class="content">OIDC ID Token</span><a class="self-link" href="#tokens-id"></a></h3>
@@ -664,15 +723,15 @@ Key bound to the Access Token. See also: <a href="https://tools.ietf.org/html/dr
    <div class="example" id="example-1b087913">
     <a class="self-link" href="#example-1b087913"></a> 
     <p>An example OIDC ID Token: </p>
-<pre>{
-    "webid": "https://janedoe.com/web#id",
-    "iss": "https://idp.example.com",
-    "sub": "janedoe",
-    "aud": "https://client.example.com/web#id",
-    "nonce": "n-0S6_WzA2Mj",
-    "exp": 1311281970,
-    "iat": 1311280970,
-}
+<pre class="highlight"><c- p>{</c->
+    <c- f>"webid"</c-><c- p>:</c-> <c- u>"https://janedoe.com/web#id"</c-><c- p>,</c->
+    <c- f>"iss"</c-><c- p>:</c-> <c- u>"https://idp.example.com"</c-><c- p>,</c->
+    <c- f>"sub"</c-><c- p>:</c-> <c- u>"janedoe"</c-><c- p>,</c->
+    <c- f>"aud"</c-><c- p>:</c-> <c- u>"https://client.example.com/web#id"</c-><c- p>,</c->
+    <c- f>"nonce"</c-><c- p>:</c-> <c- u>"n-0S6_WzA2Mj"</c-><c- p>,</c->
+    <c- f>"exp"</c-><c- p>:</c-> <c- mi>1311281970</c-><c- p>,</c->
+    <c- f>"iat"</c-><c- p>:</c-> <c- mi>1311280970</c-><c- p>,</c->
+<c- p>}</c->
 </pre>
    </div>
    <h2 class="heading settled" data-level="7" id="resource"><span class="secno">7. </span><span class="content">Resource Access</span><a class="self-link" href="#resource"></a></h2>
@@ -695,9 +754,9 @@ the RS MUST follow OpenID Connect Discovery 1.0 <a data-link-type="biblio" href=
 Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> resource. An Identity Provider would indicate this support by using the <code>solid_oidc_supported</code> metadata property, referencing the Solid-OIDC specification URL.</p>
    <div class="example" id="example-489f4248">
     <a class="self-link" href="#example-489f4248"></a> 
-<pre>{
-    "solid_oidc_supported": "https://solidproject.org/TR/solid-oidc"
-}
+<pre class="highlight"><c- p>{</c->
+    <c- f>"solid_oidc_supported"</c-><c- p>:</c-> <c- u>"https://solidproject.org/TR/solid-oidc"</c->
+<c- p>}</c->
 </pre>
    </div>
    <h2 class="heading settled" data-level="9" id="security"><span class="secno">9. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
