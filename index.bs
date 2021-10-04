@@ -191,7 +191,7 @@ This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/) for the Client ID
 <div class='example'>
     <p>https://app.example/id
 
-    <pre>
+    <pre highlight="jsonld">
         {
           "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
 
@@ -221,7 +221,7 @@ NOTE: the `oidc` vocabulary that is part of this context uses the HTTP scheme.
 The JSON-LD context is defined as:
 
 <div class='example'>
-    <pre>
+    <pre highlight="jsonld">
         {
           "@context": {
             "@version": 1.1,
@@ -343,7 +343,7 @@ The DPoP-bound Access Token payload MUST contain these claims:
 <div class="example">
     <p>An example DPoP-bound Access Token:
 
-    <pre>
+    <pre highlight="json">
     {
         "webid": "https://janedoe.com/web#id",
         "iss": "https://idp.example.com",
@@ -365,7 +365,7 @@ The user's WebID MUST be present in the ID Token as the `webid` claim.
 <div class="example">
     <p>An example OIDC ID Token:
 
-    <pre>
+    <pre highlight="json">
         {
             "webid": "https://janedoe.com/web#id",
             "iss": "https://idp.example.com",
@@ -409,7 +409,7 @@ Discovery 1.0 [[!OIDC.Discovery]] resource. An Identity Provider would indicate 
 `solid_oidc_supported` metadata property, referencing the Solid-OIDC specification URL.
 
 <div class="example">
-    <pre>
+    <pre highlight="json">
         {
             "solid_oidc_supported": "https://solidproject.org/TR/solid-oidc"
         }
