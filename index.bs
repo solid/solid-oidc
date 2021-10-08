@@ -290,12 +290,6 @@ The JSON-LD context is defined as:
     </pre>
 </div>
 
-## The Public OIDC Client URI ## {#clientids-public-uri}
-
-Ephemeral Clients MAY use the identifier `http://www.w3.org/ns/solid/terms#PublicOidcClient`. If the
-Client uses this identifier then the IdP MAY accept any `redirect_uri` as valid. Since it is public, the
-Client is effectively anonymous to the RS.
-
 ## OIDC Registration ## {#clientids-oidc}
 
 If the Client does not use an identifier that can be dereferenced, then it MUST present a client identifier
@@ -307,7 +301,6 @@ See also [[!OIDC.DynamicClientRegistration]].
 Assuming one of the following options
  - Client ID and Secret, and valid DPoP Proof (for dynamic and static registration)
  - Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)
- - A client id of `http://www.w3.org/ns/solid/terms#PublicOidcClient` (for a public identifier)
 
 the IdP MUST return two tokens to the Client:
 
