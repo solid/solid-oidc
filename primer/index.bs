@@ -185,6 +185,7 @@ Response Body:
     ],
     "scopes_supported": [
         "openid",
+        "webid",
         "profile",
         "email",
         "offline_access"
@@ -249,7 +250,7 @@ application.
 ```http
 GET https://secureauth.example/authorize?response_type=code&
 redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback&
-scope=openid%20profile%20offline_access&
+scope=openid%20webid%20offline_access&
 client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this&
 code_challenge_method=S256&
 code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0
@@ -261,10 +262,10 @@ That URL might look a little complex, but it's essentially a request to
 - `response_type=code` indicates the desired response data.
 - `redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback`:
     The url that the OP will redirect to once the user has logged in (`https://decentphotos.example/callback`).
-- `scope=openid%20profile%20offline_access`: a list of [OIDC scopes](https://auth0.com/docs/scopes/current/oidc-scopes)
+- `scope=openid%20webid%20offline_access`: a list of [OIDC scopes](https://auth0.com/docs/scopes/current/oidc-scopes)
     (attributes of the RS to which this token should have access) separated by spaces (%20).
     - `openid` is a scope that is needed to verify Alice's identity.
-    - `profile` is required by the Solid OIDC specification to denote a WebID login.
+    - `webid` is required by the Solid OIDC specification to denote a WebID login.
     - `offline_access`: Is required to get a refresh token.
 - `client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this`: Usually the client id of a Solid
     application is the app's URI (in our case `https://decentphotos.example/webid#this`) as seen here.
@@ -295,7 +296,7 @@ Response:
   "client_uri": "https://decentphotos.example/",
   "logo_uri": "https://decentphotos.example/logo.png",
   "tos_uri": "https://decentphotos.example/tos.html",
-  "scope": "openid profile offline_access",
+  "scope": "openid webid offline_access",
   "grant_types": [ "refresh_token", "authorization_code" ],
   "response_types": [ "code" ],
   "default_max_age": 3600,
@@ -334,7 +335,7 @@ id, the code challenge, the user's webid, their desired response types, and thei
     "code_challenge": "HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0",
     "webid": "https://alice.coolpod.example/profile/card#me",
     "response_types": [ "code" ],
-    "scope": [ "openid", "profile", "offline_access" ]
+    "scope": [ "openid", "webid", "offline_access" ]
   }
 }
 ```
@@ -640,7 +641,7 @@ Response (content-type: application/json)
     "token_type": "DPoP",
     "id_token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg",
     "refresh_token": "eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ.",
-    "scope": "openid profile offline_access"
+    "scope": "openid webid offline_access"
 }
 ```
 
@@ -653,7 +654,7 @@ Response (content-type: application/json)
     extract information like the user's WebId.
 - `"refresh_token":	"eyJhbGciOiJ..."`: The refresh token. The client will use this to get a
     new access token when its current one expires.
-- `"scope":	"openid profile offline_access"`: The scopes that were used.
+- `"scope":	"openid webid offline_access"`: The scopes that were used.
 
 ## Request Flow ## {#request-flow}
 
@@ -828,6 +829,7 @@ Response
     ],
     "scopes_supported": [
         "openid",
+        "webid",
         "profile",
         "email",
         "offline_access"

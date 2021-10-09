@@ -201,7 +201,7 @@ This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/) for the Client ID
           "client_uri": "https://app.example/",
           "logo_uri" : "https://app.example/logo.png",
           "tos_uri" : "https://app.example/tos.html",
-          "scope" : "openid profile offline_access",
+          "scope" : "openid profile offline_access webid",
           "grant_types" : ["refresh_token","authorization_code"],
           "response_types" : ["code"],
           "default_max_age" : 3600,
@@ -302,6 +302,18 @@ If the Client does not use an identifier that can be dereferenced, then it MUST 
 registered with the IdP via either OIDC dynamic or static registration.
 See also [[!OIDC.DynamicClientRegistration]].
 
+# Requesting the WebID Claim using a Scope Value ## {#webid-scope}
+
+In OpenID Connect, `scope` values are used to request that particular information be make available as claim values.
+
+Solid-OIDC defines the following `scope` value for use with claim requests:
+
+<dl>
+<dt>*webid*
+<dd>
+    REQUIRED. This scope requests access to the End-User's `webid` Claim.
+</dl>
+
 # Token Instantiation # {#tokens}
 
 Assuming one of the following options
@@ -322,7 +334,7 @@ When requesting a DPoP-bound Access Token, the Client MUST send a DPoP proof JWT
 that is valid according to the [[DPOP#section-5]]. The DPoP proof JWT is used to
 bind the access token to a public key. See also: [[!DPOP]].
 
-The DPoP-bound Access Token payload MUST contain these claims:
+With the `webid` scope, the DPoP-bound Access Token payload MUST contain these claims:
  * `webid` — The WebID claim MUST be the user's WebID.
  * `iss` — The issuer claim MUST be a valid URL of the IdP
     instantiating this token.
@@ -360,7 +372,7 @@ The DPoP-bound Access Token payload MUST contain these claims:
 
 ## OIDC ID Token ## {#tokens-id}
 
-The user's WebID MUST be present in the ID Token as the `webid` claim.
+When requesting the `webid` scope, the user's WebID MUST be present in the ID Token as the `webid` claim.
 
 <div class="example">
     <p>An example OIDC ID Token:
@@ -405,13 +417,13 @@ the RS MUST follow OpenID Connect Discovery 1.0 [[!OIDC.Discovery]] to find an I
 # Solid-OIDC Conformance Discovery # {#discovery}
 
 An Identity Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
-Discovery 1.0 [[!OIDC.Discovery]] resource. An Identity Provider would indicate this support by using the
-`solid_oidc_supported` metadata property, referencing the Solid-OIDC specification URL.
+Discovery 1.0 [[!OIDC.Discovery]] resource. An Identity Provider would indicate this support by including
+`webid` in the `scopes_supported` metadata property.
 
 <div class="example">
     <pre highlight="json">
         {
-            "solid_oidc_supported": "https://solidproject.org/TR/solid-oidc"
+            "scopes_supported": ["openid", "offline_access", "webid"]
         }
     </pre>
 </div>
