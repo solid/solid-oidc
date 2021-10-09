@@ -302,7 +302,7 @@ If the Client does not use an identifier that can be dereferenced, then it MUST 
 registered with the IdP via either OIDC dynamic or static registration.
 See also [[!OIDC.DynamicClientRegistration]].
 
-# Requesting the WebID Claim using a Scope Value ## {#webid-scope}
+# Requesting the WebID Claim using a Scope Value # {#webid-scope}
 
 In OpenID Connect, `scope` values are used to request that particular information be make available as claim values.
 
