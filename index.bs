@@ -404,11 +404,11 @@ the RS MUST follow OpenID Connect Discovery 1.0 [[!OIDC.Discovery]] to find an I
 
 ### WebID Issuer Discovery via Link Headers ### {#webid-issuer-discovery}
 
-A server hosting a WebID document MAY transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer` values via Link Headers. A client MUST treat the RDF in the body of the WebID document as canonical but MAY use the Link Header values as an optimization.
+A server hosting a WebID document MAY transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer` values via Link Headers but it MUST be the same as in the RDF representation. A client MUST treat the RDF in the body of the WebID document as canonical but MAY use the Link Header values as an optimization.
 
 <div class="example">
     <pre highlight="http">
-        Link: <https://oidc.example>; rel="http://www.w3.org/ns/solid/terms#oidcIssuer"
+        Link: <https://oidc.example>; rel="http://www.w3.org/ns/solid/terms#oidcIssuer"; anchor="#id"
     </pre>
 </div>
 
