@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version a210b7d86, updated Thu Sep 16 13:45:19 2021 -0700" name="generator">
+  <meta content="Bikeshed version d7036035b, updated Fri Oct 8 17:07:11 2021 -0700" name="generator">
   <link href="https://solid.github.io/solid-oidc/primer/" rel="canonical">
-  <meta content="6ba10ebfa44331116b0894f94e4e2c6210494f37" name="document-revision">
+  <meta content="b901be84ec828b613117d9d995156fd7add95fb2" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -209,6 +209,16 @@ figcaption {
 figcaption:not(.no-marker)::before {
     content: "Figure " counter(figure) " ";
 }</style>
+<style>/* style-issues */
+
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -334,7 +344,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid OIDC Primer</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-04">4 October 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-11">11 October 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -520,6 +530,7 @@ OP’s configuration. This is always located at the OP’s issuer URL followed b
     <c- p>],</c->
     <c- f>"scopes_supported"</c-><c- p>:</c-> <c- p>[</c->
         <c- u>"openid"</c-><c- p>,</c->
+        <c- u>"webid"</c-><c- p>,</c->
         <c- u>"profile"</c-><c- p>,</c->
         <c- u>"email"</c-><c- p>,</c->
         <c- u>"offline_access"</c->
@@ -570,7 +581,7 @@ challenge anywhere.</p>
 application.</p>
 <pre class="language-http highlight">GET https://secureauth.example/authorize?response_type=code&amp;
 redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback&amp;
-scope=openid%20profile%20offline_access&amp;
+scope=openid%20webid%20offline_access&amp;
 client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this&amp;
 code_challenge_method=S256&amp;
 code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0
@@ -583,12 +594,12 @@ code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0
      <p><code>redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback</code>:
 The url that the OP will redirect to once the user has logged in (<code>https://decentphotos.example/callback</code>).</p>
     <li data-md>
-     <p><code>scope=openid%20profile%20offline_access</code>: a list of <a href="https://auth0.com/docs/scopes/current/oidc-scopes">OIDC scopes</a> (attributes of the RS to which this token should have access) separated by spaces (%20).</p>
+     <p><code>scope=openid%20webid%20offline_access</code>: a list of <a href="https://auth0.com/docs/scopes/current/oidc-scopes">OIDC scopes</a> (attributes of the RS to which this token should have access) separated by spaces (%20).</p>
      <ul>
       <li data-md>
        <p><code>openid</code> is a scope that is needed to verify Alice’s identity.</p>
       <li data-md>
-       <p><code>profile</code> is required by the Solid OIDC specification to denote a WebID login.</p>
+       <p><code>webid</code> is required by the Solid OIDC specification to denote a WebID login.</p>
       <li data-md>
        <p><code>offline_access</code>: Is required to get a refresh token.</p>
      </ul>
@@ -618,7 +629,7 @@ fetch that app URI to confirm its validity.</p>
   <c- f>"client_uri"</c-><c- p>:</c-> <c- u>"https://decentphotos.example/"</c-><c- p>,</c->
   <c- f>"logo_uri"</c-><c- p>:</c-> <c- u>"https://decentphotos.example/logo.png"</c-><c- p>,</c->
   <c- f>"tos_uri"</c-><c- p>:</c-> <c- u>"https://decentphotos.example/tos.html"</c-><c- p>,</c->
-  <c- f>"scope"</c-><c- p>:</c-> <c- u>"openid profile offline_access"</c-><c- p>,</c->
+  <c- f>"scope"</c-><c- p>:</c-> <c- u>"openid webid offline_access"</c-><c- p>,</c->
   <c- f>"grant_types"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"refresh_token"</c-><c- p>,</c-> <c- u>"authorization_code"</c-> <c- p>],</c->
   <c- f>"response_types"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"code"</c-> <c- p>],</c->
   <c- f>"default_max_age"</c-><c- p>:</c-> <c- mi>3600</c-><c- p>,</c->
@@ -646,7 +657,7 @@ id, the code challenge, the user’s webid, their desired response types, and th
     <c- f>"code_challenge"</c-><c- p>:</c-> <c- u>"HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0"</c-><c- p>,</c->
     <c- f>"webid"</c-><c- p>:</c-> <c- u>"https://alice.coolpod.example/profile/card#me"</c-><c- p>,</c->
     <c- f>"response_types"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"code"</c-> <c- p>],</c->
-    <c- f>"scope"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"openid"</c-><c- p>,</c-> <c- u>"profile"</c-><c- p>,</c-> <c- u>"offline_access"</c-> <c- p>]</c->
+    <c- f>"scope"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"openid"</c-><c- p>,</c-> <c- u>"webid"</c-><c- p>,</c-> <c- u>"offline_access"</c-> <c- p>]</c->
   <c- p>}</c->
 <c- p>}</c->
 </pre>
@@ -918,7 +929,7 @@ a response with the tokens in the body:</p>
     <c- f>"token_type"</c-><c- p>:</c-> <c- u>"DPoP"</c-><c- p>,</c->
     <c- f>"id_token"</c-><c- p>:</c-> <c- u>"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg"</c-><c- p>,</c->
     <c- f>"refresh_token"</c-><c- p>:</c-> <c- u>"eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ."</c-><c- p>,</c->
-    <c- f>"scope"</c-><c- p>:</c-> <c- u>"openid profile offline_access"</c->
+    <c- f>"scope"</c-><c- p>:</c-> <c- u>"openid webid offline_access"</c->
 <c- p>}</c->
 </pre>
    <ul>
@@ -937,7 +948,7 @@ extract information like the user’s WebId.</p>
      <p><code>"refresh_token":	"eyJhbGciOiJ..."</code>: The refresh token. The client will use this to get a
 new access token when its current one expires.</p>
     <li data-md>
-     <p><code>"scope":	"openid profile offline_access"</code>: The scopes that were used.</p>
+     <p><code>"scope":	"openid webid offline_access"</code>: The scopes that were used.</p>
    </ul>
    <h3 class="heading settled" data-level="4.2" id="request-flow"><span class="secno">4.2. </span><span class="content">Request Flow</span><a class="self-link" href="#request-flow"></a></h3>
    <p><img src="primer-request.mmd.svg" width="980"></p>
@@ -1086,6 +1097,7 @@ WebID. If it does not, the RS must reject the request with a 403.</p>
     <c- p>],</c->
     <c- f>"scopes_supported"</c-><c- p>:</c-> <c- p>[</c->
         <c- u>"openid"</c-><c- p>,</c->
+        <c- u>"webid"</c-><c- p>,</c->
         <c- u>"profile"</c-><c- p>,</c->
         <c- u>"email"</c-><c- p>,</c->
         <c- u>"offline_access"</c->
