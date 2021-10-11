@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version d7036035b, updated Fri Oct 8 17:07:11 2021 -0700" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
-  <meta content="d6b86264f53201804d1bd4c3fd5c9a651671fcce" name="document-revision">
+  <meta content="f28cad5c9cb967198dec08ed8ad31fb9ee18da41" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -760,6 +760,13 @@ where <code>?webid</code> and <code>?iss</code> are the values of the <code>webi
 This prevents a malicious identity provider from issuing valid Access Tokens for arbitrary WebIDs.</p>
    <p>Unless the RS acquires IdP keys through some other means, or the RS chooses to reject tokens issued by this IdP,
 the RS MUST follow OpenID Connect Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> to find an IdP’s signing keys (JWK).</p>
+   <h4 class="heading settled" data-level="8.2.1" id="webid-issuer-discovery"><span class="secno">8.2.1. </span><span class="content">WebID Issuer Discovery via Link Headers</span><a class="self-link" href="#webid-issuer-discovery"></a></h4>
+   <p>A server hosting a WebID document MAY transmit the <code>http://www.w3.org/ns/solid/terms#oidcIssuer</code> values via Link Headers but it MUST be the same as in the RDF representation. A client MUST treat the RDF in the body of the WebID document as canonical but MAY use the Link Header values as an optimization.</p>
+   <div class="example" id="example-f4d4b4ea">
+    <a class="self-link" href="#example-f4d4b4ea"></a> 
+<pre class="highlight">Link: <httpsU0003A oidc.example>; rel="http://www.w3.org/ns/solid/terms#oidcIssuer"; anchor="#id"
+</httpsU0003A></pre>
+   </div>
    <h2 class="heading settled" data-level="9" id="discovery"><span class="secno">9. </span><span class="content">Solid-OIDC Conformance Discovery</span><a class="self-link" href="#discovery"></a></h2>
    <p>An Identity Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
 Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> resource. An Identity Provider would indicate this support by including <code>webid</code> in the <code>scopes_supported</code> metadata property.</p>
