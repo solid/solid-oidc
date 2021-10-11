@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version d7036035b, updated Fri Oct 8 17:07:11 2021 -0700" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
-  <meta content="b901be84ec828b613117d9d995156fd7add95fb2" name="document-revision">
+  <meta content="d6b86264f53201804d1bd4c3fd5c9a651671fcce" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -408,8 +408,7 @@ to cite this document as other than work in progress.</p>
      <a href="#clientids"><span class="secno">5</span> <span class="content">Client Identifiers</span></a>
      <ol class="toc">
       <li><a href="#clientids-document"><span class="secno">5.1</span> <span class="content">Client ID Document</span></a>
-      <li><a href="#clientids-public-uri"><span class="secno">5.2</span> <span class="content">The Public OIDC Client URI</span></a>
-      <li><a href="#clientids-oidc"><span class="secno">5.3</span> <span class="content">OIDC Registration</span></a>
+      <li><a href="#clientids-oidc"><span class="secno">5.2</span> <span class="content">OIDC Registration</span></a>
      </ol>
     <li><a href="#webid-scope"><span class="secno">6</span> <span class="content">Requesting the WebID Claim using a Scope Value</span></a>
     <li>
@@ -658,11 +657,7 @@ this JSON-LD context MUST use the HTTPS scheme.</p>
 <c- p>}</c->
 </pre>
    </div>
-   <h3 class="heading settled" data-level="5.2" id="clientids-public-uri"><span class="secno">5.2. </span><span class="content">The Public OIDC Client URI</span><a class="self-link" href="#clientids-public-uri"></a></h3>
-   <p>Ephemeral Clients MAY use the identifier <code>http://www.w3.org/ns/solid/terms#PublicOidcClient</code>. If the
-Client uses this identifier then the IdP MAY accept any <code>redirect_uri</code> as valid. Since it is public, the
-Client is effectively anonymous to the RS.</p>
-   <h3 class="heading settled" data-level="5.3" id="clientids-oidc"><span class="secno">5.3. </span><span class="content">OIDC Registration</span><a class="self-link" href="#clientids-oidc"></a></h3>
+   <h3 class="heading settled" data-level="5.2" id="clientids-oidc"><span class="secno">5.2. </span><span class="content">OIDC Registration</span><a class="self-link" href="#clientids-oidc"></a></h3>
    <p>If the Client does not use an identifier that can be dereferenced, then it MUST present a client identifier
 registered with the IdP via either OIDC dynamic or static registration.
 See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration">[OIDC.DynamicClientRegistration]</a>.</p>
@@ -680,8 +675,6 @@ See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration"
      <p>Client ID and Secret, and valid DPoP Proof (for dynamic and static registration)</p>
     <li data-md>
      <p>Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)</p>
-    <li data-md>
-     <p>A client id of <code>http://www.w3.org/ns/solid/terms#PublicOidcClient</code> (for a public identifier)</p>
    </ul>
    <p>the IdP MUST return two tokens to the Client:</p>
    <ol>
