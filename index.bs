@@ -350,7 +350,7 @@ With the `webid` scope, the DPoP-bound Access Token payload MUST contain these c
 
     <pre highlight="json">
     {
-        "webid": "https://janedoe.com/web#id",
+        "webid": "https://jane.doe.example/web#id",
         "iss": "https://idp.example.com",
         "aud": "solid",
         "iat": 1541493724,
@@ -372,7 +372,7 @@ When requesting the `webid` scope, the user's WebID MUST be present in the ID To
 
     <pre highlight="json">
         {
-            "webid": "https://janedoe.com/web#id",
+            "webid": "https://jane.doe.example/web#id",
             "iss": "https://idp.example.com",
             "sub": "janedoe",
             "aud": "https://client.example.com/web#id",
@@ -398,18 +398,33 @@ The DPoP-bound Access Token MUST be validated according to
 but the RS MAY perform additional verification in order to determine whether to grant access to the
 requested resource.
 
-The user's WebID in the `webid` claim MUST be dereferenced and checked against the `iss` claim in the
-Access Token. If the `iss` claim is different from the domain of the WebID, then the RS MUST check
-the WebID document for the existence of a statement matching `?webid <http://www.w3.org/ns/solid/terms#oidcIssuer> ?iss.`,
-where `?webid` and `?iss` are the values of the `webid` and `iss` claims respectively.
-This prevents a malicious identity provider from issuing valid Access Tokens for arbitrary WebIDs.
+In order to verify that the user indeed recognizes the IdP as authoritative for their WebID, it MUST be validated that the issuer is trusted by the user. To that end, `iss` MUST be an absolute URI that is an exact string match with an element of either the list of implicitly trusted issuers or the list of explicitly trusted issuers. This prevents a malicious identity provider from issuing valid Access Tokens for arbitrary WebIDs.
 
 Unless the RS acquires IdP keys through some other means, or the RS chooses to reject tokens issued by this IdP,
 the RS MUST follow OpenID Connect Discovery 1.0 [[!OIDC.Discovery]] to find an IdP's signing keys (JWK).
 
-### WebID Issuer Discovery via Link Headers ### {#webid-issuer-discovery}
+### Implicitly Trusted Issuers
+The list of implicitly trusted issuers of a WebID is obtained by constructing absolute URIs [[!RFC6749]] from the WebID value in `webid` that satisfy all of the properties below:
+- the scheme (and usage of slashes after the scheme) MUST be identical to the scheme of the WebID
+- the authority MUST be identical to the authority of the WebID, except that the WebID's domain MAY be a subdomain of the host component
+- the path MUST be either the empty string or a single slash `/`
 
-A server hosting a WebID document MAY transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer` values via Link Headers but it MUST be the same as in the RDF representation. A client MUST treat the RDF in the body of the WebID document as canonical but MAY use the Link Header values as an optimization.
+<div class="example">
+  <p>This is an exhaustive list of all implicitly trusted issuers for the WebID <code>https://jane.doe.example/web#id</code>:</p>
+  <ul>
+    <li><code>https://jane.doe.example</code></li>
+    <li><code>https://jane.doe.example/</code></li>
+    <li><code>https://doe.example</code></li>
+    <li><code>https://doe.example/</code></li>
+    <li><code>https://example</code></li>
+    <li><code>https://example/</code></li>
+  </ul>
+</div>
+
+### Explicitly Trusted Issuers
+The list of explicitly trusted issuers of a WebID can be obtained by dereferencing the WebID from the `webid` claim, thereby obtaining an RDF representation of the WebID document. The explicitly trusted issuers can be found in the resulting RDF graph by finding all named nodes with an absolute URI matching the pattern `?webid <http://www.w3.org/ns/solid/terms#oidcIssuer> ?issuer.`, wherein `?webid` is replaced by a named node whose value is `webid`.
+
+A server hosting a WebID document MAY additionally transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer` values via `Link` headers, but then the resulting list MUST be the same as in the RDF representation. This allows the client to obtain those values without retrieving and parsing the RDF body.
 
 <div class="example">
     <pre highlight="http">
