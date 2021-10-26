@@ -388,13 +388,13 @@ When requesting the `webid` scope, the user's WebID MUST be present in the ID To
 ## DPoP Proof Validation ## {#resource-dpop-validation}
 
 A DPoP Proof that is valid according to
-[DPoP Internet-Draft, Section 4.3](https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-4.3),
+[DPoP Internet-Draft, Section 4.3](https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-4.3),
 MUST be present when a DPoP-bound Access Token is used.
 
 ## Access Token Validation ## {#resource-access-validation}
 
 The DPoP-bound Access Token MUST be validated according to
-[DPoP Internet-Draft, Section 6](https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-6),
+[DPoP Internet-Draft, Section 6](https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-6),
 but the RS MAY perform additional verification in order to determine whether to grant access to the
 requested resource.
 
@@ -509,7 +509,7 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.
             "M. Jones",
             "D. Waite"
         ],
-        "href": "https://tools.ietf.org/html/draft-ietf-oauth-dpop-03",
+        "href": "https://tools.ietf.org/html/draft-ietf-oauth-dpop-04",
         "title": "OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)",
         "publisher": "IETF"
     },
