@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version d7036035b, updated Fri Oct 8 17:07:11 2021 -0700" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
-  <meta content="f28cad5c9cb967198dec08ed8ad31fb9ee18da41" name="document-revision">
+  <meta content="b2f777aedbdf94c278f624b486df803cb61e7a2c" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -344,7 +344,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-10-11">11 October 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-11-01">1 November 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -686,7 +686,7 @@ See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration"
    <h3 class="heading settled" data-level="7.1" id="tokens-access"><span class="secno">7.1. </span><span class="content">DPoP-bound Access Token</span><a class="self-link" href="#tokens-access"></a></h3>
    <p>The DPoP-bound Access Token MUST be a valid JWT. See also: <a data-link-type="biblio" href="#biblio-rfc7519">[RFC7519]</a>.</p>
    <p>When requesting a DPoP-bound Access Token, the Client MUST send a DPoP proof JWT
-that is valid according to the <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-5">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) § section-5</a>. The DPoP proof JWT is used to
+that is valid according to the <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-5">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) § section-5</a>. The DPoP proof JWT is used to
 bind the access token to a public key. See also: <a data-link-type="biblio" href="#biblio-dpop">[DPOP]</a>.</p>
    <p>With the <code>webid</code> scope, the DPoP-bound Access Token payload MUST contain these claims:</p>
    <ul>
@@ -709,7 +709,7 @@ Access Token was issued.</p>
 Access Token becomes invalid.</p>
     <li data-md>
      <p><code>cnf</code> — The confirmation claim is used to identify the DPoP Public
-Key bound to the Access Token. See also: <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-7">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) § section-7</a>.</p>
+Key bound to the Access Token. See also: <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-7">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) § section-7</a>.</p>
     <li data-md>
      <p><code>client_id</code> - The ClientID claim is used to identify the client. See also: <a href="#clientids">section 5. Client Identifiers</a>.</p>
    </ul>
@@ -747,10 +747,10 @@ Key bound to the Access Token. See also: <a href="https://tools.ietf.org/html/dr
    </div>
    <h2 class="heading settled" data-level="8" id="resource"><span class="secno">8. </span><span class="content">Resource Access</span><a class="self-link" href="#resource"></a></h2>
    <h3 class="heading settled" data-level="8.1" id="resource-dpop-validation"><span class="secno">8.1. </span><span class="content">DPoP Proof Validation</span><a class="self-link" href="#resource-dpop-validation"></a></h3>
-   <p>A DPoP Proof that is valid according to <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-4.3">DPoP Internet-Draft, Section 4.3</a>,
+   <p>A DPoP Proof that is valid according to <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-4.3">DPoP Internet-Draft, Section 4.3</a>,
 MUST be present when a DPoP-bound Access Token is used.</p>
    <h3 class="heading settled" data-level="8.2" id="resource-access-validation"><span class="secno">8.2. </span><span class="content">Access Token Validation</span><a class="self-link" href="#resource-access-validation"></a></h3>
-   <p>The DPoP-bound Access Token MUST be validated according to <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03#section-6">DPoP Internet-Draft, Section 6</a>,
+   <p>The DPoP-bound Access Token MUST be validated according to <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-6">DPoP Internet-Draft, Section 6</a>,
 but the RS MAY perform additional verification in order to determine whether to grant access to the
 requested resource.</p>
    <p>The user’s WebID in the <code>webid</code> claim MUST be dereferenced and checked against the <code>iss</code> claim in the
@@ -866,7 +866,7 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-dpop">[DPOP]
-   <dd>D. Fett; et al. <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03"><cite>OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)</cite></a>. URL: <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03">https://tools.ietf.org/html/draft-ietf-oauth-dpop-03</a>
+   <dd>D. Fett; et al. <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04"><cite>OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)</cite></a>. URL: <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04">https://tools.ietf.org/html/draft-ietf-oauth-dpop-04</a>
    <dt id="biblio-oidccore">[OIDC.Core]
    <dd>N. Sakimura; et al. <a href="https://openid.net/specs/openid-connect-core-1_0.html"><cite>OpenID Connect Core 1.0</cite></a>. URL: <a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>
    <dt id="biblio-oidcdiscovery">[OIDC.Discovery]
