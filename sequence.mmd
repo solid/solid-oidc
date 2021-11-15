@@ -1,31 +1,21 @@
 sequenceDiagram
   autonumber
-  participant WebID as User's WebID Document
+  participant WebID as End-User's WebID Document
   participant OP as OpenID Provider
-  participant RC as Resource Client
+  participant C as Client
   participant RS as Resource Server
   participant AS as Authorization Server
-  RC ->> RS: unauthenticated request
-  RS ->> RC: 401 with a WWW-Authenticate HTTP header
-  RC ->> OP: start Authorization Code grant
-  OP ->> RC: return Authorization Code
-  RC ->> OP: present Authorization Code and DPoP proof
-  OP ->> RC: return DPoP bound OIDC ID Token
-  alt
-    RC ->> AS: request exchange of ID Token for Access Token
-  else
-    RC ->> AS: request exchange of ID Token for chainable Ticket
-    AS ->> RC: chainable Ticket
-    loop for each claim
-      RC ->> AS: exchange claim for chainable Ticket
-      AS ->> RC: chainable Ticket
-    end
-    RC ->> AS: exchange chainable Ticket for Access Token
-  end
-  AS ->> WebID: get WebID document to verify Issuer
+  C ->> RS: unauthenticated request
+  RS ->> C: 401 with a WWW-Authenticate HTTP header
+  C ->> OP: start Authorization Code grant
+  OP ->> C: return Authorization Code
+  C ->> OP: present Authorization Code and DPoP proof
+  OP ->> C: return DPoP bound OIDC ID Token
+  C ->> AS: request Access Token and push solid Claim Token (including ID Token)
+  AS ->> WebID: get WebID document to verify OIDC Issuer
   WebID ->> AS: WebID document
   AS ->> OP: get OP's public key to verify ID Token (JWS)
   OP ->> AS: JWKS
-  AS ->> RC: if all checks issue Access Token
-  RC ->> RS: request with Access Token
-  RS ->> RC: representation
+  AS ->> C: if all checks pass issue Access Token
+  C ->> RS: request with Access Token
+  RS ->> C: representation
