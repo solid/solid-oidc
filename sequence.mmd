@@ -1,5 +1,4 @@
 sequenceDiagram
-  autonumber
   participant WebID as End-User's WebID Document
   participant OP as OpenID Provider
   participant C as Client
@@ -7,15 +6,27 @@ sequenceDiagram
   participant AS as Authorization Server
   C ->> RS: unauthenticated request
   RS ->> C: 401 with a WWW-Authenticate HTTP header
+  Note over C: 👩 User provides their WebID ⌨️
+  C ->> WebID: get WebID document to discover OpenID Provider
+  WebID ->> C: WebID document
   C ->> OP: start Authorization Code grant
   OP ->> C: return Authorization Code
   C ->> OP: present Authorization Code and DPoP proof
   OP ->> C: return DPoP bound OIDC ID Token
+  Note over C: 👩 User is authenticated ✅
   C ->> AS: request Access Token and push solid Claim Token (including ID Token)
-  AS ->> WebID: get WebID document to verify OIDC Issuer
+  AS ->> WebID: get WebID document to verify OpenID Provider
   WebID ->> AS: WebID document
   AS ->> OP: get OP's public key to verify ID Token (JWS)
   OP ->> AS: JWKS
-  AS ->> C: if all checks pass issue Access Token
+  Note over AS: 👩 User is authenticated ✅
+  AS ->> C: provide Access Token
   C ->> RS: request with Access Token
+  alt Token introspection
+  RS ->> AS: token introspection request
+  AS ->> RS: token introspection response
+  else signed JWT
+    Note over RS, AS: Verify AS signature
+  end
+  Note over RS: 👩 User is authenticated ✅
   RS ->> C: representation
