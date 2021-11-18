@@ -15,6 +15,7 @@ Editor: [elf Pavlik](https://elf-pavlik.hackers4peace.net/)
 Editor: [Dmitri Zagidulin](http://computingjoy.com/)
 Former Editor: [Adam Migus](https://migusgroup.com/about/) ([The Migus Group](https://migusgroup.com/))
 Former Editor: [Ricky White](https://endlesstrax.com) ([The Migus Group](https://migusgroup.com/))
+Test Suite: https://solid.github.io/solid-oidc-tests/
 Abstract:
   A key challenge on the path toward re-decentralizing user data on the Worldwide Web is the need to
   access multiple potentially untrusted resources servers securely. This document aims to address that
