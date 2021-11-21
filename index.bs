@@ -142,23 +142,11 @@ Solid and are used as a primary identifier for Users in this specification.
 
 *This section is non-normative*
 
-The basic authentication and authorization flow is as follows:
-
-1. The Client requests a non-public resource from the RS.
-2. The RS returns a 401 with a `WWW-Authenticate` HTTP header containing parameters that inform the
-    Client that a DPoP-bound Access Token is required.
-3. The Client presents its Client Identifier and the associated Secret, if any, to the IdP and requests an
-    Authorization Code.
-4. If granted, the Client presents the Authorization Code and a DPoP proof, to the Token Endpoint.
-5. The Token Endpoint returns a DPoP-bound Access Token and OIDC ID Token, to the Client.
-6. The Client presents the DPoP-bound Access Token and DPoP proof, to the RS.
-7. The RS gets user's WebID Document and check for designated OIDC issuers
-8. The RS gets the public key from the IdP and uses it to validate the signature on the DPoP-bound Access Token (JWS).
-9. If IdP is designated by the user and Access Token is valid, then the RS returns the requested resource.
+Details of the flow are available in [[!Solid.OIDC.Primer]]
 
 <figure id="fig-signature">
     <img src="sequence.mmd.svg" />
-    <figcaption>Basic sequence of authentication and authorization as described above.</figcaption>
+    <figcaption>Basic sequence of authenticating the user and the client.</figcaption>
 </figure>
 
 # Client Identifiers # {#clientids}
@@ -557,6 +545,16 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.
         ],
         "href": "https://solidproject.org/TR/protocol",
         "title": "Solid Protocol",
+        "publisher": "W3C Solid Community Group"
+    },
+    "Solid.OIDC.Primer": {
+        "authors": [
+            "Jackson Morgan",
+            "Aaron Coburn",
+            "Matthieu Bosquet"
+        ],
+        "href": "https://solid.github.io/solid-oidc/primer/",
+        "title": "Solid-OIDC Primer",
         "publisher": "W3C Solid Community Group"
     },
     "WebID": {
