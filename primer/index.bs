@@ -711,7 +711,7 @@ Token Body:
 - `"htu": "https://bob.otherpod.example/private/photo_album.ttl"`: htu limits the token for
     use only on the given url.
 - `"htm": "GET"`: htm limits the token for use only on a specific http method, in this case
-    `POST`.
+    `GET`.
 - `"jti": "fb1264dd-fff1-4509-a7b1-0fe58d08d3e1"`: jti is a unique identifier for the DPoP
     token that can optionally be used by the server to defend against replay attacks
 - `"iat": 1603389616`: The date the token was issued, in this case October 22, 2020 14:00:16
