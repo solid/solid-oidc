@@ -1,18 +1,29 @@
 sequenceDiagram
-    note over RP: 1. An AJAX request is initiated
-    note over RP: 2. Creates a DPoP header token
-    RP->>Bob's Pod (RS): 3. Sends Request
-    note over Bob's Pod (RS): 4. Checks Access token expirations
-    note over Bob's Pod (RS): 5. Checks DPoP Token url and method
-    note over Bob's Pod (RS): 5.1. (Optional) Checks DPoP token unique identifier
-    note over Bob's Pod (RS): 6. Checks DPoP signature against Access Token
-    Bob's Pod (RS)->>Alice's Pod (RS): 7. Retrieves Profile
-    Alice's Pod (RS)->>Bob's Pod (RS): Profile
-    note over Bob's Pod (RS): 8. Checks Issuer
-    Bob's Pod (RS)->>Alice's OP: 9. Retrieves OP configuration
-    Alice's OP->>Bob's Pod (RS): OP configuration
-    Bob's Pod (RS)->>Alice's OP: 10. Requests JWKS
-    Alice's OP->>Bob's Pod (RS): JWKS
-    note over Bob's Pod (RS): 11. Checks access token signature validity
-    note over Bob's Pod (RS): 12. Performs Authorization
-    Bob's Pod (RS)->>RP: 13. Returns Result
+  participant WebID as 👩 End-User's WebID Document
+  participant OP as 👩 OpenID Provider
+  participant Client as ⚙️ Client
+  participant AS as ☁️ Authorization Server
+  participant RS as ☁️ Resource Server
+  note over Client: 1. An AJAX request is initiated
+  note over Client: 2. Creates a DPoP header token
+  Client->>RS: 3. Sends Request
+  RS->>Client: 4. Responds 401 with as_uri
+  Client->>AS: Requests AS configuration
+  AS-->>Client: AS configuration
+  Client->>AS: Request Access Token
+  note over AS: 4. Checks Access token expirations
+  note over AS: 5. Checks DPoP Token url and method
+  note over AS: 5.1. (Optional) Checks DPoP token unique identifier
+  note over AS: 6. Checks DPoP signature against Access Token
+  AS->>WebID: 7. Retrieves Profile
+  WebID->>AS: Profile
+  note over AS: 8. Checks Issuer
+  AS->>OP: 9. Retrieves OP configuration
+  OP->>AS: OP configuration
+  AS->>OP: 10. Requests JWKS
+  OP->>AS: JWKS
+  note over AS: 11. Checks access token signature validity
+  AS->>Client: Access Token Response
+  Client->>RS: 3. Sends Request with Access Token
+  note over AS, RS: Have pre-established usage of Access Tokens
+  RS->>Client: 13. Returns Result

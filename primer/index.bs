@@ -505,60 +505,15 @@ Our JWK thumbprint looks more like:
 9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8
 ```
 
-<h4 id="authorization-code-pkce-flow-step-18" class="no-num">18. Generates access token</h4>
-
-The OP generates an access token. To do so it constructs a JSON Web Token and signs it using
-its own keys. The access token could look like (remember you can decode it using
-[https://jwt.io](https://jwt.io/#debugger-io?token=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwiYXVkIjoic29saWQiLCJjbmYiOnsiamt0IjoiOVhtd0s4bVEzSDUtUG56QXQzbEZIeldCV192NVFoWXluZXpiYml0NGtDOCJ9LCJjbGllbnRfaWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJqdGkiOiJmZDBhMTM1My0yNWYzLTRjN2UtOGY4Yi1jMTQyNjRmMWMxMmUiLCJpYXQiOjE2MDMzODUyNjEsImV4cCI6MTYwMzM4NTg2MX0.HIIYiovILPvsdkD3s3xomR1MkA_Ir8Mx_C-eHxbWEnw9Z2rv2rOWbvMPZ--BqH3qVSupgYTZZsTDbZXA8giCLA)):
-
-```text
-eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwiYXVkIjoic29saWQiLCJjbmYiOnsiamt0IjoiOVhtd0s4bVEzSDUtUG56QXQzbEZIeldCV192NVFoWXluZXpiYml0NGtDOCJ9LCJjbGllbnRfaWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJqdGkiOiJmZDBhMTM1My0yNWYzLTRjN2UtOGY4Yi1jMTQyNjRmMWMxMmUiLCJpYXQiOjE2MDMzODUyNjEsImV4cCI6MTYwMzM4NTg2MX0.HIIYiovILPvsdkD3s3xomR1MkA_Ir8Mx_C-eHxbWEnw9Z2rv2rOWbvMPZ--BqH3qVSupgYTZZsTDbZXA8giCLA
-```
-
-Token Header:
-```json
-{
-    "alg": "ES256",
-    "typ": "JWT"
-}
-```
-
- - `"alg": "ES256"`: indicates the token was signed using eliptic curve
- - `"typ": "JWT"`: indicates that this is a JSON web token
-
-Token Body:
-```json
-{
-    "webid": "https://alice.coolpod.example/profile/card#me",
-    "iss": "https://secureauth.example",
-    "aud": "solid",
-    "cnf": {
-        "jkt": "9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8"
-    },
-    "client_id": "https://decentphotos.example/webid#this",
-    "jti": "fd0a1353-25f3-4c7e-8f8b-c14264f1c12e",
-    "iat": 1603385261,
-    "exp": 1603385861
-}
-```
-
-- `"webid": "https://alice.coolpod.example/profile/card#me"`: The WebId of the user that
-    logged in
-- `"iss": "https://secureauth.example"`: The OP that was used to generate this token
-- `"aud": "solid"`: The token's audience. Because DPoP handles scoping the audience in all
-    practical senses, the audience for a solid token is simply "solid."
-- `"cnf": { "jkt": "9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8" }`: The jwk thrumbprint must
-    be embedded in an object on the field "jkt"
-- `"client_id": "https://decentphotos.example/webid#this"`: The client id of the application
-- `"iat": 1603370641`: The date the token was issued, in this case October 22, 2020 8:44:01
-- `"exp": 1603371241`: The token's expiration date, in this case October 22, 2020 8:54:01
-
 <h4 id="authorization-code-pkce-flow-step-19" class="no-num">19. Generates the id_token</h4>
 
-If `openid` was listed as a scope during the authorization request, the OP generates an id
-token. The id token is not used to access anything. It is simply to communicate information to
-the client. This token is a [JSON Web Token](https://jwt.io/introduction/). It would look like
+Since `openid` was listed as a scope during the authorization request, the OP generates an id
+token. The id token will be pushed as claim to any Solid Authorization Server needed, which clients want to get Access Token from.
+This token is a [JSON Web Token](https://jwt.io/introduction/). It would look like
 the following (you can decrypt the token with [https://jwt.io](https://jwt.io/#debugger-io?token=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg)):
+
+
+Issue: encoded token needs to be updated
 
 ```text
 eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg
@@ -579,19 +534,26 @@ Token Body:
 ```json
 {
     "sub": "https://alice.coolpod.example/profile/card#me",
-    "aud": "https://decentphotos.example/webid#this",
+    "aud": [ "solid", "https://decentphotos.example/webid#this"],
+    "azp": "https://decentphotos.example/webid#this"
     "webid": "https://alice.coolpod.example/profile/card#me",
     "iss": "https://secureauth.example",
     "jti": "844a095c-9cdb-47e5-9510-1dba987c0a5f",
     "iat": 1603370641,
-    "exp": 1603371241
+    "exp": 1603371241,
+    "cnf": {
+        "jkt": "9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8"
+    },
 }
 ```
 
 - `"sub": "https://alice.coolpod.example/profile/card#me"`: The subject claim. It must
     be the same as the authenticated user's WebID.
 - `"aud": "https://decentphotos.example/webid#this"`: The token's audience. Because an
-    id_token is intended for the client, its audience is the client id.
+    id_token is intended for the client and any Solid Authorization Server,
+    its audience is the client id and the string "solid".
+- `"azp": "https://decentphotos.example/webid#this"`: The token's authorized party. Because an
+    id_token is intended to be used by the client, its authorized party is the client id.
 - `"webid": "https://alice.coolpod.example/profile/card#me"`: The WebID of the user that
     logged in
 - `"iss": "https://secureauth.example"`: The OP that was used to generate this token
@@ -599,6 +561,8 @@ Token Body:
     for this token that can be used to prevent replay attacks.
 - `"iat": 1603370641`: The date the token was issued, in this case October 22, 2020 8:44:01
 - `"exp": 1603371241`: The token's expiration date, in this case October 22, 2020 8:54:01
+- `"cnf": { "jkt": "9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8" }`: The jwk thrumbprint must
+    be embedded in an object on the field "jkt"
 
 <h4 id="authorization-code-pkce-flow-step-20" class="no-num">20. Generates refresh token</h4>
 
@@ -636,20 +600,12 @@ a response with the tokens in the body:
 Response (content-type: application/json)
 ```json
 {
-    "access_token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwiYXVkIjoic29saWQiLCJjbmYiOnsiamt0IjoiOVhtd0s4bVEzSDUtUG56QXQzbEZIeldCV192NVFoWXluZXpiYml0NGtDOCJ9LCJjbGllbnRfaWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJqdGkiOiJmZDBhMTM1My0yNWYzLTRjN2UtOGY4Yi1jMTQyNjRmMWMxMmUiLCJpYXQiOjE2MDMzODUyNjEsImV4cCI6MTYwMzM4NTg2MX0.HIIYiovILPvsdkD3s3xomR1MkA_Ir8Mx_C-eHxbWEnw9Z2rv2rOWbvMPZ--BqH3qVSupgYTZZsTDbZXA8giCLA",
-    "expires_in": 300,
-    "token_type": "DPoP",
     "id_token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg",
     "refresh_token": "eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ.",
     "scope": "openid webid offline_access"
 }
 ```
 
-- `access_token": "eyJhbGciOiJ..."`: The access token we generated. The client will use this
-    to authenticate with the server.
-- `"expires_in":	300`: Tells the client that the access token will expire in 300 seconds (5
-    minutes)
-- `"token_type":	"DPoP"`: Tells the client that the token type is DPoP
 - `"id_token": "eyJhbGciOiJFU..."`: The id token we generated. The client will use this to
     extract information like the user's WebId.
 - `"refresh_token":	"eyJhbGciOiJ..."`: The refresh token. The client will use this to get a
@@ -660,16 +616,53 @@ Response (content-type: application/json)
 
 <img src="primer-request.mmd.svg" width="980" />
 
-<h4 id="request-flow-step-1" class="no-num">1. An AJAX request is initiated</h4>
 
 In this example, Alice has logged into `https://decentphotos.example` and has completed the
 authentication steps above. She wants to make a request to Bob's Pod to get a photo album
 information at `https://bob.otherpod.example/private/photo_album.ttl`. Bob has previously
 granted access to Alice but has not granted access to anyone else.
 
+<h4 id="request-flow-step-1" class="no-num">1. Discover Authorization Server</h4>
+
+Client can discover Authorization Server by making request to the resource
+
+Request:
+```http
+GET https://bob.otherpod.example/private/photo_album.ttl
+```
+
+Response:
+```http
+HTTP/1.1 401 Unauthorized
+WWW-Authenticate: UMA realm="example",
+  as_uri="https://auth.otherpod.example",
+  ticket="016f84e8-f9b9-11e0-bd6f-0021cc6004de"
+```
+
+<h4 id="request-flow-step-1" class="no-num">1. Discover Token Endpoint</h4>
+
+Knowing Authorization Server now client can discover its Token Endpoint ([[!RFC8414]])
+
+Request:
+```http
+GET https://auth.otherpod.example/.well-known/uma2-configuration
+```
+
+Response:
+```json
+{
+    "issuer": "https://auth.otherpod.example",
+    "token_endpoint": "https://auth.otherpod.example/token",
+    "grant_types_supported": [
+        "urn:ietf:params:oauth:grant-type:uma-ticket"
+    ]
+    ...
+}
+```
+
 <h4 id="request-flow-step-2" class="no-num">2. Creates a DPoP header token</h4>
 
-Before we send a request, we need to generate a DPoP header token. A new DPoP token must be
+Before we request access token, we need to generate a DPoP header token. A new DPoP token must be
 generated every time a request is made.
 
 Generating a DPoP token is done the same way we did it in the authentication section. It must be signed by the same keypair that we generated in the authentication section. Our token
@@ -702,68 +695,77 @@ Token Header:
 Token Body:
 ```json
 {
-    "htu": "https://bob.otherpod.example/private/photo_album.ttl",
-    "htm": "GET",
+    "htu": "https://auth.otherpod.example/token",
+    "htm": "POST",
     "jti": "fb1264dd-fff1-4509-a7b1-0fe58d08d3e1",
     "iat": 1603389616
 }
 ```
-- `"htu": "https://bob.otherpod.example/private/photo_album.ttl"`: htu limits the token for
+- `"htu": "https://auth.otherpod.example/token"`: htu limits the token for
     use only on the given url.
-- `"htm": "GET"`: htm limits the token for use only on a specific http method, in this case
+- `"htm": "POST"`: htm limits the token for use only on a specific http method, in this case
     `POST`.
 - `"jti": "fb1264dd-fff1-4509-a7b1-0fe58d08d3e1"`: jti is a unique identifier for the DPoP
     token that can optionally be used by the server to defend against replay attacks
 - `"iat": 1603389616`: The date the token was issued, in this case October 22, 2020 14:00:16
     GMT.
 
-<h4 id="request-flow-step-3" class="no-num">3. Sends request</h4>
 
-With the access token and new DPoP token in hand, we're ready to make our request.
+<h4 id="request-flow-step-4" class="no-num">4. Includes ID Token in Solid Claim Token</h4>
 
-```http
-GET https://bob.otherpod.example/private/photo_album.ttl
-Headers: {
-    authorization: "DPoP eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwiYXVkIjoic29saWQiLCJjbmYiOnsiamt0IjoiOVhtd0s4bVEzSDUtUG56QXQzbEZIeldCV192NVFoWXluZXpiYml0NGtDOCJ9LCJjbGllbnRfaWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJqdGkiOiJmZDBhMTM1My0yNWYzLTRjN2UtOGY4Yi1jMTQyNjRmMWMxMmUiLCJpYXQiOjE2MDMzODUyNjEsImV4cCI6MTYwMzM4NTg2MX0.HIIYiovILPvsdkD3s3xomR1MkA_Ir8Mx_C-eHxbWEnw9Z2rv2rOWbvMPZ--BqH3qVSupgYTZZsTDbZXA8giCLA",
-    dpop: "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRwb3Arand0IiwiandrIjp7Imt0eSI6IkVDIiwia2lkIjoiQ21HVE9Dd3ZKWXhrb0dGOGNxcFpBNTdab2xVdThBcFJQb3MwVlduWk1TNCIsInVzZSI6InNpZyIsImFsZyI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiU0FZcmF5VUh4Z1FPQ29YSC1MbHdyOW1iSWJpUHBsLXRQRUpLeE1WWFltcyIsInkiOiJ6eGJQODdPQ3JpeEZpMk9vZjU1QkhsTC1ySHhvWHVuUmttNFBkV3duUzJnIn19.eyJodHUiOiJodHRwczovL2JvYi5vdGhlcnBvZC5leGFtcGxlL3ByaXZhdGUvcGhvdG9fYWxidW0udHRsIiwiaHRtIjoiZ2V0IiwianRpIjoiZmIxMjY0ZGQtZmZmMS00NTA5LWE3YjEtMGZlNThkMDhkM2UxIiwiaWF0IjoxNjAzMzg5NjE2LCJleHAiOjE2MDMzOTMyMTZ9.G8JktoMOadenCYtO4Z_ZI7ACnjKJvT59OyKlQ6WpB1Qq2GoCK6v1ocrpsfELDOKIL5nt5fwWccfvCAA2bMrkjA"
+ID token received from OP MUST be included in Claim Token which we will use in next step.
+
+```json
+{
+    "id_token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg"
 }
 ```
-- `headers.authorization: "DPoP eyJhbGciOiJFUzI1N..."`: The authorization header contains the
-    ACCESS TOKEN that we received from the OP during the auth phase. Putting "DPoP" followed by a
-    space tells the Resource Server that this is a DPoP bound access token.
-- `dpop: "eyJhbGciOi..."`: The DPoP token we just generated.
 
-<h4 id="request-flow-step-4" class="no-num">4. Checks Access Token expirations</h4>
+<h4 id="request-flow-step-4" class="no-num">4. Request Access Token</h4>
 
-The RS checks if the access token is still valid by looking at the `exp` claim. If the token
-does not have an `exp` claim or the token is expired, the RS must reject the request with a 403.
+Request:
+```http
+POST /token HTTP/1.1
+Host: auth.otherpod.example
+DPoP: eyJhbGciOi...
+...
+grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Auma-ticket
+&ticket=016f84e8-f9b9-11e0-bd6f-0021cc6004de
+&claim_token=eyj0...
+&claim_token_format=http%3A%2F%2Fwww.w3.org%2Fns%2Fsolid%2Fterms%23ClaimToken
+```
+
+<h4 id="request-flow-step-4" class="no-num">4. Checks ID Token expirations</h4>
+
+The AS checks if the id token is still valid by looking at the `exp` claim. If the token
+does not have an `exp` claim or the token is expired, the AS must reject the request with a 403.
 
 <h4 id="request-flow-step-5" class="no-num">5. Checks the DPoP token url and method</h4>
 
-The RS checks the `htu` and `htm` claims of the DPoP token. If the `htu` does not match the
+The AS checks the `htu` and `htm` claims of the DPoP token. If the `htu` does not match the
 protocol, origin and path of the request or the `htm` does not correspond the the http method
-of the request, the RS must reject the request with a 403.
+of the request, the AS must reject the request with a 403.
 
 <h4 id="request-flow-step-5.1" class="no-num">5.1. (Optional) Checks DPoP token unique identifier</h4>
 
-The RS can optionally keep track of all DPoP `jti` claims it received. Because a new DPoP token
+The AS can optionally keep track of all DPoP `jti` claims it received. Because a new DPoP token
 must be generated each time a request is made, no two tokens should have the same `jti`. If the
-RS receives a DPoP token with a `jti` it has already encountered it may reject the request with
+AS receives a DPoP token with a `jti` it has already encountered it may reject the request with
 a 403.
 
 <h4 id="request-flow-step-6" class="no-num">6. Checks DPoP signature against Access Token</h4>
 
-The RS first confirms that the DPoP token was signed by the public key listed in its `header
-jwk`. If it was not, the RS must reject the request with a 403.
+The AS first confirms that the DPoP token was signed by the public key listed in its `header
+jwk`. If it was not, the AS must reject the request with a 403.
 
-The RS checks if the public key in the DPoP token's `header.jwk` corresponds to the jwk
+The AS checks if the public key in the DPoP token's `header.jwk` corresponds to the jwk
 thumbprint in the access token in the `cnf` field. If they do not, the OP must reject the
 request with a 403.
 
 <h4 id="request-flow-step-7" class="no-num">7. Retrieves Profile</h4>
 
 Using the `webid` claim in the access token (for us, it's
-`https://alice.coolpod.example/profile/card#me`), the RS retreives the user's WebId document.
+`https://alice.coolpod.example/profile/card#me`), the AS retreives the user's WebId document.
 
 Request
 ```http
@@ -790,12 +792,12 @@ Response
 
 <h4 id="request-flow-step-8" class="no-num">8. Checks issuer</h4>
 
-The RS checks that the `iss` claim in the access token matches the issuer listed in the user's
-WebID. If it does not, the RS must reject the request with a 403.
+The AS checks that the `iss` claim in the access token matches the issuer listed in the user's
+WebID. If it does not, the AS must reject the request with a 403.
 
 <h4 id="request-flow-step-9" class="no-num">9. Retrieves OP configuration</h4>
 
-The RS uses the `iss` claim to get the issuer's configuration. The url is the issuer claim with
+The AS uses the `iss` claim to get the issuer's configuration. The url is the issuer claim with
 `/.well-known/openid-configuration` appended to the end.
 
 Request
@@ -859,7 +861,7 @@ Response
 
 <h4 id="request-flow-step-10" class="no-num">10. Requests JWKS</h4>
 
-Using the `jwks_uri` field in the openid-configuration, the RS makes a request to retreive the
+Using the `jwks_uri` field in the openid-configuration, the AS makes a request to retreive the
 OP's public keys.
 
 Request
@@ -888,15 +890,34 @@ Notice that the `keys` field is an array, so an OP could have multiple public ke
 
 <h4 id="request-flow-step-11" class="no-num">11. Checks access token signature validity</h4>
 
-Using the `kid` value in the access token, the RS searches the OP keys for one that matches the
-access token. Checks to see if the access token was signed by that key. If it was not, the RS
+Using the `kid` value in the access token, the AS searches the OP keys for one that matches the
+access token. Checks to see if the access token was signed by that key. If it was not, the AS
 must reject the request with a 403.
 
 <h4 id="request-flow-step-12" class="no-num">12. Performs Authorization</h4>
 
-Now that the RS has performed all of its checks, we can trust that the agent in the `webid`
+Now that the AS has performed all of its checks, we can trust that the agent in the `webid`
 claim (`https://alice.coolpod.example/profile/card#me`) is the same agent on whose behalf the
-request was made. Using that information, the RS performs authorization.
+request was made. Using that information, the AS performs authorization and returns access token.
+
+Response:
+```json
+{
+   "access_token":"sbjsbhs(/SSJHBSUSSJHVhjsgvhsgvshgsv",
+   "token_type":"Bearer"
+}
+```
+
+<h4 id="request-flow-step-3" class="no-num">3. Sends request</h4>
+
+With the access token, we're ready to make our request.
+
+```http
+GET https://bob.otherpod.example/private/photo_album.ttl
+Headers: {
+    authorization: "Bearer sbjsbhs(/SSJHBSUSSJHVhjsgvhsgvshgsv",
+}
+```
 
 <h4 id="request-flow-step-13" class="no-num">13. Returns Result</h4>
 
