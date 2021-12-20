@@ -165,9 +165,6 @@ provided at `https://www.w3.org/ns/solid/oidc-context.jsonld` such that the resu
 document produces a JSON serialization of an OIDC client registration, per the
 definition of client registration metadata from [[!RFC7591]] section 2.
 
-Issue: [Related Issue](https://github.com/solid/authentication-panel/issues/75)
-Solid-OIDC requirements for client description document
-
 Also, the IdP MUST dereference the Client ID Document and match any Client-supplied parameters
 with the values in the Client ID Document.
 
@@ -346,12 +343,39 @@ With the `webid` scope, the DPoP-bound OIDC ID Token payload MUST contain these 
             "exp": 1311281970,
             "cnf":{
               "jkt":"0ZcOCORZNYy-DWpqq30jZyJGHTN0d2HglBV3uiguA4I"
-            },
+            }
         }
     </pre>
 </div>
 
 # Resource Access # {#resource}
+
+## Solid Claim Token ## {#solid-claim-token}
+
+Issue: Solid Claim Token (JWT) should have common definition outside of this spec
+
+Client MUST embed obtained [[#tokens-id]] in Solid Claim Token as value of `id_token` claim.
+
+## Authorization Server Discovery ## {#authorization-server-discovery}
+
+When client performs unauthenticated request to protected resource,
+Resource Server MUST respond with HTTP <code>401</code> status code,
+as well as <code>WWW-Authenticate</code> HTTP header including <code>UMA</code>
+as authentication scheme, with the <code>issuer</code> URI from the
+authorization server's discovery document in <code>as_uri</code> parameter
+and permission ticket in  <code>ticket</code> parameter.[[!UMA]]
+
+Given <code>as_uri</code> client can discover Authorization Server token endponint via
+Authorization Server Metadata available at <code>./well-known/uma-configuration</code>.
+As specified in [[!UMA]]
+
+
+## Obtaining Access Token ## {#obtaining-access-token}
+
+Client can obtain Access Token from Authorization Server token endpoint using
+<code>urn:ietf:params:oauth:grant-type:uma-ticket</code> grant [[!UMA]].
+When using this grant Client MUST use [[#solid-claim-token]] as <code>claim_token</code>
+and <code>http://www.w3.org/ns/solid/terms#ClaimToken</code> as <code>claim_token_format</code>.
 
 ## DPoP Proof Validation ## {#resource-dpop-validation}
 
@@ -546,6 +570,16 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.
         "href": "https://www.w3.org/2005/Incubator/webid/spec/identity/",
         "title": "WebID 1.0",
         "publisher": "WebID Incubator Group"
+    },
+    "UMA": {
+        "authors": [
+            "Eve Maler",
+            "Maciej Machulak",
+            "Justin Richer"
+        ],
+        "href": "https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html",
+        "title": "User-Managed Access (UMA) 2.0 Grant for OAuth 2.0 Authorization",
+        "publisher": "Kantara Initiative, Inc"
     }
 }
 </pre>
