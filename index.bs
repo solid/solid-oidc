@@ -350,12 +350,6 @@ With the `webid` scope, the DPoP-bound OIDC ID Token payload MUST contain these 
 
 # Resource Access # {#resource}
 
-## Solid Claim Token ## {#solid-claim-token}
-
-Issue: Solid Claim Token (JWT) should have common definition outside of this spec
-
-Client MUST embed obtained [[#tokens-id]] in Solid Claim Token as value of `id_token` claim.
-
 ## Authorization Server Discovery ## {#authorization-server-discovery}
 
 When client performs unauthenticated request to protected resource,
@@ -366,7 +360,7 @@ authorization server's discovery document in <code>as_uri</code> parameter
 and permission ticket in  <code>ticket</code> parameter.[[!UMA]]
 
 Given <code>as_uri</code> client can discover Authorization Server token endponint via
-Authorization Server Metadata available at <code>./well-known/uma-configuration</code>.
+Authorization Server Metadata available at <code>./well-known/uma2-configuration</code>.
 As specified in [[!UMA]]
 
 
@@ -374,8 +368,10 @@ As specified in [[!UMA]]
 
 Client can obtain Access Token from Authorization Server token endpoint using
 <code>urn:ietf:params:oauth:grant-type:uma-ticket</code> grant [[!UMA]].
-When using this grant Client MUST use [[#solid-claim-token]] as <code>claim_token</code>
-and <code>http://www.w3.org/ns/solid/terms#ClaimToken</code> as <code>claim_token_format</code>.
+When using this grant Client MUST use [[#tokens-id]] as <code>claim_token</code>
+and <code>http://openid.net/specs/openid-connect-core-1_0.html#IDToken</code> as <code>claim_token_format</code>.
+
+Note: Client can push additional claims by requesting upgraded RPT [[!UMA]]
 
 ## DPoP Proof Validation ## {#resource-dpop-validation}
 

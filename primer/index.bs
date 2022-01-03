@@ -601,8 +601,7 @@ Response (content-type: application/json)
 ```json
 {
     "id_token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg",
-    "refresh_token": "eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ.",
-    "scope": "openid webid offline_access"
+    "refresh_token": "eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ."
 }
 ```
 
@@ -610,7 +609,6 @@ Response (content-type: application/json)
     extract information like the user's WebId.
 - `"refresh_token":	"eyJhbGciOiJ..."`: The refresh token. The client will use this to get a
     new access token when its current one expires.
-- `"scope":	"openid webid offline_access"`: The scopes that were used.
 
 ## Request Flow ## {#request-flow}
 
@@ -711,16 +709,6 @@ Token Body:
     GMT.
 
 
-<h4 id="request-flow-step-4" class="no-num">4. Includes ID Token in Solid Claim Token</h4>
-
-ID token received from OP MUST be included in Claim Token which we will use in next step.
-
-```json
-{
-    "id_token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg"
-}
-```
-
 <h4 id="request-flow-step-4" class="no-num">4. Request Access Token</h4>
 
 Request:
@@ -732,7 +720,7 @@ DPoP: eyJhbGciOi...
 grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Auma-ticket
 &ticket=016f84e8-f9b9-11e0-bd6f-0021cc6004de
 &claim_token=eyj0...
-&claim_token_format=http%3A%2F%2Fwww.w3.org%2Fns%2Fsolid%2Fterms%23ClaimToken
+&claim_token_format=http%3A%2F%2Fopenid.net%2Fspecs%2Fopenid-connect-core-1_0.html%23IDToken
 ```
 
 <h4 id="request-flow-step-4" class="no-num">4. Checks ID Token expirations</h4>
@@ -909,6 +897,10 @@ Response:
 ```
 
 <h4 id="request-flow-step-3" class="no-num">3. Sends request</h4>
+
+Note: In practice client would need to upgrade RPT by pushing
+authorization related claim. This primer only focuses on authentication so we omit
+this detail here.
 
 With the access token, we're ready to make our request.
 
