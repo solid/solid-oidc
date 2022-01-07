@@ -369,12 +369,12 @@ As specified in [[!UMA]]
 
 ## Obtaining Access Token ## {#obtaining-access-token}
 
-Client can obtain Access Token from Authorization Server token endpoint using
+Clients can obtain an Access Token from the Authorization Server's token endpoint using
 <code>urn:ietf:params:oauth:grant-type:uma-ticket</code> grant [[!UMA]].
 When using this grant Client MUST use [[#tokens-id]] as <code>claim_token</code>
 and <code>http://openid.net/specs/openid-connect-core-1_0.html#IDToken</code> as <code>claim_token_format</code>.
 
-Note: Client can push additional claims by requesting upgraded RPT [[!UMA]]
+Note: Client can push additional claims by requesting an upgraded RPT [[!UMA]]
 
 ## DPoP Proof Validation ## {#resource-dpop-validation}
 
