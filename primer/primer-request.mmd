@@ -4,26 +4,25 @@ sequenceDiagram
   participant Client as ⚙️ Client
   participant AS as ☁️ Authorization Server
   participant RS as ☁️ Resource Server
-  note over Client: 1. An AJAX request is initiated
-  note over Client: 2. Creates a DPoP header token
-  Client->>RS: 3. Sends Request
-  RS->>Client: 4. Responds 401 with as_uri
-  Client->>AS: Requests AS configuration
-  AS-->>Client: AS configuration
-  Client->>AS: Request Access Token
-  note over AS: 4. Checks Access token expirations
-  note over AS: 5. Checks DPoP Token url and method
-  note over AS: 5.1. (Optional) Checks DPoP token unique identifier
-  note over AS: 6. Checks DPoP signature against Access Token
-  AS->>WebID: 7. Retrieves Profile
+  Client->>RS: 1. Discover Authorization Server
+  RS->>Client: Responds 401 with as_uri
+  Client->>AS: 2. Requests AS configuration
+  AS->>Client: AS configuration
+  note over Client: 3. Creates a DPoP header token
+  Client->>AS: 4. Request Access Token
+  note over AS: 5. Checks ID Token expirations
+  note over AS: 6. Checks DPoP Token url and method
+  note over AS: 6.1. (Optional) Checks DPoP token unique identifier
+  note over AS: 7. Checks DPoP signature against Access Token
+  AS->>WebID: 8. Retrieves WebID Document
   WebID->>AS: Profile
-  note over AS: 8. Checks Issuer
-  AS->>OP: 9. Retrieves OP configuration
+  note over AS: 9. Checks Issuer
+  AS->>OP: 10. Retrieves OP configuration
   OP->>AS: OP configuration
-  AS->>OP: 10. Requests JWKS
+  AS->>OP: 11. Requests JWKS
   OP->>AS: JWKS
-  note over AS: 11. Checks access token signature validity
-  AS->>Client: Access Token Response
-  Client->>RS: 3. Sends Request with Access Token
+  note over AS: 12. Checks access token signature validity
+  AS->>Client: 13. Access Token Response
+  Client->>RS: 14. Sends Request with Access Token
   note over AS, RS: Have pre-established usage of Access Tokens
-  RS->>Client: 13. Returns Result
+  RS->>Client: 15. Returns Result

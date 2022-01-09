@@ -177,7 +177,7 @@ list.
 This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/) for the Client ID Document:
 
 <div class='example'>
-    <p>https://app.example/id
+    <p>https://app.example/id</p>
 
     <pre highlight="jsonld">
         {
@@ -404,7 +404,7 @@ A server hosting a WebID document MAY transmit the `http://www.w3.org/ns/solid/t
 
 <div class="example">
     <pre highlight="http">
-        Link: <https://oidc.example>; rel="http://www.w3.org/ns/solid/terms#oidcIssuer"; anchor="#id"
+        Link: &lt;https://oidc.example&gt;; rel="http://www.w3.org/ns/solid/terms#oidcIssuer"; anchor="#id"
     </pre>
 </div>
 

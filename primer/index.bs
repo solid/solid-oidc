@@ -637,7 +637,7 @@ WWW-Authenticate: UMA realm="example",
   ticket="016f84e8-f9b9-11e0-bd6f-0021cc6004de"
 ```
 
-<h4 id="request-flow-step-1" class="no-num">1. Discover Token Endpoint</h4>
+<h4 id="request-flow-step-2" class="no-num">2. Request AS configuration</h4>
 
 Knowing Authorization Server now client can discover its Token Endpoint ([[!RFC8414]])
 
@@ -658,7 +658,7 @@ Response:
 }
 ```
 
-<h4 id="request-flow-step-2" class="no-num">2. Creates a DPoP header token</h4>
+<h4 id="request-flow-step-3" class="no-num">3. Creates a DPoP header token</h4>
 
 Before we request access token, we need to generate a DPoP header token. A new DPoP token must be
 generated every time a request is made.
@@ -723,25 +723,25 @@ grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Auma-ticket
 &claim_token_format=http%3A%2F%2Fopenid.net%2Fspecs%2Fopenid-connect-core-1_0.html%23IDToken
 ```
 
-<h4 id="request-flow-step-4" class="no-num">4. Checks ID Token expirations</h4>
+<h4 id="request-flow-step-5" class="no-num">5. Checks ID Token expirations</h4>
 
 The AS checks if the id token is still valid by looking at the `exp` claim. If the token
 does not have an `exp` claim or the token is expired, the AS must reject the request with a 403.
 
-<h4 id="request-flow-step-5" class="no-num">5. Checks the DPoP token url and method</h4>
+<h4 id="request-flow-step-6" class="no-num">6. Checks the DPoP token url and method</h4>
 
 The AS checks the `htu` and `htm` claims of the DPoP token. If the `htu` does not match the
 protocol, origin and path of the request or the `htm` does not correspond the the http method
 of the request, the AS must reject the request with a 403.
 
-<h4 id="request-flow-step-5.1" class="no-num">5.1. (Optional) Checks DPoP token unique identifier</h4>
+<h4 id="request-flow-step-6.1" class="no-num">6.1. (Optional) Checks DPoP token unique identifier</h4>
 
 The AS can optionally keep track of all DPoP `jti` claims it received. Because a new DPoP token
 must be generated each time a request is made, no two tokens should have the same `jti`. If the
 AS receives a DPoP token with a `jti` it has already encountered it may reject the request with
 a 403.
 
-<h4 id="request-flow-step-6" class="no-num">6. Checks DPoP signature against Access Token</h4>
+<h4 id="request-flow-step-7" class="no-num">7. Checks DPoP signature against Access Token</h4>
 
 The AS first confirms that the DPoP token was signed by the public key listed in its `header
 jwk`. If it was not, the AS must reject the request with a 403.
@@ -750,7 +750,7 @@ The AS checks if the public key in the DPoP token's `header.jwk` corresponds to 
 thumbprint in the access token in the `cnf` field. If they do not, the OP must reject the
 request with a 403.
 
-<h4 id="request-flow-step-7" class="no-num">7. Retrieves Profile</h4>
+<h4 id="request-flow-step-8" class="no-num">8. Retrieves WebID Document</h4>
 
 Using the `webid` claim in the access token (for us, it's
 `https://alice.coolpod.example/profile/card#me`), the AS retreives the user's WebId document.
@@ -778,12 +778,12 @@ Response
     solid:oidcIssuer <https://secureauth.example> ;
 ```
 
-<h4 id="request-flow-step-8" class="no-num">8. Checks issuer</h4>
+<h4 id="request-flow-step-9" class="no-num">9. Checks issuer</h4>
 
 The AS checks that the `iss` claim in the access token matches the issuer listed in the user's
 WebID. If it does not, the AS must reject the request with a 403.
 
-<h4 id="request-flow-step-9" class="no-num">9. Retrieves OP configuration</h4>
+<h4 id="request-flow-step-10" class="no-num">10. Retrieves OP configuration</h4>
 
 The AS uses the `iss` claim to get the issuer's configuration. The url is the issuer claim with
 `/.well-known/openid-configuration` appended to the end.
@@ -847,7 +847,7 @@ Response
 }
 ```
 
-<h4 id="request-flow-step-10" class="no-num">10. Requests JWKS</h4>
+<h4 id="request-flow-step-11" class="no-num">11. Requests JWKS</h4>
 
 Using the `jwks_uri` field in the openid-configuration, the AS makes a request to retreive the
 OP's public keys.
@@ -876,13 +876,13 @@ Response (application/json)
 
 Notice that the `keys` field is an array, so an OP could have multiple public keys.
 
-<h4 id="request-flow-step-11" class="no-num">11. Checks access token signature validity</h4>
+<h4 id="request-flow-step-12" class="no-num">12. Checks access token signature validity</h4>
 
 Using the `kid` value in the access token, the AS searches the OP keys for one that matches the
 access token. Checks to see if the access token was signed by that key. If it was not, the AS
 must reject the request with a 403.
 
-<h4 id="request-flow-step-12" class="no-num">12. Performs Authorization</h4>
+<h4 id="request-flow-step-13" class="no-num">13. Access Token Response</h4>
 
 Now that the AS has performed all of its checks, we can trust that the agent in the `webid`
 claim (`https://alice.coolpod.example/profile/card#me`) is the same agent on whose behalf the
@@ -896,7 +896,7 @@ Response:
 }
 ```
 
-<h4 id="request-flow-step-3" class="no-num">3. Sends request</h4>
+<h4 id="request-flow-step-14" class="no-num">14. Sends request with Access Token</h4>
 
 Note: In practice client would need to upgrade RPT by pushing
 authorization related claim. This primer only focuses on authentication so we omit
@@ -911,7 +911,7 @@ Headers: {
 }
 ```
 
-<h4 id="request-flow-step-13" class="no-num">13. Returns Result</h4>
+<h4 id="request-flow-step-15" class="no-num">15. Returns Result</h4>
 
 Given all went well, the RS should return the requested content.
 
