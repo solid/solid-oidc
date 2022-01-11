@@ -293,6 +293,7 @@ Response:
   "client_id": "https://decentphtos.example/webid#this",
   "client_name": "DecentPhotos",
   "redirect_uris": [ "https://decentphotos.example/callback" ],
+  "post_logout_redirect_uris": [ "https://decentphotos.example/logout" ],
   "client_uri": "https://decentphotos.example/",
   "logo_uri": "https://decentphotos.example/logo.png",
   "tos_uri": "https://decentphotos.example/tos.html",
