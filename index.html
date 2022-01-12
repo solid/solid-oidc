@@ -9,7 +9,7 @@
   <meta content="Bikeshed version cace53f8c, updated Tue Dec 7 12:12:54 2021 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
   <link href="https://solid.github.io/solid-oidc/solid.svg" rel="icon">
-  <meta content="6151e628a228c07066caee7c66f500a801d4800a" name="document-revision">
+  <meta content="f14aea0e4f9f065f7a9e394bd99d1808037b58be" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -547,8 +547,8 @@ definition of client registration metadata from <a data-link-type="biblio" href=
 with the values in the Client ID Document.</p>
    <p>Further, the <code>redirect_uri</code> provided by the Client MUST be included in the registration <code>redirect_uris</code> list.</p>
    <p>This example uses <a href="https://www.w3.org/TR/json-ld11/">JSON-LD </a> for the Client ID Document:</p>
-   <div class="example" id="example-587d858c">
-    <a class="self-link" href="#example-587d858c"></a> 
+   <div class="example" id="example-02b83b49">
+    <a class="self-link" href="#example-02b83b49"></a> 
     <p>https://app.example/id</p>
 <pre class="highlight"><c- p>{</c->
   <c- nd>"@context"</c-><c- p>:</c-> <c- u>"https://www.w3.org/ns/solid/oidc-context.jsonld"</c-><c- p>,</c->
@@ -556,6 +556,7 @@ with the values in the Client ID Document.</p>
   <c- f>"client_id"</c-><c- p>:</c-> <c- u>"https://app.example/id"</c-><c- p>,</c->
   <c- f>"client_name"</c-><c- p>:</c-> <c- u>"Solid Application Name"</c-><c- p>,</c->
   <c- f>"redirect_uris"</c-><c- p>:</c-> <c- p>[</c-><c- u>"https://app.example/callback"</c-><c- p>],</c->
+  <c- f>"post_logout_redirect_uris"</c-><c- p>:</c-> <c- p>[</c-><c- u>"https://app.example/logout"</c-><c- p>],</c->
   <c- f>"client_uri"</c-><c- p>:</c-> <c- u>"https://app.example/"</c-><c- p>,</c->
   <c- f>"logo_uri"</c-> <c- p>:</c-> <c- u>"https://app.example/logo.png"</c-><c- p>,</c->
   <c- f>"tos_uri"</c-> <c- p>:</c-> <c- u>"https://app.example/tos.html"</c-><c- p>,</c->
@@ -573,8 +574,8 @@ available at <code>https://www.w3.org/ns/solid/oidc-context.jsonld</code>. Clien
 this JSON-LD context MUST use the HTTPS scheme.</p>
    <p class="note" role="note"><span>NOTE:</span> the <code>oidc</code> vocabulary that is part of this context uses the HTTP scheme.</p>
    <p>The JSON-LD context is defined as:</p>
-   <div class="example" id="example-f06d2853">
-    <a class="self-link" href="#example-f06d2853"></a> 
+   <div class="example" id="example-266895ae">
+    <a class="self-link" href="#example-266895ae"></a> 
 <pre class="highlight"><c- p>{</c->
   <c- nd>"@context"</c-><c- p>:</c-> <c- p>{</c->
     <c- nd>"@version"</c-><c- p>:</c-> <c- mf>1.1</c-><c- p>,</c->
@@ -603,6 +604,14 @@ this JSON-LD context MUST use the HTTPS scheme.</p>
     <c- p>},</c->
     <c- f>"redirect_uris"</c-><c- p>:</c-> <c- p>{</c->
       <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:redirect_uris"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c-><c- p>,</c->
+      <c- nd>"@container"</c-><c- p>:</c-> <c- p>[</c->
+        <c- u>"@id"</c-><c- p>,</c->
+        <c- u>"@set"</c->
+      <c- p>]</c->
+    <c- p>},</c->
+    <c- f>"post_logout_redirect_uris"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:post_logout_redirect_uris"</c-><c- p>,</c->
       <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c-><c- p>,</c->
       <c- nd>"@container"</c-><c- p>:</c-> <c- p>[</c->
         <c- u>"@id"</c-><c- p>,</c->
