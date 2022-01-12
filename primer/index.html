@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version cace53f8c, updated Tue Dec 7 12:12:54 2021 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/primer/" rel="canonical">
-  <meta content="9ac921a8e99b1026a26ad83e046b2e2e15286cd9" name="document-revision">
+  <meta content="6151e628a228c07066caee7c66f500a801d4800a" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -344,7 +344,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2021-12-21">21 December 2021</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-01-12">12 January 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -361,7 +361,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2021 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2022 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -804,61 +804,12 @@ token, it needs to be converted into a <a href="https://tools.ietf.org/html/rfc7
 Our JWK thumbprint looks more like:</p>
 <pre class="language-text highlight">9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8
 </pre>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-18"><span class="content">18. Generates access token</span><a class="self-link" href="#authorization-code-pkce-flow-step-18"></a></h4>
-   <p>The OP generates an access token. To do so it constructs a JSON Web Token and signs it using
-its own keys. The access token could look like (remember you can decode it using <a href="https://jwt.io/#debugger-io?token=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwiYXVkIjoic29saWQiLCJjbmYiOnsiamt0IjoiOVhtd0s4bVEzSDUtUG56QXQzbEZIeldCV192NVFoWXluZXpiYml0NGtDOCJ9LCJjbGllbnRfaWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJqdGkiOiJmZDBhMTM1My0yNWYzLTRjN2UtOGY4Yi1jMTQyNjRmMWMxMmUiLCJpYXQiOjE2MDMzODUyNjEsImV4cCI6MTYwMzM4NTg2MX0.HIIYiovILPvsdkD3s3xomR1MkA_Ir8Mx_C-eHxbWEnw9Z2rv2rOWbvMPZ--BqH3qVSupgYTZZsTDbZXA8giCLA">https://jwt.io</a>):</p>
-<pre class="language-text highlight">eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwiYXVkIjoic29saWQiLCJjbmYiOnsiamt0IjoiOVhtd0s4bVEzSDUtUG56QXQzbEZIeldCV192NVFoWXluZXpiYml0NGtDOCJ9LCJjbGllbnRfaWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJqdGkiOiJmZDBhMTM1My0yNWYzLTRjN2UtOGY4Yi1jMTQyNjRmMWMxMmUiLCJpYXQiOjE2MDMzODUyNjEsImV4cCI6MTYwMzM4NTg2MX0.HIIYiovILPvsdkD3s3xomR1MkA_Ir8Mx_C-eHxbWEnw9Z2rv2rOWbvMPZ--BqH3qVSupgYTZZsTDbZXA8giCLA
-</pre>
-   <p>Token Header:</p>
-<pre class="language-json highlight"><c- p>{</c->
-    <c- f>"alg"</c-><c- p>:</c-> <c- u>"ES256"</c-><c- p>,</c->
-    <c- f>"typ"</c-><c- p>:</c-> <c- u>"JWT"</c->
-<c- p>}</c->
-</pre>
-   <ul>
-    <li data-md>
-     <p><code>"alg": "ES256"</code>: indicates the token was signed using eliptic curve</p>
-    <li data-md>
-     <p><code>"typ": "JWT"</code>: indicates that this is a JSON web token</p>
-   </ul>
-   <p>Token Body:</p>
-<pre class="language-json highlight"><c- p>{</c->
-    <c- f>"webid"</c-><c- p>:</c-> <c- u>"https://alice.coolpod.example/profile/card#me"</c-><c- p>,</c->
-    <c- f>"iss"</c-><c- p>:</c-> <c- u>"https://secureauth.example"</c-><c- p>,</c->
-    <c- f>"aud"</c-><c- p>:</c-> <c- u>"solid"</c-><c- p>,</c->
-    <c- f>"cnf"</c-><c- p>:</c-> <c- p>{</c->
-        <c- f>"jkt"</c-><c- p>:</c-> <c- u>"9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8"</c->
-    <c- p>},</c->
-    <c- f>"client_id"</c-><c- p>:</c-> <c- u>"https://decentphotos.example/webid#this"</c-><c- p>,</c->
-    <c- f>"jti"</c-><c- p>:</c-> <c- u>"fd0a1353-25f3-4c7e-8f8b-c14264f1c12e"</c-><c- p>,</c->
-    <c- f>"iat"</c-><c- p>:</c-> <c- mi>1603385261</c-><c- p>,</c->
-    <c- f>"exp"</c-><c- p>:</c-> <c- mi>1603385861</c->
-<c- p>}</c->
-</pre>
-   <ul>
-    <li data-md>
-     <p><code>"webid": "https://alice.coolpod.example/profile/card#me"</code>: The WebId of the user that
-logged in</p>
-    <li data-md>
-     <p><code>"iss": "https://secureauth.example"</code>: The OP that was used to generate this token</p>
-    <li data-md>
-     <p><code>"aud": "solid"</code>: The token’s audience. Because DPoP handles scoping the audience in all
-practical senses, the audience for a solid token is simply "solid."</p>
-    <li data-md>
-     <p><code>"cnf": { "jkt": "9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8" }</code>: The jwk thrumbprint must
-be embedded in an object on the field "jkt"</p>
-    <li data-md>
-     <p><code>"client_id": "https://decentphotos.example/webid#this"</code>: The client id of the application</p>
-    <li data-md>
-     <p><code>"iat": 1603370641</code>: The date the token was issued, in this case October 22, 2020 8:44:01</p>
-    <li data-md>
-     <p><code>"exp": 1603371241</code>: The token’s expiration date, in this case October 22, 2020 8:54:01</p>
-   </ul>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-19"><span class="content">19. Generates the id_token</span><a class="self-link" href="#authorization-code-pkce-flow-step-19"></a></h4>
-   <p>If <code>openid</code> was listed as a scope during the authorization request, the OP generates an id
-token. The id token is not used to access anything. It is simply to communicate information to
-the client. This token is a <a href="https://jwt.io/introduction/">JSON Web Token</a>. It would look like
+   <p>Since <code>openid</code> was listed as a scope during the authorization request, the OP generates an id
+token. The id token will be pushed as claim to any Solid Authorization Server needed, which clients want to get Access Token from.
+This token is a <a href="https://jwt.io/introduction/">JSON Web Token</a>. It would look like
 the following (you can decrypt the token with <a href="https://jwt.io/#debugger-io?token=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg">https://jwt.io</a>):</p>
+   <p class="issue" id="issue-81973254"><a class="self-link" href="#issue-81973254"></a> encoded token needs to be updated</p>
 <pre class="language-text highlight">eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg
 </pre>
    <p>Token Header:</p>
@@ -876,12 +827,16 @@ the following (you can decrypt the token with <a href="https://jwt.io/#debugger-
    <p>Token Body:</p>
 <pre class="language-json highlight"><c- p>{</c->
     <c- f>"sub"</c-><c- p>:</c-> <c- u>"https://alice.coolpod.example/profile/card#me"</c-><c- p>,</c->
-    <c- f>"aud"</c-><c- p>:</c-> <c- u>"https://decentphotos.example/webid#this"</c-><c- p>,</c->
+    <c- f>"aud"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"solid"</c-><c- p>,</c-> <c- u>"https://decentphotos.example/webid#this"</c-><c- p>],</c->
+    <c- f>"azp"</c-><c- p>:</c-> <c- f>"https://decentphotos.example/webid#this"</c->
     <c- f>"webid"</c-><c- p>:</c-> <c- u>"https://alice.coolpod.example/profile/card#me"</c-><c- p>,</c->
     <c- f>"iss"</c-><c- p>:</c-> <c- u>"https://secureauth.example"</c-><c- p>,</c->
     <c- f>"jti"</c-><c- p>:</c-> <c- u>"844a095c-9cdb-47e5-9510-1dba987c0a5f"</c-><c- p>,</c->
     <c- f>"iat"</c-><c- p>:</c-> <c- mi>1603370641</c-><c- p>,</c->
-    <c- f>"exp"</c-><c- p>:</c-> <c- mi>1603371241</c->
+    <c- f>"exp"</c-><c- p>:</c-> <c- mi>1603371241</c-><c- p>,</c->
+    <c- f>"cnf"</c-><c- p>:</c-> <c- p>{</c->
+        <c- f>"jkt"</c-><c- p>:</c-> <c- u>"9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8"</c->
+    <c- p>},</c->
 <c- p>}</c->
 </pre>
    <ul>
@@ -890,7 +845,11 @@ the following (you can decrypt the token with <a href="https://jwt.io/#debugger-
 be the same as the authenticated user’s WebID.</p>
     <li data-md>
      <p><code>"aud": "https://decentphotos.example/webid#this"</code>: The token’s audience. Because an
-id_token is intended for the client, its audience is the client id.</p>
+id_token is intended for the client and any Solid Authorization Server,
+its audience is the client id and the string "solid".</p>
+    <li data-md>
+     <p><code>"azp": "https://decentphotos.example/webid#this"</code>: The token’s authorized party. Because an
+id_token is intended to be used by the client, its authorized party is the client id.</p>
     <li data-md>
      <p><code>"webid": "https://alice.coolpod.example/profile/card#me"</code>: The WebID of the user that
 logged in</p>
@@ -903,6 +862,9 @@ for this token that can be used to prevent replay attacks.</p>
      <p><code>"iat": 1603370641</code>: The date the token was issued, in this case October 22, 2020 8:44:01</p>
     <li data-md>
      <p><code>"exp": 1603371241</code>: The token’s expiration date, in this case October 22, 2020 8:54:01</p>
+    <li data-md>
+     <p><code>"cnf": { "jkt": "9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8" }</code>: The jwk thrumbprint must
+be embedded in an object on the field "jkt"</p>
    </ul>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-20"><span class="content">20. Generates refresh token</span><a class="self-link" href="#authorization-code-pkce-flow-step-20"></a></h4>
    <p>If <code>offline_access</code> was provided as a scope, the OP creates an opaque token as
@@ -927,41 +889,52 @@ token does not need to be a JWT.</p>
 a response with the tokens in the body:</p>
    <p>Response (content-type: application/json)</p>
 <pre class="language-json highlight"><c- p>{</c->
-    <c- f>"access_token"</c-><c- p>:</c-> <c- u>"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwiYXVkIjoic29saWQiLCJjbmYiOnsiamt0IjoiOVhtd0s4bVEzSDUtUG56QXQzbEZIeldCV192NVFoWXluZXpiYml0NGtDOCJ9LCJjbGllbnRfaWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJqdGkiOiJmZDBhMTM1My0yNWYzLTRjN2UtOGY4Yi1jMTQyNjRmMWMxMmUiLCJpYXQiOjE2MDMzODUyNjEsImV4cCI6MTYwMzM4NTg2MX0.HIIYiovILPvsdkD3s3xomR1MkA_Ir8Mx_C-eHxbWEnw9Z2rv2rOWbvMPZ--BqH3qVSupgYTZZsTDbZXA8giCLA"</c-><c- p>,</c->
-    <c- f>"expires_in"</c-><c- p>:</c-> <c- mi>300</c-><c- p>,</c->
-    <c- f>"token_type"</c-><c- p>:</c-> <c- u>"DPoP"</c-><c- p>,</c->
     <c- f>"id_token"</c-><c- p>:</c-> <c- u>"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg"</c-><c- p>,</c->
-    <c- f>"refresh_token"</c-><c- p>:</c-> <c- u>"eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ."</c-><c- p>,</c->
-    <c- f>"scope"</c-><c- p>:</c-> <c- u>"openid webid offline_access"</c->
+    <c- f>"refresh_token"</c-><c- p>:</c-> <c- u>"eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ."</c->
 <c- p>}</c->
 </pre>
    <ul>
-    <li data-md>
-     <p><code>access_token": "eyJhbGciOiJ..."</code>: The access token we generated. The client will use this
-to authenticate with the server.</p>
-    <li data-md>
-     <p><code>"expires_in":	300</code>: Tells the client that the access token will expire in 300 seconds (5
-minutes)</p>
-    <li data-md>
-     <p><code>"token_type":	"DPoP"</code>: Tells the client that the token type is DPoP</p>
     <li data-md>
      <p><code>"id_token": "eyJhbGciOiJFU..."</code>: The id token we generated. The client will use this to
 extract information like the user’s WebId.</p>
     <li data-md>
      <p><code>"refresh_token":	"eyJhbGciOiJ..."</code>: The refresh token. The client will use this to get a
 new access token when its current one expires.</p>
-    <li data-md>
-     <p><code>"scope":	"openid webid offline_access"</code>: The scopes that were used.</p>
    </ul>
    <h3 class="heading settled" data-level="4.2" id="request-flow"><span class="secno">4.2. </span><span class="content">Request Flow</span><a class="self-link" href="#request-flow"></a></h3>
    <p><img src="primer-request.mmd.svg" width="980"></p>
-   <h4 class="no-num heading settled" id="request-flow-step-1"><span class="content">1. An AJAX request is initiated</span><a class="self-link" href="#request-flow-step-1"></a></h4>
    <p>In this example, Alice has logged into <code>https://decentphotos.example</code> and has completed the
 authentication steps above. She wants to make a request to Bob’s Pod to get a photo album
 information at <code>https://bob.otherpod.example/private/photo_album.ttl</code>. Bob has previously
 granted access to Alice but has not granted access to anyone else.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-2"><span class="content">2. Creates a DPoP header token</span><a class="self-link" href="#request-flow-step-2"></a></h4>
-   <p>Before we send a request, we need to generate a DPoP header token. A new DPoP token must be
+   <h4 class="no-num heading settled" id="request-flow-step-1"><span class="content">1. Discover Authorization Server</span><a class="self-link" href="#request-flow-step-1"></a></h4>
+   <p>Client can discover Authorization Server by making request to the resource</p>
+   <p>Request:</p>
+<pre class="language-http highlight">GET https://bob.otherpod.example/private/photo_album.ttl
+</pre>
+   <p>Response:</p>
+<pre class="language-http highlight"><c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c-> <c- m>401</c-> <c- ne>Unauthorized</c->
+<c- e>WWW-Authenticate</c-><c- o>:</c-> <c- l>UMA realm="example",</c->
+  <c- l>as_uri="https://auth.otherpod.example",</c->
+  <c- l>ticket="016f84e8-f9b9-11e0-bd6f-0021cc6004de"</c->
+</pre>
+   <h4 class="no-num heading settled" id="request-flow-step-2"><span class="content">2. Request AS configuration</span><a class="self-link" href="#request-flow-step-2"></a></h4>
+   <p>Knowing Authorization Server now client can discover its Token Endpoint (<a data-link-type="biblio" href="#biblio-rfc8414">[RFC8414]</a>)</p>
+   <p>Request:</p>
+<pre class="language-http highlight">GET https://auth.otherpod.example/.well-known/uma2-configuration
+</pre>
+   <p>Response:</p>
+<pre class="language-json highlight"><c- p>{</c->
+    <c- f>"issuer"</c-><c- p>:</c-> <c- u>"https://auth.otherpod.example"</c-><c- p>,</c->
+    <c- f>"token_endpoint"</c-><c- p>:</c-> <c- u>"https://auth.otherpod.example/token"</c-><c- p>,</c->
+    <c- f>"grant_types_supported"</c-><c- p>:</c-> <c- p>[</c->
+        <c- u>"urn:ietf:params:oauth:grant-type:uma-ticket"</c->
+    <c- p>]</c->
+    ...
+<c- p>}</c->
+</pre>
+   <h4 class="no-num heading settled" id="request-flow-step-3"><span class="content">3. Creates a DPoP header token</span><a class="self-link" href="#request-flow-step-3"></a></h4>
+   <p>Before we request access token, we need to generate a DPoP header token. A new DPoP token must be
 generated every time a request is made.</p>
    <p>Generating a DPoP token is done the same way we did it in the authentication section. It must be signed by the same keypair that we generated in the authentication section. Our token
 could look like the following (you can decode the token using https://jwt.io):</p>
@@ -993,18 +966,18 @@ generated the keys using eliptic curves.</p>
    </ul>
    <p>Token Body:</p>
 <pre class="language-json highlight"><c- p>{</c->
-    <c- f>"htu"</c-><c- p>:</c-> <c- u>"https://bob.otherpod.example/private/photo_album.ttl"</c-><c- p>,</c->
-    <c- f>"htm"</c-><c- p>:</c-> <c- u>"GET"</c-><c- p>,</c->
+    <c- f>"htu"</c-><c- p>:</c-> <c- u>"https://auth.otherpod.example/token"</c-><c- p>,</c->
+    <c- f>"htm"</c-><c- p>:</c-> <c- u>"POST"</c-><c- p>,</c->
     <c- f>"jti"</c-><c- p>:</c-> <c- u>"fb1264dd-fff1-4509-a7b1-0fe58d08d3e1"</c-><c- p>,</c->
     <c- f>"iat"</c-><c- p>:</c-> <c- mi>1603389616</c->
 <c- p>}</c->
 </pre>
    <ul>
     <li data-md>
-     <p><code>"htu": "https://bob.otherpod.example/private/photo_album.ttl"</code>: htu limits the token for
+     <p><code>"htu": "https://auth.otherpod.example/token"</code>: htu limits the token for
 use only on the given url.</p>
     <li data-md>
-     <p><code>"htm": "GET"</code>: htm limits the token for use only on a specific http method, in this case <code>GET</code>.</p>
+     <p><code>"htm": "POST"</code>: htm limits the token for use only on a specific http method, in this case <code>POST</code>.</p>
     <li data-md>
      <p><code>"jti": "fb1264dd-fff1-4509-a7b1-0fe58d08d3e1"</code>: jti is a unique identifier for the DPoP
 token that can optionally be used by the server to defend against replay attacks</p>
@@ -1012,42 +985,37 @@ token that can optionally be used by the server to defend against replay attacks
      <p><code>"iat": 1603389616</code>: The date the token was issued, in this case October 22, 2020 14:00:16
 GMT.</p>
    </ul>
-   <h4 class="no-num heading settled" id="request-flow-step-3"><span class="content">3. Sends request</span><a class="self-link" href="#request-flow-step-3"></a></h4>
-   <p>With the access token and new DPoP token in hand, we’re ready to make our request.</p>
-<pre class="language-http highlight">GET https://bob.otherpod.example/private/photo_album.ttl
-Headers: {
-    authorization: "DPoP eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwiYXVkIjoic29saWQiLCJjbmYiOnsiamt0IjoiOVhtd0s4bVEzSDUtUG56QXQzbEZIeldCV192NVFoWXluZXpiYml0NGtDOCJ9LCJjbGllbnRfaWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJqdGkiOiJmZDBhMTM1My0yNWYzLTRjN2UtOGY4Yi1jMTQyNjRmMWMxMmUiLCJpYXQiOjE2MDMzODUyNjEsImV4cCI6MTYwMzM4NTg2MX0.HIIYiovILPvsdkD3s3xomR1MkA_Ir8Mx_C-eHxbWEnw9Z2rv2rOWbvMPZ--BqH3qVSupgYTZZsTDbZXA8giCLA",
-    dpop: "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRwb3Arand0IiwiandrIjp7Imt0eSI6IkVDIiwia2lkIjoiQ21HVE9Dd3ZKWXhrb0dGOGNxcFpBNTdab2xVdThBcFJQb3MwVlduWk1TNCIsInVzZSI6InNpZyIsImFsZyI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiU0FZcmF5VUh4Z1FPQ29YSC1MbHdyOW1iSWJpUHBsLXRQRUpLeE1WWFltcyIsInkiOiJ6eGJQODdPQ3JpeEZpMk9vZjU1QkhsTC1ySHhvWHVuUmttNFBkV3duUzJnIn19.eyJodHUiOiJodHRwczovL2JvYi5vdGhlcnBvZC5leGFtcGxlL3ByaXZhdGUvcGhvdG9fYWxidW0udHRsIiwiaHRtIjoiZ2V0IiwianRpIjoiZmIxMjY0ZGQtZmZmMS00NTA5LWE3YjEtMGZlNThkMDhkM2UxIiwiaWF0IjoxNjAzMzg5NjE2LCJleHAiOjE2MDMzOTMyMTZ9.G8JktoMOadenCYtO4Z_ZI7ACnjKJvT59OyKlQ6WpB1Qq2GoCK6v1ocrpsfELDOKIL5nt5fwWccfvCAA2bMrkjA"
-}
+   <h4 class="no-num heading settled" id="request-flow-step-4"><span class="content">4. Request Access Token</span><a class="self-link" href="#request-flow-step-4"></a></h4>
+   <p>Request:</p>
+<pre class="language-http highlight"><c- nf>POST</c-> <c- nn>/token</c-> <c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c->
+<c- e>Host</c-><c- o>:</c-> <c- l>auth.otherpod.example</c->
+<c- e>DPoP</c-><c- o>:</c-> <c- l>eyJhbGciOi...</c->
+...
+grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Auma-ticket
+&amp;ticket=016f84e8-f9b9-11e0-bd6f-0021cc6004de
+&amp;claim_token=eyj0...
+&amp;claim_token_format=http%3A%2F%2Fopenid.net%2Fspecs%2Fopenid-connect-core-1_0.html%23IDToken
 </pre>
-   <ul>
-    <li data-md>
-     <p><code>headers.authorization: "DPoP eyJhbGciOiJFUzI1N..."</code>: The authorization header contains the
-ACCESS TOKEN that we received from the OP during the auth phase. Putting "DPoP" followed by a
-space tells the Resource Server that this is a DPoP bound access token.</p>
-    <li data-md>
-     <p><code>dpop: "eyJhbGciOi..."</code>: The DPoP token we just generated.</p>
-   </ul>
-   <h4 class="no-num heading settled" id="request-flow-step-4"><span class="content">4. Checks Access Token expirations</span><a class="self-link" href="#request-flow-step-4"></a></h4>
-   <p>The RS checks if the access token is still valid by looking at the <code>exp</code> claim. If the token
-does not have an <code>exp</code> claim or the token is expired, the RS must reject the request with a 403.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-5"><span class="content">5. Checks the DPoP token url and method</span><a class="self-link" href="#request-flow-step-5"></a></h4>
-   <p>The RS checks the <code>htu</code> and <code>htm</code> claims of the DPoP token. If the <code>htu</code> does not match the
+   <h4 class="no-num heading settled" id="request-flow-step-5"><span class="content">5. Checks ID Token expirations</span><a class="self-link" href="#request-flow-step-5"></a></h4>
+   <p>The AS checks if the id token is still valid by looking at the <code>exp</code> claim. If the token
+does not have an <code>exp</code> claim or the token is expired, the AS must reject the request with a 403.</p>
+   <h4 class="no-num heading settled" id="request-flow-step-6"><span class="content">6. Checks the DPoP token url and method</span><a class="self-link" href="#request-flow-step-6"></a></h4>
+   <p>The AS checks the <code>htu</code> and <code>htm</code> claims of the DPoP token. If the <code>htu</code> does not match the
 protocol, origin and path of the request or the <code>htm</code> does not correspond the the http method
-of the request, the RS must reject the request with a 403.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-5.1"><span class="content">5.1. (Optional) Checks DPoP token unique identifier</span><a class="self-link" href="#request-flow-step-5.1"></a></h4>
-   <p>The RS can optionally keep track of all DPoP <code>jti</code> claims it received. Because a new DPoP token
+of the request, the AS must reject the request with a 403.</p>
+   <h4 class="no-num heading settled" id="request-flow-step-6.1"><span class="content">6.1. (Optional) Checks DPoP token unique identifier</span><a class="self-link" href="#request-flow-step-6.1"></a></h4>
+   <p>The AS can optionally keep track of all DPoP <code>jti</code> claims it received. Because a new DPoP token
 must be generated each time a request is made, no two tokens should have the same <code>jti</code>. If the
-RS receives a DPoP token with a <code>jti</code> it has already encountered it may reject the request with
+AS receives a DPoP token with a <code>jti</code> it has already encountered it may reject the request with
 a 403.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-6"><span class="content">6. Checks DPoP signature against Access Token</span><a class="self-link" href="#request-flow-step-6"></a></h4>
-   <p>The RS first confirms that the DPoP token was signed by the public key listed in its <code>header
-jwk</code>. If it was not, the RS must reject the request with a 403.</p>
-   <p>The RS checks if the public key in the DPoP token’s <code>header.jwk</code> corresponds to the jwk
+   <h4 class="no-num heading settled" id="request-flow-step-7"><span class="content">7. Checks DPoP signature against Access Token</span><a class="self-link" href="#request-flow-step-7"></a></h4>
+   <p>The AS first confirms that the DPoP token was signed by the public key listed in its <code>header
+jwk</code>. If it was not, the AS must reject the request with a 403.</p>
+   <p>The AS checks if the public key in the DPoP token’s <code>header.jwk</code> corresponds to the jwk
 thumbprint in the access token in the <code>cnf</code> field. If they do not, the OP must reject the
 request with a 403.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-7"><span class="content">7. Retrieves Profile</span><a class="self-link" href="#request-flow-step-7"></a></h4>
-   <p>Using the <code>webid</code> claim in the access token (for us, it’s <code>https://alice.coolpod.example/profile/card#me</code>), the RS retreives the user’s WebId document.</p>
+   <h4 class="no-num heading settled" id="request-flow-step-8"><span class="content">8. Retrieves WebID Document</span><a class="self-link" href="#request-flow-step-8"></a></h4>
+   <p>Using the <code>webid</code> claim in the access token (for us, it’s <code>https://alice.coolpod.example/profile/card#me</code>), the AS retreives the user’s WebId document.</p>
    <p>Request</p>
 <pre class="language-http highlight">GET https://alice.coolpod.example/profile/card#me
 </pre>
@@ -1067,11 +1035,11 @@ request with a 403.</p>
     <c- g>foaf</c->:<c- g>name</c-> <c- u>"</c-><c- s>Alice</c-><c- u>"</c-> <c- c1>;</c->
     <c- g>solid</c->:<c- g>oidcIssuer</c-> <c- o>&lt;</c-><c- g>https</c->:<c- o>//</c-><c- g>secureauth</c->.<c- g>example</c-><c- o>></c-> <c- c1>;</c->
 </pre>
-   <h4 class="no-num heading settled" id="request-flow-step-8"><span class="content">8. Checks issuer</span><a class="self-link" href="#request-flow-step-8"></a></h4>
-   <p>The RS checks that the <code>iss</code> claim in the access token matches the issuer listed in the user’s
-WebID. If it does not, the RS must reject the request with a 403.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-9"><span class="content">9. Retrieves OP configuration</span><a class="self-link" href="#request-flow-step-9"></a></h4>
-   <p>The RS uses the <code>iss</code> claim to get the issuer’s configuration. The url is the issuer claim with <code>/.well-known/openid-configuration</code> appended to the end.</p>
+   <h4 class="no-num heading settled" id="request-flow-step-9"><span class="content">9. Checks issuer</span><a class="self-link" href="#request-flow-step-9"></a></h4>
+   <p>The AS checks that the <code>iss</code> claim in the access token matches the issuer listed in the user’s
+WebID. If it does not, the AS must reject the request with a 403.</p>
+   <h4 class="no-num heading settled" id="request-flow-step-10"><span class="content">10. Retrieves OP configuration</span><a class="self-link" href="#request-flow-step-10"></a></h4>
+   <p>The AS uses the <code>iss</code> claim to get the issuer’s configuration. The url is the issuer claim with <code>/.well-known/openid-configuration</code> appended to the end.</p>
    <p>Request</p>
 <pre class="language-http highlight">GET https://secureauth.example/.well-known/openid-configuration
 </pre>
@@ -1127,8 +1095,8 @@ WebID. If it does not, the RS must reject the request with a 403.</p>
     <c- f>"require_request_uri_registration"</c-><c- p>:</c-> <c- kc>false</c->
 <c- p>}</c->
 </pre>
-   <h4 class="no-num heading settled" id="request-flow-step-10"><span class="content">10. Requests JWKS</span><a class="self-link" href="#request-flow-step-10"></a></h4>
-   <p>Using the <code>jwks_uri</code> field in the openid-configuration, the RS makes a request to retreive the
+   <h4 class="no-num heading settled" id="request-flow-step-11"><span class="content">11. Requests JWKS</span><a class="self-link" href="#request-flow-step-11"></a></h4>
+   <p>Using the <code>jwks_uri</code> field in the openid-configuration, the AS makes a request to retreive the
 OP’s public keys.</p>
    <p>Request</p>
 <pre class="language-http highlight">GET https://secureauth.example/jwks
@@ -1149,14 +1117,30 @@ OP’s public keys.</p>
 <c- p>}</c->
 </pre>
    <p>Notice that the <code>keys</code> field is an array, so an OP could have multiple public keys.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-11"><span class="content">11. Checks access token signature validity</span><a class="self-link" href="#request-flow-step-11"></a></h4>
-   <p>Using the <code>kid</code> value in the access token, the RS searches the OP keys for one that matches the
-access token. Checks to see if the access token was signed by that key. If it was not, the RS
+   <h4 class="no-num heading settled" id="request-flow-step-12"><span class="content">12. Checks access token signature validity</span><a class="self-link" href="#request-flow-step-12"></a></h4>
+   <p>Using the <code>kid</code> value in the access token, the AS searches the OP keys for one that matches the
+access token. Checks to see if the access token was signed by that key. If it was not, the AS
 must reject the request with a 403.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-12"><span class="content">12. Performs Authorization</span><a class="self-link" href="#request-flow-step-12"></a></h4>
-   <p>Now that the RS has performed all of its checks, we can trust that the agent in the <code>webid</code> claim (<code>https://alice.coolpod.example/profile/card#me</code>) is the same agent on whose behalf the
-request was made. Using that information, the RS performs authorization.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-13"><span class="content">13. Returns Result</span><a class="self-link" href="#request-flow-step-13"></a></h4>
+   <h4 class="no-num heading settled" id="request-flow-step-13"><span class="content">13. Access Token Response</span><a class="self-link" href="#request-flow-step-13"></a></h4>
+   <p>Now that the AS has performed all of its checks, we can trust that the agent in the <code>webid</code> claim (<code>https://alice.coolpod.example/profile/card#me</code>) is the same agent on whose behalf the
+request was made. Using that information, the AS performs authorization and returns access token.</p>
+   <p>Response:</p>
+<pre class="language-json highlight"><c- p>{</c->
+   <c- f>"access_token"</c-><c- p>:</c-><c- u>"sbjsbhs(/SSJHBSUSSJHVhjsgvhsgvshgsv"</c-><c- p>,</c->
+   <c- f>"token_type"</c-><c- p>:</c-><c- u>"Bearer"</c->
+<c- p>}</c->
+</pre>
+   <h4 class="no-num heading settled" id="request-flow-step-14"><span class="content">14. Sends request with Access Token</span><a class="self-link" href="#request-flow-step-14"></a></h4>
+   <p class="note" role="note"><span>Note:</span> In practice client would need to upgrade RPT by pushing
+authorization related claim. This primer only focuses on authentication so we omit
+this detail here.</p>
+   <p>With the access token, we’re ready to make our request.</p>
+<pre class="language-http highlight">GET https://bob.otherpod.example/private/photo_album.ttl
+Headers: {
+    authorization: "Bearer sbjsbhs(/SSJHBSUSSJHVhjsgvhsgvshgsv",
+}
+</pre>
+   <h4 class="no-num heading settled" id="request-flow-step-15"><span class="content">15. Returns Result</span><a class="self-link" href="#request-flow-step-15"></a></h4>
    <p>Given all went well, the RS should return the requested content.</p>
   </main>
   <div data-fill-with="conformance">
@@ -1214,6 +1198,8 @@ request was made. Using that information, the RS performs authorization.</p>
    <dd>D. Hardt, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc6749"><cite>The OAuth 2.0 Authorization Framework</cite></a>. October 2012. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>
    <dt id="biblio-rfc7636">[RFC7636]
    <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/rfc/rfc7636"><cite>Proof Key for Code Exchange by OAuth Public Clients</cite></a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7636">https://www.rfc-editor.org/rfc/rfc7636</a>
+   <dt id="biblio-rfc8414">[RFC8414]
+   <dd>M. Jones; N. Sakimura; J. Bradley. <a href="https://www.rfc-editor.org/rfc/rfc8414"><cite>OAuth 2.0 Authorization Server Metadata</cite></a>. June 2018. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>
    <dt id="biblio-solidoidc">[Solid.OIDC]
    <dd>Aaron Coburn; elf Pavlik ; Dmitri Zagidulin. <a href="https://solid.github.io/solid-oidc/"><cite>Solid OIDC</cite></a>. URL: <a href="https://solid.github.io/solid-oidc/">https://solid.github.io/solid-oidc/</a>
    <dt id="biblio-solidprotocol">[Solid.Protocol]
