@@ -1,17 +1,37 @@
 sequenceDiagram
-  participant RC as Resource Client
-  participant RS as Resource Server
-  participant OP as OpenID Provider
-  participant WebID as User's WebID Document
-  RC ->> RS: 1. unauthenticated request
-  RS ->> RC: 2. 401 with a WWW-Authenticate HTTP header
-  RC ->> OP: 3. start Authorization Code grant
-  OP ->> RC: return Authorization Code
-  RC ->> OP: 4. present Authorization Code and DPoP proof
-  OP ->> RC: 5. return DPoP bound Access Token and OIDC ID Token
-  RC ->> RS: 6. Access Token + DPoP proof
-  RS ->> WebID: 7. get WebID document to verify Issuer
-  WebID ->> RS: WebID document
-  RS ->> OP: 8. get OP's public key to verify Access Token (JWS)
-  OP ->> RS: JWKS
-  RS ->> RC: 9. if all checks pass respond with representation
+  participant WebID as 👩 End-User's WebID Document
+  participant OP as 👩 OpenID Provider
+  participant ClientID as ⚙️ Client's ID Document
+  participant C as ⚙️ Client
+  participant RS as ☁️ Resource Server
+  participant AS as ☁️ Authorization Server
+  C ->> RS: unauthenticated request
+  RS ->> C: 401 with a WWW-Authenticate HTTP header
+  Note over C: 👩 User provides their WebID ⌨️
+  C ->> WebID: get WebID document to discover OpenID Provider
+  WebID ->> C: WebID document
+  C ->> OP: start Authorization Code grant
+  OP->> ClientID: get Client ID document
+  ClientID->> OP: ClientID document
+  Note over OP: compare redirect_uri
+  OP ->> C: return Authorization Code
+  C ->> OP: present Authorization Code and DPoP proof
+  Note over OP:  ⚙️ Client is authenticated ✅
+  OP ->> C: return DPoP bound OIDC ID Token
+  Note over C: 👩 User is authenticated ✅
+  C ->> AS: request Access Token and push solid Claim Token (including ID Token)
+  AS ->> WebID: get WebID document to verify OpenID Provider
+  WebID ->> AS: WebID document
+  AS ->> OP: get OP's public key to verify ID Token (JWS)
+  OP ->> AS: JWKS
+  Note over AS: 👩 User and ⚙️ Client are authenticated ✅
+  AS ->> C: provide Access Token
+  C ->> RS: request with Access Token
+  alt Token introspection
+  RS ->> AS: token introspection request
+  AS ->> RS: token introspection response
+  else signed JWT
+    Note over RS, AS: Verify AS signature
+  end
+  Note over RS: 👩 User and ⚙️ Client are authenticated ✅
+  RS ->> C: representation
