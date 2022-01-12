@@ -187,6 +187,7 @@ This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/) for the Client ID
           "client_id": "https://app.example/id",
           "client_name": "Solid Application Name",
           "redirect_uris": ["https://app.example/callback"],
+          "post_logout_redirect_uris": ["https://app.example/logout"],
           "client_uri": "https://app.example/",
           "logo_uri" : "https://app.example/logo.png",
           "tos_uri" : "https://app.example/tos.html",
@@ -239,6 +240,14 @@ The JSON-LD context is defined as:
             },
             "redirect_uris": {
               "@id": "oidc:redirect_uris",
+              "@type": "@id",
+              "@container": [
+                "@id",
+                "@set"
+              ]
+            },
+            "post_logout_redirect_uris": {
+              "@id": "oidc:post_logout_redirect_uris",
               "@type": "@id",
               "@container": [
                 "@id",
