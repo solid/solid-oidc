@@ -781,7 +781,7 @@ Response
 
 <h4 id="request-flow-step-9" class="no-num">9. Checks issuer</h4>
 
-The AS checks that the `iss` claim in the access token matches the issuer listed in the user's
+The AS checks that the `iss` claim in the ID token matches the issuer listed in the user's
 WebID. If it does not, the AS must reject the request with a 403.
 
 <h4 id="request-flow-step-10" class="no-num">10. Retrieves OP configuration</h4>
@@ -877,10 +877,10 @@ Response (application/json)
 
 Notice that the `keys` field is an array, so an OP could have multiple public keys.
 
-<h4 id="request-flow-step-12" class="no-num">12. Checks access token signature validity</h4>
+<h4 id="request-flow-step-12" class="no-num">12. Checks ID token signature validity</h4>
 
-Using the `kid` value in the access token, the AS searches the OP keys for one that matches the
-access token. Checks to see if the access token was signed by that key. If it was not, the AS
+Using the `kid` value in the ID token, the AS searches the OP keys for one that matches the
+ID token. Checks to see if the ID token was signed by that key. If it was not, the AS
 must reject the request with a 403.
 
 <h4 id="request-flow-step-13" class="no-num">13. Access Token Response</h4>
