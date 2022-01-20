@@ -6,9 +6,9 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version cace53f8c, updated Tue Dec 7 12:12:54 2021 -0800" name="generator">
+  <meta content="Bikeshed version 2e3c4c68b, updated Fri Jan 14 14:49:00 2022 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/primer/" rel="canonical">
-  <meta content="f14aea0e4f9f065f7a9e394bd99d1808037b58be" name="document-revision">
+  <meta content="bbdb50f7590aab16ef93bfeb6d8c4e7f2886f6ed" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -344,7 +344,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-01-12">12 January 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-01-20">20 January 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -1037,7 +1037,7 @@ request with a 403.</p>
     <c- g>solid</c->:<c- g>oidcIssuer</c-> <c- o>&lt;</c-><c- g>https</c->:<c- o>//</c-><c- g>secureauth</c->.<c- g>example</c-><c- o>></c-> <c- c1>;</c->
 </pre>
    <h4 class="no-num heading settled" id="request-flow-step-9"><span class="content">9. Checks issuer</span><a class="self-link" href="#request-flow-step-9"></a></h4>
-   <p>The AS checks that the <code>iss</code> claim in the access token matches the issuer listed in the user’s
+   <p>The AS checks that the <code>iss</code> claim in the ID token matches the issuer listed in the user’s
 WebID. If it does not, the AS must reject the request with a 403.</p>
    <h4 class="no-num heading settled" id="request-flow-step-10"><span class="content">10. Retrieves OP configuration</span><a class="self-link" href="#request-flow-step-10"></a></h4>
    <p>The AS uses the <code>iss</code> claim to get the issuer’s configuration. The url is the issuer claim with <code>/.well-known/openid-configuration</code> appended to the end.</p>
@@ -1118,9 +1118,9 @@ OP’s public keys.</p>
 <c- p>}</c->
 </pre>
    <p>Notice that the <code>keys</code> field is an array, so an OP could have multiple public keys.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-12"><span class="content">12. Checks access token signature validity</span><a class="self-link" href="#request-flow-step-12"></a></h4>
-   <p>Using the <code>kid</code> value in the access token, the AS searches the OP keys for one that matches the
-access token. Checks to see if the access token was signed by that key. If it was not, the AS
+   <h4 class="no-num heading settled" id="request-flow-step-12"><span class="content">12. Checks ID token signature validity</span><a class="self-link" href="#request-flow-step-12"></a></h4>
+   <p>Using the <code>kid</code> value in the ID token, the AS searches the OP keys for one that matches the
+ID token. Checks to see if the ID token was signed by that key. If it was not, the AS
 must reject the request with a 403.</p>
    <h4 class="no-num heading settled" id="request-flow-step-13"><span class="content">13. Access Token Response</span><a class="self-link" href="#request-flow-step-13"></a></h4>
    <p>Now that the AS has performed all of its checks, we can trust that the agent in the <code>webid</code> claim (<code>https://alice.coolpod.example/profile/card#me</code>) is the same agent on whose behalf the
