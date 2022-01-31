@@ -80,7 +80,7 @@ it is likely that authorization requirements will necessitate it.
 This specification uses the terms "access token", "authorization server", "resource server" (RS), "token endpoint",
 "grant type", and "client" as defined by The OAuth 2.0 Authorization Framework [[!RFC6749]].
 
-Throughout this specification, we will use the term Identity Provider (IdP) in line with the
+Throughout this specification, we will use the term OpenID Provider (OP) in line with the
 terminology used in the Open ID Connect Core 1.0 specification (OIDC) [[!OIDC.Core]].
 It should be noted that this is distinct from the entity referred to as an Authorization Server
 by the OAuth 2.0 Authorization Framework (OAuth) [[!RFC6749]].
@@ -122,14 +122,14 @@ This specification also uses the following terms:
 
 *This section is non-normative*
 
-In a decentralized ecosystem, such as Solid, an IdP may be an identity-as-a-service vendor or, at
-the other end of the spectrum, a user-controlled IdP. In any case, the user may be authenticating
+In a decentralized ecosystem, such as Solid, an OP may be an identity-as-a-service vendor or, at
+the other end of the spectrum, a user-controlled OP. In any case, the user may be authenticating
 from a browser or an application.
 
 Therefore, this specification assumes the use of the
 [Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowSteps) with
 PKCE, in accordance with OAuth and OIDC best practices. It is also assumed that there are no
-preexisting trust relationships with the IdP. This means that client registration, whether dynamic,
+preexisting trust relationships with the OP. This means that client registration, whether dynamic,
 or static, is entirely optional.
 
 ## WebIDs ## {#concepts-webids}
@@ -155,7 +155,7 @@ Details of the flow are available in [[!Solid.OIDC.Primer]]
 
 # Client Identifiers # {#clientids}
 
-OAuth and OIDC require the Client application to identify itself to the IdP and RS by presenting a
+OAuth and OIDC require the Client application to identify itself to the OP and RS by presenting a
 [client identifier](https://tools.ietf.org/html/rfc6749#section-2.2) (Client ID). Solid applications
 SHOULD use a URI that can be dereferenced as a [Client ID Document](#clientids-document).
 
@@ -169,7 +169,7 @@ provided at `https://www.w3.org/ns/solid/oidc-context.jsonld` such that the resu
 document produces a JSON serialization of an OIDC client registration, per the
 definition of client registration metadata from [[!RFC7591]] section 2.
 
-Also, the IdP MUST dereference the Client ID Document and match any Client-supplied parameters
+Also, the OP MUST dereference the Client ID Document and match any Client-supplied parameters
 with the values in the Client ID Document.
 
 Further, the `redirect_uri` provided by the Client MUST be included in the registration `redirect_uris`
@@ -208,90 +208,12 @@ this JSON-LD context MUST use the HTTPS scheme.
 
 NOTE: the `oidc` vocabulary that is part of this context uses the HTTP scheme.
 
-The JSON-LD context is defined as:
-
-<div class='example'>
-    <pre highlight="jsonld">
-        {
-          "@context": {
-            "@version": 1.1,
-            "@protected": true,
-            "oidc": "http://www.w3.org/ns/solid/oidc#",
-            "xsd": "http://www.w3.org/2001/XMLSchema#",
-            "client_id": {
-              "@id": "@id",
-              "@type": "@id"
-            },
-            "client_uri": {
-              "@id": "oidc:client_uri",
-              "@type": "@id"
-            },
-            "logo_uri": {
-              "@id": "oidc:logo_uri",
-              "@type": "@id"
-            },
-            "policy_uri": {
-              "@id": "oidc:policy_uri",
-              "@type": "@id"
-            },
-            "tos_uri": {
-              "@id": "oidc:tos_uri",
-              "@type": "@id"
-            },
-            "redirect_uris": {
-              "@id": "oidc:redirect_uris",
-              "@type": "@id",
-              "@container": [
-                "@id",
-                "@set"
-              ]
-            },
-            "post_logout_redirect_uris": {
-              "@id": "oidc:post_logout_redirect_uris",
-              "@type": "@id",
-              "@container": [
-                "@id",
-                "@set"
-              ]
-            },
-            "require_auth_time": {
-              "@id": "oidc:require_auth_time",
-              "@type": "xsd:boolean"
-            },
-            "default_max_age": {
-              "@id": "oidc:default_max_age",
-              "@type": "xsd:integer"
-            },
-            "application_type": {
-              "@id": "oidc:application_type"
-            },
-            "client_name": {
-              "@id": "oidc:client_name"
-            },
-            "contacts": {
-              "@id": "oidc:contacts"
-            },
-            "grant_types": {
-              "@id": "oidc:grant_types"
-            },
-            "response_types": {
-              "@id": "oidc:response_types"
-            },
-            "scope": {
-              "@id": "oidc:scope"
-            },
-            "token_endpoint_auth_method": {
-              "@id": "oidc:token_endpoint_auth_method"
-            }
-          }
-        }
-    </pre>
-</div>
+Full content of JSON-LD context can be also seen in [[#full-jsonld-context]]
 
 ## OIDC Registration ## {#clientids-oidc}
 
 If the Client does not use an identifier that can be dereferenced, then it MUST present a client identifier
-registered with the IdP via either OIDC dynamic or static registration.
+registered with the OP via either OIDC dynamic or static registration.
 See also [[!OIDC.DynamicClientRegistration]].
 
 # Requesting the WebID Claim using a Scope Value # {#webid-scope}
@@ -312,7 +234,7 @@ Assuming one of the following options
  - Client ID and Secret, and valid DPoP Proof (for dynamic and static registration)
  - Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)
 
-the IdP MUST return A DPoP-bound OIDC ID Token.
+the OP MUST return A DPoP-bound OIDC ID Token.
 
 ## DPoP-bound OIDC ID Token ## {#tokens-id}
 
@@ -322,7 +244,7 @@ bind the OIDC ID Token to a public key. See also: [[!DPOP]].
 
 With the `webid` scope, the DPoP-bound OIDC ID Token payload MUST contain these claims:
  * `webid` — The WebID claim MUST be the user's WebID.
- * `iss` — The issuer claim MUST be a valid URL of the IdP
+ * `iss` — The issuer claim MUST be a valid URL of the OP
     instantiating this token.
  * `aud` — The audience claim MUST be an array of values,
     one of which is the ClientID claim is used to identify the client.
@@ -408,8 +330,8 @@ the WebID document for the existence of a statement matching `?webid <http://www
 where `?webid` and `?iss` are the values of the `webid` and `iss` claims respectively.
 This prevents a malicious identity provider from issuing valid OIDC ID Tokens for arbitrary WebIDs.
 
-Unless the AS acquires IdP keys through some other means, or the AS chooses to reject tokens issued by this IdP,
-the AS MUST follow OpenID Connect Discovery 1.0 [[!OIDC.Discovery]] to find an IdP's signing keys (JWK).
+Unless the AS acquires OP keys through some other means, or the AS chooses to reject tokens issued by this OP,
+the AS MUST follow OpenID Connect Discovery 1.0 [[!OIDC.Discovery]] to find an OP's signing keys (JWK).
 
 ### WebID Issuer Discovery via Link Headers ### {#webid-issuer-discovery}
 
@@ -424,8 +346,8 @@ A server hosting a WebID document MAY transmit the `http://www.w3.org/ns/solid/t
 
 # Solid-OIDC Conformance Discovery # {#discovery}
 
-An Identity Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
-Discovery 1.0 [[!OIDC.Discovery]] resource. An Identity Provider would indicate this support by including
+An OpenID Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
+Discovery 1.0 [[!OIDC.Discovery]] resource. An OpenID Provider would indicate this support by including
 `webid` in the `scopes_supported` metadata property.
 
 <div class="example">
@@ -501,6 +423,78 @@ Tim Berners-Lee, Justin Bingham, Sarven Capadisli, Aaron Coburn, Matthias Everin
 Michiel de Jong, Ted Thibodeau Jr, Kjetil Kjernsmo, Mitzi László, Pat McBennett, Adam Migus, Jackson Morgan, Davi
 Ottenheimer, Justin Richer, severin-dsr, Henry Story, Michael Thornburgh, Emmet Townsend, Ruben
 Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.
+
+# Appendix A: Full JSON-LD context # {#full-jsonld-context}
+
+The JSON-LD context is defined as:
+
+<pre highlight="jsonld">
+  {
+    "@context": {
+      "@version": 1.1,
+      "@protected": true,
+      "oidc": "http://www.w3.org/ns/solid/oidc#",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "client_id": {
+        "@id": "@id",
+        "@type": "@id"
+      },
+      "client_uri": {
+        "@id": "oidc:client_uri",
+        "@type": "@id"
+      },
+      "logo_uri": {
+        "@id": "oidc:logo_uri",
+        "@type": "@id"
+      },
+      "policy_uri": {
+        "@id": "oidc:policy_uri",
+        "@type": "@id"
+      },
+      "tos_uri": {
+        "@id": "oidc:tos_uri",
+        "@type": "@id"
+      },
+      "redirect_uris": {
+        "@id": "oidc:redirect_uris",
+        "@type": "@id",
+        "@container": [
+          "@id",
+          "@set"
+        ]
+      },
+      "require_auth_time": {
+        "@id": "oidc:require_auth_time",
+        "@type": "xsd:boolean"
+      },
+      "default_max_age": {
+        "@id": "oidc:default_max_age",
+        "@type": "xsd:integer"
+      },
+      "application_type": {
+        "@id": "oidc:application_type"
+      },
+      "client_name": {
+        "@id": "oidc:client_name"
+      },
+      "contacts": {
+        "@id": "oidc:contacts"
+      },
+      "grant_types": {
+        "@id": "oidc:grant_types"
+      },
+      "response_types": {
+        "@id": "oidc:response_types"
+      },
+      "scope": {
+        "@id": "oidc:scope"
+      },
+      "token_endpoint_auth_method": {
+        "@id": "oidc:token_endpoint_auth_method"
+      }
+    }
+  }
+</pre>
 
 <pre class=biblio>
 {
