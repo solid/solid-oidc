@@ -208,85 +208,7 @@ this JSON-LD context MUST use the HTTPS scheme.
 
 NOTE: the `oidc` vocabulary that is part of this context uses the HTTP scheme.
 
-The JSON-LD context is defined as:
-
-<div class='example'>
-    <pre highlight="jsonld">
-        {
-          "@context": {
-            "@version": 1.1,
-            "@protected": true,
-            "oidc": "http://www.w3.org/ns/solid/oidc#",
-            "xsd": "http://www.w3.org/2001/XMLSchema#",
-            "client_id": {
-              "@id": "@id",
-              "@type": "@id"
-            },
-            "client_uri": {
-              "@id": "oidc:client_uri",
-              "@type": "@id"
-            },
-            "logo_uri": {
-              "@id": "oidc:logo_uri",
-              "@type": "@id"
-            },
-            "policy_uri": {
-              "@id": "oidc:policy_uri",
-              "@type": "@id"
-            },
-            "tos_uri": {
-              "@id": "oidc:tos_uri",
-              "@type": "@id"
-            },
-            "redirect_uris": {
-              "@id": "oidc:redirect_uris",
-              "@type": "@id",
-              "@container": [
-                "@id",
-                "@set"
-              ]
-            },
-            "post_logout_redirect_uris": {
-              "@id": "oidc:post_logout_redirect_uris",
-              "@type": "@id",
-              "@container": [
-                "@id",
-                "@set"
-              ]
-            },
-            "require_auth_time": {
-              "@id": "oidc:require_auth_time",
-              "@type": "xsd:boolean"
-            },
-            "default_max_age": {
-              "@id": "oidc:default_max_age",
-              "@type": "xsd:integer"
-            },
-            "application_type": {
-              "@id": "oidc:application_type"
-            },
-            "client_name": {
-              "@id": "oidc:client_name"
-            },
-            "contacts": {
-              "@id": "oidc:contacts"
-            },
-            "grant_types": {
-              "@id": "oidc:grant_types"
-            },
-            "response_types": {
-              "@id": "oidc:response_types"
-            },
-            "scope": {
-              "@id": "oidc:scope"
-            },
-            "token_endpoint_auth_method": {
-              "@id": "oidc:token_endpoint_auth_method"
-            }
-          }
-        }
-    </pre>
-</div>
+Full content of JSON-LD context can be also seen in [[#full-jsonld-context]]
 
 ## OIDC Registration ## {#clientids-oidc}
 
@@ -501,6 +423,78 @@ Tim Berners-Lee, Justin Bingham, Sarven Capadisli, Aaron Coburn, Matthias Everin
 Michiel de Jong, Ted Thibodeau Jr, Kjetil Kjernsmo, Mitzi László, Pat McBennett, Adam Migus, Jackson Morgan, Davi
 Ottenheimer, Justin Richer, severin-dsr, Henry Story, Michael Thornburgh, Emmet Townsend, Ruben
 Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.
+
+# Appendix A: Full JSON-LD context # {#full-jsonld-context}
+
+The JSON-LD context is defined as:
+
+<pre highlight="jsonld">
+  {
+    "@context": {
+      "@version": 1.1,
+      "@protected": true,
+      "oidc": "http://www.w3.org/ns/solid/oidc#",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "client_id": {
+        "@id": "@id",
+        "@type": "@id"
+      },
+      "client_uri": {
+        "@id": "oidc:client_uri",
+        "@type": "@id"
+      },
+      "logo_uri": {
+        "@id": "oidc:logo_uri",
+        "@type": "@id"
+      },
+      "policy_uri": {
+        "@id": "oidc:policy_uri",
+        "@type": "@id"
+      },
+      "tos_uri": {
+        "@id": "oidc:tos_uri",
+        "@type": "@id"
+      },
+      "redirect_uris": {
+        "@id": "oidc:redirect_uris",
+        "@type": "@id",
+        "@container": [
+          "@id",
+          "@set"
+        ]
+      },
+      "require_auth_time": {
+        "@id": "oidc:require_auth_time",
+        "@type": "xsd:boolean"
+      },
+      "default_max_age": {
+        "@id": "oidc:default_max_age",
+        "@type": "xsd:integer"
+      },
+      "application_type": {
+        "@id": "oidc:application_type"
+      },
+      "client_name": {
+        "@id": "oidc:client_name"
+      },
+      "contacts": {
+        "@id": "oidc:contacts"
+      },
+      "grant_types": {
+        "@id": "oidc:grant_types"
+      },
+      "response_types": {
+        "@id": "oidc:response_types"
+      },
+      "scope": {
+        "@id": "oidc:scope"
+      },
+      "token_endpoint_auth_method": {
+        "@id": "oidc:token_endpoint_auth_method"
+      }
+    }
+  }
+</pre>
 
 <pre class=biblio>
 {
