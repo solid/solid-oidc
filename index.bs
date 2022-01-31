@@ -80,7 +80,7 @@ it is likely that authorization requirements will necessitate it.
 This specification uses the terms "access token", "authorization server", "resource server" (RS), "token endpoint",
 "grant type", and "client" as defined by The OAuth 2.0 Authorization Framework [[!RFC6749]].
 
-Throughout this specification, we will use the term OIDC Provider (OP) in line with the
+Throughout this specification, we will use the term OpenID Provider (OP) in line with the
 terminology used in the Open ID Connect Core 1.0 specification (OIDC) [[!OIDC.Core]].
 It should be noted that this is distinct from the entity referred to as an Authorization Server
 by the OAuth 2.0 Authorization Framework (OAuth) [[!RFC6749]].
@@ -346,8 +346,8 @@ A server hosting a WebID document MAY transmit the `http://www.w3.org/ns/solid/t
 
 # Solid-OIDC Conformance Discovery # {#discovery}
 
-An OIDC Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
-Discovery 1.0 [[!OIDC.Discovery]] resource. An OIDC Provider would indicate this support by including
+An OpenID Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
+Discovery 1.0 [[!OIDC.Discovery]] resource. An OpenID Provider would indicate this support by including
 `webid` in the `scopes_supported` metadata property.
 
 <div class="example">
