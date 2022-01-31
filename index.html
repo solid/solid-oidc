@@ -9,7 +9,7 @@
   <meta content="Bikeshed version 2e3c4c68b, updated Fri Jan 14 14:49:00 2022 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
   <link href="https://solid.github.io/solid-oidc/solid.svg" rel="icon">
-  <meta content="bbdb50f7590aab16ef93bfeb6d8c4e7f2886f6ed" name="document-revision">
+  <meta content="9f8ef16ec2fcbde1859101ec5b39333b5ec491a4" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -345,7 +345,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solid.github.io/solid-oidc/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-01-20">20 January 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-01-31">31 January 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -445,6 +445,7 @@ to cite this document as other than work in progress.</p>
       <li><a href="#privacy-token-reuse"><span class="secno">11.1</span> <span class="content">OIDC ID Token Reuse</span></a>
      </ol>
     <li><a href="#acknowledgments"><span class="secno">12</span> <span class="content">Acknowledgments</span></a>
+    <li><a href="#full-jsonld-context"><span class="secno"></span> <span class="content">Appendix A: Full JSON-LD context</span></a>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
      <ol class="toc">
@@ -488,7 +489,7 @@ it is likely that authorization requirements will necessitate it.</p>
    <p><em>This section is non-normative</em></p>
    <p>This specification uses the terms "access token", "authorization server", "resource server" (RS), "token endpoint",
 "grant type", and "client" as defined by The OAuth 2.0 Authorization Framework <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>.</p>
-   <p>Throughout this specification, we will use the term Identity Provider (IdP) in line with the
+   <p>Throughout this specification, we will use the term OpenID Provider (OP) in line with the
 terminology used in the Open ID Connect Core 1.0 specification (OIDC) <a data-link-type="biblio" href="#biblio-oidccore">[OIDC.Core]</a>.
 It should be noted that this is distinct from the entity referred to as an Authorization Server
 by the OAuth 2.0 Authorization Framework (OAuth) <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>.</p>
@@ -514,12 +515,12 @@ by the OAuth 2.0 Authorization Framework (OAuth) <a data-link-type="biblio" href
    </dl>
    <h2 class="heading settled" data-level="3" id="concepts"><span class="secno">3. </span><span class="content">Core Concepts</span><a class="self-link" href="#concepts"></a></h2>
    <p><em>This section is non-normative</em></p>
-   <p>In a decentralized ecosystem, such as Solid, an IdP may be an identity-as-a-service vendor or, at
-the other end of the spectrum, a user-controlled IdP. In any case, the user may be authenticating
+   <p>In a decentralized ecosystem, such as Solid, an OP may be an identity-as-a-service vendor or, at
+the other end of the spectrum, a user-controlled OP. In any case, the user may be authenticating
 from a browser or an application.</p>
    <p>Therefore, this specification assumes the use of the <a href="https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowSteps">Authorization Code Flow</a> with
 PKCE, in accordance with OAuth and OIDC best practices. It is also assumed that there are no
-preexisting trust relationships with the IdP. This means that client registration, whether dynamic,
+preexisting trust relationships with the OP. This means that client registration, whether dynamic,
 or static, is entirely optional.</p>
    <h3 class="heading settled" data-level="3.1" id="concepts-webids"><span class="secno">3.1. </span><span class="content">WebIDs</span><a class="self-link" href="#concepts-webids"></a></h3>
    <p><em>This section is non-normative</em></p>
@@ -535,7 +536,7 @@ Solid and are used as a primary identifier for Users in this specification.</p>
     <figcaption>Basic sequence of authenticating the user and the client.</figcaption>
    </figure>
    <h2 class="heading settled" data-level="5" id="clientids"><span class="secno">5. </span><span class="content">Client Identifiers</span><a class="self-link" href="#clientids"></a></h2>
-   <p>OAuth and OIDC require the Client application to identify itself to the IdP and RS by presenting a <a href="https://tools.ietf.org/html/rfc6749#section-2.2">client identifier</a> (Client ID). Solid applications
+   <p>OAuth and OIDC require the Client application to identify itself to the OP and RS by presenting a <a href="https://tools.ietf.org/html/rfc6749#section-2.2">client identifier</a> (Client ID). Solid applications
 SHOULD use a URI that can be dereferenced as a <a href="#clientids-document">Client ID Document</a>.</p>
    <h3 class="heading settled" data-level="5.1" id="clientids-document"><span class="secno">5.1. </span><span class="content">Client ID Document</span><a class="self-link" href="#clientids-document"></a></h3>
    <p>When a Client Identifier is dereferenced, the resource MUST be serialized as an <code>application/ld+json</code> document
@@ -543,7 +544,7 @@ unless content negotiation requires a different outcome.</p>
    <p>The serialized JSON form of a Client ID Document SHOULD use the normative JSON-LD <code>@context</code> provided at <code>https://www.w3.org/ns/solid/oidc-context.jsonld</code> such that the resulting
 document produces a JSON serialization of an OIDC client registration, per the
 definition of client registration metadata from <a data-link-type="biblio" href="#biblio-rfc7591">[RFC7591]</a> section 2.</p>
-   <p>Also, the IdP MUST dereference the Client ID Document and match any Client-supplied parameters
+   <p>Also, the OP MUST dereference the Client ID Document and match any Client-supplied parameters
 with the values in the Client ID Document.</p>
    <p>Further, the <code>redirect_uri</code> provided by the Client MUST be included in the registration <code>redirect_uris</code> list.</p>
    <p>This example uses <a href="https://www.w3.org/TR/json-ld11/">JSON-LD </a> for the Client ID Document:</p>
@@ -573,87 +574,10 @@ with the values in the Client ID Document.</p>
 available at <code>https://www.w3.org/ns/solid/oidc-context.jsonld</code>. Client ID Documents that reference
 this JSON-LD context MUST use the HTTPS scheme.</p>
    <p class="note" role="note"><span>NOTE:</span> the <code>oidc</code> vocabulary that is part of this context uses the HTTP scheme.</p>
-   <p>The JSON-LD context is defined as:</p>
-   <div class="example" id="example-266895ae">
-    <a class="self-link" href="#example-266895ae"></a> 
-<pre class="highlight"><c- p>{</c->
-  <c- nd>"@context"</c-><c- p>:</c-> <c- p>{</c->
-    <c- nd>"@version"</c-><c- p>:</c-> <c- mf>1.1</c-><c- p>,</c->
-    <c- nd>"@protected"</c-><c- p>:</c-> <c- kc>true</c-><c- p>,</c->
-    <c- f>"oidc"</c-><c- p>:</c-> <c- u>"http://www.w3.org/ns/solid/oidc#"</c-><c- p>,</c->
-    <c- f>"xsd"</c-><c- p>:</c-> <c- u>"http://www.w3.org/2001/XMLSchema#"</c-><c- p>,</c->
-    <c- f>"client_id"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"@id"</c-><c- p>,</c->
-      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
-    <c- p>},</c->
-    <c- f>"client_uri"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:client_uri"</c-><c- p>,</c->
-      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
-    <c- p>},</c->
-    <c- f>"logo_uri"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:logo_uri"</c-><c- p>,</c->
-      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
-    <c- p>},</c->
-    <c- f>"policy_uri"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:policy_uri"</c-><c- p>,</c->
-      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
-    <c- p>},</c->
-    <c- f>"tos_uri"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:tos_uri"</c-><c- p>,</c->
-      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
-    <c- p>},</c->
-    <c- f>"redirect_uris"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:redirect_uris"</c-><c- p>,</c->
-      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c-><c- p>,</c->
-      <c- nd>"@container"</c-><c- p>:</c-> <c- p>[</c->
-        <c- u>"@id"</c-><c- p>,</c->
-        <c- u>"@set"</c->
-      <c- p>]</c->
-    <c- p>},</c->
-    <c- f>"post_logout_redirect_uris"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:post_logout_redirect_uris"</c-><c- p>,</c->
-      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c-><c- p>,</c->
-      <c- nd>"@container"</c-><c- p>:</c-> <c- p>[</c->
-        <c- u>"@id"</c-><c- p>,</c->
-        <c- u>"@set"</c->
-      <c- p>]</c->
-    <c- p>},</c->
-    <c- f>"require_auth_time"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:require_auth_time"</c-><c- p>,</c->
-      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"xsd:boolean"</c->
-    <c- p>},</c->
-    <c- f>"default_max_age"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:default_max_age"</c-><c- p>,</c->
-      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"xsd:integer"</c->
-    <c- p>},</c->
-    <c- f>"application_type"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:application_type"</c->
-    <c- p>},</c->
-    <c- f>"client_name"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:client_name"</c->
-    <c- p>},</c->
-    <c- f>"contacts"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:contacts"</c->
-    <c- p>},</c->
-    <c- f>"grant_types"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:grant_types"</c->
-    <c- p>},</c->
-    <c- f>"response_types"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:response_types"</c->
-    <c- p>},</c->
-    <c- f>"scope"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:scope"</c->
-    <c- p>},</c->
-    <c- f>"token_endpoint_auth_method"</c-><c- p>:</c-> <c- p>{</c->
-      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:token_endpoint_auth_method"</c->
-    <c- p>}</c->
-  <c- p>}</c->
-<c- p>}</c->
-</pre>
-   </div>
+   <p>Full content of JSON-LD context can be also seen in <a href="#full-jsonld-context">Appendix A: Full JSON-LD context</a></p>
    <h3 class="heading settled" data-level="5.2" id="clientids-oidc"><span class="secno">5.2. </span><span class="content">OIDC Registration</span><a class="self-link" href="#clientids-oidc"></a></h3>
    <p>If the Client does not use an identifier that can be dereferenced, then it MUST present a client identifier
-registered with the IdP via either OIDC dynamic or static registration.
+registered with the OP via either OIDC dynamic or static registration.
 See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration">[OIDC.DynamicClientRegistration]</a>.</p>
    <h2 class="heading settled" data-level="6" id="webid-scope"><span class="secno">6. </span><span class="content">Requesting the WebID Claim using a Scope Value</span><a class="self-link" href="#webid-scope"></a></h2>
    <p>In OpenID Connect, <code>scope</code> values are used to request that particular information be make available as claim values.</p>
@@ -670,7 +594,7 @@ See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration"
     <li data-md>
      <p>Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)</p>
    </ul>
-   <p>the IdP MUST return A DPoP-bound OIDC ID Token.</p>
+   <p>the OP MUST return A DPoP-bound OIDC ID Token.</p>
    <h3 class="heading settled" data-level="7.1" id="tokens-id"><span class="secno">7.1. </span><span class="content">DPoP-bound OIDC ID Token</span><a class="self-link" href="#tokens-id"></a></h3>
    <p>When requesting a DPoP-bound OIDC ID Token, the Client MUST send a DPoP proof JWT
 that is valid according to the <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-5">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) § section-5</a>. The DPoP proof JWT is used to
@@ -680,7 +604,7 @@ bind the OIDC ID Token to a public key. See also: <a data-link-type="biblio" hre
     <li data-md>
      <p><code>webid</code> — The WebID claim MUST be the user’s WebID.</p>
     <li data-md>
-     <p><code>iss</code> — The issuer claim MUST be a valid URL of the IdP
+     <p><code>iss</code> — The issuer claim MUST be a valid URL of the OP
 instantiating this token.</p>
     <li data-md>
      <p><code>aud</code> — The audience claim MUST be an array of values,
@@ -749,8 +673,8 @@ OIDC ID Token. If the <code>iss</code> claim is different from the domain of the
 the WebID document for the existence of a statement matching <code>?webid &lt;http://www.w3.org/ns/solid/terms#oidcIssuer> ?iss.</code>,
 where <code>?webid</code> and <code>?iss</code> are the values of the <code>webid</code> and <code>iss</code> claims respectively.
 This prevents a malicious identity provider from issuing valid OIDC ID Tokens for arbitrary WebIDs.</p>
-   <p>Unless the AS acquires IdP keys through some other means, or the AS chooses to reject tokens issued by this IdP,
-the AS MUST follow OpenID Connect Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> to find an IdP’s signing keys (JWK).</p>
+   <p>Unless the AS acquires OP keys through some other means, or the AS chooses to reject tokens issued by this OP,
+the AS MUST follow OpenID Connect Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> to find an OP’s signing keys (JWK).</p>
    <h4 class="heading settled" data-level="8.4.1" id="webid-issuer-discovery"><span class="secno">8.4.1. </span><span class="content">WebID Issuer Discovery via Link Headers</span><a class="self-link" href="#webid-issuer-discovery"></a></h4>
    <p>A server hosting a WebID document MAY transmit the <code>http://www.w3.org/ns/solid/terms#oidcIssuer</code> values via Link Headers but it MUST be the same as in the RDF representation. A client MUST treat the RDF in the body of the WebID document as canonical but MAY use the Link Header values as an optimization.</p>
    <div class="example" id="example-a71199ff">
@@ -759,8 +683,8 @@ the AS MUST follow OpenID Connect Discovery 1.0 <a data-link-type="biblio" href=
 </pre>
    </div>
    <h2 class="heading settled" data-level="9" id="discovery"><span class="secno">9. </span><span class="content">Solid-OIDC Conformance Discovery</span><a class="self-link" href="#discovery"></a></h2>
-   <p>An Identity Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
-Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> resource. An Identity Provider would indicate this support by including <code>webid</code> in the <code>scopes_supported</code> metadata property.</p>
+   <p>An OpenID Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
+Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> resource. An OpenID Provider would indicate this support by including <code>webid</code> in the <code>scopes_supported</code> metadata property.</p>
    <div class="example" id="example-b42af25e">
     <a class="self-link" href="#example-b42af25e"></a> 
 <pre class="highlight"><c- p>{</c->
@@ -810,6 +734,74 @@ feedback on the specification (in alphabetical order):</p>
 Michiel de Jong, Ted Thibodeau Jr, Kjetil Kjernsmo, Mitzi László, Pat McBennett, Adam Migus, Jackson Morgan, Davi
 Ottenheimer, Justin Richer, severin-dsr, Henry Story, Michael Thornburgh, Emmet Townsend, Ruben
 Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
+   <h2 class="heading settled" id="full-jsonld-context"><span class="content">Appendix A: Full JSON-LD context</span><a class="self-link" href="#full-jsonld-context"></a></h2>
+   <p>The JSON-LD context is defined as:</p>
+<pre class="highlight"><c- p>{</c->
+  <c- nd>"@context"</c-><c- p>:</c-> <c- p>{</c->
+    <c- nd>"@version"</c-><c- p>:</c-> <c- mf>1.1</c-><c- p>,</c->
+    <c- nd>"@protected"</c-><c- p>:</c-> <c- kc>true</c-><c- p>,</c->
+    <c- f>"oidc"</c-><c- p>:</c-> <c- u>"http://www.w3.org/ns/solid/oidc#"</c-><c- p>,</c->
+    <c- f>"xsd"</c-><c- p>:</c-> <c- u>"http://www.w3.org/2001/XMLSchema#"</c-><c- p>,</c->
+    <c- f>"client_id"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"@id"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
+    <c- p>},</c->
+    <c- f>"client_uri"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:client_uri"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
+    <c- p>},</c->
+    <c- f>"logo_uri"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:logo_uri"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
+    <c- p>},</c->
+    <c- f>"policy_uri"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:policy_uri"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
+    <c- p>},</c->
+    <c- f>"tos_uri"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:tos_uri"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c->
+    <c- p>},</c->
+    <c- f>"redirect_uris"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:redirect_uris"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"@id"</c-><c- p>,</c->
+      <c- nd>"@container"</c-><c- p>:</c-> <c- p>[</c->
+        <c- u>"@id"</c-><c- p>,</c->
+        <c- u>"@set"</c->
+      <c- p>]</c->
+    <c- p>},</c->
+    <c- f>"require_auth_time"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:require_auth_time"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"xsd:boolean"</c->
+    <c- p>},</c->
+    <c- f>"default_max_age"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:default_max_age"</c-><c- p>,</c->
+      <c- nd>"@type"</c-><c- p>:</c-> <c- u>"xsd:integer"</c->
+    <c- p>},</c->
+    <c- f>"application_type"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:application_type"</c->
+    <c- p>},</c->
+    <c- f>"client_name"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:client_name"</c->
+    <c- p>},</c->
+    <c- f>"contacts"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:contacts"</c->
+    <c- p>},</c->
+    <c- f>"grant_types"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:grant_types"</c->
+    <c- p>},</c->
+    <c- f>"response_types"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:response_types"</c->
+    <c- p>},</c->
+    <c- f>"scope"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:scope"</c->
+    <c- p>},</c->
+    <c- f>"token_endpoint_auth_method"</c-><c- p>:</c-> <c- p>{</c->
+      <c- nd>"@id"</c-><c- p>:</c-> <c- u>"oidc:token_endpoint_auth_method"</c->
+    <c- p>}</c->
+  <c- p>}</c->
+<c- p>}</c->
+</pre>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="w3c-conformance"><span class="content">Conformance</span><a class="self-link" href="#w3c-conformance"></a></h2>
