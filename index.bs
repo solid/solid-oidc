@@ -243,6 +243,8 @@ where `?webid` and `?iss` are the values of the `webid` and `iss` claims respect
 
 The same pattern MAY be used to discover a list of valid issuers for the given WebID.
 
+Issue(80):
+
 ### OIDC Issuer Discovery via Link Headers ### {#oidc-issuer-discovery-link-headers}
 
 A server hosting a WebID document MAY transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer` values via Link Headers
