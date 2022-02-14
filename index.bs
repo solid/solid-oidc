@@ -238,7 +238,9 @@ Party validationg the ID Token needs a way to discover if given OP is a valid is
 </figure>
 
 To verify ID Token the WebID Document MUST be checked for the existence of a statement matching
-`?webid <http://www.w3.org/ns/solid/terms#oidcIssuer> ?iss .`,
+<pre highlight="sparql">
+  ?webid &lt;http://www.w3.org/ns/solid/terms#oidcIssuer&gt; ?iss .
+</pre>
 where `?webid` and `?iss` are the values of the `webid` and `iss` claims respectively.
 
 The same pattern MAY be used to discover a list of valid issuers for the given WebID.
