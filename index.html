@@ -9,7 +9,7 @@
   <meta content="Bikeshed version 2e3c4c68b, updated Fri Jan 14 14:49:00 2022 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
   <link href="https://solid.github.io/solid-oidc/solid.svg" rel="icon">
-  <meta content="9f8ef16ec2fcbde1859101ec5b39333b5ec491a4" name="document-revision">
+  <meta content="f010838504640a03aef3935cb84d49567567831f" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -345,7 +345,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solid.github.io/solid-oidc/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-01-31">31 January 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-02-15">15 February 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -607,17 +607,14 @@ bind the OIDC ID Token to a public key. See also: <a data-link-type="biblio" hre
      <p><code>iss</code> — The issuer claim MUST be a valid URL of the OP
 instantiating this token.</p>
     <li data-md>
-     <p><code>aud</code> — The audience claim MUST be an array of values,
-one of which is the ClientID claim is used to identify the client.
-(See also: <a href="#clientids">section 5. Client Identifiers</a>).
-another one is the string <code>solid</code>.
+     <p><code>aud</code> — The audience claim MUST be an array of values.
+The values MUST include the authorized party claim <code>azp</code> and the string <code>solid</code>.
 In the decentralized world
-of Solid OIDC, the audience of an ID Token is not only the client,
-but also a Solid Authorization Server;
-that is, any Solid Authorization Server at any accessible address
-on the world wide web. See also: <a href="https://www.rfc-editor.org/rfc/rfc7519#section-4.1.3">JSON Web Token (JWT) § section-4.1.3</a>.</p>
+of Solid OIDC, the audience of an ID Token is not only the client (<code>azp</code>),
+but also any Solid Authorization Server at any accessible address
+on the world wide web (<code>solid</code>). See also: <a href="https://www.rfc-editor.org/rfc/rfc7519#section-4.1.3">JSON Web Token (JWT) § section-4.1.3</a>.</p>
     <li data-md>
-     <p><code>azp</code> - The ClientID claim is used to identify the client.
+     <p><code>azp</code> - The authorized party claim is used to identify the client
 (See also: <a href="#clientids">section 5. Client Identifiers</a>).</p>
     <li data-md>
      <p><code>iat</code> — The issued-at claim is the time at which the DPoP-bound
