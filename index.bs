@@ -247,15 +247,15 @@ With the `webid` scope, the DPoP-bound OIDC ID Token payload MUST contain these 
  * `iss` — The issuer claim MUST be a valid URL of the OP
     instantiating this token.
  * `aud` — The audience claim MUST be an array of values,
-    one of which is the ClientID claim is used to identify the client.
-    (See also: [section 5. Client Identifiers](#clientids)).
+    one of which is the authorized party claim is used to identify
+    the client. (See also: [section 5. Client Identifiers](#clientids)).
     another one is the string `solid`.
     In the decentralized world
     of Solid OIDC, the audience of an ID Token is not only the client,
     but also a Solid Authorization Server;
     that is, any Solid Authorization Server at any accessible address
     on the world wide web. See also: [[RFC7519#section-4.1.3]].
- * `azp` - The ClientID claim is used to identify the client.
+ * `azp` - The authorized party claim is used to identify the client.
     (See also: [section 5. Client Identifiers](#clientids)).
  * `iat` — The issued-at claim is the time at which the DPoP-bound
     OIDC ID Token was issued.
