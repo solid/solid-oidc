@@ -132,3 +132,13 @@ the access token, like the `webid` claims and `solid` audience, could be imposed
 #### Concerns, remarks and questions
 - It may be conflicting with the goal of the specification (authentication) to imply the use of an access token (which is primarily used from an authorization perspective). **(^LD)**
 - The use of a separate token type would allow for the Authorization Service to distinguish between OIDC and OAuth 2.0 discovery URIs in a cleaner way. **(^LD)**
+
+### 3. Adding these special flows into the Solid OIDC specification
+A final option might be to introduce these special OAuth flows, that are undefined in the general OpenID Connect 1.0 specification into the 
+Solid OIDC specficiation. This might be a solution for example in the context of the Client Credentials Grant.
+
+#### Concerns, remarks and questions
+- Introducing undefined flows into the Solid OIDC specification may cause generic OIDC conformance tests to fail. **(^LD)**
+- This solution might not work for some specialized flows, like Device Code Grant, that cannot be easily ported into the realm of OpenID
+Connect. **(^LD)**
+
