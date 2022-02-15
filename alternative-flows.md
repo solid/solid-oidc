@@ -142,3 +142,6 @@ Solid OIDC specficiation. This might be a solution for example in the context of
 - This solution might not work for some specialized flows, like Device Code Grant, that cannot be easily ported into the realm of OpenID
 Connect. **(^LD)**
 
+
+## Existing clients using non-OIDC authentication flows
+- [sai-java](https://github.com/janeirodigital/sai-java/blob/main/sai-java-core/src/main/java/com/janeirodigital/sai/core/authorization/ClientCredentialsSession.java#L104)
