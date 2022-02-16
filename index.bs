@@ -10,6 +10,7 @@ Group: Solid Community Group
 Favicon: https://solid.github.io/solid-oidc/solid.svg
 ED: https://solid.github.io/solid-oidc/
 Repository: https://github.com/solid/solid-oidc
+Inline Github Issues: title
 Markup Shorthands: markdown yes
 Max ToC Depth: 2
 Editor: [Aaron Coburn](https://people.apache.org/~acoburn/#i) ([Inrupt](https://inrupt.com))
@@ -216,6 +217,55 @@ If the Client does not use an identifier that can be dereferenced, then it MUST 
 registered with the OP via either OIDC dynamic or static registration.
 See also [[!OIDC.DynamicClientRegistration]].
 
+# WebID Profile # {#webid-profile}
+
+Dereferencing the WebID URL results in a WebID Profile.
+
+Issue(76):
+
+## OIDC Issuer Discovery ## {#oidc-issuer-discovery}
+
+A WebID Profile lists the OpenID Providers who are trusted to issue tokens on behalf
+of the agent who controls the WebID. This prevents a malicious OpenID Provider from issuing
+otherwise valid ID Tokens for arbitrary WebIDs. An entity that verifies ID Tokens will use this
+mechanism to determine if the issuer is authoritative for the given WebID.
+
+<figure class="example">
+    <pre highlight="turtle">
+      PREFIX solid: &lt;http://www.w3.org/ns/solid/terms#&gt;
+
+      &lt;#id&gt; solid:oidcIssuer &lt;https://oidc.example&gt; .
+    </pre>
+    <figcaption>WebID Profile specifying an OIDC issuer</figcaption>
+</figure>
+
+To verify an ID Token the WebID Profile MUST be checked for the existence of a statement matching
+<pre highlight="sparql">
+  ?webid &lt;http://www.w3.org/ns/solid/terms#oidcIssuer&gt; ?iss .
+</pre>
+where `?webid` and `?iss` are the values of the `webid` and `iss` claims respectively.
+
+The same pattern MAY be used to discover a list of valid issuers for the given WebID.
+
+Issue(80):
+
+### OIDC Issuer Discovery via Link Headers ### {#oidc-issuer-discovery-link-headers}
+
+A server hosting a WebID Profile MAY transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer` values via Link Headers
+but they MUST be the same as in the RDF representation.
+A client MUST treat the RDF in the body of the WebID Profile as canonical
+but MAY use the Link Header values as an optimization.
+
+<figure class="example">
+    <pre highlight="http">
+        Link: &lt;https://oidc.example&gt;;
+              rel="http://www.w3.org/ns/solid/terms#oidcIssuer";
+              anchor="#id"
+    </pre>
+    <figcaption>HTTP response Link Header (line breaks added for readibility)</figcaption>
+</figure>
+
+
 # Requesting the WebID Claim using a Scope Value # {#webid-scope}
 
 In OpenID Connect, `scope` values are used to request that particular information be make available as claim values.
@@ -322,25 +372,11 @@ The DPoP-bound OIDC ID Token MUST be validated according to
 but the AS MAY perform additional verification in order to determine whether to grant access to the
 requested resource.
 
-The user's WebID in the `webid` claim MUST be dereferenced and checked against the `iss` claim in the
-OIDC ID Token. If the `iss` claim is different from the domain of the WebID, then the AS MUST check
-the WebID document for the existence of a statement matching `?webid <http://www.w3.org/ns/solid/terms#oidcIssuer> ?iss.`,
-where `?webid` and `?iss` are the values of the `webid` and `iss` claims respectively.
-This prevents a malicious identity provider from issuing valid OIDC ID Tokens for arbitrary WebIDs.
+Authorization Server MUST perform [[#oidc-issuer-discovery]] using the value of the `webid` claim
+to dereference the WebID Profile.
 
 Unless the AS acquires OP keys through some other means, or the AS chooses to reject tokens issued by this OP,
 the AS MUST follow OpenID Connect Discovery 1.0 [[!OIDC.Discovery]] to find an OP's signing keys (JWK).
-
-### WebID Issuer Discovery via Link Headers ### {#webid-issuer-discovery}
-
-A server hosting a WebID document MAY transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer` values via Link Headers but it MUST be the same as in the RDF representation. A client MUST treat the RDF in the body of the WebID document as canonical but MAY use the Link Header values as an optimization.
-
-<div class="example">
-    <pre highlight="http">
-        Link: &lt;https://oidc.example&gt;; rel="http://www.w3.org/ns/solid/terms#oidcIssuer"; anchor="#id"
-    </pre>
-</div>
-
 
 # Solid-OIDC Conformance Discovery # {#discovery}
 
