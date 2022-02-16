@@ -9,7 +9,7 @@
   <meta content="Bikeshed version 2e3c4c68b, updated Fri Jan 14 14:49:00 2022 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
   <link href="https://solid.github.io/solid-oidc/solid.svg" rel="icon">
-  <meta content="f010838504640a03aef3935cb84d49567567831f" name="document-revision">
+  <meta content="776829ce1b037f62db1f1a975aa5cf5b104b494a" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -345,7 +345,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solid.github.io/solid-oidc/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-02-15">15 February 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-02-16">16 February 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -416,35 +416,40 @@ to cite this document as other than work in progress.</p>
       <li><a href="#clientids-document"><span class="secno">5.1</span> <span class="content">Client ID Document</span></a>
       <li><a href="#clientids-oidc"><span class="secno">5.2</span> <span class="content">OIDC Registration</span></a>
      </ol>
-    <li><a href="#webid-scope"><span class="secno">6</span> <span class="content">Requesting the WebID Claim using a Scope Value</span></a>
     <li>
-     <a href="#tokens"><span class="secno">7</span> <span class="content">Token Instantiation</span></a>
+     <a href="#webid-profile"><span class="secno">6</span> <span class="content">WebID Profile</span></a>
      <ol class="toc">
-      <li><a href="#tokens-id"><span class="secno">7.1</span> <span class="content">DPoP-bound OIDC ID Token</span></a>
+      <li><a href="#oidc-issuer-discovery"><span class="secno">6.1</span> <span class="content">OIDC Issuer Discovery</span></a>
+     </ol>
+    <li><a href="#webid-scope"><span class="secno">7</span> <span class="content">Requesting the WebID Claim using a Scope Value</span></a>
+    <li>
+     <a href="#tokens"><span class="secno">8</span> <span class="content">Token Instantiation</span></a>
+     <ol class="toc">
+      <li><a href="#tokens-id"><span class="secno">8.1</span> <span class="content">DPoP-bound OIDC ID Token</span></a>
      </ol>
     <li>
-     <a href="#resource"><span class="secno">8</span> <span class="content">Resource Access</span></a>
+     <a href="#resource"><span class="secno">9</span> <span class="content">Resource Access</span></a>
      <ol class="toc">
-      <li><a href="#authorization-server-discovery"><span class="secno">8.1</span> <span class="content">Authorization Server Discovery</span></a>
-      <li><a href="#obtaining-access-token"><span class="secno">8.2</span> <span class="content">Obtaining an Access Token</span></a>
-      <li><a href="#resource-dpop-validation"><span class="secno">8.3</span> <span class="content">DPoP Proof Validation</span></a>
-      <li><a href="#resource-access-validation"><span class="secno">8.4</span> <span class="content">OIDC ID Token Validation</span></a>
+      <li><a href="#authorization-server-discovery"><span class="secno">9.1</span> <span class="content">Authorization Server Discovery</span></a>
+      <li><a href="#obtaining-access-token"><span class="secno">9.2</span> <span class="content">Obtaining an Access Token</span></a>
+      <li><a href="#resource-dpop-validation"><span class="secno">9.3</span> <span class="content">DPoP Proof Validation</span></a>
+      <li><a href="#resource-access-validation"><span class="secno">9.4</span> <span class="content">OIDC ID Token Validation</span></a>
      </ol>
-    <li><a href="#discovery"><span class="secno">9</span> <span class="content">Solid-OIDC Conformance Discovery</span></a>
+    <li><a href="#discovery"><span class="secno">10</span> <span class="content">Solid-OIDC Conformance Discovery</span></a>
     <li>
-     <a href="#security"><span class="secno">10</span> <span class="content">Security Considerations</span></a>
+     <a href="#security"><span class="secno">11</span> <span class="content">Security Considerations</span></a>
      <ol class="toc">
-      <li><a href="#security-tls"><span class="secno">10.1</span> <span class="content">TLS Requirements</span></a>
-      <li><a href="#security-client-ids"><span class="secno">10.2</span> <span class="content">Client IDs</span></a>
-      <li><a href="#security-client-secrets"><span class="secno">10.3</span> <span class="content">Client Secrets</span></a>
-      <li><a href="#security-client-trust"><span class="secno">10.4</span> <span class="content">Client Trust</span></a>
+      <li><a href="#security-tls"><span class="secno">11.1</span> <span class="content">TLS Requirements</span></a>
+      <li><a href="#security-client-ids"><span class="secno">11.2</span> <span class="content">Client IDs</span></a>
+      <li><a href="#security-client-secrets"><span class="secno">11.3</span> <span class="content">Client Secrets</span></a>
+      <li><a href="#security-client-trust"><span class="secno">11.4</span> <span class="content">Client Trust</span></a>
      </ol>
     <li>
-     <a href="#privacy"><span class="secno">11</span> <span class="content">Privacy Considerations</span></a>
+     <a href="#privacy"><span class="secno">12</span> <span class="content">Privacy Considerations</span></a>
      <ol class="toc">
-      <li><a href="#privacy-token-reuse"><span class="secno">11.1</span> <span class="content">OIDC ID Token Reuse</span></a>
+      <li><a href="#privacy-token-reuse"><span class="secno">12.1</span> <span class="content">OIDC ID Token Reuse</span></a>
      </ol>
-    <li><a href="#acknowledgments"><span class="secno">12</span> <span class="content">Acknowledgments</span></a>
+    <li><a href="#acknowledgments"><span class="secno">13</span> <span class="content">Acknowledgments</span></a>
     <li><a href="#full-jsonld-context"><span class="secno"></span> <span class="content">Appendix A: Full JSON-LD context</span></a>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
@@ -579,14 +584,49 @@ this JSON-LD context MUST use the HTTPS scheme.</p>
    <p>If the Client does not use an identifier that can be dereferenced, then it MUST present a client identifier
 registered with the OP via either OIDC dynamic or static registration.
 See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration">[OIDC.DynamicClientRegistration]</a>.</p>
-   <h2 class="heading settled" data-level="6" id="webid-scope"><span class="secno">6. </span><span class="content">Requesting the WebID Claim using a Scope Value</span><a class="self-link" href="#webid-scope"></a></h2>
+   <h2 class="heading settled" data-level="6" id="webid-profile"><span class="secno">6. </span><span class="content">WebID Profile</span><a class="self-link" href="#webid-profile"></a></h2>
+   <p>Dereferencing the WebID URL results in a WebID Profile.</p>
+   <div class="issue no-marker" id="issue-d41d8cd9"><a class="self-link" href="#issue-d41d8cd9"></a><a class="marker" href="https://github.com/solid/solid-oidc/issues/76" style="text-transform:none">solid/solid-oidc/76</a><a href="https://github.com/solid/solid-oidc/issues/76">WebIDs MUST use a secure protocol</a></div>
+   <h3 class="heading settled" data-level="6.1" id="oidc-issuer-discovery"><span class="secno">6.1. </span><span class="content">OIDC Issuer Discovery</span><a class="self-link" href="#oidc-issuer-discovery"></a></h3>
+   <p>A WebID Profile lists the OpenID Providers who are trusted to issue tokens on behalf
+of the agent who controls the WebID. This prevents a malicious OpenID Provider from issuing
+otherwise valid ID Tokens for arbitrary WebIDs. An entity that verifies ID Tokens will use this
+mechanism to determine if the issuer is authoritative for the given WebID.</p>
+   <figure class="example" id="example-75c9f7b4">
+    <a class="self-link" href="#example-75c9f7b4"></a> 
+<pre class="highlight"><c- k>PREFIX</c-> <c- nn>solid:</c-> <c- g>&lt;http://www.w3.org/ns/solid/terms#></c->
+
+<c- g>&lt;#id></c-> <c- nn>solid</c-><c- p>:</c-><c- f>oidcIssuer</c-> <c- g>&lt;https://oidc.example></c-> <c- p>.</c->
+</pre>
+    <figcaption>WebID Profile specifying an OIDC issuer</figcaption>
+   </figure>
+   <p>To verify an ID Token the WebID Profile MUST be checked for the existence of a statement matching</p>
+<pre class="highlight"><c- g>?webid</c-> <c- nl>&lt;http://www.w3.org/ns/solid/terms#oidcIssuer></c-> <c- g>?iss</c-> <c- p>.</c->
+</pre>
+   <p>where <code>?webid</code> and <code>?iss</code> are the values of the <code>webid</code> and <code>iss</code> claims respectively.</p>
+   <p>The same pattern MAY be used to discover a list of valid issuers for the given WebID.</p>
+   <div class="issue no-marker" id="issue-d41d8cd9①"><a class="self-link" href="#issue-d41d8cd9①"></a><a class="marker" href="https://github.com/solid/solid-oidc/issues/80" style="text-transform:none">solid/solid-oidc/80</a><a href="https://github.com/solid/solid-oidc/issues/80">OIDC issuer discovery when WebID is not publicly readable</a></div>
+   <h4 class="heading settled" data-level="6.1.1" id="oidc-issuer-discovery-link-headers"><span class="secno">6.1.1. </span><span class="content">OIDC Issuer Discovery via Link Headers</span><a class="self-link" href="#oidc-issuer-discovery-link-headers"></a></h4>
+   <p>A server hosting a WebID Profile MAY transmit the <code>http://www.w3.org/ns/solid/terms#oidcIssuer</code> values via Link Headers
+but they MUST be the same as in the RDF representation.
+A client MUST treat the RDF in the body of the WebID Profile as canonical
+but MAY use the Link Header values as an optimization.</p>
+   <figure class="example" id="example-3821d21b">
+    <a class="self-link" href="#example-3821d21b"></a> 
+<pre class="highlight">Link: &lt;https://oidc.example>;
+      rel="http://www.w3.org/ns/solid/terms#oidcIssuer";
+      anchor="#id"
+</pre>
+    <figcaption>HTTP response Link Header (line breaks added for readibility)</figcaption>
+   </figure>
+   <h2 class="heading settled" data-level="7" id="webid-scope"><span class="secno">7. </span><span class="content">Requesting the WebID Claim using a Scope Value</span><a class="self-link" href="#webid-scope"></a></h2>
    <p>In OpenID Connect, <code>scope</code> values are used to request that particular information be make available as claim values.</p>
    <p>Solid-OIDC defines the following <code>scope</code> value for use with claim requests:</p>
    <dl>
     <dt><em>webid</em> 
     <dd> REQUIRED. This scope requests access to the End-User’s <code>webid</code> Claim. 
    </dl>
-   <h2 class="heading settled" data-level="7" id="tokens"><span class="secno">7. </span><span class="content">Token Instantiation</span><a class="self-link" href="#tokens"></a></h2>
+   <h2 class="heading settled" data-level="8" id="tokens"><span class="secno">8. </span><span class="content">Token Instantiation</span><a class="self-link" href="#tokens"></a></h2>
    <p>Assuming one of the following options</p>
    <ul>
     <li data-md>
@@ -595,7 +635,7 @@ See also <a data-link-type="biblio" href="#biblio-oidcdynamicclientregistration"
      <p>Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)</p>
    </ul>
    <p>the OP MUST return A DPoP-bound OIDC ID Token.</p>
-   <h3 class="heading settled" data-level="7.1" id="tokens-id"><span class="secno">7.1. </span><span class="content">DPoP-bound OIDC ID Token</span><a class="self-link" href="#tokens-id"></a></h3>
+   <h3 class="heading settled" data-level="8.1" id="tokens-id"><span class="secno">8.1. </span><span class="content">DPoP-bound OIDC ID Token</span><a class="self-link" href="#tokens-id"></a></h3>
    <p>When requesting a DPoP-bound OIDC ID Token, the Client MUST send a DPoP proof JWT
 that is valid according to the <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-5">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) § section-5</a>. The DPoP proof JWT is used to
 bind the OIDC ID Token to a public key. See also: <a data-link-type="biblio" href="#biblio-dpop">[DPOP]</a>.</p>
@@ -643,8 +683,8 @@ Key bound to the OIDC ID Token. See also: <a href="https://tools.ietf.org/html/d
 <c- p>}</c->
 </pre>
    </div>
-   <h2 class="heading settled" data-level="8" id="resource"><span class="secno">8. </span><span class="content">Resource Access</span><a class="self-link" href="#resource"></a></h2>
-   <h3 class="heading settled" data-level="8.1" id="authorization-server-discovery"><span class="secno">8.1. </span><span class="content">Authorization Server Discovery</span><a class="self-link" href="#authorization-server-discovery"></a></h3>
+   <h2 class="heading settled" data-level="9" id="resource"><span class="secno">9. </span><span class="content">Resource Access</span><a class="self-link" href="#resource"></a></h2>
+   <h3 class="heading settled" data-level="9.1" id="authorization-server-discovery"><span class="secno">9.1. </span><span class="content">Authorization Server Discovery</span><a class="self-link" href="#authorization-server-discovery"></a></h3>
    <p>When a Client performs an unauthenticated request to a protected resource,
 the Resource Server MUST respond with the HTTP <code>401</code> status code,
 and a <code>WWW-Authenticate</code> HTTP header. See also: <a href="https://httpwg.org/specs/rfc7235.html#section-4.1">Hypertext Transfer Protocol (HTTP/1.1): Authentication § section-4.1</a></p>
@@ -652,34 +692,24 @@ and a <code>WWW-Authenticate</code> HTTP header. See also: <a href="https://http
 for discovering an associated authorization server.</p>
    <p>Authorization Servers SHOULD implement User-Managed Access (UMA) 2.0 Grant for
 OAuth 2.0 Authorization <a data-link-type="biblio" href="#biblio-uma">[UMA]</a>.</p>
-   <h3 class="heading settled" data-level="8.2" id="obtaining-access-token"><span class="secno">8.2. </span><span class="content">Obtaining an Access Token</span><a class="self-link" href="#obtaining-access-token"></a></h3>
+   <h3 class="heading settled" data-level="9.2" id="obtaining-access-token"><span class="secno">9.2. </span><span class="content">Obtaining an Access Token</span><a class="self-link" href="#obtaining-access-token"></a></h3>
    <p>For Authorization Servers that conform to <a data-link-type="biblio" href="#biblio-uma">[UMA]</a>, the <code>http://openid.net/specs/openid-connect-core-1_0.html#IDToken</code> profile MUST
 be supported. This profile MUST be advertised in the <code>uma_profiles_supported</code> metadata of the Authorization Server discovery document <a href="https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html#rfc.section.2">User-Managed Access (UMA) 2.0 Grant for OAuth 2.0 Authorization § rfc.section.2</a>.</p>
    <p>When using the <code>http://openid.net/specs/openid-connect-core-1_0.html#IDToken</code> profile with an UMA-based Authorization Server, the Authorization Server MUST be capable
-of exchanging a valid Solid-OIDC ID Token <a href="#tokens-id">§ 7.1 DPoP-bound OIDC ID Token</a> for an OAuth 2.0 Access Token.</p>
+of exchanging a valid Solid-OIDC ID Token <a href="#tokens-id">§ 8.1 DPoP-bound OIDC ID Token</a> for an OAuth 2.0 Access Token.</p>
    <p class="note" role="note"><span>Note:</span> Clients can push additional claims by requesting an upgraded RPT <a href="https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html#rfc.section.3.3.1">User-Managed Access (UMA) 2.0 Grant for OAuth 2.0 Authorization § rfc.section.3.3.1</a></p>
-   <h3 class="heading settled" data-level="8.3" id="resource-dpop-validation"><span class="secno">8.3. </span><span class="content">DPoP Proof Validation</span><a class="self-link" href="#resource-dpop-validation"></a></h3>
+   <h3 class="heading settled" data-level="9.3" id="resource-dpop-validation"><span class="secno">9.3. </span><span class="content">DPoP Proof Validation</span><a class="self-link" href="#resource-dpop-validation"></a></h3>
    <p>A DPoP Proof that is valid according to <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-4.3">DPoP Internet-Draft, Section 4.3</a>,
 MUST be present when a DPoP-bound OIDC ID Token is used.</p>
-   <h3 class="heading settled" data-level="8.4" id="resource-access-validation"><span class="secno">8.4. </span><span class="content">OIDC ID Token Validation</span><a class="self-link" href="#resource-access-validation"></a></h3>
+   <h3 class="heading settled" data-level="9.4" id="resource-access-validation"><span class="secno">9.4. </span><span class="content">OIDC ID Token Validation</span><a class="self-link" href="#resource-access-validation"></a></h3>
    <p>The DPoP-bound OIDC ID Token MUST be validated according to <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-6">DPoP Internet-Draft, Section 6</a>,
 but the AS MAY perform additional verification in order to determine whether to grant access to the
 requested resource.</p>
-   <p>The user’s WebID in the <code>webid</code> claim MUST be dereferenced and checked against the <code>iss</code> claim in the
-OIDC ID Token. If the <code>iss</code> claim is different from the domain of the WebID, then the AS MUST check
-the WebID document for the existence of a statement matching <code>?webid &lt;http://www.w3.org/ns/solid/terms#oidcIssuer> ?iss.</code>,
-where <code>?webid</code> and <code>?iss</code> are the values of the <code>webid</code> and <code>iss</code> claims respectively.
-This prevents a malicious identity provider from issuing valid OIDC ID Tokens for arbitrary WebIDs.</p>
+   <p>Authorization Server MUST perform <a href="#oidc-issuer-discovery">§ 6.1 OIDC Issuer Discovery</a> using the value of the <code>webid</code> claim
+to dereference the WebID Profile.</p>
    <p>Unless the AS acquires OP keys through some other means, or the AS chooses to reject tokens issued by this OP,
 the AS MUST follow OpenID Connect Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> to find an OP’s signing keys (JWK).</p>
-   <h4 class="heading settled" data-level="8.4.1" id="webid-issuer-discovery"><span class="secno">8.4.1. </span><span class="content">WebID Issuer Discovery via Link Headers</span><a class="self-link" href="#webid-issuer-discovery"></a></h4>
-   <p>A server hosting a WebID document MAY transmit the <code>http://www.w3.org/ns/solid/terms#oidcIssuer</code> values via Link Headers but it MUST be the same as in the RDF representation. A client MUST treat the RDF in the body of the WebID document as canonical but MAY use the Link Header values as an optimization.</p>
-   <div class="example" id="example-a71199ff">
-    <a class="self-link" href="#example-a71199ff"></a> 
-<pre class="highlight">Link: &lt;https://oidc.example>; rel="http://www.w3.org/ns/solid/terms#oidcIssuer"; anchor="#id"
-</pre>
-   </div>
-   <h2 class="heading settled" data-level="9" id="discovery"><span class="secno">9. </span><span class="content">Solid-OIDC Conformance Discovery</span><a class="self-link" href="#discovery"></a></h2>
+   <h2 class="heading settled" data-level="10" id="discovery"><span class="secno">10. </span><span class="content">Solid-OIDC Conformance Discovery</span><a class="self-link" href="#discovery"></a></h2>
    <p>An OpenID Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
 Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> resource. An OpenID Provider would indicate this support by including <code>webid</code> in the <code>scopes_supported</code> metadata property.</p>
    <div class="example" id="example-b42af25e">
@@ -689,7 +719,7 @@ Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Disc
 <c- p>}</c->
 </pre>
    </div>
-   <h2 class="heading settled" data-level="10" id="security"><span class="secno">10. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
+   <h2 class="heading settled" data-level="11" id="security"><span class="secno">11. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
    <p><em>This section is non-normative</em></p>
    <p>As this specification builds upon existing web standards, security considerations from OAuth, OIDC,
 PKCE, and the DPoP specifications may also apply unless otherwise indicated. The following
@@ -700,30 +730,30 @@ time. It is advised to monitor these documents, as such changes might have
 security implications.</p>
    <p>In addition to above considerations, implementors should consider the Security
 Considerations in context of the Solid Protocol <a data-link-type="biblio" href="#biblio-solidprotocol">[Solid.Protocol]</a>.</p>
-   <h3 class="heading settled" data-level="10.1" id="security-tls"><span class="secno">10.1. </span><span class="content">TLS Requirements</span><a class="self-link" href="#security-tls"></a></h3>
+   <h3 class="heading settled" data-level="11.1" id="security-tls"><span class="secno">11.1. </span><span class="content">TLS Requirements</span><a class="self-link" href="#security-tls"></a></h3>
    <p>All TLS requirements outlined in <a href="https://tools.ietf.org/html/bcp195">[BCP195</a>] apply to this
 specification.</p>
    <p>All tokens, Client, and User credentials MUST only be transmitted over TLS.</p>
-   <h3 class="heading settled" data-level="10.2" id="security-client-ids"><span class="secno">10.2. </span><span class="content">Client IDs</span><a class="self-link" href="#security-client-ids"></a></h3>
+   <h3 class="heading settled" data-level="11.2" id="security-client-ids"><span class="secno">11.2. </span><span class="content">Client IDs</span><a class="self-link" href="#security-client-ids"></a></h3>
    <p>An AS SHOULD assign a fixed set of low trust policies to any client identified as anonymous.</p>
    <p>Implementors SHOULD expire ephemeral Client IDs that are kept in server storage to mitigate the
 potential for a bad actor to fill server storage with unexpired or otherwise useless Client IDs.</p>
-   <h3 class="heading settled" data-level="10.3" id="security-client-secrets"><span class="secno">10.3. </span><span class="content">Client Secrets</span><a class="self-link" href="#security-client-secrets"></a></h3>
+   <h3 class="heading settled" data-level="11.3" id="security-client-secrets"><span class="secno">11.3. </span><span class="content">Client Secrets</span><a class="self-link" href="#security-client-secrets"></a></h3>
    <p>Client secrets SHOULD NOT be stored in browser local storage. Doing so will increase the risk of
 data leaks should an attacker gain access to Client credentials.</p>
-   <h3 class="heading settled" data-level="10.4" id="security-client-trust"><span class="secno">10.4. </span><span class="content">Client Trust</span><a class="self-link" href="#security-client-trust"></a></h3>
+   <h3 class="heading settled" data-level="11.4" id="security-client-trust"><span class="secno">11.4. </span><span class="content">Client Trust</span><a class="self-link" href="#security-client-trust"></a></h3>
    <p><em>This section is non-normative</em></p>
    <p>Clients are ephemeral, client registration is optional, and most Clients cannot keep secrets. These,
 among other factors, are what makes Client trust challenging.</p>
-   <h2 class="heading settled" data-level="11" id="privacy"><span class="secno">11. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
-   <h3 class="heading settled" data-level="11.1" id="privacy-token-reuse"><span class="secno">11.1. </span><span class="content">OIDC ID Token Reuse</span><a class="self-link" href="#privacy-token-reuse"></a></h3>
+   <h2 class="heading settled" data-level="12" id="privacy"><span class="secno">12. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
+   <h3 class="heading settled" data-level="12.1" id="privacy-token-reuse"><span class="secno">12.1. </span><span class="content">OIDC ID Token Reuse</span><a class="self-link" href="#privacy-token-reuse"></a></h3>
    <p><em>This section is non-normative</em></p>
    <p>With JWTs being extendable by design, there is potential for a privacy breach if OIDC ID Tokens get
 reused across multiple authorization servers. It is not unimaginable that a custom claim is added to the
 OIDC ID Token on instantiation. This addition may unintentionally give other authorization servers
 consuming the OIDC ID Token information about the user that they may not wish to share outside of the
 intended AS.</p>
-   <h2 class="heading settled" data-level="12" id="acknowledgments"><span class="secno">12. </span><span class="content">Acknowledgments</span><a class="self-link" href="#acknowledgments"></a></h2>
+   <h2 class="heading settled" data-level="13" id="acknowledgments"><span class="secno">13. </span><span class="content">Acknowledgments</span><a class="self-link" href="#acknowledgments"></a></h2>
    <p><em>This section is non-normative</em></p>
    <p>The Solid Community Group would like to thank the following individuals for reviewing and providing
 feedback on the specification (in alphabetical order):</p>
