@@ -15,7 +15,7 @@ The following section aims to:
 
 ### Service Accounts
 In the context of server-to-server interactions, an application may not need to access resources on behalf of some user but rather assume
-its own distinct identity. For such scenario's you could use a service account, which is an account that belongs to the application instead
+its own distinct identity. For such scenarios you could use a service account, which is an account that belongs to the application instead
 of to an individual end user. 
 
 In the context of Solid this would imply that the application's Client ID Document also conforms to the WebID specification and lists an IdP
@@ -28,8 +28,8 @@ Also, an authorization to your calendar resources in the Pod has been given to t
 Now the calendar synchronization service needs to be able to authenticate itself in order to access these resources.
 
 ### Multi-tenant Backend Services
-In the context of multi-tenant backend services a single server side application (i.e. a single Client ID) is used by multiple entities (i.
-e. multiple, distinct WebIDs). The server side application should be able to assume the identity of each of these entities (i.e. 
+In the context of multi-tenant backend services a single server side application (i.e., a single Client ID) is used by multiple entities (i.
+e., multiple, distinct WebIDs). The server side application should be able to assume the identity of each of these entities (i.e., 
 impersonation), and present the necessary identity token to the authorization service asserting the impersonated WebID.
 
 #### Example:
@@ -140,7 +140,7 @@ A final option might be to introduce these special OAuth flows, that are undefin
 Solid OIDC specficiation. This might be a solution for example in the context of the Client Credentials Grant.
 
 #### Concerns, remarks and questions
-- ~~Introducing undefined flows into the Solid OIDC specification may cause generic OIDC conformance tests to fail.~~ Actually the [OIDC specification](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata) does not explicitly proclude additional grant types, so this previous statement may not be applicable. **(^LD)**
+- ~~Introducing undefined flows into the Solid OIDC specification may cause generic OIDC conformance tests to fail.~~ Actually the [OIDC specification](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata) does not explicitly preclude additional grant types, so this previous statement may not be applicable. **(^LD)**
 - This solution might not work for some specialized flows, like Device Code Grant, that cannot be easily ported into the realm of OpenID
 Connect. **(^LD)**
 
