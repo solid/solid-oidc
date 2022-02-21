@@ -72,6 +72,7 @@ ID token a sequence of requests similar to what is shown below could be envision
 2. Token exchange request is made by the client:
     - The `grant_type` **must** be `urn:ietf:params:oauth:grant-type:token-exchange`.
     - The audience `solid` **must** be specified in the request.
+    - The scope `solid` **must** be specified in the request.
     - The `subject_token` **must** contain the Access Token that was obtained by the client through the prior OAuth 2.0 flow.
     - In order to yield a DPoP-bound ID Token, the client **must** provide a DPoP through the `DPOP`-header.
     - The client **should** specify the `requested_token_type` as being `urn:ietf:params:oauth:token-type:id_token`.
@@ -85,6 +86,7 @@ ID token a sequence of requests similar to what is shown below could be envision
 
     grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Atoken-exchange
     &audience=solid
+    &scope=solid
     &subject_token=eyJhbGciOiJFUz...FVBDaQpKjn5JzAw
     &subject_token_type=urn%3Aietf%3Aparams%3Aoauth%3Atoken-type%3Aaccess_token
     &requested_token_type=urn%3Aietf%3Aparams%3Aoauth%3Atoken-type%3Aid_token
