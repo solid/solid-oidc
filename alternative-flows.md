@@ -28,7 +28,7 @@ Also, an authorization to your calendar resources in the Pod has been given to t
 Now the calendar synchronization service needs to be able to authenticate itself in order to access these resources.
 
 ### Multi-tenant Backend Services
-In the context of multi-tenant backend services a single server side application (i.e. a single Client ID) is used by multiple entities (i.
+In the context of multi-tenant backend services a single server side application (i.e., a single Client ID) is used by multiple entities (i.
 e. multiple, distinct WebIDs). The server side application should be able to assume the identity of each of these entities (i.e. 
 impersonation), and present the necessary identity token to the authorization service asserting the impersonated WebID.
 
