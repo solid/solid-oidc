@@ -15,7 +15,7 @@ The following section aims to:
 
 ### Service Accounts
 In the context of server-to-server interactions, an application may not need to access resources on behalf of some user but rather assume
-its own distinct identity. For such scenario's you could use a service account, which is an account that belongs to the application instead
+its own distinct identity. For such scenarios you could use a service account, which is an account that belongs to the application instead
 of to an individual end user. 
 
 In the context of Solid this would imply that the application's Client ID Document also conforms to the WebID specification and lists an IdP
