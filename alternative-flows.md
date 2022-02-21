@@ -138,7 +138,7 @@ A final option might be to introduce these special OAuth flows, that are undefin
 Solid OIDC specficiation. This might be a solution for example in the context of the Client Credentials Grant.
 
 #### Concerns, remarks and questions
-- ~~Introducing undefined flows into the Solid OIDC specification may cause generic OIDC conformance tests to fail.~~ Actually the [OIDC specification](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata) does not explicitly proclude additional grant types, so this previous statement may not be applicable. **(^LD)**
+- ~~Introducing undefined flows into the Solid OIDC specification may cause generic OIDC conformance tests to fail.~~ Actually the [OIDC specification](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata) does not explicitly preclude additional grant types, so this previous statement may not be applicable. **(^LD)**
 - This solution might not work for some specialized flows, like Device Code Grant, that cannot be easily ported into the realm of OpenID
 Connect. **(^LD)**
 
