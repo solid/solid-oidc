@@ -29,7 +29,7 @@ Now the calendar synchronization service needs to be able to authenticate itself
 
 ### Multi-tenant Backend Services
 In the context of multi-tenant backend services a single server side application (i.e., a single Client ID) is used by multiple entities (i.
-e. multiple, distinct WebIDs). The server side application should be able to assume the identity of each of these entities (i.e. 
+e., multiple, distinct WebIDs). The server side application should be able to assume the identity of each of these entities (i.e., 
 impersonation), and present the necessary identity token to the authorization service asserting the impersonated WebID.
 
 #### Example:
