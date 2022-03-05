@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/primer/" rel="canonical">
-  <meta content="fef63dbad99a11b86a18109f43281180b6be0d2f" name="document-revision">
+  <meta content="1cc9b802b2ee40585af58e8e6db161354d6ebeaa" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -408,7 +408,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
    <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
    <p>This document outlines in details how Alice (end-user) asserts her identity
 (logs in) when using Decent Photos (relying party) to access data in hers and
-Bob’s Solid Data Pods (resource servers).</p>
+Bob’s Solid Storage (resource servers).</p>
    <h2 class="heading settled" data-level="2" id="definitions"><span class="secno">2. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
    <dl>
     <dt id="openid-provider"><a class="self-link" href="#openid-provider"></a>OpenID Provider (OP)
@@ -421,7 +421,7 @@ Bob’s Solid Data Pods (resource servers).</p>
     <dd>An entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end-user. Resource Owner is one of the four roles <a href="https://tools.ietf.org/html/rfc6749#section-1.1">defined in the OAuth 2.0 specification</a>. <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>
     <dt id="resource-server"><a class="self-link" href="#resource-server"></a>Resource Server (RS)
     <dd>A server hosting resources, capable of accepting and responding to protected resource requests using access tokens. RS is one of the four roles <a href="https://tools.ietf.org/html/rfc6749#section-1.1">defined in the OAuth 2.0 specification</a>. <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>
-    <dt id="solid-data-pod"><a class="self-link" href="#solid-data-pod"></a>Solid Data Pod (Pod)
+    <dt id="solid-data-pod"><a class="self-link" href="#solid-data-pod"></a>Solid Storage
     <dd>A Solid compliant Resource Server as <a href="https://solidproject.org/TR/protocol#data-pod">defined in the Solid Protocol</a>. <a data-link-type="biblio" href="#biblio-solidprotocol">[Solid.Protocol]</a>
     <dt id="solid-oidc"><a class="self-link" href="#solid-oidc"></a>Solid OpenID Connect (Solid OIDC)
     <dd>The specification defining authentication in the Solid ecosystem. <a data-link-type="biblio" href="#biblio-solidoidc">[Solid.OIDC]</a>
@@ -438,12 +438,12 @@ Bob’s Solid Data Pods (resource servers).</p>
     <dd>Alice’s OpenID Provider, also known as an Identity Provider (IdP), is the
  service responsible for authorizing our third-party web app (Decent Photos) by
  providing it with the tokens necessary to gain access to any resource Alice has
- access to (in any Pod, for example Alice’s and Bob’s). In our example, Alice’s
+ access to (in any Storage, for example Alice’s and Bob’s). In our example, Alice’s
  OP is hosted at <code>https://secureauth.example</code>.
     <dt id="alice-webid"><a class="self-link" href="#alice-webid"></a>Alice’s WebID
     <dd>Alice’s WebID is <code>https://alice.coolpod.example/profile/card#me</code>. The WebID
  profile document denoted by URI <code>https://alice.coolpod.example/profile/card</code> is
- hosted on Alice’s Solid Data Pod and contains the URI of her OP. Alice’s WebID <code>https://alice.coolpod.example/profile/card#me</code> serves as her unique identifier
+ hosted on Alice’s Solid Storage and contains the URI of her OP. Alice’s WebID <code>https://alice.coolpod.example/profile/card#me</code> serves as her unique identifier
  in the Solid Ecosystem.
     <dt id="rp"><a class="self-link" href="#rp"></a>RP
     <dd>The Decent Photos application is a third party photo viewing web application.
@@ -453,13 +453,16 @@ Bob’s Solid Data Pods (resource servers).</p>
  hosted at <code>https://decentphotos.example</code>.
     <dt id="decentphotos-rp-webid"><a class="self-link" href="#decentphotos-rp-webid"></a>RP’s Client ID Document
     <dd>Decent Photos is a Solid compliant application and has a URI of its own,
- which resolves to Client ID Document. An RP’s Client ID Document
+ which resolves to a Client ID Document. An RP’s Client ID Document
  contains information identifying them as a registered OAuth 2.0 client
  application. Decent Photo’s URI is <code>https://decentphotos.example/webid#this</code>
-    <dt id="bob-pod"><a class="self-link" href="#bob-pod"></a>Bob’s Pod
-    <dd>We will be trying to access photos stored in Bob’s Pod. In our example, Bob
+    <dt id="bob-pod"><a class="self-link" href="#bob-pod"></a>Bob’s Storage
+    <dd>We will be trying to access photos stored in Bob’s Storage. In our example, Bob
  is a friend of Alice and has previously indicated via access control that Alice
- may access some of his photos using any web app. Bob’s Solid Data Pod is hosted at <code>https://bob.otherpod.example</code>.
+ may access some of his photos using any web app. Bob’s Solid Storage is hosted at <code>https://bob.otherpod.example</code>.
+    <dt id="bob-auth-server"><a class="self-link" href="#bob-auth-server"></a>Authorization Server for Bob’s Storage
+    <dd>The Authorization Server (AS) connected to Bob’s Storage will issue access tokens that
+ can be used with Bob’s Storage. In these examples, this is hosted at <code>https://auth.otherpod.example</code>.
    </dl>
    <h2 class="heading settled" data-level="4" id="solid-oidc-flow"><span class="secno">4. </span><span class="content">Solid OIDC Flow</span><a class="self-link" href="#solid-oidc-flow"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="authorization-code-pkce-flow"><span class="secno">4.1. </span><span class="content">Authorization Code Grant with PKCE Authorization Flow</span><a class="self-link" href="#authorization-code-pkce-flow"></a></h3>
@@ -476,8 +479,8 @@ This page contains JavaScript that will help with the authentication process.</p
 process of providing consent. To do so, she must either provide her WebID
 (<code>https://alice.coolpod.example/profile/card#me</code>) or the URL of her OP
 (<code>https://secureauth.example</code>).</p>
-   <p>Although it is not the case for Alice, a user’s Pod and OP can be hosted under the
-same domain. For example, Bob could have a Pod at <code>https://bob.solidpod.example.com</code>,
+   <p>Although it is not the case for Alice, a user’s Storage and OP can be hosted under the
+same domain. For example, Bob could have a Storage at <code>https://bob.solidpod.example.com</code>,
 an OP at <code>https://solidpod.example.com/</code>, and a WebID of <code>https://bob.solidpod.example.com/profile/card#me</code>.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-2.1"><span class="content">2.1 Retrieve Profile (only needed if a WebID is provided)</span><a class="self-link" href="#authorization-code-pkce-flow-step-2.1"></a></h4>
    <p>If Alice enters her WebID’s URL rather than her OP’s URL, a request should be
@@ -674,7 +677,7 @@ redirect uri, including useful information with it:</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-12"><span class="content">12. Generates a DPoP Client Key Pair</span><a class="self-link" href="#authorization-code-pkce-flow-step-12"></a></h4>
    <p>Solid-OIDC depends on <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03">Demonstration of Proof-of-Possession (DPoP) tokens</a>.
 DPoP tokens ensure that third-party web applications can send requests to any number of
-Pods while ensuring that evil Pods can’t steal a user’s token.</p>
+Storage servers while ensuring that malicious actors can’t steal and replay a user’s token.</p>
    <p>The first step to generating a DPoP token is generating a public and private key pair on the
 third-party RP. In our example, the private key is generated using elliptic curves and looks
 like:</p>
@@ -905,7 +908,7 @@ new access token when its current one expires.</p>
    <h3 class="heading settled" data-level="4.2" id="request-flow"><span class="secno">4.2. </span><span class="content">Request Flow</span><a class="self-link" href="#request-flow"></a></h3>
    <p><img src="primer-request.mmd.svg" width="980"></p>
    <p>In this example, Alice has logged into <code>https://decentphotos.example</code> and has completed the
-authentication steps above. She wants to make a request to Bob’s Pod to get a photo album
+authentication steps above. She wants to make a request to Bob’s Storage to get a photo album
 information at <code>https://bob.otherpod.example/private/photo_album.ttl</code>. Bob has previously
 granted access to Alice but has not granted access to anyone else.</p>
    <h4 class="no-num heading settled" id="request-flow-step-1"><span class="content">1. Discover Authorization Server</span><a class="self-link" href="#request-flow-step-1"></a></h4>
