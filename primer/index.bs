@@ -26,7 +26,7 @@ Abstract:
 
 This document outlines in details how Alice (end-user) asserts her identity
 (logs in) when using Decent Photos (relying party) to access data in hers and
-Bob's Solid Data Pods (resource servers).
+Bob's Solid Storage (resource servers).
 
 # Definitions # {#definitions}
 
@@ -41,7 +41,7 @@ Bob's Solid Data Pods (resource servers).
   <dd>An entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end-user. Resource Owner is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[!RFC6749]]</dd>
   <dt id="resource-server">Resource Server (RS)</dt>
   <dd>A server hosting resources, capable of accepting and responding to protected resource requests using access tokens. RS is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[!RFC6749]]</dd>
-  <dt id="solid-data-pod">Solid Data Pod (Pod)</dt>
+  <dt id="solid-data-pod">Solid Storage</dt>
   <dd>A Solid compliant Resource Server as [defined in the Solid Protocol](https://solidproject.org/TR/protocol#data-pod). [[!Solid.Protocol]]</dd>
   <dt id="solid-oidc">Solid OpenID Connect (Solid OIDC)</dt>
   <dd>The specification defining authentication in the Solid ecosystem. [[!Solid.OIDC]]</dd>
@@ -61,12 +61,12 @@ Several actors are at play in our example Solid OIDC authentication flows:
   <dd>Alice's OpenID Provider, also known as an Identity Provider (IdP), is the
  service responsible for authorizing our third-party web app (Decent Photos) by
  providing it with the tokens necessary to gain access to any resource Alice has
- access to (in any Pod, for example Alice's and Bob's). In our example, Alice's
+ access to (in any Storage, for example Alice's and Bob's). In our example, Alice's
  OP is hosted at `https://secureauth.example`.</dd>
   <dt id="alice-webid">Alice's WebID</dt>
   <dd>Alice's WebID is `https://alice.coolpod.example/profile/card#me`. The WebID
  profile document denoted by URI `https://alice.coolpod.example/profile/card` is
- hosted on Alice's Solid Data Pod and contains the URI of her OP. Alice's WebID
+ hosted on Alice's Solid Storage and contains the URI of her OP. Alice's WebID
  `https://alice.coolpod.example/profile/card#me` serves as her unique identifier
  in the Solid Ecosystem.</dd>
   <dt id="rp">RP</dt>
@@ -77,14 +77,18 @@ Several actors are at play in our example Solid OIDC authentication flows:
  hosted at `https://decentphotos.example`.</dd>
   <dt id="decentphotos-rp-webid">RP's Client ID Document</dt>
   <dd>Decent Photos is a Solid compliant application and has a URI of its own,
- which resolves to Client ID Document. An RP's Client ID Document
+ which resolves to a Client ID Document. An RP's Client ID Document
  contains information identifying them as a registered OAuth 2.0 client
  application. Decent Photo's URI is `https://decentphotos.example/webid#this`</dd>
-  <dt id="bob-pod">Bob's Pod</dt>
-  <dd>We will be trying to access photos stored in Bob's Pod. In our example, Bob
+  <dt id="bob-pod">Bob's Storage</dt>
+  <dd>We will be trying to access photos stored in Bob's Storage. In our example, Bob
  is a friend of Alice and has previously indicated via access control that Alice
- may access some of his photos using any web app. Bob's Solid Data Pod is hosted at
+ may access some of his photos using any web app. Bob's Solid Storage is hosted at
  `https://bob.otherpod.example`.</dd>
+  <dt id="bob-auth-server>Authorization Server for Bob's Storage</dt>
+  <dd>The Authorization Server (AS) connected to Bob's Storage will issue access tokens that
+ can be used with Bob's Storage. In these examples, this is hosted at
+ `https://auth.otherpod.example`.</dd>
 </dl>
 
 # Solid OIDC Flow # {#solid-oidc-flow}
@@ -110,8 +114,8 @@ process of providing consent. To do so, she must either provide her WebID
 (`https://alice.coolpod.example/profile/card#me`) or the URL of her OP
 (`https://secureauth.example`).
 
-Although it is not the case for Alice, a user's Pod and OP can be hosted under the
-same domain. For example, Bob could have a Pod at `https://bob.solidpod.example.com`,
+Although it is not the case for Alice, a user's Storage and OP can be hosted under the
+same domain. For example, Bob could have a Storage at `https://bob.solidpod.example.com`,
 an OP at `https://solidpod.example.com/`, and a WebID of
 `https://bob.solidpod.example.com/profile/card#me`.
 
@@ -357,7 +361,7 @@ This redirect gives decentphotos the code that it will exchange for an access to
 Solid-OIDC depends on
 [Demonstration of Proof-of-Possession (DPoP) tokens](https://tools.ietf.org/html/draft-ietf-oauth-dpop-03).
 DPoP tokens ensure that third-party web applications can send requests to any number of
-Pods while ensuring that evil Pods can't steal a user's token.
+Storage servers while ensuring that malicious actors can't steal and replay a user's token.
 
 The first step to generating a DPoP token is generating a public and private key pair on the
 third-party RP. In our example, the private key is generated using elliptic curves and looks
@@ -617,7 +621,7 @@ Response (content-type: application/json)
 
 
 In this example, Alice has logged into `https://decentphotos.example` and has completed the
-authentication steps above. She wants to make a request to Bob's Pod to get a photo album
+authentication steps above. She wants to make a request to Bob's Storage to get a photo album
 information at `https://bob.otherpod.example/private/photo_album.ttl`. Bob has previously
 granted access to Alice but has not granted access to anyone else.
 
