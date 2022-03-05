@@ -12,7 +12,7 @@ sequenceDiagram
   note over Client: 4. Generates PKCE code and code verifier
   note over Client: 5. Saves code verifier to session storage
   Client->>OP: 6. Authorization Request
-  OP->>ClientID: 7. Fetch Client WebID
+  OP->>ClientID: 7. Fetch Client ID Document
   ClientID->>OP: ClientID Profile
   note over OP: 8. Validates redirect url with WebID
   note over OP: 9. Alice Logs In
