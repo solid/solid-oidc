@@ -168,7 +168,6 @@ Response Body:
     "registration_endpoint": "https://secureauth.example/register",
     "end_session_endpoint": "https://secureauth.example/endsession",
     "jwks_uri": "https://secureauth.example/jwks",
-    "solid_oidc_supported": "https://solidproject.org/TR/solid-oidc",
     "response_types_supported": [
         "code"
     ],
@@ -313,8 +312,8 @@ It also have to use specific <code>"@context": "https://www.w3.org/ns/solid/oidc
 
 Check to be sure that the `redirect_uri` value provided in the auth request
 (`https://decentphotos.example/callback`) is listed in the `redirect_uris` array in the
-Client ID Document. If it is not, the OP MUST reject the request with a `403`. In our case, it
-is, so we may continue.
+Client ID Document. If it is not, the OP must reject the request. In our case, the
+`redirect_uri` is valid, so we may continue.
 
 <h4 id="authorization-code-pkce-flow-step-9" class="no-num">9. Alice Logs In</h4>
 
@@ -480,7 +479,7 @@ Once this request is completed decentphotos can remove the code verifier from se
 
 The OP looks up the code that was saved earlier in a keystore. It checks to see that the client
 id in the keystore corresponds to the client id from the request. If it does not, it must
-reject the request with a 403.
+reject the request.
 
 The OP then verifies that the code verifier [corresponds with the code challenge]
 (https://tools.ietf.org/html/rfc7636#section-4.6) stored in the keystore.
@@ -489,12 +488,12 @@ The OP then verifies that the code verifier [corresponds with the code challenge
 BASE64URL-ENCODE(SHA256(ASCII(code_verifier))) == code_challenge
 ```
 
-If they do not correspond the OP must reject the request with a 403.
+If they do not correspond the OP must reject the request.
 
 <h4 id="authorization-code-pkce-flow-step-16" class="no-num">16. Validates DPoP Token Signature</h4>
 
 The OP extracts the client's public key from the DPoP header (at header.jwk). It confirms that
-the DPoP token has a valid signature. If not, the OP must reject the request with a 403.
+the DPoP token has a valid signature. If not, the OP must reject the request.
 
 <h4 id="authorization-code-pkce-flow-step-17" class="no-num">17. Converts the DPoP public key to a JWK thumbprint</h4>
 
@@ -727,29 +726,28 @@ grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Auma-ticket
 <h4 id="request-flow-step-5" class="no-num">5. Checks ID Token expirations</h4>
 
 The AS checks if the id token is still valid by looking at the `exp` claim. If the token
-does not have an `exp` claim or the token is expired, the AS must reject the request with a 403.
+does not have an `exp` claim or the token is expired, the AS must reject the request.
 
 <h4 id="request-flow-step-6" class="no-num">6. Checks the DPoP token url and method</h4>
 
 The AS checks the `htu` and `htm` claims of the DPoP token. If the `htu` does not match the
 protocol, origin and path of the request or the `htm` does not correspond the the http method
-of the request, the AS must reject the request with a 403.
+of the request, the AS must reject the request.
 
 <h4 id="request-flow-step-6.1" class="no-num">6.1. (Optional) Checks DPoP token unique identifier</h4>
 
 The AS can optionally keep track of all DPoP `jti` claims it received. Because a new DPoP token
 must be generated each time a request is made, no two tokens should have the same `jti`. If the
-AS receives a DPoP token with a `jti` it has already encountered it may reject the request with
-a 403.
+AS receives a DPoP token with a `jti` it has already encountered it may reject the request.
 
 <h4 id="request-flow-step-7" class="no-num">7. Checks DPoP signature against Access Token</h4>
 
 The AS first confirms that the DPoP token was signed by the public key listed in its `header
-jwk`. If it was not, the AS must reject the request with a 403.
+jwk`. If it was not, the AS must reject the request.
 
 The AS checks if the public key in the DPoP token's `header.jwk` corresponds to the jwk
 thumbprint in the access token in the `cnf` field. If they do not, the OP must reject the
-request with a 403.
+request.
 
 <h4 id="request-flow-step-8" class="no-num">8. Retrieves WebID Document</h4>
 
@@ -782,7 +780,7 @@ Response
 <h4 id="request-flow-step-9" class="no-num">9. Checks issuer</h4>
 
 The AS checks that the `iss` claim in the ID token matches the issuer listed in the user's
-WebID. If it does not, the AS must reject the request with a 403.
+WebID. If it does not, the AS must reject the request.
 
 <h4 id="request-flow-step-10" class="no-num">10. Retrieves OP configuration</h4>
 
@@ -881,7 +879,7 @@ Notice that the `keys` field is an array, so an OP could have multiple public ke
 
 Using the `kid` value in the ID token, the AS searches the OP keys for one that matches the
 ID token. Checks to see if the ID token was signed by that key. If it was not, the AS
-must reject the request with a 403.
+must reject the request.
 
 <h4 id="request-flow-step-13" class="no-num">13. Access Token Response</h4>
 
