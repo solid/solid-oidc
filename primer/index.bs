@@ -85,7 +85,7 @@ Several actors are at play in our example Solid OIDC authentication flows:
  is a friend of Alice and has previously indicated via access control that Alice
  may access some of his photos using any web app. Bob's Solid Storage is hosted at
  `https://bob.otherpod.example`.</dd>
-  <dt id="bob-auth-server>Authorization Server for Bob's Storage</dt>
+  <dt id="bob-auth-server">Authorization Server for Bob's Storage</dt>
   <dd>The Authorization Server (AS) connected to Bob's Storage will issue access tokens that
  can be used with Bob's Storage. In these examples, this is hosted at
  `https://auth.otherpod.example`.</dd>
