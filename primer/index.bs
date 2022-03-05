@@ -602,15 +602,19 @@ a response with the tokens in the body:
 Response (content-type: application/json)
 ```json
 {
+    "access_token": "531683bf-fea8-4bca-8976-2de50e5c9a50",
     "id_token": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg",
     "refresh_token": "eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ."
 }
 ```
 
-- `"id_token": "eyJhbGciOiJFU..."`: The id token we generated. The client will use this to
-    extract information like the user's WebId.
-- `"refresh_token":	"eyJhbGciOiJ..."`: The refresh token. The client will use this to get a
-    new access token when its current one expires.
+- `"access_token": "531683bf-feea8..."`: The OAuth 2.0 access token, which may be used at the
+    OP's `userinfo_endpoint`.
+- `"id_token": "eyJhbGciOiJFU..."`: The ID token we generated. The client will use this to
+    extract information such as the user's WebId. A client will also exchange the ID token for
+    an access token at an authorization server.
+- `"refresh_token":	"eyJhbGciOiJ..."`: The refresh token. The client will use this to fetch a
+    new ID token when the current token expires.
 
 ## Request Flow ## {#request-flow}
 
