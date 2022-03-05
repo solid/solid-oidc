@@ -732,28 +732,34 @@ grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Auma-ticket
 <h4 id="request-flow-step-5" class="no-num">5. Checks ID Token expirations</h4>
 
 The AS checks if the id token is still valid by looking at the `exp` claim. If the token
-does not have an `exp` claim or the token is expired, the AS must reject the request.
+does not have an `exp` claim or the token is expired, the AS must reject the request with
+a 403 HTTP status. When using UMA 2.0, the AS will include `need_info` and `required_claims`
+values in the error response.
 
 <h4 id="request-flow-step-6" class="no-num">6. Checks the DPoP token url and method</h4>
 
 The AS checks the `htu` and `htm` claims of the DPoP token. If the `htu` does not match the
 protocol, origin and path of the request or the `htm` does not correspond the the http method
-of the request, the AS must reject the request.
+of the request, the AS must reject the request with a 400 HTTP status and an `invalid_dpop_proof`
+error code.
 
 <h4 id="request-flow-step-6.1" class="no-num">6.1. (Optional) Checks DPoP token unique identifier</h4>
 
 The AS can optionally keep track of all DPoP `jti` claims it received. Because a new DPoP token
 must be generated each time a request is made, no two tokens should have the same `jti`. If the
-AS receives a DPoP token with a `jti` it has already encountered it may reject the request.
+AS receives a DPoP token with a `jti` it has already encountered it may reject the request with
+a 400 HTTP status and an `invalid_dpop_proof` error code.
 
 <h4 id="request-flow-step-7" class="no-num">7. Checks DPoP signature against Access Token</h4>
 
 The AS first confirms that the DPoP token was signed by the public key listed in its `header
-jwk`. If it was not, the AS must reject the request.
+jwk`. If it was not, the AS must reject the request with a 400 HTTP status and an
+`invalid_dpop_proof` error code.
 
 The AS checks if the public key in the DPoP token's `header.jwk` corresponds to the jwk
 thumbprint in the access token in the `cnf` field. If they do not, the OP must reject the
-request.
+request. When using UMA 2.0, the response will include a 403 HTTP status code and a
+`need_info` field in the error response.
 
 <h4 id="request-flow-step-8" class="no-num">8. Retrieves WebID Document</h4>
 
@@ -883,9 +889,8 @@ Notice that the `keys` field is an array, so an OP could have multiple public ke
 
 <h4 id="request-flow-step-12" class="no-num">12. Checks ID token signature validity</h4>
 
-Using the `kid` value in the ID token, the AS searches the OP keys for one that matches the
-ID token. Checks to see if the ID token was signed by that key. If it was not, the AS
-must reject the request.
+Using the `kid` value in the ID token, the AS searches the OP public keys for one that matches the
+one used to sign the ID token. If no public key is found, the AS must reject the request.
 
 <h4 id="request-flow-step-13" class="no-num">13. Access Token Response</h4>
 
