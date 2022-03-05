@@ -479,7 +479,7 @@ Once this request is completed decentphotos can remove the code verifier from se
 
 The OP looks up the code that was saved earlier in a keystore. It checks to see that the client
 id in the keystore corresponds to the client id from the request. If it does not, it must
-reject the request.
+reject the request with a 400 HTTP status and `invalid_grant` error code.
 
 The OP then verifies that the code verifier [corresponds with the code challenge]
 (https://tools.ietf.org/html/rfc7636#section-4.6) stored in the keystore.
@@ -488,12 +488,14 @@ The OP then verifies that the code verifier [corresponds with the code challenge
 BASE64URL-ENCODE(SHA256(ASCII(code_verifier))) == code_challenge
 ```
 
-If they do not correspond the OP must reject the request.
+If they do not correspond the OP must reject the request with a 400 HTTP status and `invalid_grant`
+error code.
 
 <h4 id="authorization-code-pkce-flow-step-16" class="no-num">16. Validates DPoP Token Signature</h4>
 
 The OP extracts the client's public key from the DPoP header (at header.jwk). It confirms that
-the DPoP token has a valid signature. If not, the OP must reject the request.
+the DPoP token has a valid signature. If not, the OP must reject the request with a 400 HTTP
+status and `invalid_dpop_proof` error code.
 
 <h4 id="authorization-code-pkce-flow-step-17" class="no-num">17. Converts the DPoP public key to a JWK thumbprint</h4>
 
