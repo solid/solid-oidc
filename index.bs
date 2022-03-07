@@ -239,18 +239,18 @@ mechanism to determine if the issuer is authoritative for the given WebID.
     <figcaption>WebID Profile specifying an OIDC issuer</figcaption>
 </figure>
 
-To discover a list of valid issuers the WebID Profile MUST be checked for the existence of a statements matching
+To discover a list of valid issuers, the WebID Profile MUST be checked for the existence of statements matching
 <pre highlight="sparql">
   ?webid &lt;http://www.w3.org/ns/solid/terms#oidcIssuer&gt; ?iss .
 </pre>
 where `?webid` is set to WebID. The `?iss` will result in an IRI denoting valid issuer for that WebID.
-WebID Profile MUST include one or more statements matching the OIDC issuer pattern.
+The WebID Profile Document MUST include one or more statements matching the OIDC issuer pattern.
 
 Issue(80):
 
 ### OIDC Issuer Discovery via Link Headers ### {#oidc-issuer-discovery-link-headers}
 
-A server hosting a WebID Profile MAY transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer`
+A server hosting a WebID Profile Document MAY transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer`
 values via Link Headers, but they MUST be the same as in the RDF representation.
 A client MUST treat the RDF in the body of the WebID Profile as canonical
 but MAY use the Link Header values as an optimization.
@@ -332,10 +332,10 @@ With the `webid` scope, the DPoP-bound OIDC ID Token payload MUST contain these 
 
 ### ID Token Validation ### {#id-token-validation}
 
-ID Token must be validated according to [OIDC.Core, Section 3.1.3.7](https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation)
+An ID Token must be validated according to [OIDC.Core, Section 3.1.3.7](https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation)
 
-Verifying party MUST perform [[#oidc-issuer-discovery]] using the value of the `webid` claim
-to dereference the WebID Profile.
+The Verifying party MUST perform [[#oidc-issuer-discovery]] using the value of the `webid` claim
+to dereference the WebID Profile Document.
 
 Unless the verifying party acquires OP keys through some other means, or it chooses to reject tokens issued by this OP,
 the verifying party MUST follow OpenID Connect Discovery 1.0 [[!OIDC.Discovery]] to find an OP's signing keys (JWK).
