@@ -9,7 +9,7 @@
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
   <link href="https://solid.github.io/solid-oidc/solid.svg" rel="icon">
-  <meta content="d4e449df3b7c66b3c25e5959c248965cf6f55971" name="document-revision">
+  <meta content="d0fce6238338dabe198fac104cce252aa3894300" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -710,8 +710,8 @@ to dereference the WebID Profile.</p>
    <p>Unless the AS acquires OP keys through some other means, or the AS chooses to reject tokens issued by this OP,
 the AS MUST follow OpenID Connect Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> to find an OP’s signing keys (JWK).</p>
    <h2 class="heading settled" data-level="10" id="discovery"><span class="secno">10. </span><span class="content">Solid-OIDC Conformance Discovery</span><a class="self-link" href="#discovery"></a></h2>
-   <p>An OpenID Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect
-Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> resource. An OpenID Provider would indicate this support by including <code>webid</code> in the <code>scopes_supported</code> metadata property.</p>
+   <p>An OpenID Provider that conforms to the Solid-OIDC specification MUST advertise it in the OpenID Connect
+Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidcdiscovery">[OIDC.Discovery]</a> resource by including <code>webid</code> in its <code>scopes_supported</code> metadata property.</p>
    <div class="example" id="example-b42af25e">
     <a class="self-link" href="#example-b42af25e"></a> 
 <pre class="highlight"><c- p>{</c->
