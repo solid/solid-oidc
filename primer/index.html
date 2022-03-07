@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/primer/" rel="canonical">
-  <meta content="937d500b4bc3f7c2cf9c181aa05c79c0c52b87bd" name="document-revision">
+  <meta content="d4e449df3b7c66b3c25e5959c248965cf6f55971" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -344,7 +344,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-03-05">5 March 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-03-07">7 March 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -519,7 +519,6 @@ OP’s configuration. This is always located at the OP’s issuer URL followed b
     <c- f>"registration_endpoint"</c-><c- p>:</c-> <c- u>"https://secureauth.example/register"</c-><c- p>,</c->
     <c- f>"end_session_endpoint"</c-><c- p>:</c-> <c- u>"https://secureauth.example/endsession"</c-><c- p>,</c->
     <c- f>"jwks_uri"</c-><c- p>:</c-> <c- u>"https://secureauth.example/jwks"</c-><c- p>,</c->
-    <c- f>"solid_oidc_supported"</c-><c- p>:</c-> <c- u>"https://solidproject.org/TR/solid-oidc"</c-><c- p>,</c->
     <c- f>"response_types_supported"</c-><c- p>:</c-> <c- p>[</c->
         <c- u>"code"</c->
     <c- p>],</c->
@@ -648,8 +647,7 @@ It also have to use specific <code>"@context": "https://www.w3.org/ns/solid/oidc
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-8"><span class="content">8. Validate redirect url with Client ID Document</span><a class="self-link" href="#authorization-code-pkce-flow-step-8"></a></h4>
    <p>Check to be sure that the <code>redirect_uri</code> value provided in the auth request
 (<code>https://decentphotos.example/callback</code>) is listed in the <code>redirect_uris</code> array in the
-Client ID Document. If it is not, the OP MUST reject the request with a <code>403</code>. In our case, it
-is, so we may continue.</p>
+Client ID Document. If it is not, the OP must reject the request. In our case, the <code>redirect_uri</code> is valid, so we may continue.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-9"><span class="content">9. Alice Logs In</span><a class="self-link" href="#authorization-code-pkce-flow-step-9"></a></h4>
    <p>The OP should redirect to its login screen. The actual implementation of this is completely up
 to the OP. A user can log in with her password, a TLS certificate, or any other proven method
@@ -793,15 +791,16 @@ doing an AJAX request.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-15"><span class="content">15. Validate code verifier</span><a class="self-link" href="#authorization-code-pkce-flow-step-15"></a></h4>
    <p>The OP looks up the code that was saved earlier in a keystore. It checks to see that the client
 id in the keystore corresponds to the client id from the request. If it does not, it must
-reject the request with a 403.</p>
+reject the request with a 400 HTTP status and <code>invalid_grant</code> error code.</p>
    <p>The OP then verifies that the code verifier [corresponds with the code challenge]
 (https://tools.ietf.org/html/rfc7636#section-4.6) stored in the keystore.</p>
 <pre class="language-bash highlight">BASE64URL-ENCODE<c- o>(</c->SHA256<c- o>(</c->ASCII<c- o>(</c->code_verifier<c- o>)))</c-> <c- o>==</c-> code_challenge
 </pre>
-   <p>If they do not correspond the OP must reject the request with a 403.</p>
+   <p>If they do not correspond the OP must reject the request with a 400 HTTP status and <code>invalid_grant</code> error code.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-16"><span class="content">16. Validates DPoP Token Signature</span><a class="self-link" href="#authorization-code-pkce-flow-step-16"></a></h4>
    <p>The OP extracts the client’s public key from the DPoP header (at header.jwk). It confirms that
-the DPoP token has a valid signature. If not, the OP must reject the request with a 403.</p>
+the DPoP token has a valid signature. If not, the OP must reject the request with a 400 HTTP
+status and <code>invalid_dpop_proof</code> error code.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-17"><span class="content">17. Converts the DPoP public key to a JWK thumbprint</span><a class="self-link" href="#authorization-code-pkce-flow-step-17"></a></h4>
    <p>Currently the DPoP token contains a JWK public key, but before we place it inside the access
 token, it needs to be converted into a <a href="https://tools.ietf.org/html/rfc7638">JWK thumbprint</a>.
@@ -893,17 +892,22 @@ token does not need to be a JWT.</p>
 a response with the tokens in the body:</p>
    <p>Response (content-type: application/json)</p>
 <pre class="language-json highlight"><c- p>{</c->
+    <c- f>"access_token"</c-><c- p>:</c-> <c- u>"531683bf-fea8-4bca-8976-2de50e5c9a50"</c-><c- p>,</c->
     <c- f>"id_token"</c-><c- p>:</c-> <c- u>"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg"</c-><c- p>,</c->
     <c- f>"refresh_token"</c-><c- p>:</c-> <c- u>"eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ."</c->
 <c- p>}</c->
 </pre>
    <ul>
     <li data-md>
-     <p><code>"id_token": "eyJhbGciOiJFU..."</code>: The id token we generated. The client will use this to
-extract information like the user’s WebId.</p>
+     <p><code>"access_token": "531683bf-feea8..."</code>: The OAuth 2.0 access token, which may be used at the
+OP’s <code>userinfo_endpoint</code>.</p>
     <li data-md>
-     <p><code>"refresh_token":	"eyJhbGciOiJ..."</code>: The refresh token. The client will use this to get a
-new access token when its current one expires.</p>
+     <p><code>"id_token": "eyJhbGciOiJFU..."</code>: The ID token we generated. The client will use this to
+extract information such as the user’s WebId. A client will also exchange the ID token for
+an access token at an authorization server.</p>
+    <li data-md>
+     <p><code>"refresh_token":	"eyJhbGciOiJ..."</code>: The refresh token. The client will use this to fetch a
+new ID token when the current token expires.</p>
    </ul>
    <h3 class="heading settled" data-level="4.2" id="request-flow"><span class="secno">4.2. </span><span class="content">Request Flow</span><a class="self-link" href="#request-flow"></a></h3>
    <p><img src="primer-request.mmd.svg" width="980"></p>
@@ -1002,22 +1006,23 @@ grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Auma-ticket
 </pre>
    <h4 class="no-num heading settled" id="request-flow-step-5"><span class="content">5. Checks ID Token expirations</span><a class="self-link" href="#request-flow-step-5"></a></h4>
    <p>The AS checks if the id token is still valid by looking at the <code>exp</code> claim. If the token
-does not have an <code>exp</code> claim or the token is expired, the AS must reject the request with a 403.</p>
+does not have an <code>exp</code> claim or the token is expired, the AS must reject the request with
+a 403 HTTP status. When using UMA 2.0, the AS will include <code>need_info</code> and <code>required_claims</code> values in the error response.</p>
    <h4 class="no-num heading settled" id="request-flow-step-6"><span class="content">6. Checks the DPoP token url and method</span><a class="self-link" href="#request-flow-step-6"></a></h4>
    <p>The AS checks the <code>htu</code> and <code>htm</code> claims of the DPoP token. If the <code>htu</code> does not match the
 protocol, origin and path of the request or the <code>htm</code> does not correspond the the http method
-of the request, the AS must reject the request with a 403.</p>
+of the request, the AS must reject the request with a 400 HTTP status and an <code>invalid_dpop_proof</code> error code.</p>
    <h4 class="no-num heading settled" id="request-flow-step-6.1"><span class="content">6.1. (Optional) Checks DPoP token unique identifier</span><a class="self-link" href="#request-flow-step-6.1"></a></h4>
    <p>The AS can optionally keep track of all DPoP <code>jti</code> claims it received. Because a new DPoP token
 must be generated each time a request is made, no two tokens should have the same <code>jti</code>. If the
 AS receives a DPoP token with a <code>jti</code> it has already encountered it may reject the request with
-a 403.</p>
+a 400 HTTP status and an <code>invalid_dpop_proof</code> error code.</p>
    <h4 class="no-num heading settled" id="request-flow-step-7"><span class="content">7. Checks DPoP signature against Access Token</span><a class="self-link" href="#request-flow-step-7"></a></h4>
    <p>The AS first confirms that the DPoP token was signed by the public key listed in its <code>header
-jwk</code>. If it was not, the AS must reject the request with a 403.</p>
+jwk</code>. If it was not, the AS must reject the request with a 400 HTTP status and an <code>invalid_dpop_proof</code> error code.</p>
    <p>The AS checks if the public key in the DPoP token’s <code>header.jwk</code> corresponds to the jwk
 thumbprint in the access token in the <code>cnf</code> field. If they do not, the OP must reject the
-request with a 403.</p>
+request. When using UMA 2.0, the response will include a 403 HTTP status code and a <code>need_info</code> field in the error response.</p>
    <h4 class="no-num heading settled" id="request-flow-step-8"><span class="content">8. Retrieves WebID Document</span><a class="self-link" href="#request-flow-step-8"></a></h4>
    <p>Using the <code>webid</code> claim in the access token (for us, it’s <code>https://alice.coolpod.example/profile/card#me</code>), the AS retreives the user’s WebId document.</p>
    <p>Request</p>
@@ -1041,7 +1046,7 @@ request with a 403.</p>
 </pre>
    <h4 class="no-num heading settled" id="request-flow-step-9"><span class="content">9. Checks issuer</span><a class="self-link" href="#request-flow-step-9"></a></h4>
    <p>The AS checks that the <code>iss</code> claim in the ID token matches the issuer listed in the user’s
-WebID. If it does not, the AS must reject the request with a 403.</p>
+WebID. If it does not, the AS must reject the request.</p>
    <h4 class="no-num heading settled" id="request-flow-step-10"><span class="content">10. Retrieves OP configuration</span><a class="self-link" href="#request-flow-step-10"></a></h4>
    <p>The AS uses the <code>iss</code> claim to get the issuer’s configuration. The url is the issuer claim with <code>/.well-known/openid-configuration</code> appended to the end.</p>
    <p>Request</p>
@@ -1122,9 +1127,8 @@ OP’s public keys.</p>
 </pre>
    <p>Notice that the <code>keys</code> field is an array, so an OP could have multiple public keys.</p>
    <h4 class="no-num heading settled" id="request-flow-step-12"><span class="content">12. Checks ID token signature validity</span><a class="self-link" href="#request-flow-step-12"></a></h4>
-   <p>Using the <code>kid</code> value in the ID token, the AS searches the OP keys for one that matches the
-ID token. Checks to see if the ID token was signed by that key. If it was not, the AS
-must reject the request with a 403.</p>
+   <p>Using the <code>kid</code> value in the ID token, the AS searches the OP public keys for one that matches the
+one used to sign the ID token. If no public key is found, the AS must reject the request.</p>
    <h4 class="no-num heading settled" id="request-flow-step-13"><span class="content">13. Access Token Response</span><a class="self-link" href="#request-flow-step-13"></a></h4>
    <p>Now that the AS has performed all of its checks, we can trust that the agent in the <code>webid</code> claim (<code>https://alice.coolpod.example/profile/card#me</code>) is the same agent on whose behalf the
 request was made. Using that information, the AS performs authorization and returns access token.</p>
