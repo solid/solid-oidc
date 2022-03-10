@@ -540,7 +540,7 @@ The JSON-LD context is defined as:
             "M. Jones",
             "D. Waite"
         ],
-        "href": "https://tools.ietf.org/html/draft-ietf-oauth-dpop-04",
+        "href": "https://tools.ietf.org/html/draft-ietf-oauth-dpop",
         "title": "OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)",
         "publisher": "IETF"
     },
