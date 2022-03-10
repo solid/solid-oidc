@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/primer/" rel="canonical">
-  <meta content="d0fce6238338dabe198fac104cce252aa3894300" name="document-revision">
+  <meta content="01e43993fd8d53cc671d508812d1fe6470eb114f" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -344,7 +344,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-03-07">7 March 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-03-10">10 March 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -673,7 +673,7 @@ redirect uri, including useful information with it:</p>
 </pre>
    <p>This redirect gives decentphotos the code that it will exchange for an access token.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-12"><span class="content">12. Generates a DPoP Client Key Pair</span><a class="self-link" href="#authorization-code-pkce-flow-step-12"></a></h4>
-   <p>Solid-OIDC depends on <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-03">Demonstration of Proof-of-Possession (DPoP) tokens</a>.
+   <p>Solid-OIDC depends on <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop">Demonstration of Proof-of-Possession (DPoP) tokens</a>.
 DPoP tokens ensure that third-party web applications can send requests to any number of
 Storage servers while ensuring that malicious actors can’t steal and replay a user’s token.</p>
    <p>The first step to generating a DPoP token is generating a public and private key pair on the
