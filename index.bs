@@ -239,20 +239,19 @@ mechanism to determine if the issuer is authoritative for the given WebID.
     <figcaption>WebID Profile specifying an OIDC issuer</figcaption>
 </figure>
 
-To verify an ID Token the WebID Profile MUST be checked for the existence of a statement matching
+To discover a list of valid issuers, the WebID Profile MUST be checked for the existence of statements matching
 <pre highlight="sparql">
   ?webid &lt;http://www.w3.org/ns/solid/terms#oidcIssuer&gt; ?iss .
 </pre>
-where `?webid` and `?iss` are the values of the `webid` and `iss` claims respectively.
-
-The same pattern MAY be used to discover a list of valid issuers for the given WebID.
+where `?webid` is set to WebID. The `?iss` will result in an IRI denoting valid issuer for that WebID.
+The WebID Profile Document MUST include one or more statements matching the OIDC issuer pattern.
 
 Issue(80):
 
 ### OIDC Issuer Discovery via Link Headers ### {#oidc-issuer-discovery-link-headers}
 
-A server hosting a WebID Profile MAY transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer` values via Link Headers
-but they MUST be the same as in the RDF representation.
+A server hosting a WebID Profile Document MAY transmit the `http://www.w3.org/ns/solid/terms#oidcIssuer`
+values via Link Headers, but they MUST be the same as in the RDF representation.
 A client MUST treat the RDF in the body of the WebID Profile as canonical
 but MAY use the Link Header values as an optimization.
 
@@ -331,6 +330,16 @@ With the `webid` scope, the DPoP-bound OIDC ID Token payload MUST contain these 
     </pre>
 </div>
 
+### ID Token Validation ### {#id-token-validation}
+
+An ID Token must be validated according to [OIDC.Core, Section 3.1.3.7](https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation)
+
+The Verifying party MUST perform [[#oidc-issuer-discovery]] using the value of the `webid` claim
+to dereference the WebID Profile Document.
+
+Unless the verifying party acquires OP keys through some other means, or it chooses to reject tokens issued by this OP,
+the verifying party MUST follow OpenID Connect Discovery 1.0 [[!OIDC.Discovery]] to find an OP's signing keys (JWK).
+
 # Resource Access # {#resource}
 
 ## Authorization Server Discovery ## {#authorization-server-discovery}
@@ -359,24 +368,18 @@ of exchanging a valid Solid-OIDC ID Token [[#tokens-id]] for an OAuth 2.0 Access
 
 Note: Clients can push additional claims by requesting an upgraded RPT [[UMA#rfc.section.3.3.1]]
 
-## DPoP Proof Validation ## {#resource-dpop-validation}
+Authorization Server MUST pefrom [[#dpop-validation]] and [[#id-token-validation]]
+
+## DPoP Validation ## {#dpop-validation}
 
 A DPoP Proof that is valid according to
 [DPoP Internet-Draft, Section 4.3](https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-4.3),
 MUST be present when a DPoP-bound OIDC ID Token is used.
 
-## OIDC ID Token Validation ## {#resource-access-validation}
-
 The DPoP-bound OIDC ID Token MUST be validated according to
 [DPoP Internet-Draft, Section 6](https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-6),
 but the AS MAY perform additional verification in order to determine whether to grant access to the
 requested resource.
-
-Authorization Server MUST perform [[#oidc-issuer-discovery]] using the value of the `webid` claim
-to dereference the WebID Profile.
-
-Unless the AS acquires OP keys through some other means, or the AS chooses to reject tokens issued by this OP,
-the AS MUST follow OpenID Connect Discovery 1.0 [[!OIDC.Discovery]] to find an OP's signing keys (JWK).
 
 # Solid-OIDC Conformance Discovery # {#discovery}
 
