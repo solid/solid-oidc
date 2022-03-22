@@ -291,7 +291,7 @@ GET https://decentphotos.example/webid
 Response:
 ```jsonld
 {
-  "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
+  "@context": [ "https://www.w3.org/ns/solid/oidc-context.jsonld" ],
 
   "client_id": "https://decentphtos.example/webid#this",
   "client_name": "DecentPhotos",
@@ -308,9 +308,9 @@ Response:
 }
 ```
 
-Notice that the application Client ID Document contains JSON-LD representation of an
+Notice that the application Client ID Document contains a JSON-LD representation of an
 [OIDC Client Registration](https://tools.ietf.org/html/rfc7591#section-2).
-It also have to use specific <code>"@context": "https://www.w3.org/ns/solid/oidc-context.jsonld"</code>.
+It also must use the specific <code>"@context": ["https://www.w3.org/ns/solid/oidc-context.jsonld"]</code>.
 
 <h4 id="authorization-code-pkce-flow-step-8" class="no-num">8. Validate redirect url with Client ID Document</h4>
 

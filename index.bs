@@ -165,7 +165,7 @@ SHOULD use a URI that can be dereferenced as a [Client ID Document](#clientids-d
 When a Client Identifier is dereferenced, the resource MUST be serialized as an `application/ld+json` document
 unless content negotiation requires a different outcome.
 
-The serialized JSON form of a Client ID Document SHOULD use the normative JSON-LD `@context`
+The serialized JSON form of a Client ID Document MUST use the normative JSON-LD `@context`
 provided at `https://www.w3.org/ns/solid/oidc-context.jsonld` such that the resulting
 document produces a JSON serialization of an OIDC client registration, per the
 definition of client registration metadata from [[!RFC7591]] section 2.
@@ -183,7 +183,7 @@ This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/) for the Client ID
 
     <pre highlight="jsonld">
         {
-          "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
+          "@context": ["https://www.w3.org/ns/solid/oidc-context.jsonld"],
 
           "client_id": "https://app.example/id",
           "client_name": "Solid Application Name",
