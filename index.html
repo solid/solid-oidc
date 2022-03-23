@@ -9,7 +9,7 @@
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/" rel="canonical">
   <link href="https://solid.github.io/solid-oidc/solid.svg" rel="icon">
-  <meta content="58018d93abd4247c5a4d14d12ff70a8169879a02" name="document-revision">
+  <meta content="b3ed68ab94434f50a1489646dc046fd210778009" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -345,7 +345,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solid.github.io/solid-oidc/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-03-13">13 March 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-03-23">23 March 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -545,18 +545,18 @@ SHOULD use a URI that can be dereferenced as a <a href="#clientids-document">Cli
    <h3 class="heading settled" data-level="5.1" id="clientids-document"><span class="secno">5.1. </span><span class="content">Client ID Document</span><a class="self-link" href="#clientids-document"></a></h3>
    <p>When a Client Identifier is dereferenced, the resource MUST be serialized as an <code>application/ld+json</code> document
 unless content negotiation requires a different outcome.</p>
-   <p>The serialized JSON form of a Client ID Document SHOULD use the normative JSON-LD <code>@context</code> provided at <code>https://www.w3.org/ns/solid/oidc-context.jsonld</code> such that the resulting
+   <p>The serialized JSON form of a Client ID Document MUST use the normative JSON-LD <code>@context</code> provided at <code>https://www.w3.org/ns/solid/oidc-context.jsonld</code> such that the resulting
 document produces a JSON serialization of an OIDC client registration, per the
 definition of client registration metadata from <a data-link-type="biblio" href="#biblio-rfc7591">[RFC7591]</a> section 2.</p>
    <p>Also, the OP MUST dereference the Client ID Document and match any Client-supplied parameters
 with the values in the Client ID Document.</p>
    <p>Further, the <code>redirect_uri</code> provided by the Client MUST be included in the registration <code>redirect_uris</code> list.</p>
    <p>This example uses <a href="https://www.w3.org/TR/json-ld11/">JSON-LD </a> for the Client ID Document:</p>
-   <div class="example" id="example-02b83b49">
-    <a class="self-link" href="#example-02b83b49"></a> 
+   <div class="example" id="example-9e406e39">
+    <a class="self-link" href="#example-9e406e39"></a> 
     <p>https://app.example/id</p>
 <pre class="highlight"><c- p>{</c->
-  <c- nd>"@context"</c-><c- p>:</c-> <c- u>"https://www.w3.org/ns/solid/oidc-context.jsonld"</c-><c- p>,</c->
+  <c- nd>"@context"</c-><c- p>:</c-> <c- p>[</c-><c- u>"https://www.w3.org/ns/solid/oidc-context.jsonld"</c-><c- p>],</c->
 
   <c- f>"client_id"</c-><c- p>:</c-> <c- u>"https://app.example/id"</c-><c- p>,</c->
   <c- f>"client_name"</c-><c- p>:</c-> <c- u>"Solid Application Name"</c-><c- p>,</c->

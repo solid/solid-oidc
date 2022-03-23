@@ -8,7 +8,7 @@
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solid.github.io/solid-oidc/primer/" rel="canonical">
-  <meta content="58018d93abd4247c5a4d14d12ff70a8169879a02" name="document-revision">
+  <meta content="b3ed68ab94434f50a1489646dc046fd210778009" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -344,7 +344,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-03-13">13 March 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-03-23">23 March 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -626,7 +626,7 @@ fetch that app URI to confirm its validity.</p>
 </pre>
    <p>Response:</p>
 <pre class="language-jsonld highlight"><c- p>{</c->
-  <c- nd>"@context"</c-><c- p>:</c-> <c- u>"https://www.w3.org/ns/solid/oidc-context.jsonld"</c-><c- p>,</c->
+  <c- nd>"@context"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"https://www.w3.org/ns/solid/oidc-context.jsonld"</c-> <c- p>],</c->
 
   <c- f>"client_id"</c-><c- p>:</c-> <c- u>"https://decentphtos.example/webid#this"</c-><c- p>,</c->
   <c- f>"client_name"</c-><c- p>:</c-> <c- u>"DecentPhotos"</c-><c- p>,</c->
@@ -642,8 +642,8 @@ fetch that app URI to confirm its validity.</p>
   <c- f>"require_auth_time"</c-><c- p>:</c-> <c- kc>true</c->
 <c- p>}</c->
 </pre>
-   <p>Notice that the application Client ID Document contains JSON-LD representation of an <a href="https://tools.ietf.org/html/rfc7591#section-2">OIDC Client Registration</a>.
-It also have to use specific <code>"@context": "https://www.w3.org/ns/solid/oidc-context.jsonld"</code>.</p>
+   <p>Notice that the application Client ID Document contains a JSON-LD representation of an <a href="https://tools.ietf.org/html/rfc7591#section-2">OIDC Client Registration</a>.
+It also must use the specific <code>"@context": ["https://www.w3.org/ns/solid/oidc-context.jsonld"]</code>.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-8"><span class="content">8. Validate redirect url with Client ID Document</span><a class="self-link" href="#authorization-code-pkce-flow-step-8"></a></h4>
    <p>Check to be sure that the <code>redirect_uri</code> value provided in the auth request
 (<code>https://decentphotos.example/callback</code>) is listed in the <code>redirect_uris</code> array in the
