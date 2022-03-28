@@ -160,6 +160,8 @@ OAuth and OIDC require the Client application to identify itself to the OP and R
 [client identifier](https://tools.ietf.org/html/rfc6749#section-2.2) (Client ID). Solid applications
 SHOULD use a URI that can be dereferenced as a [Client ID Document](#clientids-document).
 
+Issue(78):
+
 ## Client ID Document ## {#clientids-document}
 
 When a Client Identifier is dereferenced, the resource MUST be serialized as an `application/ld+json` document
@@ -200,6 +202,8 @@ This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/) for the Client ID
         }
     </pre>
 </div>
+
+Issue(95):
 
 ### JSON-LD context ### {#jsonld-context}
 
@@ -247,6 +251,10 @@ where `?webid` is set to WebID. The `?iss` will result in an IRI denoting valid 
 The WebID Profile Document MUST include one or more statements matching the OIDC issuer pattern.
 
 Issue(80):
+
+Issue(92):
+
+Issue(91):
 
 ### OIDC Issuer Discovery via Link Headers ### {#oidc-issuer-discovery-link-headers}
 
@@ -329,6 +337,10 @@ With the `webid` scope, the DPoP-bound OIDC ID Token payload MUST contain these 
         }
     </pre>
 </div>
+
+Issue(26):
+
+Issue(47):
 
 ### ID Token Validation ### {#id-token-validation}
 
