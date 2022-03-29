@@ -38,25 +38,45 @@ jobs:
         run: for diagram in ./*.mmd primer/*.mmd; do docker run --rm -v "$PWD:/data" minlag/mermaid-cli -i /data/$diagram; done
 
       - name: Create publication
+        shell: bash
         run: |
           mkdir publish
-          mv index.html ./publish/oidc.html
-          mv solid.svg ./publish/solid.svg
-          mv sequence.mmd.svg ./publish/oidc-sequence.svg
-          sed -i 's/sequence.mmd.svg/oidc-sequence.svg/g' ./publish/oidc.html
+          cp index.html ./publish/oidc.html
+          cp sequence.mmd.svg ./publish/oidc-sequence.svg
+          sed -i 's|sequence.mmd.svg|oidc-sequence.svg|g' ./publish/oidc.html
           sed -i 's|https://solid.github.io/solid-oidc/solid.svg|https://solidproject.org/TR/solid.svg|g' ./publish/oidc.html
           sed -i 's|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/oidc-primer|g' ./publish/oidc.html
           sed -i 's|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/oidc|g' ./publish/oidc.html
 
-          mv primer/index.html ./publish/oidc-primer.html
-          mv primer/primer-login.mmd.svg ./publish/oidc-primer-login.svg
-          mv primer/primer-request.mmd.svg ./publish/oidc-primer-request.svg
-          sed -i 's/primer-login.mmd.svg/oidc-primer-login.svg/g' ./publish/oidc-primer.html
-          sed -i 's/primer-request.mmd.svg/oidc-primer-request.svg/g' ./publish/oidc-primer.html
+          cp primer/index.html ./publish/oidc-primer.html
+          cp primer/primer-login.mmd.svg ./publish/oidc-primer-login.svg
+          cp primer/primer-request.mmd.svg ./publish/oidc-primer-request.svg
+          sed -i 's|primer-login.mmd.svg|oidc-primer-login.svg|g' ./publish/oidc-primer.html
+          sed -i 's|primer-request.mmd.svg|oidc-primer-request.svg|g' ./publish/oidc-primer.html
           sed -i 's|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/oidc-primer|g' ./publish/oidc-primer.html
           sed -i 's|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/oidc|g' ./publish/oidc-primer.html
 
-      - name: Publish to GitHub pages
+          YEAR=(date '+%Y')
+          DAY=(date '+%Y%m%d')
+          mkdir ./publish/$YEAR
+
+          cp index.html ./publish/$YEAR/oidc-$DAY.html
+          cp sequence.mmd.svg ./publish/$YEAR/oidc-sequence-$DAY.svg
+          sed -i 's|sequence.mmd.svg|oidc-sequence-$DAY.svg|g' ./publish/$YEAR/oidc-$DAY.html
+          sed -i 's|https://solid.github.io/solid-oidc/solid.svg|https://solidproject.org/TR/solid.svg|g' ./publish/$YEAR/oidc-$DAY.html
+          sed -i 's|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/$YEAR/oidc-primer-$DAY|g' ./publish/$YEAR/oidc-$DAY.html
+          sed -i 's|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/$YEAR/oidc-$DAY|g' ./publish/$YEAR/oidc-$DAY.html
+
+          cp primer/index.html ./publish/$YEAR/oidc-primer-$DAY.html
+          cp primer/primer-login.mmd.svg ./publish/$YEAR/oidc-primer-login-$DAY.svg
+          cp primer/primer-request.mmd.svg ./publish/$YEAR/oidc-primer-request-$DAY.svg
+          sed -i 's|primer-login.mmd.svg|oidc-primer-login-$DAY.svg|g' ./publish/$YEAR/oidc-primer-$DAY.html
+          sed -i 's|primer-request.mmd.svg|oidc-primer-request-$DAY.svg|g' ./publish/$YEAR/oidc-primer-$DAY.html
+          sed -i 's|https://solid.github.io/solid-oidc/solid.svg|https://solidproject.org/TR/solid.svg|g' ./publish/$YEAR/oidc-primer-$DAY.html
+          sed -i 's|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/$YEAR/oidc-primer-$DAY|g' ./publish/$YEAR/oidc-primer-$DAY.html
+          sed -i 's|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/$YEAR/oidc-$DAY|g' ./publish/$YEAR/oidc-primer-$DAY.html
+
+      - name: Publish to TR Publication branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           publish_dir: ./publish
