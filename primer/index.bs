@@ -4,7 +4,7 @@ Boilerplate: issues-index no
 Boilerplate: style-darkmode off
 Shortname: solid-oidc-primer
 Level: 1
-Status: w3c/CG-DRAFT
+Status: w3c/ED
 Group: Solid Community Group
 ED: https://solid.github.io/solid-oidc/primer/
 Repository: https://github.com/solid/solid-oidc
