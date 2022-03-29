@@ -20,3 +20,25 @@ in all of these interactions.
 * [Specification](https://solid.github.io/solid-oidc/)
 * [Primer](https://solid.github.io/solid-oidc/primer/)
 
+## Releasing a new Solid-OIDC Draft Report
+
+Creating a new Solid-OIDC draft report for submission to the Solid Specification is simple.
+One must only create a new tag in the repository:
+
+    $ git tag -s solid-oidc-draft-04 -m "Solid-OIDC Community Group Draft Report 04"
+    $ git push origin solid-oidc-draft-04
+
+Now the GitHub automation will run and produce a formatted version of the Solid-OIDC
+specification in the `solid-tr-publication` branch. Pull this branch to your local
+environment and copy the files present into the `solid/specification` repository,
+submitting a pull request with these changes.
+
+## Releasing a new Solid-OIDC Final Report
+
+The process of creating a Community Group final report is exactly the same as with
+creating a draft report, only the tag is slightly different:
+
+    $ git tag -s solid-oidc-final-02 -m "Solid-OIDC Community Group Final Report 02"
+    $ git push origin solid-oidc-final-02
+
+The same process applies to adding this to the `solid/specification` repository.
