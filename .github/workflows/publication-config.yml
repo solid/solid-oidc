@@ -10,7 +10,7 @@ on:
       - solid-oidc-draft-[0-9]+
 
 jobs:
-  publish:
+  generate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -56,9 +56,11 @@ jobs:
           cp primer/primer-request.mmd.svg ./publish/oidc-primer-request.svg
           sed -i "s|primer-login.mmd.svg|oidc-primer-login.svg|g" ./publish/oidc-primer.html
           sed -i "s|primer-request.mmd.svg|oidc-primer-request.svg|g" ./publish/oidc-primer.html
+          sed -i "s|https://solid.github.io/solid-oidc/solid.svg|https://solidproject.org/TR/solid.svg|g" ./publish/oidc-primer.html
           sed -i "s|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/oidc-primer|g" ./publish/oidc-primer.html
           sed -i "s|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/oidc|g" ./publish/oidc-primer.html
 
+          # Perform the same tasks for a date-specific version
           YEAR=$(date '+%Y')
           DAY=$(date '+%Y%m%d')
           mkdir ./publish/$YEAR
