@@ -69,7 +69,7 @@ jobs:
           cp sequence.mmd.svg ./publish/$YEAR/oidc-sequence-$DAY.svg
           sed -i "s|sequence.mmd.svg|oidc-sequence-$DAY.svg|g" ./publish/$YEAR/oidc-$DAY.html
           sed -i "s|https://solid.github.io/solid-oidc/solid.svg|https://solidproject.org/TR/solid.svg|g" ./publish/$YEAR/oidc-$DAY.html
-          sed -i "s|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/$YEAR/oidc-primer-$DAY|g" ./publish/$YEAR/oidc-$DAY.html
+          sed -i "s|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/oidc-primer|g" ./publish/$YEAR/oidc-$DAY.html
           sed -i "s|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/$YEAR/oidc-$DAY|g" ./publish/$YEAR/oidc-$DAY.html
 
           cp primer/index.html ./publish/$YEAR/oidc-primer-$DAY.html
@@ -78,8 +78,8 @@ jobs:
           sed -i "s|primer-login.mmd.svg|oidc-primer-login-$DAY.svg|g" ./publish/$YEAR/oidc-primer-$DAY.html
           sed -i "s|primer-request.mmd.svg|oidc-primer-request-$DAY.svg|g" ./publish/$YEAR/oidc-primer-$DAY.html
           sed -i "s|https://solid.github.io/solid-oidc/solid.svg|https://solidproject.org/TR/solid.svg|g" ./publish/$YEAR/oidc-primer-$DAY.html
+          sed -i "s|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/oidc|g" ./publish/$YEAR/oidc-primer-$DAY.html
           sed -i "s|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/$YEAR/oidc-primer-$DAY|g" ./publish/$YEAR/oidc-primer-$DAY.html
-          sed -i "s|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/$YEAR/oidc-$DAY|g" ./publish/$YEAR/oidc-primer-$DAY.html
 
       - name: Publish to TR Publication branch
         uses: peaceiris/actions-gh-pages@v3
