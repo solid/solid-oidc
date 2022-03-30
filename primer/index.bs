@@ -6,13 +6,18 @@ Shortname: solid-oidc-primer
 Level: 1
 Status: w3c/CG-DRAFT
 Group: Solid Community Group
+Favicon: https://solidproject.org/TR/solid.svg
 ED: https://solid.github.io/solid-oidc/primer/
+TR: https://solidproject.org/TR/oidc-primer
+!Editor's Draft: [https://solid.github.io/solid-oidc/primer/](https://solid.github.io/solid-oidc/primer/)
 Repository: https://github.com/solid/solid-oidc
 Markup Shorthands: markdown yes
 Max ToC Depth: 2
 Editor: [Jackson Morgan](https://github.com/jaxoncreed)
 Editor: [Aaron Coburn](https://github.com/acoburn)
 Editor: [Matthieu Bosquet](https://github.com/matthieubosquet)
+Metadata Order: This version, Latest published version, Editor's Draft, Test Suite, *, !*
+Metadata Include: Editor's Draft off
 Abstract:
   The Solid OpenID Connect (Solid OIDC) specification defines how resource servers
   verify the identity of relying parties and end users based on the authentication

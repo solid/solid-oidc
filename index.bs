@@ -7,8 +7,10 @@ Shortname: solid-oidc
 Level: 1
 Status: w3c/CG-DRAFT
 Group: Solid Community Group
-Favicon: https://solid.github.io/solid-oidc/solid.svg
+Favicon: https://solidproject.org/TR/solid.svg
 ED: https://solid.github.io/solid-oidc/
+TR: https://solidproject.org/TR/oidc
+!Editor's Draft: [https://solid.github.io/solid-oidc/](https://solid.github.io/solid-oidc/)
 Repository: https://github.com/solid/solid-oidc
 Inline Github Issues: title
 Markup Shorthands: markdown yes
@@ -19,6 +21,8 @@ Editor: [Dmitri Zagidulin](http://computingjoy.com/)
 Former Editor: [Adam Migus](https://migusgroup.com/about/) ([The Migus Group](https://migusgroup.com/))
 Former Editor: [Ricky White](https://endlesstrax.com) ([The Migus Group](https://migusgroup.com/))
 Test Suite: https://solid.github.io/solid-oidc-tests/
+Metadata Order: This version, Latest published version, Editor's Draft, Test Suite, *, !*
+Metadata Include: Editor's Draft off
 Abstract:
   A key challenge on the path toward re-decentralizing user data on the Worldwide Web is the need to
   access multiple potentially untrusted resources servers securely. This document aims to address that
