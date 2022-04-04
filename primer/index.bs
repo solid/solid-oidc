@@ -2,6 +2,8 @@
 Title: Solid OIDC Primer
 Boilerplate: issues-index no
 Boilerplate: style-darkmode off
+Boilerplate: omit conformance
+Local Boilerplate: logo yes
 Shortname: solid-oidc-primer
 Level: 1
 Status: w3c/CG-DRAFT
@@ -32,21 +34,21 @@ Bob's Solid Storage (resource servers).
 
 <dl>
   <dt id="openid-provider">OpenID Provider (OP)</dt>
-  <dd>An OAuth 2.0 authorization server implementing OpenID Connect as [defined in the OpenID Connect Core 1.0 specification](https://openid.net/specs/openid-connect-core-1_0.html). [[!OIDC.Core]]</dd>
+  <dd>An OAuth 2.0 authorization server implementing OpenID Connect as [defined in the OpenID Connect Core 1.0 specification](https://openid.net/specs/openid-connect-core-1_0.html). [[OIDC.Core]]</dd>
   <dt id="relying-party">Relying Party (RP)</dt>
-  <dd>A client application using OpenID Connect to make resource requests on behalf of the resource owner. Client is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[!RFC6749]]</dd>
+  <dd>A client application using OpenID Connect to make resource requests on behalf of the resource owner. Client is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[RFC6749]]</dd>
   <dt id="resource">Resource</dt>
-  <dd>Something denoted by an IRI or a literal as [defined in RDF 1.1](https://www.w3.org/TR/rdf11-concepts/#resources-and-statements). [[!rdf11-concepts]]</dd>
+  <dd>Something denoted by an IRI or a literal as [defined in RDF 1.1](https://www.w3.org/TR/rdf11-concepts/#resources-and-statements). [[rdf11-concepts]]</dd>
   <dt id="resource-owner">Resource Owner</dt>
-  <dd>An entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end-user. Resource Owner is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[!RFC6749]]</dd>
+  <dd>An entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end-user. Resource Owner is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[RFC6749]]</dd>
   <dt id="resource-server">Resource Server (RS)</dt>
-  <dd>A server hosting resources, capable of accepting and responding to protected resource requests using access tokens. RS is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[!RFC6749]]</dd>
+  <dd>A server hosting resources, capable of accepting and responding to protected resource requests using access tokens. RS is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[RFC6749]]</dd>
   <dt id="solid-data-pod">Solid Storage</dt>
-  <dd>A Solid compliant Resource Server as [defined in the Solid Protocol](https://solidproject.org/TR/protocol#data-pod). [[!Solid.Protocol]]</dd>
+  <dd>A Solid compliant Resource Server as [defined in the Solid Protocol](https://solidproject.org/TR/protocol#data-pod). [[Solid.Protocol]]</dd>
   <dt id="solid-oidc">Solid OpenID Connect (Solid OIDC)</dt>
-  <dd>The specification defining authentication in the Solid ecosystem. [[!Solid.OIDC]]</dd>
+  <dd>The specification defining authentication in the Solid ecosystem. [[Solid.OIDC]]</dd>
   <dt id="webid">WebID</dt>
-  <dd>A WebID is an HTTP URI which refers to an Agent (Person, Organization, Group, Device, etc.) as [defined in the WebID 1.0 specification](https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html#introduction). [[!WebID]]</dd>
+  <dd>A WebID is an HTTP URI which refers to an Agent (Person, Organization, Group, Device, etc.) as [defined in the WebID 1.0 specification](https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html#introduction). [[WebID]]</dd>
 </dl>
 
 # Actors # {#actors}
@@ -96,7 +98,7 @@ Several actors are at play in our example Solid OIDC authentication flows:
 ## Authorization Code Grant with PKCE Authorization Flow ## {#authorization-code-pkce-flow}
 
 The Authorization Code grant with PKCE is the primary OAuth 2.0 authorization flow
-recommended by the Solid OIDC. It is defined by the PKCE RFC [[!RFC7636]] and
+recommended by the Solid OIDC. It is defined by the PKCE RFC [[RFC7636]] and
 described here in the Solid OIDC context.
 
 <img src="primer-login.mmd.svg" width="980" />
@@ -649,7 +651,7 @@ WWW-Authenticate: UMA realm="example",
 
 <h4 id="request-flow-step-2" class="no-num">2. Request AS configuration</h4>
 
-Knowing Authorization Server now client can discover its Token Endpoint ([[!RFC8414]])
+Knowing Authorization Server now client can discover its Token Endpoint ([[RFC8414]])
 
 Request:
 ```http
