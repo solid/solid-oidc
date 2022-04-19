@@ -26,10 +26,19 @@ jobs:
           python3 -m pip install --upgrade bikeshed
           bikeshed update
 
-      - name: Adjust document status to CG-FINAL
+      - name: Adjust document status and URLs
+        shell: bash
         run: |
-          sed -i 's|w3c/ED|w3c/CG-FINAL|g' index.bs
-          sed -i 's|w3c/ED|w3c/CG-FINAL|g' primer/index.bs
+          YEAR=$(date '+%Y')
+          DAY=$(date '+%Y%m%d')
+
+          sed -i "s|w3c/ED|w3c/CG-FINAL|g" index.bs
+          sed -i "s|ED: https://solid.github.io/solid-oidc/|ED: https://solidproject.org/TR/$YEAR/oidc-$DAY|g" index.bs
+          sed -i "s|Editor's Draft off|Editor's Draft on|" index.bs
+
+          sed -i "s|w3c/ED|w3c/CG-FINAL|g" primer/index.bs
+          sed -i "s|ED: https://solid.github.io/solid-oidc/primer/|ED: https://solidproject.org/TR/$YEAR/oidc-primer-$DAY|g" primer/index.bs
+          sed -i "s|Editor's Draft off|Editor's Draft on|" primer/index.bs
 
       - name: Generate HTML
         run: for bsdoc in ./*.bs ./**/*.bs; do bikeshed spec $bsdoc; done
@@ -44,17 +53,13 @@ jobs:
           cp index.html ./publish/oidc.html
           cp sequence.mmd.svg ./publish/oidc-sequence.svg
           sed -i "s|sequence.mmd.svg|oidc-sequence.svg|g" ./publish/oidc.html
-          sed -i "s|https://solid.github.io/solid-oidc/solid.svg|https://solidproject.org/TR/solid.svg|g" ./publish/oidc.html
           sed -i "s|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/oidc-primer|g" ./publish/oidc.html
-          sed -i "s|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/oidc|g" ./publish/oidc.html
 
           cp primer/index.html ./publish/oidc-primer.html
           cp primer/primer-login.mmd.svg ./publish/oidc-primer-login.svg
           cp primer/primer-request.mmd.svg ./publish/oidc-primer-request.svg
           sed -i "s|primer-login.mmd.svg|oidc-primer-login.svg|g" ./publish/oidc-primer.html
           sed -i "s|primer-request.mmd.svg|oidc-primer-request.svg|g" ./publish/oidc-primer.html
-          sed -i "s|https://solid.github.io/solid-oidc/solid.svg|https://solidproject.org/TR/solid.svg|g" ./publish/oidc-primer.html
-          sed -i "s|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/oidc-primer|g" ./publish/oidc-primer.html
           sed -i "s|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/oidc|g" ./publish/oidc-primer.html
 
           # Perform the same tasks for a date-specific version
@@ -65,17 +70,13 @@ jobs:
           cp index.html ./publish/$YEAR/oidc-$DAY.html
           cp sequence.mmd.svg ./publish/$YEAR/oidc-sequence-$DAY.svg
           sed -i "s|sequence.mmd.svg|oidc-sequence-$DAY.svg|g" ./publish/$YEAR/oidc-$DAY.html
-          sed -i "s|https://solid.github.io/solid-oidc/solid.svg|https://solidproject.org/TR/solid.svg|g" ./publish/$YEAR/oidc-$DAY.html
           sed -i "s|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/oidc-primer|g" ./publish/$YEAR/oidc-$DAY.html
-          sed -i "s|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/$YEAR/oidc-$DAY|g" ./publish/$YEAR/oidc-$DAY.html
 
           cp primer/index.html ./publish/$YEAR/oidc-primer-$DAY.html
           cp primer/primer-login.mmd.svg ./publish/$YEAR/oidc-primer-login-$DAY.svg
           cp primer/primer-request.mmd.svg ./publish/$YEAR/oidc-primer-request-$DAY.svg
           sed -i "s|primer-login.mmd.svg|oidc-primer-login-$DAY.svg|g" ./publish/$YEAR/oidc-primer-$DAY.html
           sed -i "s|primer-request.mmd.svg|oidc-primer-request-$DAY.svg|g" ./publish/$YEAR/oidc-primer-$DAY.html
-          sed -i "s|https://solid.github.io/solid-oidc/solid.svg|https://solidproject.org/TR/solid.svg|g" ./publish/$YEAR/oidc-primer-$DAY.html
-          sed -i "s|https://solid.github.io/solid-oidc/primer/|https://solidproject.org/TR/$YEAR/oidc-primer-$DAY|g" ./publish/$YEAR/oidc-primer-$DAY.html
           sed -i "s|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/oidc|g" ./publish/$YEAR/oidc-primer-$DAY.html
 
       - name: Publish to TR Publication branch
