@@ -39,7 +39,7 @@ Bob's Solid Storage (resource servers).
 
 <dl>
   <dt id="openid-provider">OpenID Provider (OP)</dt>
-  <dd>An OAuth 2.0 authorization server implementing OpenID Connect as [defined in the OpenID Connect Core 1.0 specification](https://openid.net/specs/openid-connect-core-1_0.html). [[OIDC.Core]]</dd>
+  <dd>An OAuth 2.0 authorization server implementing OpenID Connect as [defined in the OpenID Connect Core 1.0 specification](https://openid.net/specs/openid-connect-core-1_0.html). [[OIDC-CORE]]</dd>
   <dt id="relying-party">Relying Party (RP)</dt>
   <dd>A client application using OpenID Connect to make resource requests on behalf of the resource owner. Client is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[RFC6749]]</dd>
   <dt id="resource">Resource</dt>
@@ -49,11 +49,11 @@ Bob's Solid Storage (resource servers).
   <dt id="resource-server">Resource Server (RS)</dt>
   <dd>A server hosting resources, capable of accepting and responding to protected resource requests using access tokens. RS is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[RFC6749]]</dd>
   <dt id="solid-data-pod">Solid Storage</dt>
-  <dd>A Solid compliant Resource Server as [defined in the Solid Protocol](https://solidproject.org/TR/protocol#data-pod). [[Solid.Protocol]]</dd>
+  <dd>A Solid compliant Resource Server as [defined in the Solid Protocol](https://solidproject.org/TR/protocol#data-pod). [[SOLID-PROTOCOL]]</dd>
   <dt id="solid-oidc">Solid OpenID Connect (Solid OIDC)</dt>
-  <dd>The specification defining authentication in the Solid ecosystem. [[Solid.OIDC]]</dd>
+  <dd>The specification defining authentication in the Solid ecosystem. [[SOLID-OIDC]]</dd>
   <dt id="webid">WebID</dt>
-  <dd>A WebID is an HTTP URI which refers to an Agent (Person, Organization, Group, Device, etc.) as [defined in the WebID 1.0 specification](https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html#introduction). [[WebID]]</dd>
+  <dd>A WebID is an HTTP URI which refers to an Agent (Person, Organization, Group, Device, etc.) as [defined in the WebID 1.0 specification](https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html#introduction). [[WEBID]]</dd>
 </dl>
 
 # Actors # {#actors}
@@ -938,7 +938,7 @@ Given all went well, the RS should return the requested content.
 
 <pre class=biblio>
 {
-    "OIDC.Core": {
+    "OIDC-CORE": {
         "authors": [
             "N. Sakimura",
             "J. Bradley",
@@ -950,7 +950,7 @@ Given all went well, the RS should return the requested content.
         "title": "OpenID Connect Core 1.0",
         "publisher": "The OpenID Foundation"
     },
-    "Solid.Protocol": {
+    "SOLID-PROTOCOL": {
         "authors": [
             "Sarven Capadisli",
             "Tim Berners-Lee",
@@ -963,7 +963,7 @@ Given all went well, the RS should return the requested content.
         "title": "Solid Protocol",
         "publisher": "W3C Solid Community Group"
     },
-    "Solid.OIDC": {
+    "SOLID-OIDC": {
         "authors": [
             "Aaron Coburn",
             "elf Pavlik ",
@@ -973,7 +973,7 @@ Given all went well, the RS should return the requested content.
         "title": "Solid OIDC",
         "publisher": "W3C"
     },
-    "WebID": {
+    "WEBID": {
         "authors": [
             "Andrei Sambra",
             "Henry Story",
