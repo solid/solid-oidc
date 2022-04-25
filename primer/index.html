@@ -2,14 +2,14 @@
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Solid OIDC Primer</title>
+  <title>Solid-OIDC Primer</title>
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solidproject.org/TR/oidc-primer" rel="canonical">
   <link href="https://solidproject.org/TR/solid.svg" rel="icon">
-  <meta content="d635cb0c55bb91898558c7c955fb95718afe8d25" name="document-revision">
+  <meta content="024339cd49c697786f35a8b738bb4966eda6b82c" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -344,7 +344,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solidproject.org/TR/solid.svg" width="72"> </a> </p>
-   <h1 class="p-name no-ref" id="title">Solid OIDC Primer</h1>
+   <h1 class="p-name no-ref" id="title">Solid-OIDC Primer</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-04-25">25 April 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
@@ -371,10 +371,10 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>The Solid OpenID Connect (Solid OIDC) specification defines how resource servers
+   <p>The Solid OpenID Connect (Solid-OIDC) specification defines how resource servers
 
   verify the identity of relying parties and end users based on the authentication
-  performed by an OpenID provider. Solid OIDC builds on top of OpenID Connect 1.0.
+  performed by an OpenID provider. Solid-OIDC builds on top of OpenID Connect 1.0.
   This primer is designed to provide the reader with the basic knowledge required
   to understand Solid OpenID Connect authentication flows. It introduces the basic
   concepts of authentication in the Solid ecosystem.</p>
@@ -391,7 +391,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <li><a href="#definitions"><span class="secno">2</span> <span class="content">Definitions</span></a>
     <li><a href="#actors"><span class="secno">3</span> <span class="content">Actors</span></a>
     <li>
-     <a href="#solid-oidc-flow"><span class="secno">4</span> <span class="content">Solid OIDC Flow</span></a>
+     <a href="#solid-oidc-flow"><span class="secno">4</span> <span class="content">Solid-OIDC Flow</span></a>
      <ol class="toc">
       <li><a href="#authorization-code-pkce-flow"><span class="secno">4.1</span> <span class="content">Authorization Code Grant with PKCE Authorization Flow</span></a>
       <li><a href="#request-flow"><span class="secno">4.2</span> <span class="content">Request Flow</span></a>
@@ -428,7 +428,7 @@ Bob’s Solid Storage (resource servers).</p>
     <dd>A WebID is an HTTP URI which refers to an Agent (Person, Organization, Group, Device, etc.) as <a href="https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html#introduction">defined in the WebID 1.0 specification</a>. <a data-link-type="biblio" href="#biblio-webid">[WEBID]</a>
    </dl>
    <h2 class="heading settled" data-level="3" id="actors"><span class="secno">3. </span><span class="content">Actors</span><a class="self-link" href="#actors"></a></h2>
-   <p>Several actors are at play in our example Solid OIDC authentication flows:</p>
+   <p>Several actors are at play in our example Solid-OIDC authentication flows:</p>
    <dl>
     <dt id="alice"><a class="self-link" href="#alice"></a>Alice
     <dd>Alice will be providing consent for Decent Photos to make resource requests
@@ -463,11 +463,11 @@ Bob’s Solid Storage (resource servers).</p>
     <dd>The Authorization Server (AS) connected to Bob’s Storage will issue access tokens that
  can be used with Bob’s Storage. In these examples, this is hosted at <code>https://auth.otherpod.example</code>.
    </dl>
-   <h2 class="heading settled" data-level="4" id="solid-oidc-flow"><span class="secno">4. </span><span class="content">Solid OIDC Flow</span><a class="self-link" href="#solid-oidc-flow"></a></h2>
+   <h2 class="heading settled" data-level="4" id="solid-oidc-flow"><span class="secno">4. </span><span class="content">Solid-OIDC Flow</span><a class="self-link" href="#solid-oidc-flow"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="authorization-code-pkce-flow"><span class="secno">4.1. </span><span class="content">Authorization Code Grant with PKCE Authorization Flow</span><a class="self-link" href="#authorization-code-pkce-flow"></a></h3>
    <p>The Authorization Code grant with PKCE is the primary OAuth 2.0 authorization flow
-recommended by the Solid OIDC. It is defined by the PKCE RFC <a data-link-type="biblio" href="#biblio-rfc7636">[RFC7636]</a> and
-described here in the Solid OIDC context.</p>
+recommended by the Solid-OIDC. It is defined by the PKCE RFC <a data-link-type="biblio" href="#biblio-rfc7636">[RFC7636]</a> and
+described here in the Solid-OIDC context.</p>
    <p><img src="primer-login.mmd.svg" width="980"></p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-1"><span class="content">1. Alice uses the Decent Photos web app</span><a class="self-link" href="#authorization-code-pkce-flow-step-1"></a></h4>
    <p>Alice has heard of a great new site that allows her to view her friend’s photos and tag faces.
@@ -603,7 +603,7 @@ The url that the OP will redirect to once the user has logged in (<code>https://
       <li data-md>
        <p><code>openid</code> is a scope that is needed to verify Alice’s identity.</p>
       <li data-md>
-       <p><code>webid</code> is required by the Solid OIDC specification to denote a WebID login.</p>
+       <p><code>webid</code> is required by the Solid-OIDC specification to denote a WebID login.</p>
       <li data-md>
        <p><code>offline_access</code>: Is required to get a refresh token.</p>
      </ul>
@@ -1165,7 +1165,7 @@ Headers: {
    <dt id="biblio-rfc8414">[RFC8414]
    <dd>M. Jones; N. Sakimura; J. Bradley. <a href="https://www.rfc-editor.org/rfc/rfc8414"><cite>OAuth 2.0 Authorization Server Metadata</cite></a>. June 2018. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>
    <dt id="biblio-solid-oidc">[SOLID-OIDC]
-   <dd>Aaron Coburn; elf Pavlik ; Dmitri Zagidulin. <a href="https://solid.github.io/solid-oidc/"><cite>Solid OIDC</cite></a>. URL: <a href="https://solid.github.io/solid-oidc/">https://solid.github.io/solid-oidc/</a>
+   <dd>Aaron Coburn; elf Pavlik ; Dmitri Zagidulin. <a href="https://solid.github.io/solid-oidc/"><cite>Solid-OIDC</cite></a>. URL: <a href="https://solid.github.io/solid-oidc/">https://solid.github.io/solid-oidc/</a>
    <dt id="biblio-solid-protocol">[SOLID-PROTOCOL]
    <dd>Sarven Capadisli; et al. <a href="https://solidproject.org/TR/protocol"><cite>Solid Protocol</cite></a>. URL: <a href="https://solidproject.org/TR/protocol">https://solidproject.org/TR/protocol</a>
    <dt id="biblio-webid">[WEBID]
