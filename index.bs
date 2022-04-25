@@ -10,6 +10,8 @@ Group: Solid Community Group
 Favicon: https://solidproject.org/TR/solid.svg
 ED: https://solid.github.io/solid-oidc/
 TR: https://solidproject.org/TR/oidc
+!Created: March 28, 2022
+!Modified: [DATE]
 !Editor's Draft: [https://solid.github.io/solid-oidc/](https://solid.github.io/solid-oidc/)
 !License: [MIT License](http://purl.org/NET/rdflicense/MIT1.0)
 Repository: https://github.com/solid/solid-oidc
@@ -22,7 +24,7 @@ Editor: [Dmitri Zagidulin](http://computingjoy.com/)
 Former Editor: [Adam Migus](https://migusgroup.com/about/) ([The Migus Group](https://migusgroup.com/))
 Former Editor: [Ricky White](https://endlesstrax.com) ([The Migus Group](https://migusgroup.com/))
 Test Suite: https://solid.github.io/solid-oidc-tests/
-Metadata Order: This version, Latest published version, Editor's Draft, Test Suite, *, !*
+Metadata Order: This version, Latest published version, Editor's Draft, Test Suite, Created, Modified, *, !*
 Metadata Include: Editor's Draft off
 Abstract:
   A key challenge on the path toward re-decentralizing user data on the Worldwide Web is the need to
