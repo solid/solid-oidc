@@ -12,6 +12,7 @@ Favicon: https://solidproject.org/TR/solid.svg
 ED: https://solid.github.io/solid-oidc/primer/
 TR: https://solidproject.org/TR/oidc-primer
 !Editor's Draft: [https://solid.github.io/solid-oidc/primer/](https://solid.github.io/solid-oidc/primer/)
+!License: [MIT License](http://purl.org/NET/rdflicense/MIT1.0)
 Repository: https://github.com/solid/solid-oidc
 Markup Shorthands: markdown yes
 Max ToC Depth: 2
