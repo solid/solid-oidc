@@ -9,7 +9,7 @@
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solidproject.org/TR/oidc" rel="canonical">
   <link href="https://solidproject.org/TR/solid.svg" rel="icon">
-  <meta content="5936d4d91214af230b9ee0b744975a83279efb5d" name="document-revision">
+  <meta content="404c1fd9eb5a92b6d81d25eb0e86b60fddbdfe05" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -587,10 +587,10 @@ with the values in the Client ID Document.</p>
    <p>This specification defines a JSON-LD context for use with OIDC Client ID Documents. This context is
 available at <code>https://www.w3.org/ns/solid/oidc-context.jsonld</code>. Client ID Documents that reference
 this JSON-LD context MUST use the HTTPS scheme.</p>
-   <p class="note" role="note"><span>NOTE:</span> the <code>oidc</code> vocabulary that is part of this context uses the HTTP scheme.</p>
+   <p class="note" role="note"><span>NOTE:</span> the <a href="https://www.w3.org/ns/solid/oidc">Solid-OIDC Vocabulary</a> that is part of this context uses the HTTP scheme.</p>
    <p>Full content of JSON-LD context can be also seen in <a href="#full-jsonld-context">Appendix A: Full JSON-LD context</a></p>
    <h3 class="heading settled" data-level="5.2" id="clientids-oidc"><span class="secno">5.2. </span><span class="content">OIDC Registration</span><a class="self-link" href="#clientids-oidc"></a></h3>
-   <p>If the Client does not use an identifier that can be dereferenced, then it MUST present a client identifier
+   <p>For non-dereferencable identifiers, the Client MUST present a <code>client_id</code> value that has been
 registered with the OP via either OIDC dynamic or static registration.
 See also <a data-link-type="biblio" href="#biblio-oidc-dynamic-client-registration">[OIDC-DYNAMIC-CLIENT-REGISTRATION]</a>.</p>
    <h2 class="heading settled" data-level="6" id="webid-profile"><span class="secno">6. </span><span class="content">WebID Profile</span><a class="self-link" href="#webid-profile"></a></h2>
