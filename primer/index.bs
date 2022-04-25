@@ -1,5 +1,5 @@
 <pre class='metadata'>
-Title: Solid OIDC Primer
+Title: Solid-OIDC Primer
 Boilerplate: issues-index no
 Boilerplate: style-darkmode off
 Boilerplate: omit conformance
@@ -22,9 +22,9 @@ Editor: [Matthieu Bosquet](https://github.com/matthieubosquet)
 Metadata Order: This version, Latest published version, Editor's Draft, Test Suite, *, !*
 Metadata Include: Editor's Draft off
 Abstract:
-  The Solid OpenID Connect (Solid OIDC) specification defines how resource servers
+  The Solid OpenID Connect (Solid-OIDC) specification defines how resource servers
   verify the identity of relying parties and end users based on the authentication
-  performed by an OpenID provider. Solid OIDC builds on top of OpenID Connect 1.0.
+  performed by an OpenID provider. Solid-OIDC builds on top of OpenID Connect 1.0.
   This primer is designed to provide the reader with the basic knowledge required
   to understand Solid OpenID Connect authentication flows. It introduces the basic
   concepts of authentication in the Solid ecosystem.
@@ -59,7 +59,7 @@ Bob's Solid Storage (resource servers).
 
 # Actors # {#actors}
 
-Several actors are at play in our example Solid OIDC authentication flows:
+Several actors are at play in our example Solid-OIDC authentication flows:
 
 <dl>
   <dt id="alice">Alice</dt>
@@ -99,13 +99,13 @@ Several actors are at play in our example Solid OIDC authentication flows:
  `https://auth.otherpod.example`.</dd>
 </dl>
 
-# Solid OIDC Flow # {#solid-oidc-flow}
+# Solid-OIDC Flow # {#solid-oidc-flow}
 
 ## Authorization Code Grant with PKCE Authorization Flow ## {#authorization-code-pkce-flow}
 
 The Authorization Code grant with PKCE is the primary OAuth 2.0 authorization flow
-recommended by the Solid OIDC. It is defined by the PKCE RFC [[RFC7636]] and
-described here in the Solid OIDC context.
+recommended by the Solid-OIDC. It is defined by the PKCE RFC [[RFC7636]] and
+described here in the Solid-OIDC context.
 
 <img src="primer-login.mmd.svg" width="980" />
 
@@ -276,7 +276,7 @@ That URL might look a little complex, but it's essentially a request to
 - `scope=openid%20webid%20offline_access`: a list of [OIDC scopes](https://auth0.com/docs/scopes/current/oidc-scopes)
     (attributes of the RS to which this token should have access) separated by spaces (%20).
     - `openid` is a scope that is needed to verify Alice's identity.
-    - `webid` is required by the Solid OIDC specification to denote a WebID login.
+    - `webid` is required by the Solid-OIDC specification to denote a WebID login.
     - `offline_access`: Is required to get a refresh token.
 - `client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this`: Usually the client id of a Solid
     application is the app's URI (in our case `https://decentphotos.example/webid#this`) as seen here.
@@ -971,7 +971,7 @@ Given all went well, the RS should return the requested content.
             "Dmitri Zagidulin"
         ],
         "href": "https://solid.github.io/solid-oidc/",
-        "title": "Solid OIDC",
+        "title": "Solid-OIDC",
         "publisher": "W3C"
     },
     "WEBID": {
