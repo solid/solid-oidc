@@ -218,13 +218,13 @@ This specification defines a JSON-LD context for use with OIDC Client ID Documen
 available at `https://www.w3.org/ns/solid/oidc-context.jsonld`. Client ID Documents that reference
 this JSON-LD context MUST use the HTTPS scheme.
 
-NOTE: the `oidc` vocabulary that is part of this context uses the HTTP scheme.
+NOTE: the [Solid-OIDC Vocabulary](https://www.w3.org/ns/solid/oidc) that is part of this context uses the HTTP scheme.
 
 Full content of JSON-LD context can be also seen in [[#full-jsonld-context]]
 
 ## OIDC Registration ## {#clientids-oidc}
 
-If the Client does not use an identifier that can be dereferenced, then it MUST present a client identifier
+For non-dereferencable identifiers, the Client MUST present a `client_id` value that has been
 registered with the OP via either OIDC dynamic or static registration.
 See also [[!OIDC-DYNAMIC-CLIENT-REGISTRATION]].
 
