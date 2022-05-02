@@ -78,8 +78,7 @@ The additional functionality documented herein aims to address:
 
 *This section is non-normative*
 
-At the time of writing, there is no demonstrated use case for a strongly asserted identity; however,
-it is likely that authorization requirements will necessitate it.
+While the Solid-OIDC specification describes the structure of an ID Token for use in Solid, the definition of a global access token for use with Solid Resource Servers is beyond the scope of this specification.
 
 # Terminology # {#terms}
 
