@@ -281,7 +281,8 @@ but MAY use the Link Header values as an optimization.
 
 # Requesting the WebID Claim using a Scope Value # {#webid-scope}
 
-In OpenID Connect, `scope` values are used to request that particular information be make available as claim values.
+Solid-OIDC uses scope values, as defined in [!OAUTH] Section 3.3 and [!OIDC-CORE] Section 5.4 to specify
+what information is made available as Claim Values.
 
 Solid-OIDC defines the following `scope` value for use with claim requests:
 
@@ -563,6 +564,14 @@ The JSON-LD context is defined as:
         ],
         "href": "https://tools.ietf.org/html/draft-ietf-oauth-dpop",
         "title": "OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)",
+        "publisher": "IETF"
+    },
+    "OAUTH": {
+        "authors": [
+            "D. Hardt"
+        ],
+        "href": "https://tools.ietf.org/html/rfc6749",
+        "title": "The OAuth 2.0 Authorization Framework",
         "publisher": "IETF"
     },
     "OIDC-CORE": {
