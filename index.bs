@@ -185,7 +185,7 @@ with the values in the Client ID Document.
 Further, the `redirect_uri` provided by the Client MUST be included in the registration `redirect_uris`
 list.
 
-This example uses [JSON-LD ](https://www.w3.org/TR/json-ld11/) for the Client ID Document:
+This example uses [JSON-LD ](https://www.w3.org/TR/json-ld/) for the Client ID Document:
 
 <div class='example'>
     <p>https://app.example/id</p>
