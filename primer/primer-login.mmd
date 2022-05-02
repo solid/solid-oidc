@@ -9,15 +9,15 @@ sequenceDiagram
   WebID->>Client: WebID Profile
   Client->>OP: 3. Retrieves OP configuration
   OP->>Client: OP configuration
-  note over Client: 4. Generates PKCE code and code verifier
+  note over Client: 4. Generates PKCE code verifier and code challenge
   note over Client: 5. Saves code verifier to session storage
   Client->>OP: 6. Authorization Request
   OP->>ClientID: 7. Fetch Client ID Document
   ClientID->>OP: ClientID Profile
   note over OP: 8. Validates redirect url with WebID
   note over OP: 9. Alice Logs In
-  note over OP: 10. Generates a code
-  OP->>Client: 11. Send code to redirect url
+  note over OP: 10. Generates an authorization code
+  OP->>Client: 11. Send authorization code to redirect url
   note over Client: 12. Generates DPoP Client Key Pair
   note over Client: 13. Generates a DPoP Header
   Client->>OP: 14. Token request with code and code verifier
