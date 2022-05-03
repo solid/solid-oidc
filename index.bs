@@ -281,7 +281,8 @@ but MAY use the Link Header values as an optimization.
 
 # Requesting the WebID Claim using a Scope Value # {#webid-scope}
 
-In OpenID Connect, `scope` values are used to request that particular information be make available as claim values.
+Solid-OIDC uses scope values, as defined in [[!RFC6749]] Section 3.3 and [[!OIDC-CORE]] Section 5.4 to specify
+what information is made available as Claim Values.
 
 Solid-OIDC defines the following `scope` value for use with claim requests:
 
