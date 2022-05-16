@@ -130,7 +130,7 @@ This specification also uses the following terms:
 *This section is non-normative*
 
 In a decentralized ecosystem, such as Solid, an OP may be an identity-as-a-service vendor or, at
-the other end of the spectrum, a user-controlled OP. In any case, the user may be authenticating
+the other end of the spectrum, a user-controlled OP. In either case, the user may be authenticating
 from a browser or an application.
 
 Therefore, this specification assumes the use of the
