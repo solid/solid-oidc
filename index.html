@@ -9,7 +9,7 @@
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solidproject.org/TR/oidc" rel="canonical">
   <link href="https://solidproject.org/TR/solid.svg" rel="icon">
-  <meta content="0a63ff71046923f87b21d060c5699e33c42d804a" name="document-revision">
+  <meta content="d43c4a42249cddf42ef5bf4eb42f7b4c8120e48f" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -218,6 +218,45 @@ a[href].issue-return {
     color: var(--issueheading-text);
     font-weight: bold;
     text-decoration: none;
+}
+</style>
+<style>/* style-line-highlighting */
+
+:root {
+    --highlight-hover-bg: rgba(0, 0, 0, .05);
+}
+.line-numbered {
+    display: grid !important;
+    grid-template-columns: min-content 1fr;
+    grid-auto-flow: rows;
+}
+.line-numbered > *,
+.line-numbered::before,
+.line-numbered::after {
+    grid-column: 1/-1;
+}
+.line-no {
+    grid-column: 1;
+    color: gray;
+}
+.line {
+    grid-column: 2;
+}
+.line.highlight-line {
+    background: var(--highlight-hover-bg);
+}
+.line-no.highlight-line {
+    background: var(--highlight-hover-bg);
+    color: #444;
+    font-weight: bold;
+}
+.line-no.highlight-line[data-line]::before {
+    padding: 0 .5em 0 .1em;
+    content: attr(data-line);
+}
+.line-no.highlight-line[data-line-end]::after {
+    padding: 0 .5em 0 .1em;
+    content: attr(data-line-end);
 }
 </style>
 <style>/* style-md-lists */
@@ -592,6 +631,12 @@ this JSON-LD context MUST use the HTTPS scheme.</p>
    <p>For non-dereferencable identifiers, the Client MUST present a <code>client_id</code> value that has been
 registered with the OP via either OIDC dynamic or static registration.
 See also <a data-link-type="biblio" href="#biblio-oidc-dynamic-client-registration">[OIDC-DYNAMIC-CLIENT-REGISTRATION]</a>.</p>
+   <p>When requesting Dynamic Client Registration, the Client MUST specify the <code>scope</code> in the metadata
+and include <code>webid</code> in its value (space-separated list).</p>
+   <div class="example" id="example-a82d78ca">
+    <a class="self-link" href="#example-a82d78ca"></a> 
+<pre class="highlight line-numbered"><span class="line-no"></span><span class="line"><c- p>{</c-></span><span class="line-no"></span><span class="line">  <c- f>"client_name"</c-><c- p>:</c-> <c- u>"S-C-A Browser Demo Client App"</c-><c- p>,</c-></span><span class="line-no"></span><span class="line">  <c- f>"application_type"</c-><c- p>:</c-> <c- u>"web"</c-><c- p>,</c-></span><span class="line-no"></span><span class="line">  <c- f>"redirect_uris"</c-><c- p>:</c-> <c- p>[</c-></span><span class="line-no"></span><span class="line">    <c- u>"https://dynamic-client.example/auth"</c-></span><span class="line-no"></span><span class="line">  <c- p>],</c-></span><span class="line-no"></span><span class="line">  <c- f>"subject_type"</c-><c- p>:</c-> <c- u>"pairwise"</c-><c- p>,</c-></span><span class="line-no"></span><span class="line">  <c- f>"token_endpoint_auth_method"</c-><c- p>:</c-> <c- u>"client_secret_basic"</c-><c- p>,</c-></span><span class="line-no highlight-line" data-line="9"></span><span class="line highlight-line">  <c- f>"scope"</c-> <c- p>:</c-> <c- u>"openid profile offline_access webid"</c-></span><span class="line-no"></span><span class="line"><c- p>}</c-></span></pre>
+   </div>
    <h2 class="heading settled" data-level="6" id="webid-profile"><span class="secno">6. </span><span class="content">WebID Profile</span><a class="self-link" href="#webid-profile"></a></h2>
    <p>Dereferencing the WebID URL results in a WebID Profile.</p>
    <div class="issue no-marker" id="issue-d41d8cd9②"><a class="self-link" href="#issue-d41d8cd9②"></a><a class="marker" href="https://github.com/solid/solid-oidc/issues/76" style="text-transform:none">solid/solid-oidc/76</a><a href="https://github.com/solid/solid-oidc/issues/76">WebIDs MUST use a secure protocol</a></div>
