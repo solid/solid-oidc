@@ -372,7 +372,7 @@ redirect uri, including useful information with it:
 302 redirect to: https://decentphotos.example/callback?code=m-OrTPHdRsm8W_e9P0J2Bt
 ```
 
-This redirect gives decentphotos the [=authorization code=] that it will exchange for an access token.
+This redirect gives decentphotos the [=authorization code=] that it will exchange for requested tokens.
 
 <h4 id="authorization-code-pkce-flow-step-12" class="no-num">12. Generates a DPoP Client Key Pair</h4>
 
@@ -530,7 +530,7 @@ Our JWK thumbprint looks more like:
 9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8
 ```
 
-<h4 id="authorization-code-pkce-flow-step-19" class="no-num">19. Generates the id_token</h4>
+<h4 id="authorization-code-pkce-flow-step-19" class="no-num">19. Generates the ID Token</h4>
 
 Since `openid` was listed as a scope during the authorization request, the OP generates an id
 token. The id token will be pushed as claim to any Solid Authorization Server needed, which clients want to get Access Token from.
@@ -575,7 +575,7 @@ Token Body:
 - `"sub": "https://alice.coolpod.example/profile/card#me"`: The subject claim. It must
     be the same as the authenticated user's WebID.
 - `"aud": "https://decentphotos.example/webid#this"`: The token's audience. Because an
-    id_token is intended for the client and any Solid Authorization Server,
+    id token is intended for the client and any Solid Authorization Server,
     its audience is the client id and the string "solid".
 - `"azp": "https://decentphotos.example/webid#this"`: The token's authorized party. Because an
     id_token is intended to be used by the client, its authorized party is the client id.
@@ -773,20 +773,20 @@ must be generated each time a request is made, no two tokens should have the sam
 AS receives a DPoP token with a `jti` it has already encountered it may reject the request with
 a 400 HTTP status and an `invalid_dpop_proof` error code.
 
-<h4 id="request-flow-step-7" class="no-num">7. Checks DPoP signature against Access Token</h4>
+<h4 id="request-flow-step-7" class="no-num">7. Checks DPoP signature against ID Token</h4>
 
 The AS first confirms that the DPoP token was signed by the public key listed in its `header
 jwk`. If it was not, the AS must reject the request with a 400 HTTP status and an
 `invalid_dpop_proof` error code.
 
 The AS checks if the public key in the DPoP token's `header.jwk` corresponds to the jwk
-thumbprint in the access token in the `cnf` field. If they do not, the OP must reject the
+thumbprint in the ID token in the `cnf` field. If they do not, the OP must reject the
 request. When using UMA 2.0, the response will include a 403 HTTP status code and a
 `need_info` field in the error response.
 
 <h4 id="request-flow-step-8" class="no-num">8. Retrieves WebID Document</h4>
 
-Using the `webid` claim in the access token (for us, it's
+Using the `webid` claim in the id token (for us, it's
 `https://alice.coolpod.example/profile/card#me`), the AS retreives the user's WebId document.
 
 Request
