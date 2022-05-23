@@ -9,7 +9,7 @@
   <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
   <link href="https://solidproject.org/TR/oidc-primer" rel="canonical">
   <link href="https://solidproject.org/TR/solid.svg" rel="icon">
-  <meta content="33d53a7e2e6def3ae1628840cc894e9183a72018" name="document-revision">
+  <meta content="0a63ff71046923f87b21d060c5699e33c42d804a" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -386,7 +386,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solidproject.org/TR/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-05-16">16 May 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-05-23">23 May 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -398,7 +398,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>March 28, 2022
       <dt>Modified:
-      <dd>16 May 2022
+      <dd>23 May 2022
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -732,7 +732,7 @@ id, the <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challeng
 redirect uri, including useful information with it:</p>
 <pre class="language-http highlight">302 redirect to: https://decentphotos.example/callback?code=m-OrTPHdRsm8W_e9P0J2Bt
 </pre>
-   <p>This redirect gives decentphotos the <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code①">authorization code</a> that it will exchange for an access token.</p>
+   <p>This redirect gives decentphotos the <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code①">authorization code</a> that it will exchange for requested tokens.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-12"><span class="content">12. Generates a DPoP Client Key Pair</span><a class="self-link" href="#authorization-code-pkce-flow-step-12"></a></h4>
    <p>Solid-OIDC depends on <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop">Demonstration of Proof-of-Possession (DPoP) tokens</a>.
 DPoP tokens ensure that third-party web applications can send requests to any number of
@@ -867,7 +867,7 @@ token, it needs to be converted into a <a href="https://tools.ietf.org/html/rfc7
 Our JWK thumbprint looks more like:</p>
 <pre class="language-text highlight">9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8
 </pre>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-19"><span class="content">19. Generates the id_token</span><a class="self-link" href="#authorization-code-pkce-flow-step-19"></a></h4>
+   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-19"><span class="content">19. Generates the ID Token</span><a class="self-link" href="#authorization-code-pkce-flow-step-19"></a></h4>
    <p>Since <code>openid</code> was listed as a scope during the authorization request, the OP generates an id
 token. The id token will be pushed as claim to any Solid Authorization Server needed, which clients want to get Access Token from.
 This token is a <a href="https://jwt.io/introduction/">JSON Web Token</a>. It would look like
@@ -908,7 +908,7 @@ the following (you can decrypt the token with <a href="https://jwt.io/#debugger-
 be the same as the authenticated user’s WebID.</p>
     <li data-md>
      <p><code>"aud": "https://decentphotos.example/webid#this"</code>: The token’s audience. Because an
-id_token is intended for the client and any Solid Authorization Server,
+id token is intended for the client and any Solid Authorization Server,
 its audience is the client id and the string "solid".</p>
     <li data-md>
      <p><code>"azp": "https://decentphotos.example/webid#this"</code>: The token’s authorized party. Because an
@@ -1077,14 +1077,14 @@ of the request, the AS must reject the request with a 400 HTTP status and an <co
 must be generated each time a request is made, no two tokens should have the same <code>jti</code>. If the
 AS receives a DPoP token with a <code>jti</code> it has already encountered it may reject the request with
 a 400 HTTP status and an <code>invalid_dpop_proof</code> error code.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-7"><span class="content">7. Checks DPoP signature against Access Token</span><a class="self-link" href="#request-flow-step-7"></a></h4>
+   <h4 class="no-num heading settled" id="request-flow-step-7"><span class="content">7. Checks DPoP signature against ID Token</span><a class="self-link" href="#request-flow-step-7"></a></h4>
    <p>The AS first confirms that the DPoP token was signed by the public key listed in its <code>header
 jwk</code>. If it was not, the AS must reject the request with a 400 HTTP status and an <code>invalid_dpop_proof</code> error code.</p>
    <p>The AS checks if the public key in the DPoP token’s <code>header.jwk</code> corresponds to the jwk
-thumbprint in the access token in the <code>cnf</code> field. If they do not, the OP must reject the
+thumbprint in the ID token in the <code>cnf</code> field. If they do not, the OP must reject the
 request. When using UMA 2.0, the response will include a 403 HTTP status code and a <code>need_info</code> field in the error response.</p>
    <h4 class="no-num heading settled" id="request-flow-step-8"><span class="content">8. Retrieves WebID Document</span><a class="self-link" href="#request-flow-step-8"></a></h4>
-   <p>Using the <code>webid</code> claim in the access token (for us, it’s <code>https://alice.coolpod.example/profile/card#me</code>), the AS retreives the user’s WebId document.</p>
+   <p>Using the <code>webid</code> claim in the id token (for us, it’s <code>https://alice.coolpod.example/profile/card#me</code>), the AS retreives the user’s WebId document.</p>
    <p>Request</p>
 <pre class="language-http highlight">GET https://alice.coolpod.example/profile/card#me
 </pre>
