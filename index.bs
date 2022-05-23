@@ -227,6 +227,24 @@ For non-dereferencable identifiers, the Client MUST present a `client_id` value 
 registered with the OP via either OIDC dynamic or static registration.
 See also [[!OIDC-DYNAMIC-CLIENT-REGISTRATION]].
 
+When requesting Dynamic Client Registration, the Client MUST specify the `scope` in the metadata
+and include `webid` in its value (space-separated list).
+
+<div class='example'>
+    <pre highlight="jsonld" line-highlight="9">
+        {
+          "client_name": "S-C-A Browser Demo Client App",
+          "application_type": "web",
+          "redirect_uris": [
+            "https://dynamic-client.example/auth"
+          ],
+          "subject_type": "pairwise",
+          "token_endpoint_auth_method": "client_secret_basic",
+          "scope" : "openid profile offline_access webid"
+        }
+    </pre>
+</div>
+
 # WebID Profile # {#webid-profile}
 
 Dereferencing the WebID URL results in a WebID Profile.
