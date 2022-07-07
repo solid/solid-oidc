@@ -160,6 +160,15 @@ Details of the flow are available in [[!SOLID-OIDC-PRIMER]]
     <figcaption>Basic sequence of authenticating the user and the client.</figcaption>
 </figure>
 
+# Client Metadata # {#clientmetadata}
+
+OAuth and OIDC define how a Client should describe itself using Client Metadata, as
+specified in [[!RFC7591]] section 2 and extended in [[!OIDC-DYNAMIC-CLIENT-REGISTRATION]].
+
+In addition to the requirements set by these parent specifications, a Solid-OIDC
+Client MUST specify the `scope` in its metadata, and include `webid` in its value
+(space-separated list).
+
 # Client Identifiers # {#clientids}
 
 OAuth and OIDC require the Client application to identify itself to the OP and RS by presenting a
@@ -175,8 +184,8 @@ unless content negotiation requires a different outcome.
 
 The serialized JSON form of a Client ID Document MUST use the normative JSON-LD `@context`
 provided at `https://www.w3.org/ns/solid/oidc-context.jsonld` such that the resulting
-document produces a JSON serialization of an OIDC client registration, per the
-definition of client registration metadata from [[!RFC7591]] section 2.
+document produces a JSON serialization of an OIDC client registration containing
+the expected [Client metadata](##clientmetadata).
 
 Also, the OP MUST dereference the Client ID Document and match any Client-supplied parameters
 with the values in the Client ID Document.
@@ -227,13 +236,13 @@ For non-dereferencable identifiers, the Client MUST present a `client_id` value 
 registered with the OP via either OIDC dynamic or static registration.
 See also [[!OIDC-DYNAMIC-CLIENT-REGISTRATION]].
 
-When requesting Dynamic Client Registration, the Client MUST specify the `scope` in the metadata
-and include `webid` in its value (space-separated list).
+When requesting Dynamic Client Registration, the Client MUST produce a JSON serialization
+of an OIDC client registration containing the expected [Client metadata](##clientmetadata).
 
 <div class='example'>
     <pre highlight="jsonld" line-highlight="9">
         {
-          "client_name": "S-C-A Browser Demo Client App",
+          "client_name": "Client app name",
           "application_type": "web",
           "redirect_uris": [
             "https://dynamic-client.example/auth"
