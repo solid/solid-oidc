@@ -6,10 +6,10 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version fb1e763a4, updated Tue Mar 1 13:13:50 2022 -0800" name="generator">
+  <meta content="Bikeshed version 44af0bf3e, updated Fri Jul 29 17:05:16 2022 -0700" name="generator">
   <link href="https://solidproject.org/TR/oidc" rel="canonical">
   <link href="https://solidproject.org/TR/solid.svg" rel="icon">
-  <meta content="d43c4a42249cddf42ef5bf4eb42f7b4c8120e48f" name="document-revision">
+  <meta content="d3f0f70819ef5fd11699a4fbe8965510c06b7e5e" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -384,7 +384,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solid.github.io/solid-oidc/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-05-23">23 May 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-08-09">9 August 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -398,7 +398,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>March 28, 2022
       <dt>Modified:
-      <dd>23 May 2022
+      <dd>9 August 2022
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -750,7 +750,7 @@ the verifying party MUST follow OpenID Connect Discovery 1.0 <a data-link-type="
    <h3 class="heading settled" data-level="9.1" id="authorization-server-discovery"><span class="secno">9.1. </span><span class="content">Authorization Server Discovery</span><a class="self-link" href="#authorization-server-discovery"></a></h3>
    <p>When a Client performs an unauthenticated request to a protected resource,
 the Resource Server MUST respond with the HTTP <code>401</code> status code,
-and a <code>WWW-Authenticate</code> HTTP header. See also: <a href="https://httpwg.org/specs/rfc7235.html#section-4.1">Hypertext Transfer Protocol (HTTP/1.1): Authentication § section-4.1</a></p>
+and a <code>WWW-Authenticate</code> HTTP header. See also: <a href="https://www.rfc-editor.org/rfc/rfc9110#section-11.6.1">HTTP Semantics § section-11.6.1</a></p>
    <p>The <code>WWW-Authenticate</code> HTTP header MUST include an <code>as_uri</code> parameter unless the authentication scheme requires a different mechanism
 for discovering an associated authorization server.</p>
    <p>Authorization Servers SHOULD implement User-Managed Access (UMA) 2.0 Grant for
@@ -914,7 +914,7 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
     and are set apart from the normative text
     with <code>class="note"</code>,
     like this: </p>
-   <p class="note" role="note">Note, this is an informative note. </p>
+   <p class="note" role="note">Note, this is an informative note.</p>
    <h3 class="no-ref no-num heading settled" id="w3c-conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#w3c-conformant-algorithms"></a></h3>
    <p>Requirements phrased in the imperative as part of algorithms
     (such as "strip any leading space characters"
@@ -954,6 +954,8 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
    <dd>J. Richer, Ed.; et al. <a href="https://www.rfc-editor.org/rfc/rfc7591"><cite>OAuth 2.0 Dynamic Client Registration Protocol</cite></a>. July 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7591">https://www.rfc-editor.org/rfc/rfc7591</a>
    <dt id="biblio-rfc7636">[RFC7636]
    <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/rfc/rfc7636"><cite>Proof Key for Code Exchange by OAuth Public Clients</cite></a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7636">https://www.rfc-editor.org/rfc/rfc7636</a>
+   <dt id="biblio-rfc9110">[RFC9110]
+   <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc9110"><cite>HTTP Semantics</cite></a>. June 2022. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>
    <dt id="biblio-solid-oidc-primer">[SOLID-OIDC-PRIMER]
    <dd>Jackson Morgan; Aaron Coburn; Matthieu Bosquet. <a href="https://solid.github.io/solid-oidc/primer/"><cite>Solid-OIDC Primer</cite></a>. URL: <a href="https://solid.github.io/solid-oidc/primer/">https://solid.github.io/solid-oidc/primer/</a>
    <dt id="biblio-solid-protocol">[SOLID-PROTOCOL]
