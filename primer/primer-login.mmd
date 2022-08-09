@@ -14,7 +14,7 @@ sequenceDiagram
   Client->>OP: 6. Authorization Request
   OP->>ClientID: 7. Fetch Client ID Document
   ClientID->>OP: ClientID Profile
-  note over OP: 8. Validates redirect url with WebID
+  note over OP: 8. Validates redirect url with Client ID Document
   note over OP: 9. Alice Logs In
   note over OP: 10. Generates an authorization code
   OP->>Client: 11. Send authorization code to redirect url
