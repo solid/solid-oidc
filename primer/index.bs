@@ -182,6 +182,7 @@ The [openid-configuration](https://openid.net/specs/openid-connect-discovery-1_0
 describes everything the client will need to know to authorize with Alice's specific OP.
 
 Response Body:
+
 ```json
 {
     "issuer": "https://secureauth.example",
@@ -270,12 +271,12 @@ Now that the web app is registered, we can finally make an auth request to autho
 application.
 
 ```http
-GET https://secureauth.example/authorize?response_type=code&
-redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback&
-scope=openid%20webid%20offline_access&
-client_id=https%3A%2F%2Fdecentphotos.example%2Fclient_id&
-code_challenge_method=S256&
-code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0
+GET https://secureauth.example/authorize?response_type=code
+  &redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback
+  &scope=openid%20webid%20offline_access
+  &client_id=https%3A%2F%2Fdecentphotos.example%2Fclient_id
+  &code_challenge_method=S256
+  &code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0
 ```
 
 That URL might look a little complex, but it's essentially a request to
@@ -309,22 +310,28 @@ GET https://decentphotos.example/client_id
 ```
 
 Response:
+
 ```jsonld
 {
-  "@context": [ "https://www.w3.org/ns/solid/oidc-context.jsonld" ],
-
-  "client_id": "https://decentphtos.example/client_id",
-  "client_name": "DecentPhotos",
-  "redirect_uris": [ "https://decentphotos.example/callback" ],
-  "post_logout_redirect_uris": [ "https://decentphotos.example/logout" ],
-  "client_uri": "https://decentphotos.example/",
-  "logo_uri": "https://decentphotos.example/logo.png",
-  "tos_uri": "https://decentphotos.example/tos.html",
-  "scope": "openid webid offline_access",
-  "grant_types": [ "refresh_token", "authorization_code" ],
-  "response_types": [ "code" ],
-  "default_max_age": 3600,
-  "require_auth_time": true
+    "@context": [
+        "https://www.w3.org/ns/solid/oidc-context.jsonld"
+    ],
+    "client_id": "https://decentphtos.example/client_id",
+    "client_name": "DecentPhotos",
+    "redirect_uris": [
+        "https://decentphotos.example/callback"
+    ],
+    "post_logout_redirect_uris": [
+        "https://decentphotos.example/logout"
+    ],
+    "client_uri": "https://decentphotos.example/",
+    "logo_uri": "https://decentphotos.example/logo.png",
+    "tos_uri": "https://decentphotos.example/tos.html",
+    "scope": "openid webid offline_access",
+    "grant_types": ["refresh_token", "authorization_code"],
+    "response_types": ["code"],
+    "default_max_age": 3600,
+    "require_auth_time": true
 }
 ```
 
@@ -354,13 +361,13 @@ id, the [=code challenge=], the user's webid, their desired response types, and 
 
 ```json
 {
-  "m-OrTPHdRsm8W_e9P0J2Bt": {
-    "client_id": "https://decentphotos.example/client_id",
-    "code_challenge": "HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0",
-    "webid": "https://alice.coolpod.example/profile/card#me",
-    "response_types": [ "code" ],
-    "scope": [ "openid", "webid", "offline_access" ]
-  }
+    "m-OrTPHdRsm8W_e9P0J2Bt": {
+        "client_id": "https://decentphotos.example/client_id",
+        "code_challenge": "HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0",
+        "webid": "https://alice.coolpod.example/profile/card#me",
+        "response_types": ["code"],
+        "scope": ["openid", "webid", "offline_access"]
+    }
 }
 ```
 
@@ -402,6 +409,7 @@ like:
 From now on we will refer to this as `RP_PRIVATE_KEY`.
 
 The public key looks like:
+
 ```json
 {
     "kty": "EC",
@@ -421,11 +429,13 @@ so, we create a [JSON Web Token](https://jwt.io/introduction/) and sign it using
 generated.
 
 Our token could look like the following (you can decode the token using https://jwt.io):
+
 ```text
 eyJhbGciOiJFUzI1NiIsInR5cCI6ImRwb3Arand0IiwiandrIjp7Imt0eSI6IkVDIiwia2lkIjoiZkJ1STExTkdGbTQ4Vlp6RzNGMjVDOVJmMXYtaGdEakVnV2pEQ1BrdV9pVSIsInVzZSI6InNpZyIsImFsZyI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiOWxlT2gxeF9IWkhzVkNScDcyQzVpR01jek1nUnpDUFBjNjBoWldfSFlLMCIsInkiOiJqOVVYcnRjUzRLVzBIYmVteW1vRWlMXzZ1cko0TFFHZXJQZXVNaFNEaV80In19.eyJodHUiOiJodHRwczovL3NlY3VyZWF1dGguZXhhbXBsZS90b2tlbiIsImh0bSI6InBvc3QiLCJqdGkiOiI0YmEzZTllZi1lOThkLTQ2NDQtOTg3OC03MTYwZmE3ZDNlYjgiLCJpYXQiOjE2MDMzMDYxMjgsImV4cCI6MTYwMzMwOTcyOH0.2lbgLoRCkj0MsDc9BpquoaYuq0-XwRf_URdXru2JKrVzaWUqQfyKRK76_sQ0aJyVwavM3pPswLlHq2r9032O7Q
 ```
 
 Token Header:
+
 ```json
 {
     "alg": "ES256",
@@ -448,6 +458,7 @@ Token Header:
 - `"jwk": { "kty": "EC" ... }`: The client's public key.
 
 Token Body:
+
 ```json
 {
     "htu": "https://secureauth.example/token",
@@ -546,6 +557,7 @@ eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXh
 ```
 
 Token Header:
+
 ```json
 {
     "alg": "ES256",
@@ -553,10 +565,11 @@ Token Header:
 }
 ```
 
- - `"alg": "ES256"`: indicates the token was signed using eliptic curve
- - `"typ": "JWT"`: indicates that this is a JSON web token
+- `"alg": "ES256"`: indicates the algorithm used to sign the token
+- `"typ": "JWT"`: indicates that this is a JSON web token
 
 Token Body:
+
 ```json
 {
     "sub": "https://alice.coolpod.example/profile/card#me",
@@ -603,6 +616,7 @@ eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYi
 The example token would decrypt as:
 
 Token Header:
+
 ```json
 {
     "alg": "none"
@@ -610,6 +624,7 @@ Token Header:
 ```
 
 Token Body:
+
 ```json
 {
     "jti": "a78b49ef-71c5-4985-a50c-5ef3aef0fd8f"
@@ -640,13 +655,12 @@ Issue: encoded id_token needs to be updated
 - `"id_token": "eyJhbGciOiJFU..."`: The ID token we generated. The client will use this to
     extract information such as the user's WebId. A client will also exchange the ID token for
     an access token at an authorization server.
-- `"refresh_token":	"eyJhbGciOiJ..."`: The refresh token. The client will use this to fetch a
+- `"refresh_token": "eyJhbGciOiJ..."`: The refresh token. The client will use this to fetch a
     new ID token when the current token expires.
 
 ## Request Flow ## {#request-flow}
 
 <img src="primer-request.mmd.svg" width="980" />
-
 
 In this example, Alice has logged into `https://decentphotos.example` and has completed the
 authentication steps above. She wants to make a request to Bob's Storage to get a photo album
@@ -658,11 +672,13 @@ granted access to Alice but has not granted access to anyone else.
 Client can discover Authorization Server by making request to the resource
 
 Request:
+
 ```http
 GET https://bob.otherpod.example/private/photo_album.ttl
 ```
 
 Response:
+
 ```http
 HTTP/1.1 401 Unauthorized
 WWW-Authenticate: UMA realm="example",
@@ -675,11 +691,13 @@ WWW-Authenticate: UMA realm="example",
 Knowing Authorization Server now client can discover its Token Endpoint ([[RFC8414]])
 
 Request:
+
 ```http
 GET https://auth.otherpod.example/.well-known/uma2-configuration
 ```
 
 Response:
+
 ```json
 {
     "issuer": "https://auth.otherpod.example",
@@ -706,6 +724,7 @@ eyJhbGciOiJFUzI1NiIsInR5cCI6ImRwb3Arand0IiwiandrIjp7Imt0eSI6IkVDIiwia2lkIjoiQ21H
 ```
 
 Token Header:
+
 ```json
 {
     "alg": "ES256",
@@ -721,12 +740,14 @@ Token Header:
     }
 }
 ```
+
 - `"alg": "ES256"`: The signing algorithm used in this token. In this case, `ES256` because we
     generated the keys using eliptic curves.
 - `"typ": "dpop+jwt"`: The type of token. All DPoP Tokens should have a type of "dpop+jwt"
 - `"jwk": { "kty": "EC" ... }`: The client's public key.
 
 Token Body:
+
 ```json
 {
     "htu": "https://bob.otherpod.example/private/photo_album.ttl",
@@ -736,6 +757,7 @@ Token Body:
     "exp": 1603393216
 }
 ```
+
 - `"htu": "https://bob.otherpod.example/private/photo_album.ttl"`: htu limits the token for
     use only on the given url.
 - `"htm": "POST"`: htm limits the token for use only on a specific http method, in this case
@@ -745,10 +767,10 @@ Token Body:
 - `"iat": 1603389616`: The date the token was issued, in this case October 22, 2020 14:00:16
     GMT.
 
-
 <h4 id="request-flow-step-4" class="no-num">4. Request Access Token</h4>
 
 Request:
+
 ```http
 POST /token HTTP/1.1
 Host: auth.otherpod.example
@@ -798,11 +820,13 @@ Using the `webid` claim in the id token (for us, it's
 `https://alice.coolpod.example/profile/card#me`), the AS retreives the user's WebId document.
 
 Request
+
 ```http
 GET https://alice.coolpod.example/profile/card#me
 ```
 
 Response
+
 ```ttl
 @prefix : <#>.
 @prefix solid: <http://www.w3.org/ns/solid/terms#>.
@@ -831,11 +855,13 @@ The AS uses the `iss` claim to get the issuer's configuration. The url is the is
 `/.well-known/openid-configuration` appended to the end.
 
 Request
+
 ```http
 GET https://secureauth.example/.well-known/openid-configuration
 ```
 
 Response
+
 ```json
 {
     "issuer": "https://secureauth.example",
@@ -895,11 +921,13 @@ Using the `jwks_uri` field in the openid-configuration, the AS makes a request t
 OP's public keys.
 
 Request
+
 ```http
 GET https://secureauth.example/jwks
 ```
 
 Response (application/json)
+
 ```json
 {
     "keys": [
@@ -930,10 +958,11 @@ claim (`https://alice.coolpod.example/profile/card#me`) is the same agent on who
 request was made. Using that information, the AS performs authorization and returns access token.
 
 Response:
+
 ```json
 {
-   "access_token":"sbjsbhs(/SSJHBSUSSJHVhjsgvhsgvshgsv",
-   "token_type":"Bearer"
+    "access_token": "sbjsbhs(/SSJHBSUSSJHVhjsgvhsgvshgsv",
+    "token_type": "Bearer"
 }
 ```
 
