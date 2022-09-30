@@ -10,7 +10,7 @@ Group: Solid Community Group
 Favicon: https://solidproject.org/TR/solid.svg
 ED: https://solid.github.io/solid-oidc/
 TR: https://solidproject.org/TR/oidc
-!Created: March 28, 2022
+!Created: July 16, 2021
 !Modified: [DATE]
 !Editor's Draft: [https://solid.github.io/solid-oidc/](https://solid.github.io/solid-oidc/)
 !License: [MIT License](http://purl.org/NET/rdflicense/MIT1.0)
