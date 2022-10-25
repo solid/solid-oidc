@@ -352,8 +352,8 @@ With the `webid` scope, the DPoP-bound OIDC ID Token payload MUST contain these 
             "webid": "https://janedoe.com/web#id",
             "iss": "https://idp.example.com",
             "sub": "janedoe",
-            "aud": ["https://client.example.com/web#id", "solid"],
-            "azp": "https://client.example.com/web#id",
+            "aud": ["https://client.example.com/client_id", "solid"],
+            "azp": "https://client.example.com/client_id",
             "iat": 1311280970,
             "exp": 1311281970,
             "cnf":{

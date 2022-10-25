@@ -98,7 +98,7 @@ Several actors are at play in our example Solid-OIDC authentication flows:
   <dd>Decent Photos is a Solid compliant application and has a URI of its own,
  which resolves to a Client ID Document. An RP's Client ID Document
  contains information identifying them as a registered OAuth 2.0 client
- application. Decent Photo's URI is `https://decentphotos.example/webid#this`</dd>
+ application. Decent Photo's URI is `https://decentphotos.example/client_id`</dd>
   <dt id="bob-pod">Bob's Storage</dt>
   <dd>We will be trying to access photos stored in Bob's Storage. In our example, Bob
  is a friend of Alice and has previously indicated via access control that Alice
@@ -273,7 +273,7 @@ application.
 GET https://secureauth.example/authorize?response_type=code&
 redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback&
 scope=openid%20webid%20offline_access&
-client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this&
+client_id=https%3A%2F%2Fdecentphotos.example%client_id&
 code_challenge_method=S256&
 code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0
 ```
@@ -289,8 +289,8 @@ That URL might look a little complex, but it's essentially a request to
     - `openid` is a scope that is needed to verify Alice's identity.
     - `webid` is required by the Solid-OIDC specification to denote a WebID login.
     - `offline_access`: Is required to get a refresh token.
-- `client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this`: Usually the client id of a Solid
-    application is the app's URI (in our case `https://decentphotos.example/webid#this`) as seen here.
+- `client_id=https%3A%2F%2Fdecentphotos.example%2Fclient_id`: Usually the client id of a Solid
+    application is the app's URI (in our case `https://decentphotos.example/client_id`) as seen here.
 - `code_challenge_method=S256`: Tells the OP that our code challenge was transformed using SHA-256.
 - `code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0`: The [=code challenge=] we generated before.
 
@@ -302,7 +302,7 @@ via some UI on the OP or use [dynamic registration](https://openid.net/specs/ope
 If an app URI is provided as the client id (see note above to see other options), we must
 fetch that app URI to confirm its validity.
 
-For the URI `https://decentphotos.example/webid#this`, request the Client ID Document with:
+For the URI `https://decentphotos.example/client_id`, request the Client ID Document with:
 ```http
 GET https://decentphotos.example/webid
 ```
@@ -312,7 +312,7 @@ Response:
 {
   "@context": [ "https://www.w3.org/ns/solid/oidc-context.jsonld" ],
 
-  "client_id": "https://decentphtos.example/webid#this",
+  "client_id": "https://decentphtos.example/client_id",
   "client_name": "DecentPhotos",
   "redirect_uris": [ "https://decentphotos.example/callback" ],
   "post_logout_redirect_uris": [ "https://decentphotos.example/logout" ],
@@ -354,7 +354,7 @@ id, the [=code challenge=], the user's webid, their desired response types, and 
 ```json
 {
   "m-OrTPHdRsm8W_e9P0J2Bt": {
-    "client_id": "https://decentphotos.example/webid#this",
+    "client_id": "https://decentphotos.example/client_id",
     "code_challenge": "HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0",
     "webid": "https://alice.coolpod.example/profile/card#me",
     "response_types": [ "code" ],
@@ -479,7 +479,7 @@ Body:
   code_verifier=JXPOuToEB7&
   code=m-OrTPHdRsm8W_e9P0J2Bt&
   redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback&
-  client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this
+  client_id=https%3A%2F%2Fdecentphotos.example%2Fclient_id
 ```
 
 - `headers.DPoP: "eyJhbGciOiJFUz..."`: The DPoP token we generated before. This will tell the
@@ -494,7 +494,7 @@ Body:
 - `body.code=m-OrTPHdRsm8W_e9P0J2Bt`: The [=authorization code=] that we received from the OP upon redirect
 - `body.redirect_uri`: The app's redirect url. In this case, this isn't needed because we're
     doing an AJAX request.
-- `body.client_id=https%3A%2F%2Fdecentphotos.example%2Fwebid%23this`: The app's client id.
+- `body.client_id=https%3A%2F%2Fdecentphotos.example%client_id`: The app's client id.
 
 Once this request is completed decentphotos can remove the code verifier from session storage.
 
@@ -559,8 +559,8 @@ Token Body:
 ```json
 {
     "sub": "https://alice.coolpod.example/profile/card#me",
-    "aud": [ "solid", "https://decentphotos.example/webid#this"],
-    "azp": "https://decentphotos.example/webid#this"
+    "aud": [ "solid", "https://decentphotos.example/client_id"],
+    "azp": "https://decentphotos.example/client_id"
     "webid": "https://alice.coolpod.example/profile/card#me",
     "iss": "https://secureauth.example",
     "jti": "844a095c-9cdb-47e5-9510-1dba987c0a5f",
@@ -574,10 +574,10 @@ Token Body:
 
 - `"sub": "https://alice.coolpod.example/profile/card#me"`: The subject claim. It must
     be the same as the authenticated user's WebID.
-- `"aud": "https://decentphotos.example/webid#this"`: The token's audience. Because an
+- `"aud": "https://decentphotos.example/client_id"`: The token's audience. Because an
     id token is intended for the client and any Solid Authorization Server,
     its audience is the client id and the string "solid".
-- `"azp": "https://decentphotos.example/webid#this"`: The token's authorized party. Because an
+- `"azp": "https://decentphotos.example/client_id"`: The token's authorized party. Because an
     id_token is intended to be used by the client, its authorized party is the client id.
 - `"webid": "https://alice.coolpod.example/profile/card#me"`: The WebID of the user that
     logged in
