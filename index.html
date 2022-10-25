@@ -6,10 +6,10 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version 44af0bf3e, updated Fri Jul 29 17:05:16 2022 -0700" name="generator">
+  <meta content="Bikeshed version afdea9b3f, updated Fri Oct 21 14:30:36 2022 -0700" name="generator">
   <link href="https://solidproject.org/TR/oidc" rel="canonical">
   <link href="https://solidproject.org/TR/solid.svg" rel="icon">
-  <meta content="66a3e42f503bbabdb9ef419593ed91b2f367e62a" name="document-revision">
+  <meta content="8f8db1392f47d543c9a8df4ffa2c49e1cfc3c622" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -296,6 +296,14 @@ a.self-link:hover {
 .heading > a.self-link {
     font-size: 83%;
 }
+.example > a.self-link,
+.note > a.self-link,
+.issue > a.self-link {
+    /* These blocks are overflow:auto, so positioning outside
+       doesn't work. */
+    left: auto;
+    right: 0;
+}
 li > a.self-link {
     left: calc(-1 * (3.5rem - 26px) - 2em);
 }
@@ -384,7 +392,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solid.github.io/solid-oidc/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-09-30">30 September 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-10-25">25 October 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -398,7 +406,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>July 16, 2021
       <dt>Modified:
-      <dd>30 September 2022
+      <dd>25 October 2022
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -721,15 +729,15 @@ OIDC ID Token becomes invalid.</p>
      <p><code>cnf</code> — The confirmation claim is used to identify the DPoP Public
 Key bound to the OIDC ID Token. See also: <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop#section-7">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) § section-7</a>.</p>
    </ul>
-   <div class="example" id="example-0f51afca">
-    <a class="self-link" href="#example-0f51afca"></a> 
+   <div class="example" id="example-75ae5fb3">
+    <a class="self-link" href="#example-75ae5fb3"></a> 
     <p>An example OIDC ID Token: </p>
 <pre class="highlight"><c- p>{</c->
     <c- f>"webid"</c-><c- p>:</c-> <c- u>"https://janedoe.com/web#id"</c-><c- p>,</c->
     <c- f>"iss"</c-><c- p>:</c-> <c- u>"https://idp.example.com"</c-><c- p>,</c->
     <c- f>"sub"</c-><c- p>:</c-> <c- u>"janedoe"</c-><c- p>,</c->
-    <c- f>"aud"</c-><c- p>:</c-> <c- p>[</c-><c- u>"https://client.example.com/web#id"</c-><c- p>,</c-> <c- u>"solid"</c-><c- p>],</c->
-    <c- f>"azp"</c-><c- p>:</c-> <c- u>"https://client.example.com/web#id"</c-><c- p>,</c->
+    <c- f>"aud"</c-><c- p>:</c-> <c- p>[</c-><c- u>"https://client.example.com/client_id"</c-><c- p>,</c-> <c- u>"solid"</c-><c- p>],</c->
+    <c- f>"azp"</c-><c- p>:</c-> <c- u>"https://client.example.com/client_id"</c-><c- p>,</c->
     <c- f>"iat"</c-><c- p>:</c-> <c- mi>1311280970</c-><c- p>,</c->
     <c- f>"exp"</c-><c- p>:</c-> <c- mi>1311281970</c-><c- p>,</c->
     <c- f>"cnf"</c-><c- p>:{</c->
