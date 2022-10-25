@@ -349,7 +349,7 @@ With the `webid` scope, the DPoP-bound OIDC ID Token payload MUST contain these 
 
     <pre highlight="json">
         {
-            "webid": "https://janedoe.com/client_id",
+            "webid": "https://janedoe.com/web#id",
             "iss": "https://idp.example.com",
             "sub": "janedoe",
             "aud": ["https://client.example.com/client_id", "solid"],
