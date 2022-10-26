@@ -52,7 +52,7 @@ Bob's Solid Storage (resource servers).
   <dt id="resource-server">Resource Server (RS)</dt>
   <dd>A server hosting resources, capable of accepting and responding to protected resource requests using access tokens. RS is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[RFC6749]]</dd>
   <dt id="solid-data-pod">Solid Storage</dt>
-  <dd>A Solid compliant Resource Server as [defined in the Solid Protocol](https://solidproject.org/TR/protocol#data-pod). [[SOLID-PROTOCOL]]</dd>
+  <dd>A storage on a Solid compliant Resource Server as [defined by the Solid Protocol](https://solidproject.org/TR/protocol#storage). [[SOLID-PROTOCOL]]</dd>
   <dt id="solid-oidc">Solid OpenID Connect (Solid OIDC)</dt>
   <dd>The specification defining authentication in the Solid ecosystem. [[SOLID-OIDC]]</dd>
   <dt id="webid">WebID</dt>
