@@ -51,7 +51,7 @@ Bob's Solid Storage (resource servers).
   <dd>An entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end-user. Resource Owner is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[RFC6749]]</dd>
   <dt id="resource-server">Resource Server (RS)</dt>
   <dd>A server hosting resources, capable of accepting and responding to protected resource requests using access tokens. RS is one of the four roles [defined in the OAuth 2.0 specification](https://tools.ietf.org/html/rfc6749#section-1.1). [[RFC6749]]</dd>
-  <dt id="solid-data-pod">Solid Storage</dt>
+  <dt id="solid-storage">Solid Storage</dt>
   <dd>A storage on a Solid compliant Resource Server as [defined by the Solid Protocol](https://solidproject.org/TR/protocol#storage). [[SOLID-PROTOCOL]]</dd>
   <dt id="solid-oidc">Solid OpenID Connect (Solid OIDC)</dt>
   <dd>The specification defining authentication in the Solid ecosystem. [[SOLID-OIDC]]</dd>
