@@ -348,7 +348,7 @@ of the hands of the RP and is in complete control of the OP.
 <h4 id="authorization-code-pkce-flow-step-10" class="no-num">10. Generate an authorization code</h4>
 
 Generate a cryptographically random string that will be used as a [=authorization code=] (Let's say ours is
-`m-OrTPHdRsm8W_e9P0J2Bt`). Store that string in a persistant keystore as the key for the client
+`m-OrTPHdRsm8W_e9P0J2Bt`). Store that string in a persistent keystore as the key for the client
 id, the [=code challenge=], the user's webid, their desired response types, and their scopes:
 
 ```json
@@ -615,7 +615,7 @@ Token Body:
 }
 ```
 
-Save the refresh token to a persistant store.
+Save the refresh token to a persistent store.
 
 <h4 id="authorization-code-pkce-flow-step-21" class="no-num">21. Sends tokens</h4>
 
