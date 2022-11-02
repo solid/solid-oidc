@@ -9,7 +9,7 @@
   <meta content="Bikeshed version 63e66730b, updated Tue Oct 25 12:35:05 2022 -0700" name="generator">
   <link href="https://solidproject.org/TR/oidc-primer" rel="canonical">
   <link href="https://solidproject.org/TR/solid.svg" rel="icon">
-  <meta content="c5123dbce4450216f410c5f7db689ac15939e2dc" name="document-revision">
+  <meta content="40bfd7d8bf4a581521f92d5ed5961410c6bd0e91" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -394,7 +394,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solidproject.org/TR/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-10-27">27 October 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-11-02">2 November 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -406,7 +406,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>March 28, 2022
       <dt>Modified:
-      <dd>27 October 2022
+      <dd>2 November 2022
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -724,7 +724,7 @@ to the OP. A user can log in with her password, a TLS certificate, or any other 
 of authentication. The important thing is that, thanks to the redirect, the control is now out
 of the hands of the RP and is in complete control of the OP.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-10"><span class="content">10. Generate an authorization code</span><a class="self-link" href="#authorization-code-pkce-flow-step-10"></a></h4>
-   <p>Generate a cryptographically random string that will be used as a <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code">authorization code</a> (Let’s say ours is <code>m-OrTPHdRsm8W_e9P0J2Bt</code>). Store that string in a persistant keystore as the key for the client
+   <p>Generate a cryptographically random string that will be used as a <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code">authorization code</a> (Let’s say ours is <code>m-OrTPHdRsm8W_e9P0J2Bt</code>). Store that string in a persistent keystore as the key for the client
 id, the <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challenge②">code challenge</a>, the user’s webid, their desired response types, and their scopes:</p>
 <pre class="language-json highlight"><c- p>{</c->
   <c- f>"m-OrTPHdRsm8W_e9P0J2Bt"</c-><c- p>:</c-> <c- p>{</c->
@@ -955,7 +955,7 @@ token does not need to be a JWT.</p>
     <c- f>"jti"</c-><c- p>:</c-> <c- u>"a78b49ef-71c5-4985-a50c-5ef3aef0fd8f"</c->
 <c- p>}</c->
 </pre>
-   <p>Save the refresh token to a persistant store.</p>
+   <p>Save the refresh token to a persistent store.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-21"><span class="content">21. Sends tokens</span><a class="self-link" href="#authorization-code-pkce-flow-step-21"></a></h4>
    <p>Once the OP has confirmed that everything checks out and all the tokens are generated, it sends
 a response with the tokens in the body:</p>
