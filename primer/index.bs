@@ -98,7 +98,7 @@ Several actors are at play in our example Solid-OIDC authentication flows:
   <dd>Decent Photos is a Solid compliant application and has a URI of its own,
  which resolves to a Client ID Document. An RP's Client ID Document
  contains information identifying them as a registered OAuth 2.0 client
- application. Decent Photo's URI is `https://decentphotos.example/client_id`</dd>
+ application. Decent Photo's URI is `https://decentphotos.example`</dd>
   <dt id="bob-pod">Bob's Storage</dt>
   <dd>We will be trying to access photos stored in Bob's Storage. In our example, Bob
  is a friend of Alice and has previously indicated via access control that Alice
@@ -235,6 +235,8 @@ Response Body:
 }
 ```
 
+Issue: OIDC Federation defines `client_registration_types_supported`, should it be addedhere, to `.well-known/oidc-federation` or both?
+
 The thing we care about here is the `authorization_endpoint` field. This will
 be the url we use when we're ready to send an authorization request to the OP.
 
@@ -269,11 +271,13 @@ challenge anywhere.
 Now that the web app is registered, we can finally make an auth request to authorize the web
 application.
 
+Issue: Change to match [OIDC Federation - Authentication Request](https://openid.net/specs/openid-connect-federation-1_0.html#name-authentication-request)
+
 ```http
 GET https://secureauth.example/authorize?response_type=code&
 redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback&
 scope=openid%20webid%20offline_access&
-client_id=https%3A%2F%2Fdecentphotos.example%client_id&
+client_id=https%3A%2F%2Fdecentphotos.example&
 code_challenge_method=S256&
 code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0
 ```
@@ -289,53 +293,84 @@ That URL might look a little complex, but it's essentially a request to
     - `openid` is a scope that is needed to verify Alice's identity.
     - `webid` is required by the Solid-OIDC specification to denote a WebID login.
     - `offline_access`: Is required to get a refresh token.
-- `client_id=https%3A%2F%2Fdecentphotos.example%2Fclient_id`: Usually the client id of a Solid
-    application is the app's URI (in our case `https://decentphotos.example/client_id`) as seen here.
+- `client_id=https%3A%2F%2Fdecentphotos.example`: Usually the client id of a Solid
+    application is the app's URI (in our case `https://decentphotos.example`) as seen here.
 - `code_challenge_method=S256`: Tells the OP that our code challenge was transformed using SHA-256.
 - `code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0`: The [=code challenge=] we generated before.
 
 Note: If the app doesn't have a URI, you can either register an app using static registration
 via some UI on the OP or use [dynamic registration](https://openid.net/specs/openid-connect-registration-1_0.html).
 
-<h4 id="authorization-code-pkce-flow-step-7" class="no-num">7. Fetch RP Client ID Document</h4>
+<h4 id="authorization-code-pkce-flow-step-7" class="no-num">7. Fetch RP Metadata</h4>
 
 If an app URI is provided as the client id (see note above to see other options), we must
-fetch that app URI to confirm its validity.
+[Obtaining Federation Entity Configuration Information](https://openid.net/specs/openid-connect-federation-1_0.html#name-obtaining-federation-entity)
 
-For the URI `https://decentphotos.example/client_id`, request the Client ID Document with:
+For the URI `https://decentphotos.example`, request the Entity Statement from:
 ```http
-GET https://decentphotos.example/webid
+GET https://decentphotos.example/.well-known/openid-federation
 ```
 
 Response:
-```jsonld
-{
-  "@context": [ "https://www.w3.org/ns/solid/oidc-context.jsonld" ],
 
-  "client_id": "https://decentphtos.example/client_id",
-  "client_name": "DecentPhotos",
-  "redirect_uris": [ "https://decentphotos.example/callback" ],
-  "post_logout_redirect_uris": [ "https://decentphotos.example/logout" ],
-  "client_uri": "https://decentphotos.example/",
-  "logo_uri": "https://decentphotos.example/logo.png",
-  "tos_uri": "https://decentphotos.example/tos.html",
-  "scope": "openid webid offline_access",
-  "grant_types": [ "refresh_token", "authorization_code" ],
-  "response_types": [ "code" ],
-  "default_max_age": 3600,
-  "require_auth_time": true
-}
+```json
+{
+      "iss": "https://decentphotos.example",
+      "sub": "https://decentphotos.example",
+      "iat": 1516239022,
+      "exp": 1516298022,
+      "metadata": {
+        "openid_relying_party": {
+          "application_type": "web",
+          "redirect_uris": [
+            "https://decentphotos.example/callback"
+          ],
+          "organization_name": "DecentOrg",
+          "client_id": "https://decentphotos.example",
+          "client_name": "DecentPhotos",
+          "client_uri": "https://decentphotos.example",
+          "logo_uri": "https://decentphotos.example/logo.png",
+          "tos_uri": "https://decentphotos.example/tos.html",
+          "scope": "openid webid offline_access",
+          "grant_types": [
+            "authorization_code",
+            "refresh_token"
+          ],
+          "response_types": [ "code" ],
+          "default_max_age": 3600,
+          "require_auth_time": true
+          "signed_jwks_uri": "https://openid.sunet.se/rp/jwks.jose",
+          "jwks_uri":"https://openid.sunet.se/rp/signed_jwks.json"
+        }
+      },
+      "jwks": {
+        "keys": [
+          {
+            "alg": "RS256",
+            "e": "AQAB",
+            "key_ops": [
+              "verify"
+            ],
+            "kid": "key1",
+            "kty": "RSA",
+            "n": "pnXBOusEANuug6ewezb9J_...",
+            "use": "sig"
+          }
+        ]
+      },
+      "authority_hints": [
+        "https://decent.example/federation"
+      ]
+    }
 ```
 
-Notice that the application Client ID Document contains a JSON-LD representation of an
-[OIDC Client Registration](https://tools.ietf.org/html/rfc7591#section-2).
-It also must use the specific <code>"@context": ["https://www.w3.org/ns/solid/oidc-context.jsonld"]</code>.
+Issue: Details from [OIDC Federation - Processing the Authentication Request](https://openid.net/specs/openid-connect-federation-1_0.html#name-processing-the-authenticati)
 
-<h4 id="authorization-code-pkce-flow-step-8" class="no-num">8. Validate redirect url with Client ID Document</h4>
+<h4 id="authorization-code-pkce-flow-step-8" class="no-num">8. Validate redirect url with RP Metadata</h4>
 
 Check to be sure that the `redirect_uri` value provided in the auth request
 (`https://decentphotos.example/callback`) is listed in the `redirect_uris` array in the
-Client ID Document. If it is not, the OP must reject the request. In our case, the
+RP Metadata. If it is not, the OP must reject the request. In our case, the
 `redirect_uri` is valid, so we may continue.
 
 <h4 id="authorization-code-pkce-flow-step-9" class="no-num">9. Alice Logs In</h4>
@@ -354,7 +389,7 @@ id, the [=code challenge=], the user's webid, their desired response types, and 
 ```json
 {
   "m-OrTPHdRsm8W_e9P0J2Bt": {
-    "client_id": "https://decentphotos.example/client_id",
+    "client_id": "https://decentphotos.example",
     "code_challenge": "HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0",
     "webid": "https://alice.coolpod.example/profile/card#me",
     "response_types": [ "code" ],
@@ -479,7 +514,7 @@ Body:
   code_verifier=JXPOuToEB7&
   code=m-OrTPHdRsm8W_e9P0J2Bt&
   redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback&
-  client_id=https%3A%2F%2Fdecentphotos.example%2Fclient_id
+  client_id=https%3A%2F%2Fdecentphotos.example
 ```
 
 - `headers.DPoP: "eyJhbGciOiJFUz..."`: The DPoP token we generated before. This will tell the
@@ -494,7 +529,7 @@ Body:
 - `body.code=m-OrTPHdRsm8W_e9P0J2Bt`: The [=authorization code=] that we received from the OP upon redirect
 - `body.redirect_uri`: The app's redirect url. In this case, this isn't needed because we're
     doing an AJAX request.
-- `body.client_id=https%3A%2F%2Fdecentphotos.example%client_id`: The app's client id.
+- `body.client_id=https%3A%2F%2Fdecentphotos.example`: The app's client id.
 
 Once this request is completed decentphotos can remove the code verifier from session storage.
 
@@ -559,8 +594,8 @@ Token Body:
 ```json
 {
     "sub": "https://alice.coolpod.example/profile/card#me",
-    "aud": [ "solid", "https://decentphotos.example/client_id"],
-    "azp": "https://decentphotos.example/client_id"
+    "aud": [ "solid", "https://decentphotos.example"],
+    "azp": "https://decentphotos.example"
     "webid": "https://alice.coolpod.example/profile/card#me",
     "iss": "https://secureauth.example",
     "jti": "844a095c-9cdb-47e5-9510-1dba987c0a5f",
@@ -574,10 +609,10 @@ Token Body:
 
 - `"sub": "https://alice.coolpod.example/profile/card#me"`: The subject claim. It must
     be the same as the authenticated user's WebID.
-- `"aud": "https://decentphotos.example/client_id"`: The token's audience. Because an
+- `"aud": "https://decentphotos.example"`: The token's audience. Because an
     id token is intended for the client and any Solid Authorization Server,
     its audience is the client id and the string "solid".
-- `"azp": "https://decentphotos.example/client_id"`: The token's authorized party. Because an
+- `"azp": "https://decentphotos.example"`: The token's authorized party. Because an
     id_token is intended to be used by the client, its authorized party is the client id.
 - `"webid": "https://alice.coolpod.example/profile/card#me"`: The WebID of the user that
     logged in
