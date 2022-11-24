@@ -251,7 +251,7 @@ To follow the [PKCE code flow](https://oauth.net/2/pkce/) we need to generate a
 [=code verifier=] and [=code challenge=] as instructed in the [Proof Key for Code
 Exchange spec](https://tools.ietf.org/html/rfc7636#section-4.1).
 
-We start by generating a code verifier. The can be done by creating a
+We start by generating a code verifier. This can be done by creating a
 cryptographically random string. Let's say ours looks like this: `"JXPOuToEB7"`.
 
 Now using the code verifier, we construct a code challenge. This can be made by transforming
@@ -668,7 +668,7 @@ WWW-Authenticate: UMA realm="example",
 
 <h4 id="request-flow-step-2" class="no-num">2. Request AS configuration</h4>
 
-Knowing Authorization Server now client can discover its Token Endpoint ([[RFC8414]])
+Knowing the Authorization Server, now the client can discover its Token Endpoint ([[RFC8414]])
 
 Request:
 ```http
@@ -931,8 +931,8 @@ Response:
 
 <h4 id="request-flow-step-14" class="no-num">14. Sends request with Access Token</h4>
 
-Note: In practice client would need to upgrade RPT by pushing
-authorization related claim. This primer only focuses on authentication so we omit
+Note: In practice, the client would need to upgrade RPT by pushing
+the authorization related claim. This primer only focuses on authentication so we omit
 this detail here.
 
 With the access token, we're ready to make our request.
