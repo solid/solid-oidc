@@ -9,7 +9,7 @@
   <meta content="Bikeshed version 63e66730b, updated Tue Oct 25 12:35:05 2022 -0700" name="generator">
   <link href="https://solidproject.org/TR/oidc-primer" rel="canonical">
   <link href="https://solidproject.org/TR/solid.svg" rel="icon">
-  <meta content="40bfd7d8bf4a581521f92d5ed5961410c6bd0e91" name="document-revision">
+  <meta content="bc4f9aa01403acadc54811b4acfb193453cf7165" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -394,7 +394,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solidproject.org/TR/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-11-02">2 November 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-12-05">5 December 2022</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -406,7 +406,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>March 28, 2022
       <dt>Modified:
-      <dd>2 November 2022
+      <dd>5 December 2022
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -642,7 +642,7 @@ don’t recommend enabling them. For the same reason, we do not support the <cod
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-4"><span class="content">4. Generates PKCE code verifier and code challenge</span><a class="self-link" href="#authorization-code-pkce-flow-step-4"></a></h4>
    <p>To follow the <a href="https://oauth.net/2/pkce/">PKCE code flow</a> we need to generate a <a data-link-type="dfn" href="#code-verifier" id="ref-for-code-verifier">code verifier</a> and <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challenge">code challenge</a> as instructed in the <a href="https://tools.ietf.org/html/rfc7636#section-4.1">Proof Key for Code
 Exchange spec</a>.</p>
-   <p>We start by generating a code verifier. The can be done by creating a
+   <p>We start by generating a code verifier. This can be done by creating a
 cryptographically random string. Let’s say ours looks like this: <code>"JXPOuToEB7"</code>.</p>
    <p>Now using the code verifier, we construct a code challenge. This can be made by transforming
 the code verifier with Sha 256: <code>BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))</code>. Here’s our
@@ -996,7 +996,7 @@ granted access to Alice but has not granted access to anyone else.</p>
   <c- l>ticket="016f84e8-f9b9-11e0-bd6f-0021cc6004de"</c->
 </pre>
    <h4 class="no-num heading settled" id="request-flow-step-2"><span class="content">2. Request AS configuration</span><a class="self-link" href="#request-flow-step-2"></a></h4>
-   <p>Knowing Authorization Server now client can discover its Token Endpoint (<a data-link-type="biblio" href="#biblio-rfc8414">[RFC8414]</a>)</p>
+   <p>Knowing the Authorization Server, now the client can discover its Token Endpoint (<a data-link-type="biblio" href="#biblio-rfc8414">[RFC8414]</a>)</p>
    <p>Request:</p>
 <pre class="language-http highlight">GET https://auth.otherpod.example/.well-known/uma2-configuration
 </pre>
@@ -1208,8 +1208,8 @@ request was made. Using that information, the AS performs authorization and retu
 <c- p>}</c->
 </pre>
    <h4 class="no-num heading settled" id="request-flow-step-14"><span class="content">14. Sends request with Access Token</span><a class="self-link" href="#request-flow-step-14"></a></h4>
-   <p class="note" role="note"><span>Note:</span> In practice client would need to upgrade RPT by pushing
-authorization related claim. This primer only focuses on authentication so we omit
+   <p class="note" role="note"><span>Note:</span> In practice, the client would need to upgrade RPT by pushing
+the authorization related claim. This primer only focuses on authentication so we omit
 this detail here.</p>
    <p>With the access token, we’re ready to make our request.</p>
 <pre class="language-http highlight">GET https://bob.otherpod.example/private/photo_album.ttl
