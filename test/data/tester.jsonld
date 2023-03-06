@@ -1,0 +1,12 @@
+{
+  "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
+
+  "client_id": "https://solid.github.io/solid-oidc/test/data/tester.jsonld",
+  "redirect_uris": ["https://solid.github.io/solid-oidc/test/callback.html"],
+  "client_name": "Solid-OIDC Tester",
+  "logo_uri": "https://solid.github.io/solid-oidc/test/img/solid.svg",
+  "contacts": ["https://id.inrupt.com/acoburn"],
+  "client_uri": "https://solid.github.io/solid-oidc/test/",
+  "grant_types": ["authorization_code"],
+  "response_types": ["code"]
+}

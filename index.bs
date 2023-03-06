@@ -23,7 +23,7 @@ Editor: [elf Pavlik](https://elf-pavlik.hackers4peace.net/)
 Editor: [Dmitri Zagidulin](http://computingjoy.com/)
 Former Editor: [Adam Migus](https://migusgroup.com/about/) ([The Migus Group](https://migusgroup.com/))
 Former Editor: [Ricky White](https://endlesstrax.com) ([The Migus Group](https://migusgroup.com/))
-Test Suite: https://solid.github.io/solid-oidc-tests/
+Test Suite: https://solid.github.io/solid-oidc/test/
 Metadata Order: This version, Latest published version, Editor's Draft, Test Suite, Created, Modified, *, !*
 Metadata Include: Editor's Draft off
 Abstract:

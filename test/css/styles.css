@@ -1,0 +1,123 @@
+body {
+    font-family: Raleway, sans-serif;
+    margin: 0;
+    background-color: #ddd;
+    width: 100%; }
+
+header {
+    width: 100%;
+    height: 60px;
+    background-color: #fcfeff;
+    display: grid;
+    border-bottom: 1px solid #000; }
+header img {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 8px 20px;
+    max-width: 50px; }
+header h1 {
+    grid-column: 3;
+    grid-row: 1;
+    font-size: 1.4em;
+    font-weight: 500;
+    text-align: right;
+    padding-right: 20px;
+    color: #666666; }
+
+section {
+    padding: 10px; }
+section div {
+    margin: 30px 0;
+    text-align: center; }
+
+h2 {
+    text-align: center; }
+
+table {
+    border-collapse: collapse; }
+table a {
+    padding-left: 7px; }
+
+tr {
+    border-bottom: 1px solid black; }
+tr:last-child {
+    border: none; }
+
+td {
+    padding: 5px 10px; }
+th {
+    font-weight: 900;
+    padding: 5px 10px; }
+
+#report .active {
+    width: 90%;
+    margin: 0 auto;
+    padding: 5px 0;
+    background-color: #fcfeff;
+    border-radius: 10px;
+    border: 1px solid #7c4dff;
+}
+#report .active .issuer {
+    text-decoration: solid underline #7c4dff 3px; }
+
+#informational {
+    display: grid;
+    font-size: 20px;
+    line-height: 1.5em;
+    grid-template-columns: auto 500px auto; }
+#informational div {
+    grid-column: 2; }
+#informational form {
+    background-color: #fcfeff;
+    padding: 20px;
+    /*align-items: center;*/
+    border: 1px solid #7c4dff;
+    border-radius: 15px; }
+#informational button {
+    border: none;
+    padding: 0.875em 1.5em;
+    font-size: 1em;
+    height: 52px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #7c4dff; }
+
+.label {
+    font-weight: 900; }
+
+.detail {
+    text-align: left;
+    line-height: 1.2em; }
+
+.status {
+    text-align: right;
+    font-weight: 900; }
+
+.level {
+    text-align: right;
+    font-weight: 900; }
+
+.pass::before {
+    color: green;
+    margin-right: 6px;
+    content: "\2714 "; }
+.pass::after {
+    color: green;
+    content: "passed"; }
+
+.skip::before {
+    color: grey;
+    margin-right: 6px;
+    content: "X"; }
+.skip::after {
+    color: grey;
+    content: "skipped"; }
+
+.fail::before {
+    color: red;
+    margin-right: 6px;
+    content: "X"; }
+.fail::after {
+    color: red;
+    content: "failed" }

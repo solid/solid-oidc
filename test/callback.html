@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Solid OpenID Connect Conformance Test</title>
+    <link rel="shortcut icon" type="image/svg" href="img/solid.svg"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <script type="module" src="js/callback.js"></script>
+  </head>
+  <body>
+    <header>
+      <a href="https://solidproject.org"><img src="img/solid.svg" title="Solid Project" alt="Solid Project"></a>
+      <h1>Solid-OIDC Conformance Test</h1>
+    </header>
+
+    <section id="informational">
+      <div>
+        <form id="solid-oidc">
+          <h2>Solid-OIDC Provider Selection</h2>
+          <p>Please enter the issuer URL for the Solid-OIDC provider you wish to test.</p>
+          <p>
+            <label for="issuer">Solid-OIDC Issuer:</label>
+            <input id="issuer" type="url" placeholder="OpenID Issuer" required autofocus>
+          </p>
+          <p>
+            <button>Perform Tests</button>
+          </p>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
+

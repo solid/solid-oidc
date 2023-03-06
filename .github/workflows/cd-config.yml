@@ -38,6 +38,7 @@ jobs:
           for file in index.html *.svg; do cp $file ./publish/; done
           cp -R ./primer publish/
           for file in ./publish/primer/*.{mmd,bs}; do rm $file; done
+          cp -R ./test publish/
 
       - name: Publish to GitHub pages
         uses: peaceiris/actions-gh-pages@v3

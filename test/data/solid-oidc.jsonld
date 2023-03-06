@@ -1,0 +1,202 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@protected": true,
+    "spec": "http://www.w3.org/ns/spec#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "oidc": "http://www.w3.org/ns/solid/oidc#",
+
+    "label": {
+        "@id": "rdfs:label" },
+
+    "OpenIDProvider": "oidc:OpenIDProvider",
+
+    "MAY": "spec:MAY",
+    "MUST": "spec:MUST",
+    "SHOULD": "spec:SHOULD",
+    "RECOMMENDED": "spec:RECOMMENDED",
+
+    "statement": {
+      "@id": "spec:statement",
+      "@type": "@id" },
+
+    "requirementSubject": {
+        "@id": "spec:requirementSubject",
+        "@type": "@id" },
+
+    "requirementLevel": {
+        "@id": "spec:requirementLevel",
+        "@type": "@id" },
+
+    "requirementReference": {
+        "@id": "spec:requirementReference",
+        "@type": "@id" } },
+
+  "TokenType": {
+    "label": "Token type value",
+    "statement": "A token_type of DPoP MUST be included in the access token response to signal to the client that the access token was bound to its DPoP key.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop#section-5"},
+
+  "IdTokenIssuerClaim": {
+    "label": "ID Token issuer claim",
+    "statement": "REQUIRED. Issuer Identifier for the Issuer of the response. The iss value is a case sensitive URL using the https scheme that contains scheme, host, and optionally, port number and path components and no query or fragment components.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-core-1_0.html#IDToken"},
+
+  "IdTokenValidation": {
+    "label": "ID Token validation",
+    "statement": "ID Tokens MUST be signed using JWS, thereby providing authentication, integrity, and non-repudiation",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-core-1_0.html#IDToken"},
+
+  "IdTokenAudienceClaim": {
+    "label": "ID Token audience claim",
+    "statement": "REQUIRED. Audience(s) that this ID Token is intended for. It MUST contain the OAuth 2.0 client_id of the Relying Party as an audience value.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-core-1_0.html#IDToken"},
+
+  "IdTokenAudienceClaimSolid": {
+    "label": "ID Token audience claim",
+    "statement": "REQUIRED. Audience(s) that this ID Token is intended for. It MUST contain the string 'solid' as an audience value.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://solid.github.io/solid-oidc/#tokens-id"},
+
+  "IdTokenAuthorizedPartyClaim": {
+    "label": "ID Token authorized party claim",
+    "statement": "REQUIRED. Authorized party this ID Token is intended for. It MUST equal the client_id of the Relying Party.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://solid.github.io/solid-oidc/#tokens-id"},
+
+  "WebidHeaderDiscovery": {
+    "label": "WebID discovery headers",
+    "statement": "A server hosting a WebID document MAY transmit the http://www.w3.org/ns/solid/terms#oidcIssuer values via Link Headers",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MAY",
+    "requirementReference": "https://solid.github.io/solid-oidc/#webid-issuer-discovery"},
+
+  "IdTokenWebidClaim": {
+    "label": "ID Token webid claim",
+    "statement": "When requesting the webid scope, the user’s WebID MUST be present in the ID Token as the webid claim.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://solid.github.io/solid-oidc/#tokens-id"},
+
+  "IdTokenIatClaim": {
+    "label": "ID Token issued at claim",
+    "statement": "REQUIRED. Time at which the JWT was issued. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-core-1_0.html#IDToken"},
+
+  "IdTokenExpClaim": {
+    "label": "ID Token expriation claim",
+    "statement": "REQUIRED. Expiration time on or after which the ID Token MUST NOT be accepted for processing.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-core-1_0.html#IDToken"},
+
+  "MetadataIssuer": {
+    "label": "Issuer claim match",
+    "statement": "REQUIRED. URL using the https scheme with no query or fragment component that the OP asserts as its Issuer Identifier. This also MUST be identical to the iss Claim value in ID Tokens issued from this Issuer.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata" },
+
+  "MetadataWebidClaim": {
+    "label": "webid claim support",
+    "statement": "RECOMMENDED. JSON array containing a list of the Claim Names of the Claims that the OpenID Provider MAY be able to supply values for. Note that for privacy or other reasons, this might not be an exhaustive list.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "RECOMMENDED",
+    "requirementReference": "https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata" },
+
+  "MetadataProofKeyCodeExchange": {
+    "label": "PKCE S256 support",
+    "statement": "This specification assumes the use of the Authorization Code Flow with PKCE, in accordance with OAuth and OIDC best practices.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://solid.github.io/solid-oidc/#concepts" },
+
+  "MetadataAuthorizationCodeGrant": {
+    "label": "authorization_code flow support",
+    "statement": "This specification assumes the use of the Authorization Code Flow with PKCE, in accordance with OAuth and OIDC best practices.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://solid.github.io/solid-oidc/#concepts" },
+
+  "MetadataWebidScope": {
+    "label": "webid scope support",
+    "statement": "An Identity Provider that conforms to the Solid-OIDC specification MUST advertise this in the OpenID Connect Discovery 1.0 resource. An Identity Provider would indicate this support by including webid in the scopes_supported metadata property.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://solid.github.io/solid-oidc/#discovery"},
+
+  "MetadataDpopAlgorithm": {
+    "label": "DPoP algorithm support",
+    "statement": "A JSON array containing a list of the JWS alg values supported by the authorization server for DPoP proof JWTs.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "RECOMMENDED",
+    "requirementReference": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-dpop#section-5.1" },
+
+  "MetadataSigningAlgorithm": {
+    "label": "ID token signing support",
+    "statement": "REQUIRED. JSON array containing a list of the JWS signing algorithms supported by the OP for the ID Token to encode the Claims in a JWT. The algorithm RS256 MUST be included.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata"},
+
+  "MetadataDynamicRegistration": {
+    "label": "Dynamic client registration support",
+    "statement": "URL of the OP's Dynamic Client Registration Endpoint",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MAY",
+    "requirementReference": "https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata" },
+
+  "MetadataLogout": {
+    "label": "Relying party logout support",
+    "statement": "If supported, the URL at the OP to which an RP can perform a redirect to request that the End-User be logged out at the OP. This URL MUST use the https scheme and MAY contain port, path, and query parameter components.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MAY",
+    "requirementReference": "https://openid.net/specs/openid-connect-rpinitiated-1_0.html#OPMetadata" },
+
+  "MetadataTokenEndpoint": {
+    "label": "Token endpoint discovery",
+    "statement": "REQUIRED URL of the OP's OAuth 2.0 Token Endpoint.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-rpinitiated-1_0.html#OPMetadata" },
+
+  "MetadataAuthorizationEndpoint": {
+    "label": "Authorization endpoint discovery",
+    "statement": "REQUIRED. URL of the OP's OAuth 2.0 Authorization Endpoint.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-rpinitiated-1_0.html#OPMetadata" },
+
+  "MetadataJwksEndpoint": {
+    "label": "JSON Web Key Set endpoint discovery",
+    "statement": "REQUIRED. URL of the OP's JSON Web Key Set document.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-rpinitiated-1_0.html#OPMetadata" },
+
+  "MetadataSubjectTypesSupported": {
+    "label": "Subject types supported",
+    "statement": "REQUIRED. JSON array containing a list of the Subject Identifier types that this OP supports. Valid types include pairwise and public.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://openid.net/specs/openid-connect-rpinitiated-1_0.html#OPMetadata" },
+
+  "MetadataResponseType": {
+    "label": "Response type support",
+    "statement": "REQUIRED. JSON array containing a list of the OAuth 2.0 response_type values that this OP supports. Dynamic OpenID Providers MUST support the code, id_token, and the token id_token Response Type values.",
+    "requirementSubject": "OpenIDProvider",
+    "requirementLevel": "MUST",
+    "requirementReference": "https://datatracker.ietf.org/doc/html/rfc8414#section-2" }
+}
