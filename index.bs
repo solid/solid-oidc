@@ -23,7 +23,7 @@ Editor: [elf Pavlik](https://elf-pavlik.hackers4peace.net/)
 Editor: [Dmitri Zagidulin](http://computingjoy.com/)
 Former Editor: [Adam Migus](https://migusgroup.com/about/) ([The Migus Group](https://migusgroup.com/))
 Former Editor: [Ricky White](https://endlesstrax.com) ([The Migus Group](https://migusgroup.com/))
-Test Suite: https://solid.github.io/solid-oidc-tests/
+Test Suite: https://solid-contrib.github.io/solid-oidc-tests/
 Metadata Order: This version, Latest published version, Editor's Draft, Test Suite, Created, Modified, *, !*
 Metadata Include: Editor's Draft off
 Abstract:
@@ -383,7 +383,7 @@ the verifying party MUST follow OpenID Connect Discovery 1.0 [[!OIDC-DISCOVERY]]
 
 When a Client performs an unauthenticated request to a protected resource,
 the Resource Server MUST respond with the HTTP <code>401</code> status code,
-and a <code>WWW-Authenticate</code> HTTP header. See also: [[RFC9110#section-11.6.1]]
+and a <code>WWW-Authenticate</code> HTTP header. See also: [[RFC9110##name-www-authenticate]]
 
 The <code>WWW-Authenticate</code> HTTP header MUST include an <code>as_uri</code>
 parameter unless the authentication scheme requires a different mechanism
