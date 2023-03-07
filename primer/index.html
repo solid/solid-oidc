@@ -6,12 +6,11 @@
   <meta content="w3c/ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="Bikeshed version 63e66730b, updated Tue Oct 25 12:35:05 2022 -0700" name="generator">
+  <meta content="Bikeshed version 077497365, updated Thu Mar 2 15:15:29 2023 -0800" name="generator">
   <link href="https://solidproject.org/TR/oidc-primer" rel="canonical">
   <link href="https://solidproject.org/TR/solid.svg" rel="icon">
-  <meta content="bc4f9aa01403acadc54811b4acfb193453cf7165" name="document-revision">
+  <meta content="ea5e6ebc335c29fe06a66f7aede6ed6920c4298e" name="document-revision">
 <style>/* style-autolinks */
-
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
     font-size: inherit;
@@ -71,7 +70,8 @@ pre .property::before, pre .property::after {
 
 [data-link-type=biblio] {
     white-space: pre;
-}</style>
+}
+</style>
 <style>/* style-colors */
 
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
@@ -180,9 +180,9 @@ pre .property::before, pre .property::after {
     --outdated-shadow: red;
 
     --editedrec-bg: darkorange;
-}</style>
+}
+</style>
 <style>/* style-counters */
-
 body {
     counter-reset: example figure issue;
 }
@@ -209,9 +209,9 @@ figcaption {
 }
 figcaption:not(.no-marker)::before {
     content: "Figure " counter(figure) " ";
-}</style>
+}
+</style>
 <style>/* style-dfn-panel */
-
 :root {
     --dfnpanel-bg: #ddd;
     --dfnpanel-text: var(--text);
@@ -219,10 +219,10 @@ figcaption:not(.no-marker)::before {
 .dfn-panel {
     position: absolute;
     z-index: 35;
-    height: auto;
-    width: -webkit-fit-content;
-    width: fit-content;
+    width: 20em;
+    min-width: min-content;
     max-width: 300px;
+    height: auto;
     max-height: 500px;
     overflow: auto;
     padding: 0.5em 0.75em;
@@ -230,6 +230,7 @@ figcaption:not(.no-marker)::before {
     background: var(--dfnpanel-bg);
     color: var(--dfnpanel-text);
     border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
 }
 .dfn-panel:not(.on) { display: none; }
 .dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
@@ -252,7 +253,6 @@ figcaption:not(.no-marker)::before {
 .dfn-paneled { cursor: pointer; }
 </style>
 <style>/* style-issues */
-
 a[href].issue-return {
     float: right;
     float: inline-end;
@@ -262,7 +262,6 @@ a[href].issue-return {
 }
 </style>
 <style>/* style-md-lists */
-
 /* This is a weird hack for me not yet following the commonmark spec
    regarding paragraph and lists. */
 [data-md] > :first-child {
@@ -270,7 +269,8 @@ a[href].issue-return {
 }
 [data-md] > :last-child {
     margin-bottom: 0;
-}</style>
+}
+</style>
 <style>/* style-selflinks */
 
 :root {
@@ -394,7 +394,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solidproject.org/TR/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2022-12-05">5 December 2022</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-03-07">7 March 2023</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -406,7 +406,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>March 28, 2022
       <dt>Modified:
-      <dd>5 December 2022
+      <dd>7 March 2023
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -419,7 +419,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2022 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2023 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -470,34 +470,34 @@ Bob’s Solid Storage (resource servers).</p>
    <h2 class="heading settled" data-level="2" id="definitions"><span class="secno">2. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
    <dl>
     <dt id="openid-provider"><a class="self-link" href="#openid-provider"></a>OpenID Provider (OP)
-    <dd>An OAuth 2.0 authorization server implementing OpenID Connect as <a href="https://openid.net/specs/openid-connect-core-1_0.html">defined in the OpenID Connect Core 1.0 specification</a>. <a data-link-type="biblio" href="#biblio-oidc-core">[OIDC-CORE]</a>
+    <dd>An OAuth 2.0 authorization server implementing OpenID Connect as <a href="https://openid.net/specs/openid-connect-core-1_0.html">defined in the OpenID Connect Core 1.0 specification</a>. <a data-link-type="biblio" href="#biblio-oidc-core" title="OpenID Connect Core 1.0">[OIDC-CORE]</a>
     <dt id="relying-party"><a class="self-link" href="#relying-party"></a>Relying Party (RP)
-    <dd>A client application using OpenID Connect to make resource requests on behalf of the resource owner. Client is one of the four roles <a href="https://tools.ietf.org/html/rfc6749#section-1.1">defined in the OAuth 2.0 specification</a>. <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>
+    <dd>A client application using OpenID Connect to make resource requests on behalf of the resource owner. Client is one of the four roles <a href="https://tools.ietf.org/html/rfc6749#section-1.1">defined in the OAuth 2.0 specification</a>. <a data-link-type="biblio" href="#biblio-rfc6749" title="The OAuth 2.0 Authorization Framework">[RFC6749]</a>
     <dt id="resource"><a class="self-link" href="#resource"></a>Resource
-    <dd>Something denoted by an IRI or a literal as <a href="https://www.w3.org/TR/rdf11-concepts/#resources-and-statements">defined in RDF 1.1</a>. <a data-link-type="biblio" href="#biblio-rdf11-concepts">[rdf11-concepts]</a>
+    <dd>Something denoted by an IRI or a literal as <a href="https://www.w3.org/TR/rdf11-concepts/#resources-and-statements">defined in RDF 1.1</a>. <a data-link-type="biblio" href="#biblio-rdf11-concepts" title="RDF 1.1 Concepts and Abstract Syntax">[rdf11-concepts]</a>
     <dt id="resource-owner"><a class="self-link" href="#resource-owner"></a>Resource Owner
-    <dd>An entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end-user. Resource Owner is one of the four roles <a href="https://tools.ietf.org/html/rfc6749#section-1.1">defined in the OAuth 2.0 specification</a>. <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>
+    <dd>An entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end-user. Resource Owner is one of the four roles <a href="https://tools.ietf.org/html/rfc6749#section-1.1">defined in the OAuth 2.0 specification</a>. <a data-link-type="biblio" href="#biblio-rfc6749" title="The OAuth 2.0 Authorization Framework">[RFC6749]</a>
     <dt id="resource-server"><a class="self-link" href="#resource-server"></a>Resource Server (RS)
-    <dd>A server hosting resources, capable of accepting and responding to protected resource requests using access tokens. RS is one of the four roles <a href="https://tools.ietf.org/html/rfc6749#section-1.1">defined in the OAuth 2.0 specification</a>. <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a>
+    <dd>A server hosting resources, capable of accepting and responding to protected resource requests using access tokens. RS is one of the four roles <a href="https://tools.ietf.org/html/rfc6749#section-1.1">defined in the OAuth 2.0 specification</a>. <a data-link-type="biblio" href="#biblio-rfc6749" title="The OAuth 2.0 Authorization Framework">[RFC6749]</a>
     <dt id="solid-storage"><a class="self-link" href="#solid-storage"></a>Solid Storage
-    <dd>A storage on a Solid compliant Resource Server as <a href="https://solidproject.org/TR/protocol#storage">defined by the Solid Protocol</a>. <a data-link-type="biblio" href="#biblio-solid-protocol">[SOLID-PROTOCOL]</a>
+    <dd>A storage on a Solid compliant Resource Server as <a href="https://solidproject.org/TR/protocol#storage">defined by the Solid Protocol</a>. <a data-link-type="biblio" href="#biblio-solid-protocol" title="Solid Protocol">[SOLID-PROTOCOL]</a>
     <dt id="solid-oidc"><a class="self-link" href="#solid-oidc"></a>Solid OpenID Connect (Solid OIDC)
-    <dd>The specification defining authentication in the Solid ecosystem. <a data-link-type="biblio" href="#biblio-solid-oidc">[SOLID-OIDC]</a>
+    <dd>The specification defining authentication in the Solid ecosystem. <a data-link-type="biblio" href="#biblio-solid-oidc" title="Solid-OIDC">[SOLID-OIDC]</a>
     <dt id="webid"><a class="self-link" href="#webid"></a>WebID
-    <dd>A WebID is an HTTP URI which refers to an Agent (Person, Organization, Group, Device, etc.) as <a href="https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html#introduction">defined in the WebID 1.0 specification</a>. <a data-link-type="biblio" href="#biblio-webid">[WEBID]</a>
+    <dd>A WebID is an HTTP URI which refers to an Agent (Person, Organization, Group, Device, etc.) as <a href="https://dvcs.w3.org/hg/WebID/raw-file/tip/spec/identity-respec.html#introduction">defined in the WebID 1.0 specification</a>. <a data-link-type="biblio" href="#biblio-webid" title="WebID 1.0">[WEBID]</a>
    </dl>
    <dl>
     <dt data-md><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="code-verifier">code verifier</dfn>
     <dd data-md>
      <p>A cryptographically random string that is used to correlate the
-authorization request to the token request. <a data-link-type="biblio" href="#biblio-rfc7636">[RFC7636]</a></p>
+authorization request to the token request. <a data-link-type="biblio" href="#biblio-rfc7636" title="Proof Key for Code Exchange by OAuth Public Clients">[RFC7636]</a></p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="code-challenge">code challenge</dfn>
     <dd data-md>
      <p>A challenge derived from the code verifier that is sent in the
-authorization request, to be verified against later. <a data-link-type="biblio" href="#biblio-rfc7636">[RFC7636]</a></p>
+authorization request, to be verified against later. <a data-link-type="biblio" href="#biblio-rfc7636" title="Proof Key for Code Exchange by OAuth Public Clients">[RFC7636]</a></p>
     <dt data-md><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="authorization-code">authorization code</dfn>
     <dd data-md>
-     <p>The authorization code generated by the authorization server. <a data-link-type="biblio" href="#biblio-rfc6749">[RFC6749]</a></p>
+     <p>The authorization code generated by the authorization server. <a data-link-type="biblio" href="#biblio-rfc6749" title="The OAuth 2.0 Authorization Framework">[RFC6749]</a></p>
    </dl>
    <h2 class="heading settled" data-level="3" id="actors"><span class="secno">3. </span><span class="content">Actors</span><a class="self-link" href="#actors"></a></h2>
    <p>Several actors are at play in our example Solid-OIDC authentication flows:</p>
@@ -538,7 +538,7 @@ authorization request, to be verified against later. <a data-link-type="biblio" 
    <h2 class="heading settled" data-level="4" id="solid-oidc-flow"><span class="secno">4. </span><span class="content">Solid-OIDC Flow</span><a class="self-link" href="#solid-oidc-flow"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="authorization-code-pkce-flow"><span class="secno">4.1. </span><span class="content">Authorization Code Grant with PKCE Authorization Flow</span><a class="self-link" href="#authorization-code-pkce-flow"></a></h3>
    <p>The Authorization Code grant with PKCE is the primary OAuth 2.0 authorization flow
-recommended by the Solid-OIDC. It is defined by the PKCE RFC <a data-link-type="biblio" href="#biblio-rfc7636">[RFC7636]</a> and
+recommended by the Solid-OIDC. It is defined by the PKCE RFC <a data-link-type="biblio" href="#biblio-rfc7636" title="Proof Key for Code Exchange by OAuth Public Clients">[RFC7636]</a> and
 described here in the Solid-OIDC context.</p>
    <p><img src="primer-login.mmd.svg" width="980"></p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-1"><span class="content">1. Alice uses the Decent Photos web app</span><a class="self-link" href="#authorization-code-pkce-flow-step-1"></a></h4>
@@ -571,7 +571,7 @@ made to determine her OP. To do so, a request should be made to Alice’s WebId:
 
 <c- nl>:me</c-> <c- g>a</c-> <c- g>foaf</c->:<c- g>Person</c-> <c- c1>;</c->
     <c- g>a</c-> <c- g>schema</c->:<c- g>Person</c-> <c- c1>;</c->
-    <c- g>foaf</c->:<c- g>name</c-> <c- u>"</c-><c- s>Alice</c-><c- u>"</c-> <c- c1>;</c->
+    <c- g>foaf</c->:<c- g>name</c-> <c- u>"Alice"</c-> <c- c1>;</c->
     <c- g>solid</c->:<c- g>oidcIssuer</c-> <c- o>&lt;</c-><c- g>https</c->:<c- o>//</c-><c- g>secureauth</c->.<c- g>example</c-><c- o>></c-> <c- c1>;</c->
 </pre>
    <p>The OP URL is located at <code>:me -> solid:oidcIssuer</code></p>
@@ -686,7 +686,7 @@ application is the app’s URI (in our case <code>https://decentphotos.example/c
     <li data-md>
      <p><code>code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0</code>: The <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challenge①">code challenge</a> we generated before.</p>
    </ul>
-   <p class="note" role="note"><span>Note:</span> If the app doesn’t have a URI, you can either register an app using static registration
+   <p class="note" role="note"><span class="marker">Note:</span> If the app doesn’t have a URI, you can either register an app using static registration
 via some UI on the OP or use <a href="https://openid.net/specs/openid-connect-registration-1_0.html">dynamic registration</a>.</p>
    <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-7"><span class="content">7. Fetch RP Client ID Document</span><a class="self-link" href="#authorization-code-pkce-flow-step-7"></a></h4>
    <p>If an app URI is provided as the client id (see note above to see other options), we must
@@ -996,7 +996,7 @@ granted access to Alice but has not granted access to anyone else.</p>
   <c- l>ticket="016f84e8-f9b9-11e0-bd6f-0021cc6004de"</c->
 </pre>
    <h4 class="no-num heading settled" id="request-flow-step-2"><span class="content">2. Request AS configuration</span><a class="self-link" href="#request-flow-step-2"></a></h4>
-   <p>Knowing the Authorization Server, now the client can discover its Token Endpoint (<a data-link-type="biblio" href="#biblio-rfc8414">[RFC8414]</a>)</p>
+   <p>Knowing the Authorization Server, now the client can discover its Token Endpoint (<a data-link-type="biblio" href="#biblio-rfc8414" title="OAuth 2.0 Authorization Server Metadata">[RFC8414]</a>)</p>
    <p>Request:</p>
 <pre class="language-http highlight">GET https://auth.otherpod.example/.well-known/uma2-configuration
 </pre>
@@ -1110,7 +1110,7 @@ request. When using UMA 2.0, the response will include a 403 HTTP status code an
 
 <c- nl>:me</c-> <c- g>a</c-> <c- g>foaf</c->:<c- g>Person</c-> <c- c1>;</c->
     <c- g>a</c-> <c- g>schema</c->:<c- g>Person</c-> <c- c1>;</c->
-    <c- g>foaf</c->:<c- g>name</c-> <c- u>"</c-><c- s>Alice</c-><c- u>"</c-> <c- c1>;</c->
+    <c- g>foaf</c->:<c- g>name</c-> <c- u>"Alice"</c-> <c- c1>;</c->
     <c- g>solid</c->:<c- g>oidcIssuer</c-> <c- o>&lt;</c-><c- g>https</c->:<c- o>//</c-><c- g>secureauth</c->.<c- g>example</c-><c- o>></c-> <c- c1>;</c->
 </pre>
    <h4 class="no-num heading settled" id="request-flow-step-9"><span class="content">9. Checks issuer</span><a class="self-link" href="#request-flow-step-9"></a></h4>
@@ -1208,7 +1208,7 @@ request was made. Using that information, the AS performs authorization and retu
 <c- p>}</c->
 </pre>
    <h4 class="no-num heading settled" id="request-flow-step-14"><span class="content">14. Sends request with Access Token</span><a class="self-link" href="#request-flow-step-14"></a></h4>
-   <p class="note" role="note"><span>Note:</span> In practice, the client would need to upgrade RPT by pushing
+   <p class="note" role="note"><span class="marker">Note:</span> In practice, the client would need to upgrade RPT by pushing
 the authorization related claim. This primer only focuses on authentication so we omit
 this detail here.</p>
    <p>With the access token, we’re ready to make our request.</p>
@@ -1251,8 +1251,8 @@ Headers: {
    <dt id="biblio-webid">[WEBID]
    <dd>Andrei Sambra; Henry Story; Tim Berners-Lee. <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/"><cite>WebID 1.0</cite></a>. URL: <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">https://www.w3.org/2005/Incubator/webid/spec/identity/</a>
   </dl>
-  <aside class="dfn-panel" data-for="code-verifier">
-   <b><a href="#code-verifier">#code-verifier</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-code-verifier" class="dfn-panel" data-for="code-verifier" id="infopanel-for-code-verifier">
+   <span id="infopaneltitle-for-code-verifier" style="display:none">Info about the 'code verifier' definition.</span><b><a href="#code-verifier">#code-verifier</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-code-verifier">4. Generates PKCE code verifier and code challenge</a>
     <li><a href="#ref-for-code-verifier①">5. Saved code verifier to session storage</a>
@@ -1260,8 +1260,8 @@ Headers: {
     <li><a href="#ref-for-code-verifier③">15. Validate code verifier</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="code-challenge">
-   <b><a href="#code-challenge">#code-challenge</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-code-challenge" class="dfn-panel" data-for="code-challenge" id="infopanel-for-code-challenge">
+   <span id="infopaneltitle-for-code-challenge" style="display:none">Info about the 'code challenge' definition.</span><b><a href="#code-challenge">#code-challenge</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-code-challenge">4. Generates PKCE code verifier and code challenge</a>
     <li><a href="#ref-for-code-challenge①">6. Authorization request</a>
@@ -1269,8 +1269,8 @@ Headers: {
     <li><a href="#ref-for-code-challenge③">15. Validate code verifier</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="authorization-code">
-   <b><a href="#authorization-code">#authorization-code</a></b><b>Referenced in:</b>
+  <aside aria-labelledby="infopaneltitle-for-authorization-code" class="dfn-panel" data-for="authorization-code" id="infopanel-for-authorization-code">
+   <span id="infopaneltitle-for-authorization-code" style="display:none">Info about the 'authorization code' definition.</span><b><a href="#authorization-code">#authorization-code</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-authorization-code">10. Generate an authorization code</a>
     <li><a href="#ref-for-authorization-code①">11. Send authorization code to redirect url</a>
@@ -1279,58 +1279,112 @@ Headers: {
    </ul>
   </aside>
 <script>/* script-dfn-panel */
-
-document.body.addEventListener("click", function(e) {
-    var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
-    // Find the dfn element or panel, if any, that was clicked on.
-    var el = e.target;
-    var target;
-    var hitALink = false;
-    while(el.parentElement) {
-        if(el.tagName == "A") {
-            // Clicking on a link in a <dfn> shouldn't summon the panel
-            hitALink = true;
-        }
-        if(el.classList.contains("dfn-paneled")) {
-            target = "dfn";
-            break;
-        }
-        if(el.classList.contains("dfn-panel")) {
-            target = "dfn-panel";
-            break;
-        }
-        el = el.parentElement;
+"use strict";
+{
+    function queryAll(sel) {
+        return [].slice.call(document.querySelectorAll(sel));
     }
-    if(target != "dfn-panel") {
+
+    // Add popup behavior to all dfns to show the corresponding dfn-panel.
+    var dfns = document.querySelectorAll('.dfn-paneled');
+    for (let dfn of dfns) { insertDfnPopupAction(dfn); }
+
+    document.body.addEventListener("click", (e) => {
+        // If not handled already, just hide all dfn panels.
+        hideAllDfnPanels();
+    });
+
+    function hideAllDfnPanels() {
         // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
-            el.classList.remove("on");
-            el.classList.remove("activated");
-        });
-    }
-    if(target == "dfn" && !hitALink) {
-        // open the panel
-        var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
-        if(dfnPanel) {
-            dfnPanel.classList.add("on");
-            var rect = el.getBoundingClientRect();
-            dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
-            dfnPanel.style.top = window.scrollY + rect.top + "px";
-            var panelRect = dfnPanel.getBoundingClientRect();
-            var panelWidth = panelRect.right - panelRect.left;
-            if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
-                // Reposition, because the panel is overflowing
-                dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
-            }
-        } else {
-            console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
-        }
-    } else if(target == "dfn-panel") {
-        // Switch it to "activated" state, which pins it.
-        el.classList.add("activated");
-        el.style.left = null;
-        el.style.top = null;
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
     }
 
-});
+    function showDfnPanel(dfnPanel, dfn) {
+        hideAllDfnPanels(); // Only display one at this time.
+        dfn.setAttribute("aria-expanded", "true");
+        dfnPanel.classList.add("on");
+        dfnPanel.style.left = "5px";
+        dfnPanel.style.top = "0px";
+        const panelRect = dfnPanel.getBoundingClientRect();
+        const panelWidth = panelRect.right - panelRect.left;
+        if (panelRect.right > document.body.scrollWidth) {
+            // Panel's overflowing the screen.
+            // Just drop it below the dfn and flip it rightward instead.
+            // This still wont' fix things if the screen is *really* wide,
+            // but fixing that's a lot harder without 'anchor()'.
+            dfnPanel.style.top = "1.5em";
+            dfnPanel.style.left = "auto";
+            dfnPanel.style.right = "0px";
+        }
+    }
+
+    function pinDfnPanel(dfnPanel) {
+        // Switch it to "activated" state, which pins it.
+        dfnPanel.classList.add("activated");
+        dfnPanel.style.left = null;
+        dfnPanel.style.top = null;
+    }
+
+    function hideDfnPanel(dfnPanel, dfn) {
+        if(!dfn) {
+            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
+        }
+        dfn.setAttribute("aria-expanded", "false")
+        dfnPanel.classList.remove("on");
+        dfnPanel.classList.remove("activated");
+    }
+
+    function toggleDfnPanel(dfnPanel, dfn) {
+        if(dfnPanel.classList.contains("on")) {
+            hideDfnPanel(dfnPanel, dfn);
+        } else {
+            showDfnPanel(dfnPanel, dfn);
+        }
+    }
+
+    function insertDfnPopupAction(dfn) {
+        // Find dfn panel
+        const dfnPanel = document.querySelector(`.dfn-panel[data-for='${dfn.id}']`);
+        if (dfnPanel) {
+            const panelWrapper = document.createElement('span');
+            panelWrapper.appendChild(dfnPanel);
+            panelWrapper.style.position = "relative";
+            panelWrapper.style.height = "0px";
+            dfn.insertAdjacentElement("afterend", panelWrapper);
+            dfn.setAttribute('role', 'button');
+            dfn.setAttribute('aria-expanded', 'false')
+            dfn.tabIndex = 0;
+            dfn.classList.add('has-dfn-panel');
+            dfn.addEventListener('click', (event) => {
+                showDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+            });
+            dfn.addEventListener('keypress', (event) => {
+                const kc = event.keyCode;
+                // 32->Space, 13->Enter
+                if(kc == 32 || kc == 13) {
+                    toggleDfnPanel(dfnPanel, dfn);
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            });
+
+            dfnPanel.addEventListener('click', (event) => {
+                pinDfnPanel(dfnPanel);
+                event.stopPropagation();
+            });
+
+            dfnPanel.addEventListener('keydown', (event) => {
+                if(event.keyCode == 27) { // Escape key
+                    hideDfnPanel(dfnPanel, dfn);
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            })
+
+        } else {
+            console.log("Couldn't find .dfn-panel[data-for='" + dfn.id + "']");
+        }
+    }
+}
 </script>
