@@ -8,9 +8,9 @@ This specification has been incubated by the
 [Solid Authentication Panel](https://github.com/solid/authentication-panel) for inclusion in the
 [Solid Technical Reports](https://solidproject.org/TR/).
 
-Anyone is welcome to join the [weekly meetings](https://github.com/solid/authentication-panel#meetings).
+Anyone is welcome to join the Solid CG weekly or special topic meetings to discuss Solid OIDC. See [W3C calendar](https://www.w3.org/groups/cg/solid/calendar).
 
-The Solid Authentication Panel meetings and associated communication channels are open to all
+Chat in [Matrix](https://matrix.to/#/#solid_specification:gitter.im).
 to participate. It is expected that everyone will abide by the
 [Solid Code of Conduct](https://github.com/solid/process/blob/main/code-of-conduct.md)
 in all of these interactions.
