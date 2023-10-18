@@ -118,7 +118,7 @@ The Authorization Code grant with PKCE is the primary OAuth 2.0 authorization fl
 recommended by the Solid-OIDC. It is defined by the PKCE RFC [[RFC7636]] and
 described here in the Solid-OIDC context.
 
-<img src="primer-login.mmd.svg" width="980" />
+<img src="primer-login.mmd.svg" width="980">
 
 <h4 id="authorization-code-pkce-flow-step-1" class="no-num">1. Alice uses the Decent Photos web app</h4>
 
@@ -641,7 +641,7 @@ Response (content-type: application/json)
 
 ## Request Flow ## {#request-flow}
 
-<img src="primer-request.mmd.svg" width="980" />
+<img src="primer-request.mmd.svg" width="980">
 
 
 In this example, Alice has logged into `https://decentphotos.example` and has completed the
