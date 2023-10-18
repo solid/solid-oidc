@@ -156,7 +156,7 @@ Solid and are used as a primary identifier for Users in this specification.
 Details of the flow are available in [[!SOLID-OIDC-PRIMER]]
 
 <figure id="fig-signature">
-    <img src="sequence.mmd.svg" />
+    <img src="sequence.mmd.svg">
     <figcaption>Basic sequence of authenticating the user and the client.</figcaption>
 </figure>
 
