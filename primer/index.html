@@ -8,7 +8,7 @@
   <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://solidproject.org/TR/oidc-primer" rel="canonical">
   <link href="https://solidproject.org/TR/solid.svg" rel="icon">
-  <meta content="dcc961e839750579bd7c8f7092b1b9971c978e09" name="document-revision">
+  <meta content="7bcd6a396970af3ede7aeb1a728017fad144602d" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -589,7 +589,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://solidproject.org/TR/"> <img alt="Solid" src="https://solidproject.org/TR/solid.svg" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-12-13">13 December 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-01-25">25 January 2024</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -601,7 +601,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>March 28, 2022
       <dt>Modified:
-      <dd>13 December 2023
+      <dd>25 January 2024
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -614,7 +614,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2023 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/copyright/software-license/" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2024 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/copyright/software-license/" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -1082,7 +1082,8 @@ the following (you can decrypt the token with <a href="https://jwt.io/#debugger-
    <p>Token Header:</p>
 <pre class="language-json highlight"><c- p>{</c->
     <c- f>"alg"</c-><c- p>:</c-> <c- u>"ES256"</c-><c- p>,</c->
-    <c- f>"typ"</c-><c- p>:</c-> <c- u>"JWT"</c->
+    <c- f>"typ"</c-><c- p>:</c-> <c- u>"JWT"</c-><c- p>,</c->
+    <c- f>"kid"</c-><c- p>:</c-> <c- u>"Xu68Q0ZfwDiRfWOb2UE8N77GoEQQ7q58_3gl1wsKENs"</c->
 <c- p>}</c->
 </pre>
    <ul>
@@ -1392,6 +1393,7 @@ OP’s public keys.</p>
    <h4 class="no-num heading settled" id="request-flow-step-12"><span class="content">12. Checks ID token signature validity</span><a class="self-link" href="#request-flow-step-12"></a></h4>
    <p>Using the <code>kid</code> value in the ID token, the AS searches the OP public keys for one that matches the
 one used to sign the ID token. If no public key is found, the AS must reject the request.</p>
+   <p>Details about the <code>kid</code> can be found in the <a href="https://www.rfc-editor.org/rfc/rfc7515#section-4.1.4">JSON Web Signature (JWS) § section-4.1.4</a>.</p>
    <h4 class="no-num heading settled" id="request-flow-step-13"><span class="content">13. Access Token Response</span><a class="self-link" href="#request-flow-step-13"></a></h4>
    <p>Now that the AS has performed all of its checks, we can trust that the agent in the <code>webid</code> claim (<code>https://alice.coolpod.example/profile/card#me</code>) is the same agent on whose behalf the
 request was made. Using that information, the AS performs authorization and returns access token.</p>
@@ -1425,6 +1427,8 @@ Headers: {
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-rfc7515">[RFC7515]
+   <dd>M. Jones; J. Bradley; N. Sakimura. <a href="https://www.rfc-editor.org/rfc/rfc7515"><cite>JSON Web Signature (JWS)</cite></a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7515">https://www.rfc-editor.org/rfc/rfc7515</a>
    <dt id="biblio-rfc7636">[RFC7636]
    <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/rfc/rfc7636"><cite>Proof Key for Code Exchange by OAuth Public Clients</cite></a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7636">https://www.rfc-editor.org/rfc/rfc7636</a>
   </dl>
