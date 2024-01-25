@@ -916,7 +916,7 @@ Notice that the `keys` field is an array, so an OP could have multiple public ke
 Using the `kid` value in the ID token, the AS searches the OP public keys for one that matches the
 one used to sign the ID token. If no public key is found, the AS must reject the request.
 
-Details about the `kid` can be found in the [RFC7515 section 4.1.4](https://datatracker.ietf.org/doc/html/rfc7515#section-4.1.4).
+Details about the `kid` can be found in the [[RFC7515#section-4.1.4]].
 
 <h4 id="request-flow-step-13" class="no-num">13. Access Token Response</h4>
 
