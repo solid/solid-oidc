@@ -548,7 +548,8 @@ Token Header:
 ```json
 {
     "alg": "ES256",
-    "typ": "JWT"
+    "typ": "JWT",
+    "kid": "Xu68Q0ZfwDiRfWOb2UE8N77GoEQQ7q58_3gl1wsKENs"
 }
 ```
 
@@ -914,6 +915,8 @@ Notice that the `keys` field is an array, so an OP could have multiple public ke
 
 Using the `kid` value in the ID token, the AS searches the OP public keys for one that matches the
 one used to sign the ID token. If no public key is found, the AS must reject the request.
+
+Details about the `kid` can be found in the [[RFC7515#section-4.1.4]].
 
 <h4 id="request-flow-step-13" class="no-num">13. Access Token Response</h4>
 

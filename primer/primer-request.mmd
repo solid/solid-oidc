@@ -13,7 +13,7 @@ sequenceDiagram
   note over AS: 5. Checks ID Token expirations
   note over AS: 6. Checks DPoP Token url and method
   note over AS: 6.1. (Optional) Checks DPoP token unique identifier
-  note over AS: 7. Checks DPoP signature against Access Token
+  note over AS: 7. Checks DPoP signature against ID Token
   AS->>WebID: 8. Retrieves WebID Document
   WebID->>AS: Profile
   note over AS: 9. Checks Issuer
@@ -21,7 +21,7 @@ sequenceDiagram
   OP->>AS: OP configuration
   AS->>OP: 11. Requests JWKS
   OP->>AS: JWKS
-  note over AS: 12. Checks access token signature validity
+  note over AS: 12. Checks ID token signature validity
   AS->>Client: 13. Access Token Response
   Client->>RS: 14. Sends Request with Access Token
   note over AS, RS: Have pre-established usage of Access Tokens
