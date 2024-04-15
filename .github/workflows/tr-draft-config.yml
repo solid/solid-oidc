@@ -80,7 +80,7 @@ jobs:
           sed -i "s|https://solid.github.io/solid-oidc/|https://solidproject.org/TR/oidc|g" ./publish/$YEAR/oidc-primer-$DAY.html
 
       - name: Publish to TR Publication branch
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           publish_dir: ./publish
           publish_branch: solid-tr-publication
