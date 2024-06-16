@@ -1,28 +1,23 @@
 <pre class='metadata'>
 Title: Solid-OIDC Primer
 Boilerplate: issues-index no
-Boilerplate: style-darkmode off
 Boilerplate: omit conformance
-Local Boilerplate: logo yes
 Shortname: solid-oidc-primer
 Level: 1
-Status: w3c/ED
+Status: w3c/CG-DRAFT
 Group: Solid Community Group
-Favicon: https://solidproject.org/TR/solid.svg
 ED: https://solid.github.io/solid-oidc/primer/
 TR: https://solidproject.org/TR/oidc-primer
 !Created: March 28, 2022
 !Modified: [DATE]
-!Editor's Draft: [https://solid.github.io/solid-oidc/primer/](https://solid.github.io/solid-oidc/primer/)
-!License: [MIT License](http://purl.org/NET/rdflicense/MIT1.0)
 Repository: https://github.com/solid/solid-oidc
 Markup Shorthands: markdown yes
 Max ToC Depth: 2
 Editor: [Jackson Morgan](https://github.com/jaxoncreed)
 Editor: [Aaron Coburn](https://github.com/acoburn)
 Editor: [Matthieu Bosquet](https://github.com/matthieubosquet)
-Metadata Order: This version, Latest published version, Editor's Draft, Test Suite, Created, Modified, *, !*
-Metadata Include: Editor's Draft off
+Editor: [elf Pavlik](https://elf-pavlik.hackers4peace.net)
+Metadata Order: This version, Latest published version, Test Suite, Created, Modified, *, !*
 Abstract:
   The Solid OpenID Connect (Solid-OIDC) specification defines how resource servers
   verify the identity of relying parties and end users based on the authentication
