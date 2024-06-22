@@ -3,12 +3,13 @@
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <title>Solid-OIDC</title>
-  <meta content="w3c/CG-DRAFT" name="w3c-status">
+  <meta content="CG-DRAFT" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
+  <meta content="Bikeshed version a1dabb26c, updated Mon Jun 17 15:00:44 2024 -0700" name="generator">
   <link href="https://solidproject.org/TR/oidc" rel="canonical">
-  <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="deecfbd30855a7b44422429005259aaa96915b9d" name="document-revision">
+  <meta content="4d58c3c6a37ea38d3c01213887443df74d14f7be" name="revision">
+  <meta content="dark light" name="color-scheme">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -80,7 +81,6 @@ pre .property::before, pre .property::after {
 }
 </style>
 <style>/* Boilerplate: style-colors */
-
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
 :root {
     color-scheme: light dark;
@@ -340,7 +340,6 @@ a[href].issue-return {
 }
 </style>
 <style>/* Boilerplate: style-line-highlighting */
-
 :root {
     --highlight-hover-bg: rgba(0, 0, 0, .05);
 }
@@ -378,7 +377,6 @@ a[href].issue-return {
     content: attr(data-line-end);
 }
 
-
 @media (prefers-color-scheme: dark) {
     :root {
         --highlight-hover-bg: rgba(255, 255, 255, .05);
@@ -396,7 +394,6 @@ a[href].issue-return {
 }
 </style>
 <style>/* Boilerplate: style-selflinks */
-
 :root {
     --selflink-text: white;
     --selflink-bg: gray;
@@ -456,7 +453,6 @@ a.self-link::before            { content: "¶"; }
 dfn > a.self-link::before      { content: "#"; }
 </style>
 <style>/* Boilerplate: style-syntax-highlighting */
-
 code.highlight { padding: .1em; border-radius: .3em; }
 pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
 
@@ -513,7 +509,6 @@ c-[vc] { color: #0077aa } /* Name.Variable.Class */
 c-[vg] { color: #0077aa } /* Name.Variable.Global */
 c-[vi] { color: #0077aa } /* Name.Variable.Instance */
 c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
-
 
 @media (prefers-color-scheme: dark) {
     .highlight:not(.idl) { background: rgba(255, 255, 255, .05); }
@@ -582,7 +577,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Solid-OIDC</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2024-06-16">16 June 2024</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2024-06-22">22 June 2024</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -596,7 +591,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>July 16, 2021
       <dt>Modified:
-      <dd>16 June 2024
+      <dd>22 June 2024
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -610,32 +605,27 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2024 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/copyright/software-license/" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright">
+    <p> Copyright © 2024 the Contributors to the Solid-OIDC,
+  published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+  A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
+   </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
    <p>The Solid OpenID Connect (Solid-OIDC) specification defines how resource servers
-
-  verify the identity of relying parties and end users based on the authentication
-  performed by an OpenID provider. Solid-OIDC builds on top of OpenID Connect 1.0
-  for use within the Solid ecosystem.</p>
+verify the identity of relying parties and end users based on the authentication
+performed by an OpenID provider. Solid-OIDC builds on top of OpenID Connect 1.0
+for use within the Solid ecosystem.</p>
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
+   <p> This report was published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>.
+  It is not a W3C Standard nor is it on the W3C Standards Track.
+  Please note that under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply.
+  Learn more about <a href="https://www.w3.org/community/">W3C Community and Business Groups</a>. </p>
    <p></p>
-   <p>This section describes the status of this document at the time of its publication.</p>
-   <p>This document was published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a> as
-
-a Community Group Draft. The information in this document is
-still subject to change. You are invited to <a href="https://github.com/solid/solid-oidc/issues">contribute</a> any feedback, comments, or questions you might have.</p>
-   <p>Publication as a Community Group Draft does not imply endorsement by the W3C Membership. This is a draft
-
-document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate
-to cite this document as other than work in progress.</p>
-   <p>This document was produced by a group operating under the <a href="https://www.w3.org/community/about/process/cla/">W3C Community Contributor License Agreement
-
-(CLA)</a>. A human-readable <a href="https://www.w3.org/community/about/process/cla-deed/">summary</a> is available.</p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
@@ -1111,7 +1101,7 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
     like this: </p>
    <p class="note" role="note">Note, this is an informative note.</p>
   </div>
-<script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
+  <script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
