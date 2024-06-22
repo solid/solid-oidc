@@ -16,14 +16,11 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.8'
-
-      - name: Upgrade pip
-        run: python3 -m pip install --upgrade pip
+          python-version: '3.10'
 
       - name: Install Bikeshed
         run: |
-          python3 -m pip install --upgrade bikeshed
+          pipx install bikeshed
           bikeshed update
 
       - name: Generate HTML
