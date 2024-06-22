@@ -2,7 +2,7 @@
 
 # Requires
 # python3 -m pip install --upgrade pip
-# python3 -m pip install --upgrade bikeshed
+# pipx install bikeshed
 # bikeshed update (to get the latest autolinking data)
 
 for bsdoc in ./*.bs ./**/*.bs; do bikeshed spec $bsdoc; done
