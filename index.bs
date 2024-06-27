@@ -142,7 +142,7 @@ Details of the flow are available in [[!SOLID-OIDC-PRIMER]]
 
 OAuth and OIDC require the Client application to identify itself to the OP and RS by presenting a
 [client identifier](https://tools.ietf.org/html/rfc6749#section-2.2) (Client ID). Solid applications
-SHOULD use a URI that can be dereferenced as a [Client ID Document](#clientids-document).
+MUST use a URI that can be dereferenced as a [Client ID Document](#clientids-document).
 
 Issue(78):
 
