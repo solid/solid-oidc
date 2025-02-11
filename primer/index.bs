@@ -556,7 +556,7 @@ Token Body:
 {
     "sub": "https://alice.coolpod.example/profile/card#me",
     "aud": [ "solid", "https://decentphotos.example/client_id"],
-    "azp": "https://decentphotos.example/client_id"
+    "azp": "https://decentphotos.example/client_id",
     "webid": "https://alice.coolpod.example/profile/card#me",
     "iss": "https://secureauth.example",
     "jti": "844a095c-9cdb-47e5-9510-1dba987c0a5f",
