@@ -5,9 +5,10 @@
   <title>Solid-OIDC Primer</title>
   <meta content="CG-DRAFT" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version a1dabb26c, updated Mon Jun 17 15:00:44 2024 -0700" name="generator">
+  <meta content="Bikeshed version 0ef803fdf, updated Tue Jan 6 11:59:39 2026 -0800" name="generator">
   <link href="https://solidproject.org/TR/oidc-primer" rel="canonical">
-  <meta content="4d58c3c6a37ea38d3c01213887443df74d14f7be" name="revision">
+  <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
+  <meta content="efe91a217e0cfcf8af61f0c9b82665396e288d21" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -320,7 +321,7 @@ body {
 }
 .invalid.example:not(.no-marker)::before,
 .illegal.example:not(.no-marker)::before {
-    content: "Invalid Example" counter(example);
+    content: "Invalid Example " counter(example);
 }
 
 figcaption {
@@ -688,9 +689,13 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
-   <h1 class="p-name no-ref" id="title">Solid-OIDC Primer</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#CG-DRAFT">Draft Community Group Report</a>, <time class="dt-updated" datetime="2024-06-22">22 June 2024</time></p>
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/">
+    <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
+</a>
+</p>
+   <h1 class="no-ref p-name" id="title">Solid-OIDC Primer</h1>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
+    <time class="dt-updated" datetime="2026-01-20">20 January 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -702,27 +707,27 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>March 28, 2022
       <dt>Modified:
-      <dd>22 June 2024
+      <dd>20 January 2026
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
-      <dd class="editor p-author h-card vcard"><span class="p-name fn"><a href="https://github.com/jaxoncreed">Jackson Morgan</a></span>
-      <dd class="editor p-author h-card vcard"><span class="p-name fn"><a href="https://github.com/acoburn">Aaron Coburn</a></span>
-      <dd class="editor p-author h-card vcard"><span class="p-name fn"><a href="https://github.com/matthieubosquet">Matthieu Bosquet</a></span>
-      <dd class="editor p-author h-card vcard"><span class="p-name fn"><a href="https://elf-pavlik.hackers4peace.net">elf Pavlik</a></span>
+      <dd class="editor h-card p-author vcard"><span class="fn p-name">[Jackson Morgan](https://github.com/jaxoncreed)</span>
+      <dd class="editor h-card p-author vcard"><span class="fn p-name">[Aaron Coburn](https://github.com/acoburn)</span>
+      <dd class="editor h-card p-author vcard"><span class="fn p-name">[Matthieu Bosquet](https://github.com/matthieubosquet)</span>
+      <dd class="editor h-card p-author vcard"><span class="fn p-name">[elf Pavlik](https://elf-pavlik.hackers4peace.net)</span>
      </dl>
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright">
-    <p> Copyright © 2024 the Contributors to the Solid-OIDC Primer,
-  published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
-  A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available. </p>
-   </p>
+   <p class="copyright" data-fill-with="copyright">Copyright © 2026 the Contributors to the Solid-OIDC Primer,
+published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>
+under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>.
+A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.
+</p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
-   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
+   <h2 class="heading no-num no-ref no-toc settled" id="abstract"><span class="content">Abstract</span></h2>
    <p>The Solid OpenID Connect (Solid-OIDC) specification defines how resource servers
 verify the identity of relying parties and end users based on the authentication
 performed by an OpenID provider. Solid-OIDC builds on top of OpenID Connect 1.0.
@@ -730,18 +735,21 @@ This primer is designed to provide the reader with the basic knowledge required
 to understand Solid OpenID Connect authentication flows. It introduces the basic
 concepts of authentication in the Solid ecosystem.</p>
   </div>
-  <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
+  <h2 class="heading no-num no-ref no-toc settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
-   <p> This report was published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>.
+   <p>
+  This report was published by the <a href="https://www.w3.org/community/solid/">Solid Community Group</a>.
   It is not a W3C Standard nor is it on the W3C Standards Track.
-  Please note that under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply.
-  Learn more about <a href="https://www.w3.org/community/">W3C Community and Business Groups</a>. </p>
+  Please note that under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>
+  there is a limited opt-out and other conditions apply.
+  Learn more about <a href="https://www.w3.org/community/">W3C Community and Business Groups</a>.
+</p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
-   <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
-   <ol class="toc" role="directory">
+   <h2 class="no-num no-ref no-toc" id="contents">Table of Contents</h2>
+   <ol class="toc">
     <li><a href="#intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
     <li><a href="#definitions"><span class="secno">2</span> <span class="content">Definitions</span></a>
     <li><a href="#actors"><span class="secno">3</span> <span class="content">Actors</span></a>
@@ -816,7 +824,8 @@ authorization request, to be verified against later. <a data-link-type="biblio" 
     <dt id="alice-webid"><a class="self-link" href="#alice-webid"></a>Alice’s WebID
     <dd>Alice’s WebID is <code>https://alice.coolpod.example/profile/card#me</code>. The WebID
  profile document denoted by URI <code>https://alice.coolpod.example/profile/card</code> is
- hosted on Alice’s Solid Storage and contains the URI of her OP. Alice’s WebID <code>https://alice.coolpod.example/profile/card#me</code> serves as her unique identifier
+ hosted on Alice’s Solid Storage and contains the URI of her OP. Alice’s WebID
+ <code>https://alice.coolpod.example/profile/card#me</code> serves as her unique identifier
  in the Solid Ecosystem.
     <dt id="rp"><a class="self-link" href="#rp"></a>RP
     <dd>The Decent Photos application is a third party photo viewing web application.
@@ -832,10 +841,12 @@ authorization request, to be verified against later. <a data-link-type="biblio" 
     <dt id="bob-pod"><a class="self-link" href="#bob-pod"></a>Bob’s Storage
     <dd>We will be trying to access photos stored in Bob’s Storage. In our example, Bob
  is a friend of Alice and has previously indicated via access control that Alice
- may access some of his photos using any web app. Bob’s Solid Storage is hosted at <code>https://bob.otherpod.example</code>.
+ may access some of his photos using any web app. Bob’s Solid Storage is hosted at
+ <code>https://bob.otherpod.example</code>.
     <dt id="bob-auth-server"><a class="self-link" href="#bob-auth-server"></a>Authorization Server for Bob’s Storage
     <dd>The Authorization Server (AS) connected to Bob’s Storage will issue access tokens that
- can be used with Bob’s Storage. In these examples, this is hosted at <code>https://auth.otherpod.example</code>.
+ can be used with Bob’s Storage. In these examples, this is hosted at
+ <code>https://auth.otherpod.example</code>.
    </dl>
    <h2 class="heading settled" data-level="4" id="solid-oidc-flow"><span class="secno">4. </span><span class="content">Solid-OIDC Flow</span><a class="self-link" href="#solid-oidc-flow"></a></h2>
    <h3 class="heading settled" data-level="4.1" id="authorization-code-pkce-flow"><span class="secno">4.1. </span><span class="content">Authorization Code Grant with PKCE Authorization Flow</span><a class="self-link" href="#authorization-code-pkce-flow"></a></h3>
@@ -843,25 +854,26 @@ authorization request, to be verified against later. <a data-link-type="biblio" 
 recommended by the Solid-OIDC. It is defined by the PKCE RFC <a data-link-type="biblio" href="#biblio-rfc7636" title="Proof Key for Code Exchange by OAuth Public Clients">[RFC7636]</a> and
 described here in the Solid-OIDC context.</p>
    <p><img src="primer-login.mmd.svg" width="980"></p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-1"><span class="content">1. Alice uses the Decent Photos web app</span><a class="self-link" href="#authorization-code-pkce-flow-step-1"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-1"><span class="content">1. Alice uses the Decent Photos web app</span><a class="self-link" href="#authorization-code-pkce-flow-step-1"></a></h4>
    <p>Alice has heard of a great new site that allows her to view her friend’s photos and tag faces.
 She navigates to <code>https://decentphotos.example</code> via her web browser which returns an HTML page.
 This page contains JavaScript that will help with the authentication process.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-2"><span class="content">2. Alice selects her OP or WebID</span><a class="self-link" href="#authorization-code-pkce-flow-step-2"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-2"><span class="content">2. Alice selects her OP or WebID</span><a class="self-link" href="#authorization-code-pkce-flow-step-2"></a></h4>
    <p>Before decentphotos can start displaying images, Alice needs to start the
 process of providing consent. To do so, she must either provide her WebID
 (<code>https://alice.coolpod.example/profile/card#me</code>) or the URL of her OP
 (<code>https://secureauth.example</code>).</p>
    <p>Although it is not the case for Alice, a user’s Storage and OP can be hosted under the
 same domain. For example, Bob could have a Storage at <code>https://bob.solidpod.example.com</code>,
-an OP at <code>https://solidpod.example.com/</code>, and a WebID of <code>https://bob.solidpod.example.com/profile/card#me</code>.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-2.1"><span class="content">2.1 Retrieve Profile (only needed if a WebID is provided)</span><a class="self-link" href="#authorization-code-pkce-flow-step-2.1"></a></h4>
+an OP at <code>https://solidpod.example.com/</code>, and a WebID of
+<code>https://bob.solidpod.example.com/profile/card#me</code>.</p>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-2.1"><span class="content">2.1 Retrieve Profile (only needed if a WebID is provided)</span><a class="self-link" href="#authorization-code-pkce-flow-step-2.1"></a></h4>
    <p>If Alice enters her WebID’s URL rather than her OP’s URL, a request should be
 made to determine her OP. To do so, a request should be made to Alice’s WebId:</p>
-<pre class="language-http highlight">GET https://alice.coolpod.example/profile/card#me
+<pre class="highlight language-http">GET https://alice.coolpod.example/profile/card#me
 </pre>
    <p>It will return a body similar to this:</p>
-<pre class="language-ttl highlight">@<c- g>prefix</c-> : <c- o>&lt;</c->#<c- o>></c->.
+<pre class="highlight language-ttl">@<c- g>prefix</c-> : <c- o>&lt;</c->#<c- o>></c->.
 @<c- g>prefix</c-> <c- g>solid</c->: <c- o>&lt;</c-><c- g>http</c->:<c- o>//</c-><c- g>www</c->.<c- g>w3</c->.<c- g>org</c-><c- o>/</c-><c- g>ns</c-><c- o>/</c-><c- g>solid</c-><c- o>/</c-><c- g>terms</c->#<c- o>></c->.
 @<c- g>prefix</c-> <c- g>foaf</c->: <c- o>&lt;</c-><c- g>http</c->:<c- o>//</c-><c- g>xmlns</c->.<c- g>com</c-><c- o>/</c-><c- g>foaf</c-><c- o>/</c-><c- mi>0</c->.<c- mi>1</c-><c- o>/></c->.
 @<c- g>prefix</c-> <c- g>schema</c->: <c- o>&lt;</c-><c- g>http</c->:<c- o>//</c-><c- g>schema</c->.<c- g>org</c-><c- o>/></c->.
@@ -877,14 +889,16 @@ made to determine her OP. To do so, a request should be made to Alice’s WebId:
     <c- g>solid</c->:<c- g>oidcIssuer</c-> <c- o>&lt;</c-><c- g>https</c->:<c- o>//</c-><c- g>secureauth</c->.<c- g>example</c-><c- o>></c-> <c- c1>;</c->
 </pre>
    <p>The OP URL is located at <code>:me -> solid:oidcIssuer</code></p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-3"><span class="content">3. Retrieves OP Configuration</span><a class="self-link" href="#authorization-code-pkce-flow-step-3"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-3"><span class="content">3. Retrieves OP Configuration</span><a class="self-link" href="#authorization-code-pkce-flow-step-3"></a></h4>
    <p>Now that we have Alice’s OP’s URL, the RP must make a request to retrieve the
-OP’s configuration. This is always located at the OP’s issuer URL followed by <code>/.well-known/openid-configuration</code>.</p>
-<pre class="language-http highlight">GET https://secureauth.example/.well-known/openid-configuration
+OP’s configuration. This is always located at the OP’s issuer URL followed by
+<code>/.well-known/openid-configuration</code>.</p>
+<pre class="highlight language-http">GET https://secureauth.example/.well-known/openid-configuration
 </pre>
-   <p>The <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata">openid-configuration</a> describes everything the client will need to know to authorize with Alice’s specific OP.</p>
+   <p>The <a href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata">openid-configuration</a>
+describes everything the client will need to know to authorize with Alice’s specific OP.</p>
    <p>Response Body:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"issuer"</c-><c- p>:</c-> <c- u>"https://secureauth.example"</c-><c- p>,</c->
     <c- f>"authorization_endpoint"</c-><c- p>:</c-> <c- u>"https://secureauth.example/authorize"</c-><c- p>,</c->
     <c- f>"token_endpoint"</c-><c- p>:</c-> <c- u>"https://secureauth.example/token"</c-><c- p>,</c->
@@ -938,32 +952,36 @@ OP’s configuration. This is always located at the OP’s issuer URL followed b
    <p>The thing we care about here is the <code>authorization_endpoint</code> field. This will
 be the url we use when we’re ready to send an authorization request to the OP.</p>
    <p>Note that we only support the <code>code</code> response type. The OIDC discovery
-specification states that Dynamic OpenID Providers MUST also support <code>id_token</code> and <code>token id_token</code>. However, <a href="https://oauth.net/2/grant-types/implicit/">implicit flows should not be used for
+specification states that Dynamic OpenID Providers MUST also support
+<code>id_token</code> and <code>token id_token</code>. However, <a href="https://oauth.net/2/grant-types/implicit/">implicit flows should not be used for
 security reasons</a>. Therefore, we
-don’t recommend enabling them. For the same reason, we do not support the <code>implicit</code> grant type.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-4"><span class="content">4. Generates PKCE code verifier and code challenge</span><a class="self-link" href="#authorization-code-pkce-flow-step-4"></a></h4>
-   <p>To follow the <a href="https://oauth.net/2/pkce/">PKCE code flow</a> we need to generate a <a data-link-type="dfn" href="#code-verifier" id="ref-for-code-verifier">code verifier</a> and <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challenge">code challenge</a> as instructed in the <a href="https://tools.ietf.org/html/rfc7636#section-4.1">Proof Key for Code
+don’t recommend enabling them. For the same reason, we do not support the
+<code>implicit</code> grant type.</p>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-4"><span class="content">4. Generates PKCE code verifier and code challenge</span><a class="self-link" href="#authorization-code-pkce-flow-step-4"></a></h4>
+   <p>To follow the <a href="https://oauth.net/2/pkce/">PKCE code flow</a> we need to generate a
+<a data-link-type="dfn" href="#code-verifier" id="ref-for-code-verifier">code verifier</a> and <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challenge">code challenge</a> as instructed in the <a href="https://tools.ietf.org/html/rfc7636#section-4.1">Proof Key for Code
 Exchange spec</a>.</p>
    <p>We start by generating a code verifier. This can be done by creating a
 cryptographically random string. Let’s say ours looks like this: <code>"JXPOuToEB7"</code>.</p>
    <p>Now using the code verifier, we construct a code challenge. This can be made by transforming
 the code verifier with Sha 256: <code>BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))</code>. Here’s our
 code challenge: <code>"HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0"</code></p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-5"><span class="content">5. Saved code verifier to session storage</span><a class="self-link" href="#authorization-code-pkce-flow-step-5"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-5"><span class="content">5. Saved code verifier to session storage</span><a class="self-link" href="#authorization-code-pkce-flow-step-5"></a></h4>
    <p>Now, we save the <a data-link-type="dfn" href="#code-verifier" id="ref-for-code-verifier①">code verifier</a> (<code>"JXPOuToEB7"</code>) to session storage. We’ll need it later to
 confirm to the OP that this is the app that initiated the request. Do not save the code
 challenge anywhere.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-6"><span class="content">6. Authorization request</span><a class="self-link" href="#authorization-code-pkce-flow-step-6"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-6"><span class="content">6. Authorization request</span><a class="self-link" href="#authorization-code-pkce-flow-step-6"></a></h4>
    <p>Now that the web app is registered, we can finally make an auth request to authorize the web
 application.</p>
-<pre class="language-http highlight">GET https://secureauth.example/authorize?response_type=code&amp;
+<pre class="highlight language-http">GET https://secureauth.example/authorize?response_type=code&amp;
 redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback&amp;
 scope=openid%20webid%20offline_access&amp;
 client_id=https%3A%2F%2Fdecentphotos.example%client_id&amp;
 code_challenge_method=S256&amp;
 code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0
 </pre>
-   <p>That URL might look a little complex, but it’s essentially a request to <code>https://secureauth.example/authorize</code> with the following URL parameters:</p>
+   <p>That URL might look a little complex, but it’s essentially a request to
+<code>https://secureauth.example/authorize</code> with the following URL parameters:</p>
    <ul>
     <li data-md>
      <p><code>response_type=code</code> indicates the desired response data.</p>
@@ -971,7 +989,8 @@ code_challenge=HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0
      <p><code>redirect_uri=https%3A%2F%2Fdecentphotos.example%2Fcallback</code>:
 The url that the OP will redirect to once the user has logged in (<code>https://decentphotos.example/callback</code>).</p>
     <li data-md>
-     <p><code>scope=openid%20webid%20offline_access</code>: a list of <a href="https://auth0.com/docs/scopes/current/oidc-scopes">OIDC scopes</a> (attributes of the RS to which this token should have access) separated by spaces (%20).</p>
+     <p><code>scope=openid%20webid%20offline_access</code>: a list of <a href="https://auth0.com/docs/scopes/current/oidc-scopes">OIDC scopes</a>
+(attributes of the RS to which this token should have access) separated by spaces (%20).</p>
      <ul>
       <li data-md>
        <p><code>openid</code> is a scope that is needed to verify Alice’s identity.</p>
@@ -990,14 +1009,14 @@ application is the app’s URI (in our case <code>https://decentphotos.example/c
    </ul>
    <p class="note" role="note"><span class="marker">Note:</span> If the app doesn’t have a URI, you can either register an app using static registration
 via some UI on the OP or use <a href="https://openid.net/specs/openid-connect-registration-1_0.html">dynamic registration</a>.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-7"><span class="content">7. Fetch RP Client ID Document</span><a class="self-link" href="#authorization-code-pkce-flow-step-7"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-7"><span class="content">7. Fetch RP Client ID Document</span><a class="self-link" href="#authorization-code-pkce-flow-step-7"></a></h4>
    <p>If an app URI is provided as the client id (see note above to see other options), we must
 fetch that app URI to confirm its validity.</p>
    <p>For the URI <code>https://decentphotos.example/client_id</code>, request the Client ID Document with:</p>
-<pre class="language-http highlight">GET https://decentphotos.example/webid
+<pre class="highlight language-http">GET https://decentphotos.example/webid
 </pre>
    <p>Response:</p>
-<pre class="language-jsonld highlight"><c- p>{</c->
+<pre class="highlight language-jsonld"><c- p>{</c->
   <c- nd>"@context"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"https://www.w3.org/ns/solid/oidc-context.jsonld"</c-> <c- p>],</c->
 
   <c- f>"client_id"</c-><c- p>:</c-> <c- u>"https://decentphtos.example/client_id"</c-><c- p>,</c->
@@ -1014,21 +1033,24 @@ fetch that app URI to confirm its validity.</p>
   <c- f>"require_auth_time"</c-><c- p>:</c-> <c- kc>true</c->
 <c- p>}</c->
 </pre>
-   <p>Notice that the application Client ID Document contains a JSON-LD representation of an <a href="https://tools.ietf.org/html/rfc7591#section-2">OIDC Client Registration</a>.
+   <p>Notice that the application Client ID Document contains a JSON-LD representation of an
+<a href="https://tools.ietf.org/html/rfc7591#section-2">OIDC Client Registration</a>.
 It also must use the specific <code>"@context": ["https://www.w3.org/ns/solid/oidc-context.jsonld"]</code>.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-8"><span class="content">8. Validate redirect url with Client ID Document</span><a class="self-link" href="#authorization-code-pkce-flow-step-8"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-8"><span class="content">8. Validate redirect url with Client ID Document</span><a class="self-link" href="#authorization-code-pkce-flow-step-8"></a></h4>
    <p>Check to be sure that the <code>redirect_uri</code> value provided in the auth request
 (<code>https://decentphotos.example/callback</code>) is listed in the <code>redirect_uris</code> array in the
-Client ID Document. If it is not, the OP must reject the request. In our case, the <code>redirect_uri</code> is valid, so we may continue.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-9"><span class="content">9. Alice Logs In</span><a class="self-link" href="#authorization-code-pkce-flow-step-9"></a></h4>
+Client ID Document. If it is not, the OP must reject the request. In our case, the
+<code>redirect_uri</code> is valid, so we may continue.</p>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-9"><span class="content">9. Alice Logs In</span><a class="self-link" href="#authorization-code-pkce-flow-step-9"></a></h4>
    <p>The OP should redirect to its login screen. The actual implementation of this is completely up
 to the OP. A user can log in with her password, a TLS certificate, or any other proven method
 of authentication. The important thing is that, thanks to the redirect, the control is now out
 of the hands of the RP and is in complete control of the OP.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-10"><span class="content">10. Generate an authorization code</span><a class="self-link" href="#authorization-code-pkce-flow-step-10"></a></h4>
-   <p>Generate a cryptographically random string that will be used as a <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code">authorization code</a> (Let’s say ours is <code>m-OrTPHdRsm8W_e9P0J2Bt</code>). Store that string in a persistent keystore as the key for the client
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-10"><span class="content">10. Generate an authorization code</span><a class="self-link" href="#authorization-code-pkce-flow-step-10"></a></h4>
+   <p>Generate a cryptographically random string that will be used as a <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code">authorization code</a> (Let’s say ours is
+<code>m-OrTPHdRsm8W_e9P0J2Bt</code>). Store that string in a persistent keystore as the key for the client
 id, the <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challenge②">code challenge</a>, the user’s webid, their desired response types, and their scopes:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
   <c- f>"m-OrTPHdRsm8W_e9P0J2Bt"</c-><c- p>:</c-> <c- p>{</c->
     <c- f>"client_id"</c-><c- p>:</c-> <c- u>"https://decentphotos.example/client_id"</c-><c- p>,</c->
     <c- f>"code_challenge"</c-><c- p>:</c-> <c- u>"HSi9dwlvRpNHCDm-L8GOdM16qcb0tLHPZqQSvaWXTI0"</c-><c- p>,</c->
@@ -1038,20 +1060,21 @@ id, the <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challeng
   <c- p>}</c->
 <c- p>}</c->
 </pre>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-11"><span class="content">11. Send authorization code to redirect url</span><a class="self-link" href="#authorization-code-pkce-flow-step-11"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-11"><span class="content">11. Send authorization code to redirect url</span><a class="self-link" href="#authorization-code-pkce-flow-step-11"></a></h4>
    <p>Once Alice successfully logs in, the OP redirects back to the application via the provided
 redirect uri, including useful information with it:</p>
-<pre class="language-http highlight">302 redirect to: https://decentphotos.example/callback?code=m-OrTPHdRsm8W_e9P0J2Bt
+<pre class="highlight language-http">302 redirect to: https://decentphotos.example/callback?code=m-OrTPHdRsm8W_e9P0J2Bt
 </pre>
    <p>This redirect gives decentphotos the <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code①">authorization code</a> that it will exchange for requested tokens.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-12"><span class="content">12. Generates a DPoP Client Key Pair</span><a class="self-link" href="#authorization-code-pkce-flow-step-12"></a></h4>
-   <p>Solid-OIDC depends on <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop">Demonstration of Proof-of-Possession (DPoP) tokens</a>.
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-12"><span class="content">12. Generates a DPoP Client Key Pair</span><a class="self-link" href="#authorization-code-pkce-flow-step-12"></a></h4>
+   <p>Solid-OIDC depends on
+<a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop">Demonstration of Proof-of-Possession (DPoP) tokens</a>.
 DPoP tokens ensure that third-party web applications can send requests to any number of
 Storage servers while ensuring that malicious actors can’t steal and replay a user’s token.</p>
    <p>The first step to generating a DPoP token is generating a public and private key pair on the
 third-party RP. In our example, the private key is generated using elliptic curves and looks
 like:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"kty"</c-><c- p>:</c-> <c- u>"EC"</c-><c- p>,</c->
     <c- f>"kid"</c-><c- p>:</c-> <c- u>"2i00gHnREsMhD5WqsABPSaqEjLC5MS-E98ykd-qtF1I"</c-><c- p>,</c->
     <c- f>"use"</c-><c- p>:</c-> <c- u>"sig"</c-><c- p>,</c->
@@ -1064,7 +1087,7 @@ like:</p>
 </pre>
    <p>From now on we will refer to this as <code>RP_PRIVATE_KEY</code>.</p>
    <p>The public key looks like:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"kty"</c-><c- p>:</c-> <c- u>"EC"</c-><c- p>,</c->
     <c- f>"kid"</c-><c- p>:</c-> <c- u>"2i00gHnREsMhD5WqsABPSaqEjLC5MS-E98ykd-qtF1I"</c-><c- p>,</c->
     <c- f>"use"</c-><c- p>:</c-> <c- u>"sig"</c-><c- p>,</c->
@@ -1074,15 +1097,15 @@ like:</p>
     <c- f>"y"</c-><c- p>:</c-> <c- u>"ay9qDOrFGdGe_3hAivW5HnqHYdnYUkXJJevHOBU4z5s"</c->
 <c- p>}</c->
 </pre>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-13"><span class="content">13. Generates a DPoP Header</span><a class="self-link" href="#authorization-code-pkce-flow-step-13"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-13"><span class="content">13. Generates a DPoP Header</span><a class="self-link" href="#authorization-code-pkce-flow-step-13"></a></h4>
    <p>Now that we generated a private key for the client, we need to generate the DPoP header. To do
 so, we create a <a href="https://jwt.io/introduction/">JSON Web Token</a> and sign it using the key we
 generated.</p>
    <p>Our token could look like the following (you can decode the token using https://jwt.io):</p>
-<pre class="language-text highlight">eyJhbGciOiJFUzI1NiIsInR5cCI6ImRwb3Arand0IiwiandrIjp7Imt0eSI6IkVDIiwia2lkIjoiZkJ1STExTkdGbTQ4Vlp6RzNGMjVDOVJmMXYtaGdEakVnV2pEQ1BrdV9pVSIsInVzZSI6InNpZyIsImFsZyI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiOWxlT2gxeF9IWkhzVkNScDcyQzVpR01jek1nUnpDUFBjNjBoWldfSFlLMCIsInkiOiJqOVVYcnRjUzRLVzBIYmVteW1vRWlMXzZ1cko0TFFHZXJQZXVNaFNEaV80In19.eyJodHUiOiJodHRwczovL3NlY3VyZWF1dGguZXhhbXBsZS90b2tlbiIsImh0bSI6InBvc3QiLCJqdGkiOiI0YmEzZTllZi1lOThkLTQ2NDQtOTg3OC03MTYwZmE3ZDNlYjgiLCJpYXQiOjE2MDMzMDYxMjgsImV4cCI6MTYwMzMwOTcyOH0.2lbgLoRCkj0MsDc9BpquoaYuq0-XwRf_URdXru2JKrVzaWUqQfyKRK76_sQ0aJyVwavM3pPswLlHq2r9032O7Q
+<pre class="highlight language-text">eyJhbGciOiJFUzI1NiIsInR5cCI6ImRwb3Arand0IiwiandrIjp7Imt0eSI6IkVDIiwia2lkIjoiZkJ1STExTkdGbTQ4Vlp6RzNGMjVDOVJmMXYtaGdEakVnV2pEQ1BrdV9pVSIsInVzZSI6InNpZyIsImFsZyI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiOWxlT2gxeF9IWkhzVkNScDcyQzVpR01jek1nUnpDUFBjNjBoWldfSFlLMCIsInkiOiJqOVVYcnRjUzRLVzBIYmVteW1vRWlMXzZ1cko0TFFHZXJQZXVNaFNEaV80In19.eyJodHUiOiJodHRwczovL3NlY3VyZWF1dGguZXhhbXBsZS90b2tlbiIsImh0bSI6InBvc3QiLCJqdGkiOiI0YmEzZTllZi1lOThkLTQ2NDQtOTg3OC03MTYwZmE3ZDNlYjgiLCJpYXQiOjE2MDMzMDYxMjgsImV4cCI6MTYwMzMwOTcyOH0.2lbgLoRCkj0MsDc9BpquoaYuq0-XwRf_URdXru2JKrVzaWUqQfyKRK76_sQ0aJyVwavM3pPswLlHq2r9032O7Q
 </pre>
    <p>Token Header:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"alg"</c-><c- p>:</c-> <c- u>"ES256"</c-><c- p>,</c->
     <c- f>"typ"</c-><c- p>:</c-> <c- u>"dpop+jwt"</c-><c- p>,</c->
     <c- f>"jwk"</c-><c- p>:</c-> <c- p>{</c->
@@ -1098,14 +1121,15 @@ generated.</p>
 </pre>
    <ul>
     <li data-md>
-     <p><code>"alg": "ES256"</code>: The signing algorithm used in this token. In this case, <code>ES256</code> because we generated the keys using eliptic curves.</p>
+     <p><code>"alg": "ES256"</code>: The signing algorithm used in this token. In this case, <code>ES256</code>
+because we generated the keys using eliptic curves.</p>
     <li data-md>
      <p><code>"typ": "dpop+jwt"</code>: The type of token. All DPoP Tokens should have a type of "dpop+jwt"</p>
     <li data-md>
      <p><code>"jwk": { "kty": "EC" ... }</code>: The client’s public key.</p>
    </ul>
    <p>Token Body:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"htu"</c-><c- p>:</c-> <c- u>"https://secureauth.example/token"</c-><c- p>,</c->
     <c- f>"htm"</c-><c- p>:</c-> <c- u>"POST"</c-><c- p>,</c->
     <c- f>"jti"</c-><c- p>:</c-> <c- u>"4ba3e9ef-e98d-4644-9878-7160fa7d3eb8"</c-><c- p>,</c->
@@ -1123,11 +1147,11 @@ that can optionally be used by the server to defend against replay attacks</p>
     <li data-md>
      <p><code>"iat": 1603306128</code>: The date the token was issued, in this case October 21, 2020 15:52:33 GMT.</p>
    </ul>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-14"><span class="content">14. Token request with code and code verifier</span><a class="self-link" href="#authorization-code-pkce-flow-step-14"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-14"><span class="content">14. Token request with code and code verifier</span><a class="self-link" href="#authorization-code-pkce-flow-step-14"></a></h4>
    <p>Now, we have everything we need to make an auth request. No need to redirect the web browser
 for this one. We only need to make an AJAX request to the <code>token</code> endpoint as defined in the
 OP’s <code>openid-configuration</code> file, in our case <code>https://secureauth.example/token</code></p>
-<pre class="language-http highlight">POST https://secureauth.example/token
+<pre class="highlight language-http">POST https://secureauth.example/token
 Headers: {
   "DPoP": "eyJhbGciOiJFUzI1NiIsInR5cCI6ImRwb3Arand0IiwiandrIjp7Imt0eSI6IkVDIiwia2lkIjoiZkJ1STExTkdGbTQ4Vlp6RzNGMjVDOVJmMXYtaGdEakVnV2pEQ1BrdV9pVSIsInVzZSI6InNpZyIsImFsZyI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiOWxlT2gxeF9IWkhzVkNScDcyQzVpR01jek1nUnpDUFBjNjBoWldfSFlLMCIsInkiOiJqOVVYcnRjUzRLVzBIYmVteW1vRWlMXzZ1cko0TFFHZXJQZXVNaFNEaV80In19.eyJodHUiOiJodHRwczovL3NlY3VyZWF1dGguZXhhbXBsZS90b2tlbiIsImh0bSI6InBvc3QiLCJqdGkiOiI0YmEzZTllZi1lOThkLTQ2NDQtOTg3OC03MTYwZmE3ZDNlYjgiLCJpYXQiOjE2MDMzMDYxMjgsImV4cCI6MTYwMzMwOTcyOH0.2lbgLoRCkj0MsDc9BpquoaYuq0-XwRf_URdXru2JKrVzaWUqQfyKRK76_sQ0aJyVwavM3pPswLlHq2r9032O7Q",
   "content-type": "application/x-www-form-urlencoded"
@@ -1144,7 +1168,9 @@ Body:
      <p><code>headers.DPoP: "eyJhbGciOiJFUz..."</code>: The DPoP token we generated before. This will tell the
 OP what the client’s public key is.</p>
     <li data-md>
-     <p><code>headers.content-type: "application/x-www-form-urlencoded"</code>: Sets to body’s content type to <code>application/x-www-form-urlencoded</code>. Some OPs will accept other content types like <code>application/json</code> but they all must access urlencoded content types, so it’s safest to use
+     <p><code>headers.content-type: "application/x-www-form-urlencoded"</code>: Sets to body’s content type to
+<code>application/x-www-form-urlencoded</code>. Some OPs will accept other content types like
+<code>application/json</code> but they all must access urlencoded content types, so it’s safest to use
 that.</p>
     <li data-md>
      <p><code>body.grant_type=authorization_code</code>: Tells the OP that we are doing the authorization code
@@ -1160,34 +1186,36 @@ doing an AJAX request.</p>
      <p><code>body.client_id=https%3A%2F%2Fdecentphotos.example%client_id</code>: The app’s client id.</p>
    </ul>
    <p>Once this request is completed decentphotos can remove the code verifier from session storage.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-15"><span class="content">15. Validate code verifier</span><a class="self-link" href="#authorization-code-pkce-flow-step-15"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-15"><span class="content">15. Validate code verifier</span><a class="self-link" href="#authorization-code-pkce-flow-step-15"></a></h4>
    <p>The OP looks up the <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code③">authorization code</a> that was saved earlier in a keystore. It checks to see that the client
 id in the keystore corresponds to the client id from the request. If it does not, it must
 reject the request with a 400 HTTP status and <code>invalid_grant</code> error code.</p>
-   <p>The OP then verifies that the <a data-link-type="dfn" href="#code-verifier" id="ref-for-code-verifier③">code verifier</a> corresponds with the <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challenge③">code challenge</a> stored in the keystore. <a href="https://www.rfc-editor.org/rfc/rfc7636#section-4.6">Proof Key for Code Exchange by OAuth Public Clients § section-4.6</a></p>
-<pre class="language-bash highlight">BASE64URL-ENCODE<c- o>(</c->SHA256<c- o>(</c->ASCII<c- o>(</c->code_verifier<c- o>)))</c-> <c- o>==</c-> code_challenge
+   <p>The OP then verifies that the <a data-link-type="dfn" href="#code-verifier" id="ref-for-code-verifier③">code verifier</a> corresponds with the <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challenge③">code challenge</a>
+stored in the keystore. <a href="https://www.rfc-editor.org/rfc/rfc7636#section-4.6">Proof Key for Code Exchange by OAuth Public Clients § section-4.6</a></p>
+<pre class="highlight language-bash">BASE64URL-ENCODE<c- o>(</c->SHA256<c- o>(</c->ASCII<c- o>(</c->code_verifier<c- o>)))</c-> <c- o>==</c-> code_challenge
 </pre>
-   <p>If they do not correspond the OP must reject the request with a 400 HTTP status and <code>invalid_grant</code> error code.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-16"><span class="content">16. Validates DPoP Token Signature</span><a class="self-link" href="#authorization-code-pkce-flow-step-16"></a></h4>
+   <p>If they do not correspond the OP must reject the request with a 400 HTTP status and <code>invalid_grant</code>
+error code.</p>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-16"><span class="content">16. Validates DPoP Token Signature</span><a class="self-link" href="#authorization-code-pkce-flow-step-16"></a></h4>
    <p>The OP extracts the client’s public key from the DPoP header (at header.jwk). It confirms that
 the DPoP token has a valid signature. If not, the OP must reject the request with a 400 HTTP
 status and <code>invalid_dpop_proof</code> error code.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-17"><span class="content">17. Converts the DPoP public key to a JWK thumbprint</span><a class="self-link" href="#authorization-code-pkce-flow-step-17"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-17"><span class="content">17. Converts the DPoP public key to a JWK thumbprint</span><a class="self-link" href="#authorization-code-pkce-flow-step-17"></a></h4>
    <p>Currently the DPoP token contains a JWK public key, but before we place it inside the access
 token, it needs to be converted into a <a href="https://tools.ietf.org/html/rfc7638">JWK thumbprint</a>.
 Our JWK thumbprint looks more like:</p>
-<pre class="language-text highlight">9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8
+<pre class="highlight language-text">9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8
 </pre>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-19"><span class="content">19. Generates the ID Token</span><a class="self-link" href="#authorization-code-pkce-flow-step-19"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-19"><span class="content">19. Generates the ID Token</span><a class="self-link" href="#authorization-code-pkce-flow-step-19"></a></h4>
    <p>Since <code>openid</code> was listed as a scope during the authorization request, the OP generates an id
 token. The id token will be pushed as claim to any Solid Authorization Server needed, which clients want to get Access Token from.
 This token is a <a href="https://jwt.io/introduction/">JSON Web Token</a>. It would look like
 the following (you can decrypt the token with <a href="https://jwt.io/#debugger-io?token=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg">https://jwt.io</a>):</p>
    <p class="issue" id="issue-81973254"><a class="self-link" href="#issue-81973254"></a> encoded token needs to be updated</p>
-<pre class="language-text highlight">eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg
+<pre class="highlight language-text">eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg
 </pre>
    <p>Token Header:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"alg"</c-><c- p>:</c-> <c- u>"ES256"</c-><c- p>,</c->
     <c- f>"typ"</c-><c- p>:</c-> <c- u>"JWT"</c-><c- p>,</c->
     <c- f>"kid"</c-><c- p>:</c-> <c- u>"Xu68Q0ZfwDiRfWOb2UE8N77GoEQQ7q58_3gl1wsKENs"</c->
@@ -1200,7 +1228,7 @@ the following (you can decrypt the token with <a href="https://jwt.io/#debugger-
      <p><code>"typ": "JWT"</code>: indicates that this is a JSON web token</p>
    </ul>
    <p>Token Body:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"sub"</c-><c- p>:</c-> <c- u>"https://alice.coolpod.example/profile/card#me"</c-><c- p>,</c->
     <c- f>"aud"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"solid"</c-><c- p>,</c-> <c- u>"https://decentphotos.example/client_id"</c-><c- p>],</c->
     <c- f>"azp"</c-><c- p>:</c-> <c- f>"https://decentphotos.example/client_id"</c->
@@ -1241,29 +1269,29 @@ for this token that can be used to prevent replay attacks.</p>
      <p><code>"cnf": { "jkt": "9XmwK8mQ3H5-PnzAt3lFHzWBW_v5QhYynezbbit4kC8" }</code>: The jwk thrumbprint must
 be embedded in an object on the field "jkt"</p>
    </ul>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-20"><span class="content">20. Generates refresh token</span><a class="self-link" href="#authorization-code-pkce-flow-step-20"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-20"><span class="content">20. Generates refresh token</span><a class="self-link" href="#authorization-code-pkce-flow-step-20"></a></h4>
    <p>If <code>offline_access</code> was provided as a scope, the OP creates an opaque token as
 a refresh token. It could be like the one below. Notice the one below is a JWT, but a refresh
 token does not need to be a JWT.</p>
-<pre class="language-text highlight">eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ.
+<pre class="highlight language-text">eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ.
 </pre>
    <p>The example token would decrypt as:</p>
    <p>Token Header:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"alg"</c-><c- p>:</c-> <c- u>"none"</c->
 <c- p>}</c->
 </pre>
    <p>Token Body:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"jti"</c-><c- p>:</c-> <c- u>"a78b49ef-71c5-4985-a50c-5ef3aef0fd8f"</c->
 <c- p>}</c->
 </pre>
    <p>Save the refresh token to a persistent store.</p>
-   <h4 class="no-num heading settled" id="authorization-code-pkce-flow-step-21"><span class="content">21. Sends tokens</span><a class="self-link" href="#authorization-code-pkce-flow-step-21"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-21"><span class="content">21. Sends tokens</span><a class="self-link" href="#authorization-code-pkce-flow-step-21"></a></h4>
    <p>Once the OP has confirmed that everything checks out and all the tokens are generated, it sends
 a response with the tokens in the body:</p>
    <p>Response (content-type: application/json)</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"access_token"</c-><c- p>:</c-> <c- u>"531683bf-fea8-4bca-8976-2de50e5c9a50"</c-><c- p>,</c->
     <c- f>"id_token"</c-><c- p>:</c-> <c- u>"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJodHRwczovL2FsaWNlLmNvb2xwb2QuZXhhbXBsZS9wcm9maWxlL2NhcmQjbWUiLCJhdWQiOiJodHRwczovL2RlY2VudHBob3Rvcy5leGFtcGxlL3dlYmlkI3RoaXMiLCJ3ZWJpZCI6Imh0dHBzOi8vYWxpY2UuY29vbHBvZC5leGFtcGxlL3Byb2ZpbGUvY2FyZCNtZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJlYXV0aC5leGFtcGxlIiwianRpIjoiODQ0YTA5NWMtOWNkYi00N2U1LTk1MTAtMWRiYTk4N2MwYTVmIiwiaWF0IjoxNjAzMzg2NDQ4LCJleHAiOjE2MDMzODcwNDh9.T306vT8dmn9gQIMEdG92AM4WRnrhqWZTfDpovwqZ6Zn0mK9yxj0iOVGqXD4CW8-tzDTitNwEGorAo85atL0Oeg"</c-><c- p>,</c->
     <c- f>"refresh_token"</c-><c- p>:</c-> <c- u>"eyJhbGciOiJub25lIn0.eyJqdGkiOiJhNzhiNDllZi03MWM1LTQ5ODUtYTUwYy01ZWYzYWVmMGZkOGYifQ."</c->
@@ -1287,24 +1315,24 @@ new ID token when the current token expires.</p>
 authentication steps above. She wants to make a request to Bob’s Storage to get a photo album
 information at <code>https://bob.otherpod.example/private/photo_album.ttl</code>. Bob has previously
 granted access to Alice but has not granted access to anyone else.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-1"><span class="content">1. Discover Authorization Server</span><a class="self-link" href="#request-flow-step-1"></a></h4>
+   <h4 class="heading no-num settled" id="request-flow-step-1"><span class="content">1. Discover Authorization Server</span><a class="self-link" href="#request-flow-step-1"></a></h4>
    <p>Client can discover Authorization Server by making request to the resource</p>
    <p>Request:</p>
-<pre class="language-http highlight">GET https://bob.otherpod.example/private/photo_album.ttl
+<pre class="highlight language-http">GET https://bob.otherpod.example/private/photo_album.ttl
 </pre>
    <p>Response:</p>
-<pre class="language-http highlight"><c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c-> <c- m>401</c-> <c- ne>Unauthorized</c->
+<pre class="highlight language-http"><c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c-> <c- m>401</c-> <c- ne>Unauthorized</c->
 <c- e>WWW-Authenticate</c-><c- o>:</c-> <c- l>UMA realm="example",</c->
   <c- l>as_uri="https://auth.otherpod.example",</c->
   <c- l>ticket="016f84e8-f9b9-11e0-bd6f-0021cc6004de"</c->
 </pre>
-   <h4 class="no-num heading settled" id="request-flow-step-2"><span class="content">2. Request AS configuration</span><a class="self-link" href="#request-flow-step-2"></a></h4>
+   <h4 class="heading no-num settled" id="request-flow-step-2"><span class="content">2. Request AS configuration</span><a class="self-link" href="#request-flow-step-2"></a></h4>
    <p>Knowing the Authorization Server, now the client can discover its Token Endpoint (<a data-link-type="biblio" href="#biblio-rfc8414" title="OAuth 2.0 Authorization Server Metadata">[RFC8414]</a>)</p>
    <p>Request:</p>
-<pre class="language-http highlight">GET https://auth.otherpod.example/.well-known/uma2-configuration
+<pre class="highlight language-http">GET https://auth.otherpod.example/.well-known/uma2-configuration
 </pre>
    <p>Response:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"issuer"</c-><c- p>:</c-> <c- u>"https://auth.otherpod.example"</c-><c- p>,</c->
     <c- f>"token_endpoint"</c-><c- p>:</c-> <c- u>"https://auth.otherpod.example/token"</c-><c- p>,</c->
     <c- f>"grant_types_supported"</c-><c- p>:</c-> <c- p>[</c->
@@ -1313,15 +1341,15 @@ granted access to Alice but has not granted access to anyone else.</p>
     ...
 <c- p>}</c->
 </pre>
-   <h4 class="no-num heading settled" id="request-flow-step-3"><span class="content">3. Creates a DPoP header token</span><a class="self-link" href="#request-flow-step-3"></a></h4>
+   <h4 class="heading no-num settled" id="request-flow-step-3"><span class="content">3. Creates a DPoP header token</span><a class="self-link" href="#request-flow-step-3"></a></h4>
    <p>Before we request access token, we need to generate a DPoP header token. A new DPoP token must be
 generated every time a request is made.</p>
    <p>Generating a DPoP token is done the same way we did it in the authentication section. It must be signed by the same keypair that we generated in the authentication section. Our token
 could look like the following (you can decode the token using https://jwt.io):</p>
-<pre class="language-text highlight">eyJhbGciOiJFUzI1NiIsInR5cCI6ImRwb3Arand0IiwiandrIjp7Imt0eSI6IkVDIiwia2lkIjoiQ21HVE9Dd3ZKWXhrb0dGOGNxcFpBNTdab2xVdThBcFJQb3MwVlduWk1TNCIsInVzZSI6InNpZyIsImFsZyI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiU0FZcmF5VUh4Z1FPQ29YSC1MbHdyOW1iSWJpUHBsLXRQRUpLeE1WWFltcyIsInkiOiJ6eGJQODdPQ3JpeEZpMk9vZjU1QkhsTC1ySHhvWHVuUmttNFBkV3duUzJnIn19.eyJodHUiOiJodHRwczovL2JvYi5vdGhlcnBvZC5leGFtcGxlL3ByaXZhdGUvcGhvdG9fYWxidW0udHRsIiwiaHRtIjoiZ2V0IiwianRpIjoiZmIxMjY0ZGQtZmZmMS00NTA5LWE3YjEtMGZlNThkMDhkM2UxIiwiaWF0IjoxNjAzMzg5NjE2LCJleHAiOjE2MDMzOTMyMTZ9.G8JktoMOadenCYtO4Z_ZI7ACnjKJvT59OyKlQ6WpB1Qq2GoCK6v1ocrpsfELDOKIL5nt5fwWccfvCAA2bMrkjA
+<pre class="highlight language-text">eyJhbGciOiJFUzI1NiIsInR5cCI6ImRwb3Arand0IiwiandrIjp7Imt0eSI6IkVDIiwia2lkIjoiQ21HVE9Dd3ZKWXhrb0dGOGNxcFpBNTdab2xVdThBcFJQb3MwVlduWk1TNCIsInVzZSI6InNpZyIsImFsZyI6IkVDIiwiY3J2IjoiUC0yNTYiLCJ4IjoiU0FZcmF5VUh4Z1FPQ29YSC1MbHdyOW1iSWJpUHBsLXRQRUpLeE1WWFltcyIsInkiOiJ6eGJQODdPQ3JpeEZpMk9vZjU1QkhsTC1ySHhvWHVuUmttNFBkV3duUzJnIn19.eyJodHUiOiJodHRwczovL2JvYi5vdGhlcnBvZC5leGFtcGxlL3ByaXZhdGUvcGhvdG9fYWxidW0udHRsIiwiaHRtIjoiZ2V0IiwianRpIjoiZmIxMjY0ZGQtZmZmMS00NTA5LWE3YjEtMGZlNThkMDhkM2UxIiwiaWF0IjoxNjAzMzg5NjE2LCJleHAiOjE2MDMzOTMyMTZ9.G8JktoMOadenCYtO4Z_ZI7ACnjKJvT59OyKlQ6WpB1Qq2GoCK6v1ocrpsfELDOKIL5nt5fwWccfvCAA2bMrkjA
 </pre>
    <p>Token Header:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"alg"</c-><c- p>:</c-> <c- u>"ES256"</c-><c- p>,</c->
     <c- f>"typ"</c-><c- p>:</c-> <c- u>"dpop+jwt"</c-><c- p>,</c->
     <c- f>"jwk"</c-><c- p>:</c-> <c- p>{</c->
@@ -1345,7 +1373,7 @@ generated the keys using eliptic curves.</p>
      <p><code>"jwk": { "kty": "EC" ... }</code>: The client’s public key.</p>
    </ul>
    <p>Token Body:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"htu"</c-><c- p>:</c-> <c- u>"https://auth.otherpod.example/token"</c-><c- p>,</c->
     <c- f>"htm"</c-><c- p>:</c-> <c- u>"POST"</c-><c- p>,</c->
     <c- f>"jti"</c-><c- p>:</c-> <c- u>"fb1264dd-fff1-4509-a7b1-0fe58d08d3e1"</c-><c- p>,</c->
@@ -1357,7 +1385,8 @@ generated the keys using eliptic curves.</p>
      <p><code>"htu": "https://auth.otherpod.example/token"</code>: htu limits the token for
 use only on the given url.</p>
     <li data-md>
-     <p><code>"htm": "POST"</code>: htm limits the token for use only on a specific http method, in this case <code>POST</code>.</p>
+     <p><code>"htm": "POST"</code>: htm limits the token for use only on a specific http method, in this case
+<code>POST</code>.</p>
     <li data-md>
      <p><code>"jti": "fb1264dd-fff1-4509-a7b1-0fe58d08d3e1"</code>: jti is a unique identifier for the DPoP
 token that can optionally be used by the server to defend against replay attacks</p>
@@ -1365,9 +1394,9 @@ token that can optionally be used by the server to defend against replay attacks
      <p><code>"iat": 1603389616</code>: The date the token was issued, in this case October 22, 2020 14:00:16
 GMT.</p>
    </ul>
-   <h4 class="no-num heading settled" id="request-flow-step-4"><span class="content">4. Request Access Token</span><a class="self-link" href="#request-flow-step-4"></a></h4>
+   <h4 class="heading no-num settled" id="request-flow-step-4"><span class="content">4. Request Access Token</span><a class="self-link" href="#request-flow-step-4"></a></h4>
    <p>Request:</p>
-<pre class="language-http highlight"><c- nf>POST</c-> <c- nn>/token</c-> <c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c->
+<pre class="highlight language-http"><c- nf>POST</c-> <c- nn>/token</c-> <c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c->
 <c- e>Host</c-><c- o>:</c-> <c- l>auth.otherpod.example</c->
 <c- e>DPoP</c-><c- o>:</c-> <c- l>eyJhbGciOi...</c->
 ...
@@ -1376,31 +1405,36 @@ grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Auma-ticket
 &amp;claim_token=eyj0...
 &amp;claim_token_format=http%3A%2F%2Fopenid.net%2Fspecs%2Fopenid-connect-core-1_0.html%23IDToken
 </pre>
-   <h4 class="no-num heading settled" id="request-flow-step-5"><span class="content">5. Checks ID Token expirations</span><a class="self-link" href="#request-flow-step-5"></a></h4>
+   <h4 class="heading no-num settled" id="request-flow-step-5"><span class="content">5. Checks ID Token expirations</span><a class="self-link" href="#request-flow-step-5"></a></h4>
    <p>The AS checks if the id token is still valid by looking at the <code>exp</code> claim. If the token
 does not have an <code>exp</code> claim or the token is expired, the AS must reject the request with
-a 403 HTTP status. When using UMA 2.0, the AS will include <code>need_info</code> and <code>required_claims</code> values in the error response.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-6"><span class="content">6. Checks the DPoP token url and method</span><a class="self-link" href="#request-flow-step-6"></a></h4>
+a 403 HTTP status. When using UMA 2.0, the AS will include <code>need_info</code> and <code>required_claims</code>
+values in the error response.</p>
+   <h4 class="heading no-num settled" id="request-flow-step-6"><span class="content">6. Checks the DPoP token url and method</span><a class="self-link" href="#request-flow-step-6"></a></h4>
    <p>The AS checks the <code>htu</code> and <code>htm</code> claims of the DPoP token. If the <code>htu</code> does not match the
 protocol, origin and path of the request or the <code>htm</code> does not correspond the the http method
-of the request, the AS must reject the request with a 400 HTTP status and an <code>invalid_dpop_proof</code> error code.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-6.1"><span class="content">6.1. (Optional) Checks DPoP token unique identifier</span><a class="self-link" href="#request-flow-step-6.1"></a></h4>
+of the request, the AS must reject the request with a 400 HTTP status and an <code>invalid_dpop_proof</code>
+error code.</p>
+   <h4 class="heading no-num settled" id="request-flow-step-6.1"><span class="content">6.1. (Optional) Checks DPoP token unique identifier</span><a class="self-link" href="#request-flow-step-6.1"></a></h4>
    <p>The AS can optionally keep track of all DPoP <code>jti</code> claims it received. Because a new DPoP token
 must be generated each time a request is made, no two tokens should have the same <code>jti</code>. If the
 AS receives a DPoP token with a <code>jti</code> it has already encountered it may reject the request with
 a 400 HTTP status and an <code>invalid_dpop_proof</code> error code.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-7"><span class="content">7. Checks DPoP signature against ID Token</span><a class="self-link" href="#request-flow-step-7"></a></h4>
-   <p>The AS first confirms that the DPoP token was signed by the public key listed in its <code>header jwk</code>. If it was not, the AS must reject the request with a 400 HTTP status and an <code>invalid_dpop_proof</code> error code.</p>
+   <h4 class="heading no-num settled" id="request-flow-step-7"><span class="content">7. Checks DPoP signature against ID Token</span><a class="self-link" href="#request-flow-step-7"></a></h4>
+   <p>The AS first confirms that the DPoP token was signed by the public key listed in its <code>header jwk</code>. If it was not, the AS must reject the request with a 400 HTTP status and an
+<code>invalid_dpop_proof</code> error code.</p>
    <p>The AS checks if the public key in the DPoP token’s <code>header.jwk</code> corresponds to the jwk
 thumbprint in the ID token in the <code>cnf</code> field. If they do not, the OP must reject the
-request. When using UMA 2.0, the response will include a 403 HTTP status code and a <code>need_info</code> field in the error response.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-8"><span class="content">8. Retrieves WebID Document</span><a class="self-link" href="#request-flow-step-8"></a></h4>
-   <p>Using the <code>webid</code> claim in the id token (for us, it’s <code>https://alice.coolpod.example/profile/card#me</code>), the AS retreives the user’s WebId document.</p>
+request. When using UMA 2.0, the response will include a 403 HTTP status code and a
+<code>need_info</code> field in the error response.</p>
+   <h4 class="heading no-num settled" id="request-flow-step-8"><span class="content">8. Retrieves WebID Document</span><a class="self-link" href="#request-flow-step-8"></a></h4>
+   <p>Using the <code>webid</code> claim in the id token (for us, it’s
+<code>https://alice.coolpod.example/profile/card#me</code>), the AS retreives the user’s WebId document.</p>
    <p>Request</p>
-<pre class="language-http highlight">GET https://alice.coolpod.example/profile/card#me
+<pre class="highlight language-http">GET https://alice.coolpod.example/profile/card#me
 </pre>
    <p>Response</p>
-<pre class="language-ttl highlight">@<c- g>prefix</c-> : <c- o>&lt;</c->#<c- o>></c->.
+<pre class="highlight language-ttl">@<c- g>prefix</c-> : <c- o>&lt;</c->#<c- o>></c->.
 @<c- g>prefix</c-> <c- g>solid</c->: <c- o>&lt;</c-><c- g>http</c->:<c- o>//</c-><c- g>www</c->.<c- g>w3</c->.<c- g>org</c-><c- o>/</c-><c- g>ns</c-><c- o>/</c-><c- g>solid</c-><c- o>/</c-><c- g>terms</c->#<c- o>></c->.
 @<c- g>prefix</c-> <c- g>foaf</c->: <c- o>&lt;</c-><c- g>http</c->:<c- o>//</c-><c- g>xmlns</c->.<c- g>com</c-><c- o>/</c-><c- g>foaf</c-><c- o>/</c-><c- mi>0</c->.<c- mi>1</c-><c- o>/></c->.
 @<c- g>prefix</c-> <c- g>schema</c->: <c- o>&lt;</c-><c- g>http</c->:<c- o>//</c-><c- g>schema</c->.<c- g>org</c-><c- o>/></c->.
@@ -1415,16 +1449,17 @@ request. When using UMA 2.0, the response will include a 403 HTTP status code an
     <c- g>foaf</c->:<c- g>name</c-> <c- u>"Alice"</c-> <c- c1>;</c->
     <c- g>solid</c->:<c- g>oidcIssuer</c-> <c- o>&lt;</c-><c- g>https</c->:<c- o>//</c-><c- g>secureauth</c->.<c- g>example</c-><c- o>></c-> <c- c1>;</c->
 </pre>
-   <h4 class="no-num heading settled" id="request-flow-step-9"><span class="content">9. Checks issuer</span><a class="self-link" href="#request-flow-step-9"></a></h4>
+   <h4 class="heading no-num settled" id="request-flow-step-9"><span class="content">9. Checks issuer</span><a class="self-link" href="#request-flow-step-9"></a></h4>
    <p>The AS checks that the <code>iss</code> claim in the ID token matches the issuer listed in the user’s
 WebID. If it does not, the AS must reject the request.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-10"><span class="content">10. Retrieves OP configuration</span><a class="self-link" href="#request-flow-step-10"></a></h4>
-   <p>The AS uses the <code>iss</code> claim to get the issuer’s configuration. The url is the issuer claim with <code>/.well-known/openid-configuration</code> appended to the end.</p>
+   <h4 class="heading no-num settled" id="request-flow-step-10"><span class="content">10. Retrieves OP configuration</span><a class="self-link" href="#request-flow-step-10"></a></h4>
+   <p>The AS uses the <code>iss</code> claim to get the issuer’s configuration. The url is the issuer claim with
+<code>/.well-known/openid-configuration</code> appended to the end.</p>
    <p>Request</p>
-<pre class="language-http highlight">GET https://secureauth.example/.well-known/openid-configuration
+<pre class="highlight language-http">GET https://secureauth.example/.well-known/openid-configuration
 </pre>
    <p>Response</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"issuer"</c-><c- p>:</c-> <c- u>"https://secureauth.example"</c-><c- p>,</c->
     <c- f>"authorization_endpoint"</c-><c- p>:</c-> <c- u>"https://secureauth.example/authorize"</c-><c- p>,</c->
     <c- f>"token_endpoint"</c-><c- p>:</c-> <c- u>"https://secureauth.example/token"</c-><c- p>,</c->
@@ -1475,14 +1510,14 @@ WebID. If it does not, the AS must reject the request.</p>
     <c- f>"require_request_uri_registration"</c-><c- p>:</c-> <c- kc>false</c->
 <c- p>}</c->
 </pre>
-   <h4 class="no-num heading settled" id="request-flow-step-11"><span class="content">11. Requests JWKS</span><a class="self-link" href="#request-flow-step-11"></a></h4>
+   <h4 class="heading no-num settled" id="request-flow-step-11"><span class="content">11. Requests JWKS</span><a class="self-link" href="#request-flow-step-11"></a></h4>
    <p>Using the <code>jwks_uri</code> field in the openid-configuration, the AS makes a request to retreive the
 OP’s public keys.</p>
    <p>Request</p>
-<pre class="language-http highlight">GET https://secureauth.example/jwks
+<pre class="highlight language-http">GET https://secureauth.example/jwks
 </pre>
    <p>Response (application/json)</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
     <c- f>"keys"</c-><c- p>:</c-> <c- p>[</c->
         <c- p>{</c->
             <c- f>"alg"</c-><c- p>:</c-> <c- u>"EC"</c-><c- p>,</c->
@@ -1497,49 +1532,50 @@ OP’s public keys.</p>
 <c- p>}</c->
 </pre>
    <p>Notice that the <code>keys</code> field is an array, so an OP could have multiple public keys.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-12"><span class="content">12. Checks ID token signature validity</span><a class="self-link" href="#request-flow-step-12"></a></h4>
+   <h4 class="heading no-num settled" id="request-flow-step-12"><span class="content">12. Checks ID token signature validity</span><a class="self-link" href="#request-flow-step-12"></a></h4>
    <p>Using the <code>kid</code> value in the ID token, the AS searches the OP public keys for one that matches the
 one used to sign the ID token. If no public key is found, the AS must reject the request.</p>
    <p>Details about the <code>kid</code> can be found in the <a href="https://www.rfc-editor.org/rfc/rfc7515#section-4.1.4">JSON Web Signature (JWS) § section-4.1.4</a>.</p>
-   <h4 class="no-num heading settled" id="request-flow-step-13"><span class="content">13. Access Token Response</span><a class="self-link" href="#request-flow-step-13"></a></h4>
-   <p>Now that the AS has performed all of its checks, we can trust that the agent in the <code>webid</code> claim (<code>https://alice.coolpod.example/profile/card#me</code>) is the same agent on whose behalf the
+   <h4 class="heading no-num settled" id="request-flow-step-13"><span class="content">13. Access Token Response</span><a class="self-link" href="#request-flow-step-13"></a></h4>
+   <p>Now that the AS has performed all of its checks, we can trust that the agent in the <code>webid</code>
+claim (<code>https://alice.coolpod.example/profile/card#me</code>) is the same agent on whose behalf the
 request was made. Using that information, the AS performs authorization and returns access token.</p>
    <p>Response:</p>
-<pre class="language-json highlight"><c- p>{</c->
+<pre class="highlight language-json"><c- p>{</c->
    <c- f>"access_token"</c-><c- p>:</c-><c- u>"sbjsbhs(/SSJHBSUSSJHVhjsgvhsgvshgsv"</c-><c- p>,</c->
    <c- f>"token_type"</c-><c- p>:</c-><c- u>"Bearer"</c->
 <c- p>}</c->
 </pre>
-   <h4 class="no-num heading settled" id="request-flow-step-14"><span class="content">14. Sends request with Access Token</span><a class="self-link" href="#request-flow-step-14"></a></h4>
+   <h4 class="heading no-num settled" id="request-flow-step-14"><span class="content">14. Sends request with Access Token</span><a class="self-link" href="#request-flow-step-14"></a></h4>
    <p class="note" role="note"><span class="marker">Note:</span> In practice, the client would need to upgrade RPT by pushing
 the authorization related claim. This primer only focuses on authentication so we omit
 this detail here.</p>
    <p>With the access token, we’re ready to make our request.</p>
-<pre class="language-http highlight">GET https://bob.otherpod.example/private/photo_album.ttl
+<pre class="highlight language-http">GET https://bob.otherpod.example/private/photo_album.ttl
 Headers: {
     authorization: "Bearer sbjsbhs(/SSJHBSUSSJHVhjsgvhsgvshgsv",
 }
 </pre>
-   <h4 class="no-num heading settled" id="request-flow-step-15"><span class="content">15. Returns Result</span><a class="self-link" href="#request-flow-step-15"></a></h4>
+   <h4 class="heading no-num settled" id="request-flow-step-15"><span class="content">15. Returns Result</span><a class="self-link" href="#request-flow-step-15"></a></h4>
    <p>Given all went well, the RS should return the requested content.</p>
   </main>
   <script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
-  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
-  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
+  <h2 class="heading no-num no-ref settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="heading no-num no-ref settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
    <li><a href="#authorization-code">authorization code</a><span>, in § 2</span>
    <li><a href="#code-challenge">code challenge</a><span>, in § 2</span>
    <li><a href="#code-verifier">code verifier</a><span>, in § 2</span>
   </ul>
-  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
-  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
+  <h2 class="heading no-num no-ref settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="heading no-num no-ref settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-rfc7515">[RFC7515]
    <dd>M. Jones; J. Bradley; N. Sakimura. <a href="https://www.rfc-editor.org/rfc/rfc7515"><cite>JSON Web Signature (JWS)</cite></a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7515">https://www.rfc-editor.org/rfc/rfc7515</a>
    <dt id="biblio-rfc7636">[RFC7636]
    <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/rfc/rfc7636"><cite>Proof Key for Code Exchange by OAuth Public Clients</cite></a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7636">https://www.rfc-editor.org/rfc/rfc7636</a>
   </dl>
-  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-oidc-core">[OIDC-CORE]
    <dd>N. Sakimura; et al. <a href="https://openid.net/specs/openid-connect-core-1_0.html"><cite>OpenID Connect Core 1.0</cite></a>. URL: <a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>
@@ -2147,19 +2183,21 @@ function genLinkingSyntaxes(dfn) {
 "use strict";
 {
 let refsData = {
-"#authorization-code": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"solid-oidc-primer","spec":"solid-oidc-primer-1","status":"local","text":"authorization code","type":"dfn","url":"#authorization-code"},
-"#code-challenge": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"solid-oidc-primer","spec":"solid-oidc-primer-1","status":"local","text":"code challenge","type":"dfn","url":"#code-challenge"},
-"#code-verifier": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"solid-oidc-primer","spec":"solid-oidc-primer-1","status":"local","text":"code verifier","type":"dfn","url":"#code-verifier"},
+"#authorization-code": {"displayText":"authorization code","export":true,"for_":[],"level":"1","normative":true,"shortname":"solid-oidc-primer","spec":"solid-oidc-primer-1","status":"local","text":"authorization code","type":"dfn","url":"#authorization-code"},
+"#code-challenge": {"displayText":"code challenge","export":true,"for_":[],"level":"1","normative":true,"shortname":"solid-oidc-primer","spec":"solid-oidc-primer-1","status":"local","text":"code challenge","type":"dfn","url":"#code-challenge"},
+"#code-verifier": {"displayText":"code verifier","export":true,"for_":[],"level":"1","normative":true,"shortname":"solid-oidc-primer","spec":"solid-oidc-primer-1","status":"local","text":"code verifier","type":"dfn","url":"#code-verifier"},
 };
 
 function mkRefHint(link, ref) {
     const linkText = link.textContent;
     let dfnTextElements = '';
-    if (ref.text != linkText) {
+    if (ref.displayText.toLowerCase() != linkText.toLowerCase()) {
+        // Give the original term if it's being displayed in a different way.
+        // But allow casing differences, they're insignificant.
         dfnTextElements =
             mk.li({},
                 mk.b({}, "Term: "),
-                mk.span({}, ref.text)
+                mk.span({}, ref.displayText)
             );
     }
     const forList = ref.for_;
@@ -2229,7 +2267,12 @@ function hideRefHint(refHint) {
 function showRefHint(link) {
     if(link.classList.contains("dfn-link")) return;
     const url = link.getAttribute("href");
-    const ref = refsData[url];
+    const refHintKey = link.getAttribute("data-refhint-key");
+    let key = url;
+    if(refHintKey) {
+        key = refHintKey + "_" + url;
+    }
+    const ref = refsData[key];
     if(!ref) return;
 
     hideAllRefHints(); // Only display one at this time.
