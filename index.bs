@@ -288,6 +288,34 @@ Solid-OIDC defines the following `scope` value for use with claim requests:
     REQUIRED. This scope requests access to the End-User's `webid` Claim.
 </dl>
 
+
+# Issuer Validation after receiving the Authorization Code # {#iss-check}
+
+In accordance with Best Current Practice [[RFC9700]], 
+defense against [Mix-Up Attacks](https://www.rfc-editor.org/rfc/rfc9700.html#section-4.4) 
+is required in Solid-OIDC as clients are expected to interact with more than one OP. 
+To this end, this specification adopts the mechanism defined in [[!RFC9207]].
+
+The OP MUST include the `iss` query parameter alongside the authorization code when redirecting the user agent back to the Client's redirect_uri.
+The value of the `iss` parameter MUST be the Issuer Identifier of the OP, as defined in [[OIDC-CORE]].
+<figure class="example">
+    <pre highlight="http">
+HTTP/1.1 302 Found
+Location: https://client.example.com/callback?
+                                        code=n0esc392ae491076
+                                        &amp;state=af0ifjsldkj
+                                        &amp;iss=https%3A%2F%2Fidp.example.com
+    </pre>
+    <figcaption>Example Authorization Response including the `iss` query parameter</figcaption>
+</figure>
+
+Upon receiving the authorization response, the Client MUST validate the `iss` parameter:
+* The Client MUST check for the presence of the `iss` parameter.
+* The Client MUST verify that the `iss` value matches the Issuer Identifier of the OP to which the authorization request was sent.
+
+If the `iss` parameter is missing or does not match the expected value, the Client MUST reject the response, MUST NOT exchange the authorization code for tokens, and SHOULD signal an error to the user.
+
+
 # Token Instantiation # {#tokens}
 
 Assuming one of the following options
