@@ -113,7 +113,11 @@ from a browser or an application.
 
 Therefore, this specification assumes the use of the
 [Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowSteps) with
-PKCE, in accordance with OAuth and OIDC best practices. It is also assumed that there are no
+PKCE, in accordance with OAuth and OIDC best practices, for interactive browser-based login.
+For non-interactive use cases such as scripts, automated agents, and server-to-server communication,
+this specification also requires support for the
+[Client Credentials Grant](https://www.rfc-editor.org/rfc/rfc6749#section-4.4).
+It is also assumed that there are no
 preexisting trust relationships with the OP. This means that client registration, whether dynamic,
 or static, is entirely optional.
 
@@ -288,13 +292,31 @@ Solid-OIDC defines the following `scope` value for use with claim requests:
     REQUIRED. This scope requests access to the End-User's `webid` Claim.
 </dl>
 
+# Client Credentials Grant # {#client-credentials}
+
+OpenID Providers MUST support the OAuth 2.0 Client Credentials Grant [[!RFC6749]] (Section 4.4)
+to enable non-interactive authentication for scripts, automated agents, and server-to-server
+communication.
+
+When using the Client Credentials Grant, the Client authenticates with the OP using a
+`client_id` and `client_secret` pair previously obtained through client registration
+(either static or dynamic). The Client sends a token request to the OP's token endpoint
+with `grant_type=client_credentials` and the `webid` scope.
+
+The OP MUST validate the `client_id` and `client_secret`, and if valid, MUST return
+a DPoP-bound Access Token. The Client MUST include a valid DPoP proof [[!DPOP]]
+with the token request.
+
+The OP MUST advertise `client_credentials` in its `grant_types_supported`
+metadata property in its OpenID Connect Discovery 1.0 [[!OIDC-DISCOVERY]] document.
+
 # Token Instantiation # {#tokens}
 
 Assuming one of the following options
- - Client ID and Secret, and valid DPoP Proof (for dynamic and static registration)
+ - Client ID and Secret, and valid DPoP Proof, using either the Authorization Code Grant or the Client Credentials Grant
  - Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)
 
-the OP MUST return A DPoP-bound OIDC ID Token.
+the OP MUST return a DPoP-bound OIDC ID Token.
 
 ## DPoP-bound OIDC ID Token ## {#tokens-id}
 
@@ -401,10 +423,15 @@ requested resource.
 An OpenID Provider that conforms to the Solid-OIDC specification MUST advertise it in the OpenID Connect
 Discovery 1.0 [[!OIDC-DISCOVERY]] resource by including `webid` in its `scopes_supported` metadata property.
 
+Additionally, the OP MUST include `client_credentials` in its `grant_types_supported`
+metadata property to indicate support for non-interactive authentication
+via the Client Credentials Grant (see [[#client-credentials]]).
+
 <div class="example">
     <pre highlight="json">
         {
-            "scopes_supported": ["openid", "offline_access", "webid"]
+            "scopes_supported": ["openid", "offline_access", "webid"],
+            "grant_types_supported": ["authorization_code", "refresh_token", "client_credentials"]
         }
     </pre>
 </div>
