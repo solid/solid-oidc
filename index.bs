@@ -294,7 +294,7 @@ Solid-OIDC defines the following `scope` value for use with claim requests:
 
 # Client Credentials Grant # {#client-credentials}
 
-OpenID Providers MUST support the OAuth 2.0 Client Credentials Grant [[!RFC6749]] (Section 4.4)
+Authorization Servers MUST support the OAuth 2.0 Client Credentials Grant [[!RFC6749]] (Section 4.4)
 to enable non-interactive authentication for scripts, automated agents, and server-to-server
 communication.
 
