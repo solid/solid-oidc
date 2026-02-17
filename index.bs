@@ -304,7 +304,7 @@ When using the Client Credentials Grant, the Client authenticates with the OP us
 with `grant_type=client_credentials` and the `webid` scope.
 
 The OP MUST validate the `client_id` and `client_secret`, and if valid, MUST return
-a DPoP-bound Access Token. The Client MUST include a valid DPoP proof [[!DPOP]]
+a DPoP-bound OIDC ID Token. The Client MUST include a valid DPoP proof [[!DPOP]]
 with the token request.
 
 The OP MUST advertise `client_credentials` in its `grant_types_supported`
