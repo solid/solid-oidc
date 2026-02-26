@@ -8,7 +8,7 @@
   <meta content="Bikeshed version 0ef803fdf, updated Tue Jan 6 11:59:39 2026 -0800" name="generator">
   <link href="https://solidproject.org/TR/oidc" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="c15c153e31f2c274646ded5a1c423777ea6dd8bb" name="revision">
+  <meta content="db9b112dd23e8981985dcb2a7a4877a2464e3214" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -582,7 +582,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </p>
    <h1 class="no-ref p-name" id="title">Solid-OIDC</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-01-21">21 January 2026</time></p>
+    <time class="dt-updated" datetime="2026-02-26">26 February 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -596,7 +596,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>July 16, 2021
       <dt>Modified:
-      <dd>21 January 2026
+      <dd>26 February 2026
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -663,33 +663,34 @@ for use within the Solid ecosystem.</p>
       <li><a href="#oidc-issuer-discovery"><span class="secno">6.1</span> <span class="content">OIDC Issuer Discovery</span></a>
      </ol>
     <li><a href="#webid-scope"><span class="secno">7</span> <span class="content">Requesting the WebID Claim using a Scope Value</span></a>
+    <li><a href="#iss-check"><span class="secno">8</span> <span class="content">Issuer Validation after receiving the Authorization Code</span></a>
     <li>
-     <a href="#tokens"><span class="secno">8</span> <span class="content">Token Instantiation</span></a>
+     <a href="#tokens"><span class="secno">9</span> <span class="content">Token Instantiation</span></a>
      <ol class="toc">
-      <li><a href="#tokens-id"><span class="secno">8.1</span> <span class="content">DPoP-bound OIDC ID Token</span></a>
+      <li><a href="#tokens-id"><span class="secno">9.1</span> <span class="content">DPoP-bound OIDC ID Token</span></a>
      </ol>
     <li>
-     <a href="#resource"><span class="secno">9</span> <span class="content">Resource Access</span></a>
+     <a href="#resource"><span class="secno">10</span> <span class="content">Resource Access</span></a>
      <ol class="toc">
-      <li><a href="#authorization-server-discovery"><span class="secno">9.1</span> <span class="content">Authorization Server Discovery</span></a>
-      <li><a href="#obtaining-access-token"><span class="secno">9.2</span> <span class="content">Obtaining an Access Token</span></a>
-      <li><a href="#dpop-validation"><span class="secno">9.3</span> <span class="content">DPoP Validation</span></a>
+      <li><a href="#authorization-server-discovery"><span class="secno">10.1</span> <span class="content">Authorization Server Discovery</span></a>
+      <li><a href="#obtaining-access-token"><span class="secno">10.2</span> <span class="content">Obtaining an Access Token</span></a>
+      <li><a href="#dpop-validation"><span class="secno">10.3</span> <span class="content">DPoP Validation</span></a>
      </ol>
-    <li><a href="#discovery"><span class="secno">10</span> <span class="content">Solid-OIDC Conformance Discovery</span></a>
+    <li><a href="#discovery"><span class="secno">11</span> <span class="content">Solid-OIDC Conformance Discovery</span></a>
     <li>
-     <a href="#security"><span class="secno">11</span> <span class="content">Security Considerations</span></a>
+     <a href="#security"><span class="secno">12</span> <span class="content">Security Considerations</span></a>
      <ol class="toc">
-      <li><a href="#security-tls"><span class="secno">11.1</span> <span class="content">TLS Requirements</span></a>
-      <li><a href="#security-client-ids"><span class="secno">11.2</span> <span class="content">Client IDs</span></a>
-      <li><a href="#security-client-secrets"><span class="secno">11.3</span> <span class="content">Client Secrets</span></a>
-      <li><a href="#security-client-trust"><span class="secno">11.4</span> <span class="content">Client Trust</span></a>
+      <li><a href="#security-tls"><span class="secno">12.1</span> <span class="content">TLS Requirements</span></a>
+      <li><a href="#security-client-ids"><span class="secno">12.2</span> <span class="content">Client IDs</span></a>
+      <li><a href="#security-client-secrets"><span class="secno">12.3</span> <span class="content">Client Secrets</span></a>
+      <li><a href="#security-client-trust"><span class="secno">12.4</span> <span class="content">Client Trust</span></a>
      </ol>
     <li>
-     <a href="#privacy"><span class="secno">12</span> <span class="content">Privacy Considerations</span></a>
+     <a href="#privacy"><span class="secno">13</span> <span class="content">Privacy Considerations</span></a>
      <ol class="toc">
-      <li><a href="#privacy-token-reuse"><span class="secno">12.1</span> <span class="content">OIDC ID Token Reuse</span></a>
+      <li><a href="#privacy-token-reuse"><span class="secno">13.1</span> <span class="content">OIDC ID Token Reuse</span></a>
      </ol>
-    <li><a href="#acknowledgments"><span class="secno">13</span> <span class="content">Acknowledgments</span></a>
+    <li><a href="#acknowledgments"><span class="secno">14</span> <span class="content">Acknowledgments</span></a>
     <li><a href="#full-jsonld-context"><span class="secno"></span> <span class="content">Appendix A: Full JSON-LD context</span></a>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
@@ -917,7 +918,33 @@ what information is made available as Claim Values.</p>
     REQUIRED. This scope requests access to the End-User’s <code>webid</code> Claim.
 
    </dl>
-   <h2 class="heading settled" data-level="8" id="tokens"><span class="secno">8. </span><span class="content">Token Instantiation</span><a class="self-link" href="#tokens"></a></h2>
+   <h2 class="heading settled" data-level="8" id="iss-check"><span class="secno">8. </span><span class="content">Issuer Validation after receiving the Authorization Code</span><a class="self-link" href="#iss-check"></a></h2>
+   <p>In accordance with Best Current Practice <a data-link-type="biblio" href="#biblio-rfc9700" title="Best Current Practice for OAuth 2.0 Security">[RFC9700]</a>,
+defense against <a href="https://www.rfc-editor.org/rfc/rfc9700.html#section-4.4">Mix-Up Attacks</a> 
+is required in Solid-OIDC as clients are expected to interact with more than one OP. 
+To this end, this specification adopts the mechanism defined in <a data-link-type="biblio" href="#biblio-rfc9207" title="OAuth 2.0 Authorization Server Issuer Identification">[RFC9207]</a>.</p>
+   <p>The OP MUST include the <code>iss</code> query parameter alongside the authorization code when redirecting the user agent back to the Client’s redirect_uri.
+The value of the <code>iss</code> parameter MUST be the Issuer Identifier of the OP, as defined in <a data-link-type="biblio" href="#biblio-oidc-core" title="OpenID Connect Core 1.0">[OIDC-CORE]</a>.</p>
+   <figure class="example" id="example-4e08796c">
+    <a class="self-link" href="#example-4e08796c"></a>
+    
+<pre class="highlight"><c- kr>HTTP</c-><c- o>/</c-><c- m>1.1</c-> <c- m>302</c-> <c- ne>Found</c->
+<c- e>Location</c-><c- o>:</c-> <c- l>https://client.example.com/callback?</c->
+                                        <c- l>code=n0esc392ae491076</c->
+                                        <c- l>&amp;state=af0ifjsldkj</c->
+                                        <c- l>&amp;iss=https%3A%2F%2Fidp.example.com</c->
+</pre>
+    <figcaption>Example Authorization Response including the <code>iss</code> query parameter</figcaption>
+   </figure>
+   <p>Upon receiving the authorization response, the Client MUST validate the <code>iss</code> parameter:</p>
+   <ul>
+    <li data-md>
+     <p>The Client MUST check for the presence of the <code>iss</code> parameter.</p>
+    <li data-md>
+     <p>The Client MUST verify that the <code>iss</code> value matches the Issuer Identifier of the OP to which the authorization request was sent.</p>
+   </ul>
+   <p>If the <code>iss</code> parameter is missing or does not match the expected value, the Client MUST reject the response, MUST NOT exchange the authorization code for tokens, and SHOULD signal an error to the user.</p>
+   <h2 class="heading settled" data-level="9" id="tokens"><span class="secno">9. </span><span class="content">Token Instantiation</span><a class="self-link" href="#tokens"></a></h2>
    <p>Assuming one of the following options</p>
    <ul>
     <li data-md>
@@ -926,7 +953,7 @@ what information is made available as Claim Values.</p>
      <p>Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)</p>
    </ul>
    <p>the OP MUST return A DPoP-bound OIDC ID Token.</p>
-   <h3 class="heading settled" data-level="8.1" id="tokens-id"><span class="secno">8.1. </span><span class="content">DPoP-bound OIDC ID Token</span><a class="self-link" href="#tokens-id"></a></h3>
+   <h3 class="heading settled" data-level="9.1" id="tokens-id"><span class="secno">9.1. </span><span class="content">DPoP-bound OIDC ID Token</span><a class="self-link" href="#tokens-id"></a></h3>
    <p>When requesting a DPoP-bound OIDC ID Token, the Client MUST send a DPoP proof JWT
 that is valid according to the <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop#section-5">OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP) § section-5</a>. The DPoP proof JWT is used to
 bind the OIDC ID Token to a public key. See also: <a data-link-type="biblio" href="#biblio-dpop" title="OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)">[DPOP]</a>.</p>
@@ -980,14 +1007,14 @@ Key bound to the OIDC ID Token. See also: <a href="https://tools.ietf.org/html/d
    </div>
    <div class="issue no-marker" id="issue-d41d8cd9⑥"><a class="self-link" href="#issue-d41d8cd9⑥"></a><a class="marker" href="https://github.com/solid/solid-oidc/issues/26" style="text-transform:none">solid/solid-oidc/26</a><a href="https://github.com/solid/solid-oidc/issues/26">Proposal: change webid claim to solid</a></div>
    <div class="issue no-marker" id="issue-d41d8cd9⑦"><a class="self-link" href="#issue-d41d8cd9⑦"></a><a class="marker" href="https://github.com/solid/solid-oidc/issues/47" style="text-transform:none">solid/solid-oidc/47</a><a href="https://github.com/solid/solid-oidc/issues/47">Presenting multiple WebIDs in an ID Token</a></div>
-   <h4 class="heading settled" data-level="8.1.1" id="id-token-validation"><span class="secno">8.1.1. </span><span class="content">ID Token Validation</span><a class="self-link" href="#id-token-validation"></a></h4>
+   <h4 class="heading settled" data-level="9.1.1" id="id-token-validation"><span class="secno">9.1.1. </span><span class="content">ID Token Validation</span><a class="self-link" href="#id-token-validation"></a></h4>
    <p>An ID Token must be validated according to <a href="https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation">OIDC-CORE, Section 3.1.3.7</a></p>
    <p>The Verifying party MUST perform <a href="#oidc-issuer-discovery">§ 6.1 OIDC Issuer Discovery</a> using the value of the <code>webid</code> claim
 to dereference the WebID Profile Document.</p>
    <p>Unless the verifying party acquires OP keys through some other means, or it chooses to reject tokens issued by this OP,
 the verifying party MUST follow OpenID Connect Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidc-discovery" title="OpenID Connect Discovery 1.0">[OIDC-DISCOVERY]</a> to find an OP’s signing keys (JWK).</p>
-   <h2 class="heading settled" data-level="9" id="resource"><span class="secno">9. </span><span class="content">Resource Access</span><a class="self-link" href="#resource"></a></h2>
-   <h3 class="heading settled" data-level="9.1" id="authorization-server-discovery"><span class="secno">9.1. </span><span class="content">Authorization Server Discovery</span><a class="self-link" href="#authorization-server-discovery"></a></h3>
+   <h2 class="heading settled" data-level="10" id="resource"><span class="secno">10. </span><span class="content">Resource Access</span><a class="self-link" href="#resource"></a></h2>
+   <h3 class="heading settled" data-level="10.1" id="authorization-server-discovery"><span class="secno">10.1. </span><span class="content">Authorization Server Discovery</span><a class="self-link" href="#authorization-server-discovery"></a></h3>
    <p>When a Client performs an unauthenticated request to a protected resource,
 the Resource Server MUST respond with the HTTP <code>401</code> status code,
 and a <code>WWW-Authenticate</code> HTTP header. See also: <a data-link-type="biblio" href="#biblio-rfc9110" title="HTTP Semantics">[RFC9110]</a>(11.6.1. WWW-Authenticate)</p>
@@ -996,17 +1023,17 @@ parameter unless the authentication scheme requires a different mechanism
 for discovering an associated authorization server.</p>
    <p>Authorization Servers SHOULD implement User-Managed Access (UMA) 2.0 Grant for
 OAuth 2.0 Authorization <a data-link-type="biblio" href="#biblio-uma" title="User-Managed Access (UMA) 2.0 Grant for OAuth 2.0 Authorization">[UMA]</a>.</p>
-   <h3 class="heading settled" data-level="9.2" id="obtaining-access-token"><span class="secno">9.2. </span><span class="content">Obtaining an Access Token</span><a class="self-link" href="#obtaining-access-token"></a></h3>
+   <h3 class="heading settled" data-level="10.2" id="obtaining-access-token"><span class="secno">10.2. </span><span class="content">Obtaining an Access Token</span><a class="self-link" href="#obtaining-access-token"></a></h3>
    <p>For Authorization Servers that conform to <a data-link-type="biblio" href="#biblio-uma" title="User-Managed Access (UMA) 2.0 Grant for OAuth 2.0 Authorization">[UMA]</a>, the
 <code>http://openid.net/specs/openid-connect-core-1_0.html#IDToken</code> profile MUST
 be supported. This profile MUST be advertised in the <code>uma_profiles_supported</code>
 metadata of the Authorization Server discovery document <a href="https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html#rfc.section.2">User-Managed Access (UMA) 2.0 Grant for OAuth 2.0 Authorization § rfc.section.2</a>.</p>
    <p>When using the <code>http://openid.net/specs/openid-connect-core-1_0.html#IDToken</code>
 profile with an UMA-based Authorization Server, the Authorization Server MUST be capable
-of exchanging a valid Solid-OIDC ID Token <a href="#tokens-id">§ 8.1 DPoP-bound OIDC ID Token</a> for an OAuth 2.0 Access Token.</p>
+of exchanging a valid Solid-OIDC ID Token <a href="#tokens-id">§ 9.1 DPoP-bound OIDC ID Token</a> for an OAuth 2.0 Access Token.</p>
    <p class="note" role="note"><span class="marker">Note:</span> Clients can push additional claims by requesting an upgraded RPT <a href="https://docs.kantarainitiative.org/uma/wg/rec-oauth-uma-grant-2.0.html#rfc.section.3.3.1">User-Managed Access (UMA) 2.0 Grant for OAuth 2.0 Authorization § rfc.section.3.3.1</a></p>
-   <p>Authorization Server MUST pefrom <a href="#dpop-validation">§ 9.3 DPoP Validation</a> and <a href="#id-token-validation">§ 8.1.1 ID Token Validation</a></p>
-   <h3 class="heading settled" data-level="9.3" id="dpop-validation"><span class="secno">9.3. </span><span class="content">DPoP Validation</span><a class="self-link" href="#dpop-validation"></a></h3>
+   <p>Authorization Server MUST pefrom <a href="#dpop-validation">§ 10.3 DPoP Validation</a> and <a href="#id-token-validation">§ 9.1.1 ID Token Validation</a></p>
+   <h3 class="heading settled" data-level="10.3" id="dpop-validation"><span class="secno">10.3. </span><span class="content">DPoP Validation</span><a class="self-link" href="#dpop-validation"></a></h3>
    <p>A DPoP Proof that is valid according to
 <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-4.3">DPoP Internet-Draft, Section 4.3</a>,
 MUST be present when a DPoP-bound OIDC ID Token is used.</p>
@@ -1014,7 +1041,7 @@ MUST be present when a DPoP-bound OIDC ID Token is used.</p>
 <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop-04#section-6">DPoP Internet-Draft, Section 6</a>,
 but the AS MAY perform additional verification in order to determine whether to grant access to the
 requested resource.</p>
-   <h2 class="heading settled" data-level="10" id="discovery"><span class="secno">10. </span><span class="content">Solid-OIDC Conformance Discovery</span><a class="self-link" href="#discovery"></a></h2>
+   <h2 class="heading settled" data-level="11" id="discovery"><span class="secno">11. </span><span class="content">Solid-OIDC Conformance Discovery</span><a class="self-link" href="#discovery"></a></h2>
    <p>An OpenID Provider that conforms to the Solid-OIDC specification MUST advertise it in the OpenID Connect
 Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidc-discovery" title="OpenID Connect Discovery 1.0">[OIDC-DISCOVERY]</a> resource by including <code>webid</code> in its <code>scopes_supported</code> metadata property.</p>
    <div class="example" id="example-b42af25e">
@@ -1025,7 +1052,7 @@ Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidc-discovery" title="Op
 <c- p>}</c->
 </pre>
    </div>
-   <h2 class="heading settled" data-level="11" id="security"><span class="secno">11. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
+   <h2 class="heading settled" data-level="12" id="security"><span class="secno">12. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
    <p><em>This section is non-normative</em></p>
    <p>As this specification builds upon existing web standards, security considerations from OAuth, OIDC,
 PKCE, and the DPoP specifications may also apply unless otherwise indicated. The following
@@ -1036,30 +1063,30 @@ time. It is advised to monitor these documents, as such changes might have
 security implications.</p>
    <p>In addition to above considerations, implementors should consider the Security
 Considerations in context of the Solid Protocol <a data-link-type="biblio" href="#biblio-solid-protocol" title="Solid Protocol">[SOLID-PROTOCOL]</a>.</p>
-   <h3 class="heading settled" data-level="11.1" id="security-tls"><span class="secno">11.1. </span><span class="content">TLS Requirements</span><a class="self-link" href="#security-tls"></a></h3>
+   <h3 class="heading settled" data-level="12.1" id="security-tls"><span class="secno">12.1. </span><span class="content">TLS Requirements</span><a class="self-link" href="#security-tls"></a></h3>
    <p>All TLS requirements outlined in <a data-link-type="biblio" href="#biblio-bcp195" title="Best Current Practice 195">[BCP195]</a> apply to this
 specification.</p>
    <p>All tokens, Client, and User credentials MUST only be transmitted over TLS.</p>
-   <h3 class="heading settled" data-level="11.2" id="security-client-ids"><span class="secno">11.2. </span><span class="content">Client IDs</span><a class="self-link" href="#security-client-ids"></a></h3>
+   <h3 class="heading settled" data-level="12.2" id="security-client-ids"><span class="secno">12.2. </span><span class="content">Client IDs</span><a class="self-link" href="#security-client-ids"></a></h3>
    <p>An AS SHOULD assign a fixed set of low trust policies to any client identified as anonymous.</p>
    <p>Implementors SHOULD expire ephemeral Client IDs that are kept in server storage to mitigate the
 potential for a bad actor to fill server storage with unexpired or otherwise useless Client IDs.</p>
-   <h3 class="heading settled" data-level="11.3" id="security-client-secrets"><span class="secno">11.3. </span><span class="content">Client Secrets</span><a class="self-link" href="#security-client-secrets"></a></h3>
+   <h3 class="heading settled" data-level="12.3" id="security-client-secrets"><span class="secno">12.3. </span><span class="content">Client Secrets</span><a class="self-link" href="#security-client-secrets"></a></h3>
    <p>Client secrets SHOULD NOT be stored in browser local storage. Doing so will increase the risk of
 data leaks should an attacker gain access to Client credentials.</p>
-   <h3 class="heading settled" data-level="11.4" id="security-client-trust"><span class="secno">11.4. </span><span class="content">Client Trust</span><a class="self-link" href="#security-client-trust"></a></h3>
+   <h3 class="heading settled" data-level="12.4" id="security-client-trust"><span class="secno">12.4. </span><span class="content">Client Trust</span><a class="self-link" href="#security-client-trust"></a></h3>
    <p><em>This section is non-normative</em></p>
    <p>Clients are ephemeral, client registration is optional, and most Clients cannot keep secrets. These,
 among other factors, are what makes Client trust challenging.</p>
-   <h2 class="heading settled" data-level="12" id="privacy"><span class="secno">12. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
-   <h3 class="heading settled" data-level="12.1" id="privacy-token-reuse"><span class="secno">12.1. </span><span class="content">OIDC ID Token Reuse</span><a class="self-link" href="#privacy-token-reuse"></a></h3>
+   <h2 class="heading settled" data-level="13" id="privacy"><span class="secno">13. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
+   <h3 class="heading settled" data-level="13.1" id="privacy-token-reuse"><span class="secno">13.1. </span><span class="content">OIDC ID Token Reuse</span><a class="self-link" href="#privacy-token-reuse"></a></h3>
    <p><em>This section is non-normative</em></p>
    <p>With JWTs being extendable by design, there is potential for a privacy breach if OIDC ID Tokens get
 reused across multiple authorization servers. It is not unimaginable that a custom claim is added to the
 OIDC ID Token on instantiation. This addition may unintentionally give other authorization servers
 consuming the OIDC ID Token information about the user that they may not wish to share outside of the
 intended AS.</p>
-   <h2 class="heading settled" data-level="13" id="acknowledgments"><span class="secno">13. </span><span class="content">Acknowledgments</span><a class="self-link" href="#acknowledgments"></a></h2>
+   <h2 class="heading settled" data-level="14" id="acknowledgments"><span class="secno">14. </span><span class="content">Acknowledgments</span><a class="self-link" href="#acknowledgments"></a></h2>
    <p><em>This section is non-normative</em></p>
    <p>The Solid Community Group would like to thank the following individuals for reviewing and providing
 feedback on the specification (in alphabetical order):</p>
@@ -1197,6 +1224,8 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
    <dd>J. Richer, Ed.; et al. <a href="https://www.rfc-editor.org/rfc/rfc7591"><cite>OAuth 2.0 Dynamic Client Registration Protocol</cite></a>. July 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7591">https://www.rfc-editor.org/rfc/rfc7591</a>
    <dt id="biblio-rfc7636">[RFC7636]
    <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/rfc/rfc7636"><cite>Proof Key for Code Exchange by OAuth Public Clients</cite></a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7636">https://www.rfc-editor.org/rfc/rfc7636</a>
+   <dt id="biblio-rfc9207">[RFC9207]
+   <dd>K. Meyer zu Selhausen; D. Fett. <a href="https://www.rfc-editor.org/rfc/rfc9207"><cite>OAuth 2.0 Authorization Server Issuer Identification</cite></a>. March 2022. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc9207">https://www.rfc-editor.org/rfc/rfc9207</a>
    <dt id="biblio-solid-oidc-primer">[SOLID-OIDC-PRIMER]
    <dd>Jackson Morgan; Aaron Coburn; Matthieu Bosquet. <a href="https://solid.github.io/solid-oidc/primer/"><cite>Solid-OIDC Primer</cite></a>. URL: <a href="https://solid.github.io/solid-oidc/primer/">https://solid.github.io/solid-oidc/primer/</a>
    <dt id="biblio-solid-protocol">[SOLID-PROTOCOL]
@@ -1212,4 +1241,6 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
    <dd><a href="https://www.rfc-editor.org/info/bcp195"><cite>Best Current Practice 195</cite></a>. URL: <a href="https://www.rfc-editor.org/info/bcp195">https://www.rfc-editor.org/info/bcp195</a>
    <dt id="biblio-rfc9110">[RFC9110]
    <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc9110.html"><cite>HTTP Semantics</cite></a>. June 2022. Internet Standard. URL: <a href="https://httpwg.org/specs/rfc9110.html">https://httpwg.org/specs/rfc9110.html</a>
+   <dt id="biblio-rfc9700">[RFC9700]
+   <dd>T. Lodderstedt; et al. <a href="https://www.rfc-editor.org/rfc/rfc9700"><cite>Best Current Practice for OAuth 2.0 Security</cite></a>. January 2025. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc9700">https://www.rfc-editor.org/rfc/rfc9700</a>
   </dl>
