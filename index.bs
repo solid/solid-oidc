@@ -15,7 +15,8 @@ Markup Shorthands: markdown yes
 Max ToC Depth: 2
 Editor: [Aaron Coburn](https://people.apache.org/~acoburn/#i) ([Inrupt](https://inrupt.com))
 Editor: [elf Pavlik](https://elf-pavlik.hackers4peace.net)
-Editor: [Dmitri Zagidulin](http://computingjoy.com/)
+Editor: Christoph Braun (Forschungszentrum Informatik (FZI))
+Former Editor: [Dmitri Zagidulin](http://computingjoy.com/)
 Former Editor: [Adam Migus](https://migusgroup.com/about/) ([The Migus Group](https://migusgroup.com/))
 Former Editor: [Ricky White](https://endlesstrax.com) ([The Migus Group](https://migusgroup.com/))
 Test Suite: https://solid-contrib.github.io/solid-oidc-tests/
