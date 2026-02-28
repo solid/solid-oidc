@@ -17,7 +17,7 @@ Editor: [Aaron Coburn](https://people.apache.org/~acoburn/#i) ([Inrupt](https://
 Editor: [elf Pavlik](https://elf-pavlik.hackers4peace.net)
 Editor: [Dmitri Zagidulin](http://computingjoy.com/)
 Former Editor: [Adam Migus](https://migusgroup.com/about/) ([The Migus Group](https://migusgroup.com/))
-Former Editor: [Ricky White](https://endlesstrax.com) ([The Migus Group](https://migusgroup.com/))
+Former Editor: [Ricky White](https://rickywhite.net) ([The Migus Group](https://migusgroup.com/))
 Test Suite: https://solid-contrib.github.io/solid-oidc-tests/
 Metadata Order: This version, Latest published version, Test Suite, Created, Modified, *, !*
 Abstract:
