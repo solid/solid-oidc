@@ -1,17 +1,20 @@
 {
-  "id": "solid-oidc",
-  "respec": {
+  "bikeshed": {
+    "modified": "[DATE]",
     "title": "Solid-OIDC",
-    "shortName": "solid-oidc",
-    "specStatus": "CG-DRAFT",
-    "thisVersion": "https://solid.github.io/solid-oidc/",
-    "latestVersion": "https://solidproject.org/TR/oidc",
-    "creationDate": "July 16, 2021",
-    "modificationDate": "[DATE]",
+    "boilerplate": "issues-index no",
+    "shortname": "solid-oidc",
+    "level": "1",
+    "status": "CG-DRAFT",
     "group": "solidcg",
+    "ed": "https://solid.github.io/solid-oidc/",
+    "tr": "https://solidproject.org/TR/oidc",
+    "created": "July 16, 2021",
     "repository": "https://github.com/solid/solid-oidc",
-    "maxTocLevel": 2,
-    "editors": [
+    "inlinegithubissues": "title",
+    "markupshorthands": "markdown yes",
+    "maxtocdepth": "2",
+    "editor": [
       {
         "name": "Aaron Coburn",
         "url": "https://people.apache.org/~acoburn/#i",
@@ -26,7 +29,9 @@
         "name": "Christoph Braun (Forschungszentrum Informatik (FZI))"
       }
     ],
-    "localBiblio": {
+    "testsuite": "https://solid-contrib.github.io/solid-oidc-tests/",
+    "metadataorder": "This version, Latest published version, Test Suite, Created, Modified, *, !*",
+    "biblio": {
       "DPOP": {
         "title": "OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer (DPoP)",
         "url": "https://tools.ietf.org/html/draft-ietf-oauth-dpop",
@@ -121,12 +126,10 @@
         "url": "https://www.rfc-editor.org/info/bcp195",
         "publisher": "IETF"
       }
-    },
-    "copyright": "Copyright © [YEAR] the Contributors to the [TITLE],\npublished by the <a href=\"https://www.w3.org/community/solid/\">Solid Community Group</a>\nunder the <a href=\"https://www.w3.org/community/about/agreements/cla/\">W3C Community Contributor License Agreement (CLA)</a>.\nA human-readable <a href=\"http://www.w3.org/community/about/agreements/cla-deed/\">summary</a> is available."
+    }
   },
-  "title": "Solid-OIDC",
   "custom": {
-    "formerEditors": [
+    "formereditor": [
       {
         "name": "Dmitri Zagidulin",
         "url": "http://computingjoy.com/"
@@ -144,7 +147,7 @@
         "companyUrl": "https://migusgroup.com/"
       }
     ],
-    "testSuite": "https://solid-contrib.github.io/solid-oidc-tests/",
+    "copyright": "Copyright © [YEAR] the Contributors to the [TITLE],\npublished by the <a href=\"https://www.w3.org/community/solid/\">Solid Community Group</a>\nunder the <a href=\"https://www.w3.org/community/about/agreements/cla/\">W3C Community Contributor License Agreement (CLA)</a>.\nA human-readable <a href=\"http://www.w3.org/community/about/agreements/cla-deed/\">summary</a> is available.",
     "logo": {
       "href": "https://www.w3.org/",
       "src": "https://www.w3.org/StyleSheets/TR/2021/logos/W3C",
