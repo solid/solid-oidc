@@ -457,7 +457,7 @@ the OP's token endpoint with `grant_type=client_credentials` and the `webid` sco
 
 During Token Instantiation [[#tokens]], if the [Client Credentials
 Grant](https://www.rfc-editor.org/rfc/rfc6749#section-4.4) is used, the OP MUST validate the `client_id` and
-`client_secret`. If valid, the OP MUST return A DPoP-bound OIDC ID Token.
+`client_secret`. If valid, the OP MUST return a DPoP-bound OIDC ID Token.
 
 ## Solid-OIDC Conformance Discovery ## {#client-credentials-discovery}
 
