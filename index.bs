@@ -114,11 +114,7 @@ from a browser or an application.
 
 Therefore, this specification assumes the use of the
 [Authorization Code Flow](https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowSteps) with
-PKCE, in accordance with OAuth and OIDC best practices, for interactive browser-based login.
-For non-interactive use cases such as scripts, automated agents, and server-to-server communication,
-this specification also requires support for the
-[Client Credentials Grant](https://www.rfc-editor.org/rfc/rfc6749#section-4.4).
-It is also assumed that there are no
+PKCE, in accordance with OAuth and OIDC best practices. It is also assumed that there are no
 preexisting trust relationships with the OP. This means that client registration, whether dynamic,
 or static, is entirely optional.
 
@@ -296,9 +292,9 @@ Solid-OIDC defines the following `scope` value for use with claim requests:
 
 # Issuer Validation after receiving the Authorization Code # {#iss-check}
 
-In accordance with Best Current Practice [[RFC9700]],
-defense against [Mix-Up Attacks](https://www.rfc-editor.org/rfc/rfc9700.html#section-4.4)
-is required in Solid-OIDC as clients are expected to interact with more than one OP.
+In accordance with Best Current Practice [[RFC9700]], 
+defense against [Mix-Up Attacks](https://www.rfc-editor.org/rfc/rfc9700.html#section-4.4) 
+is required in Solid-OIDC as clients are expected to interact with more than one OP. 
 To this end, this specification adopts the mechanism defined in [[!RFC9207]].
 
 The OP MUST include the `iss` query parameter alongside the authorization code when redirecting the user agent back to the Client's redirect_uri.
@@ -321,31 +317,13 @@ Upon receiving the authorization response, the Client MUST validate the `iss` pa
 If the `iss` parameter is missing or does not match the expected value, the Client MUST reject the response, MUST NOT exchange the authorization code for tokens, and SHOULD signal an error to the user.
 
 
-# Client Credentials Grant # {#client-credentials}
-
-Authorization Servers MUST support the OAuth 2.0 Client Credentials Grant [[!RFC6749]] (Section 4.4)
-to enable non-interactive authentication for scripts, automated agents, and server-to-server
-communication.
-
-When using the Client Credentials Grant, the Client authenticates with the OP using a
-`client_id` and `client_secret` pair previously obtained through client registration
-(either static or dynamic). The Client sends a token request to the OP's token endpoint
-with `grant_type=client_credentials` and the `webid` scope.
-
-The OP MUST validate the `client_id` and `client_secret`, and if valid, MUST return
-a DPoP-bound OIDC ID Token. The Client MUST include a valid DPoP proof [[!DPOP]]
-with the token request.
-
-The OP MUST advertise `client_credentials` in its `grant_types_supported`
-metadata property in its OpenID Connect Discovery 1.0 [[!OIDC-DISCOVERY]] document.
-
 # Token Instantiation # {#tokens}
 
 Assuming one of the following options
- - Client ID and Secret, and valid DPoP Proof, using either the Authorization Code Grant or the Client Credentials Grant
+ - Client ID and Secret, and valid DPoP Proof (for dynamic and static registration)
  - Dereferencable Client Identifier with a proper Client ID Document and valid DPoP Proof (for a Solid client identifier)
 
-the OP MUST return a DPoP-bound OIDC ID Token.
+the OP MUST return A DPoP-bound OIDC ID Token.
 
 ## DPoP-bound OIDC ID Token ## {#tokens-id}
 
@@ -452,14 +430,45 @@ requested resource.
 An OpenID Provider that conforms to the Solid-OIDC specification MUST advertise it in the OpenID Connect
 Discovery 1.0 [[!OIDC-DISCOVERY]] resource by including `webid` in its `scopes_supported` metadata property.
 
-Additionally, the OP MUST include `client_credentials` in its `grant_types_supported`
-metadata property to indicate support for non-interactive authentication
-via the Client Credentials Grant (see [[#client-credentials]]).
+<div class="example">
+    <pre highlight="json">
+        {
+            "scopes_supported": ["openid", "offline_access", "webid"]
+        }
+    </pre>
+</div>
+
+# Client Credentials Grant # {#client-credentials}
+
+NOTE: This sections borrows concepts from OAuth 2.0 [[!RFC6749]], while the rest of Solid-OIDC builds on top of OpenID
+Connect Core 1.0 [[!OIDC-CORE]]. The section is likely to be extracted into a separate specification in the future.
+
+Authorization Servers MUST support the OAuth 2.0 Client Credentials Grant [[!RFC6749]] (Section 4.4) to enable
+non-interactive authentication for scripts, automated agents, and server-to-server communication.
+
+NOTE: Scripts and bots can also use Solid-OIDC without Client Credentials via the refresh token flow, when supported by
+the server.
+
+When using the Client Credentials Grant, the Client authenticates with the OP using a `client_id` and `client_secret`
+pair previously obtained through client registration (either static or dynamic). The Client sends a token request to
+the OP's token endpoint with `grant_type=client_credentials` and the `webid` scope.
+
+## Token Instantiation ## {#client-credentials-token-instantiation}
+
+During Token Instantiation [[#tokens]], if the [Client Credentials
+Grant](https://www.rfc-editor.org/rfc/rfc6749#section-4.4) is used, the OP MUST validate the `client_id` and
+`client_secret`. If valid, the OP MUST return A DPoP-bound OIDC ID Token.
+
+## Solid-OIDC Conformance Discovery ## {#client-credentials-discovery}
+
+For non-interactive use cases such as scripts, automated agents, and server-to-server communication, this specification
+also requires that an OpenID Provider that conforms to the Solid-OIDC specification MUST advertise its support for the
+[Client Credentials Grant](https://www.rfc-editor.org/rfc/rfc6749#section-4.4) in the OpenID Connect Discovery 1.0
+[OIDC.Discovery] resource by including `client_credentials` in its `grant_types_supported` metadata property.
 
 <div class="example">
     <pre highlight="json">
         {
-            "scopes_supported": ["openid", "offline_access", "webid"],
             "grant_types_supported": ["authorization_code", "refresh_token", "client_credentials"]
         }
     </pre>
