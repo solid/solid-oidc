@@ -446,8 +446,8 @@ Connect Core 1.0 [[!OIDC-CORE]]. The section is likely to be extracted into a se
 Authorization Servers MUST support the OAuth 2.0 Client Credentials Grant [[!RFC6749]] (Section 4.4) to enable
 non-interactive authentication for scripts, automated agents, and server-to-server communication.
 
-NOTE: Scripts and bots can also use Solid-OIDC without Client Credentials via the refresh token flow, when supported by
-the server.
+NOTE: Scripts and bots can also use Solid-OIDC without Client Credentials via the [refresh token
+flow](https://www.rfc-editor.org/rfc/rfc6749#section-1.5), when supported by the server.
 
 When using the Client Credentials Grant, the Client authenticates with the OP using a `client_id` and `client_secret`
 pair previously obtained through client registration (either static or dynamic). The Client sends a token request to
