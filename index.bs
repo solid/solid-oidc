@@ -462,8 +462,8 @@ NOTE: [[!RFC7523]] (Section 2.2) presents another way to handle authentication u
 ## Token Instantiation ## {#client-credentials-token-instantiation}
 
 During Token Instantiation [[#tokens]], if the [Client Credentials
-Grant](https://www.rfc-editor.org/rfc/rfc6749#section-4.4) is used, the OP MUST validate the `client_id` and
-`client_secret`. If valid, the OP MUST return a DPoP-bound OIDC ID Token.
+Grant](https://www.rfc-editor.org/rfc/rfc6749#section-4.4) is used, the OP MUST validate the client's authentication
+credentials.
 
 ## Solid-OIDC Conformance Discovery ## {#client-credentials-discovery}
 
