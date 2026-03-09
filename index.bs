@@ -449,8 +449,8 @@ non-interactive authentication for scripts, automated agents, and server-to-serv
 NOTE: Scripts and bots can also use Solid-OIDC without Client Credentials via the [refresh token
 flow](https://www.rfc-editor.org/rfc/rfc6749#section-1.5), when supported by the server.
 
-When using the Client Credentials Grant, the AS must bind the `client_id` to the user who registered it and use that
-user's WebID in the ID token.
+When using the Client Credentials Grant, the Authorization Server must bind the `client_id` to the user who registered it and use that
+user's WebID for the value of `webid` claim in the ID token.
 
 *This section is non-normative*
 
