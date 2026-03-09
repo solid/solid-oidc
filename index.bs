@@ -449,9 +449,15 @@ non-interactive authentication for scripts, automated agents, and server-to-serv
 NOTE: Scripts and bots can also use Solid-OIDC without Client Credentials via the [refresh token
 flow](https://www.rfc-editor.org/rfc/rfc6749#section-1.5), when supported by the server.
 
-When using the Client Credentials Grant, the Client authenticates with the OP using a `client_id` and `client_secret`
-pair previously obtained through client registration (either static or dynamic). The Client sends a token request to
-the OP's token endpoint with `grant_type=client_credentials` and the `webid` scope.
+*This section is non-normative*
+
+<div class='example'>
+    When using the Client Credentials Grant, a Client could authenticate with the OP using a `client_id`
+    and `client_secret` pair previously obtained through client registration (either static or dynamic). The Client
+    sends a token request to the OP's token endpoint with `grant_type=client_credentials` and the `webid` scope.
+</div>
+
+NOTE: [[!RFC7523]] (Section 2.2) presents another way to handle authentication using JWTs.
 
 ## Token Instantiation ## {#client-credentials-token-instantiation}
 
