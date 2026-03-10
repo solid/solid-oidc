@@ -456,7 +456,7 @@ user's WebID for the value of `webid` claim in the ID token.
 
 <div class='example'>
     When using the Client Credentials Grant, a Client could authenticate with the OP using a `client_id`
-    and `client_secret` pair previously obtained through client registration (either static or dynamic). The Client
+    and `client_secret` pair, which was previously obtained through client registration (either static or dynamic) by and bound to an authenticated user. The Client
     sends a token request to the OP's token endpoint with `grant_type=client_credentials` and the `webid` scope.
 </div>
 
