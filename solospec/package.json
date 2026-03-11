@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@openuji/solospec": "latest",
+    "likec4": "^1.52.0",
     "mermaid": "^11.12.3"
   },
   "devDependencies": {
