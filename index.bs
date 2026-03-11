@@ -438,6 +438,51 @@ Discovery 1.0 [[!OIDC-DISCOVERY]] resource by including `webid` in its `scopes_s
     </pre>
 </div>
 
+# Client Credentials Grant # {#client-credentials}
+
+NOTE: This sections borrows concepts from OAuth 2.0 [[!RFC6749]], while the rest of Solid-OIDC builds on top of OpenID
+Connect Core 1.0 [[!OIDC-CORE]]. The section is likely to be extracted into a separate specification in the future.
+
+Authorization Servers MUST support the OAuth 2.0 Client Credentials Grant [[!RFC6749]] (Section 4.4) to enable
+non-interactive authentication for scripts, automated agents, and server-to-server communication.
+
+NOTE: Scripts and bots can also use Solid-OIDC without Client Credentials via the [refresh token
+flow](https://www.rfc-editor.org/rfc/rfc6749#section-1.5), when supported by the server.
+
+When using the Client Credentials Grant, the Authorization Server must bind the `client_id` to the user who registered it and use that
+user's WebID for the value of `webid` claim in the ID token.
+
+*This section is non-normative*
+
+<div class='example'>
+    When using the Client Credentials Grant, a Client could authenticate with the OP using a `client_id`
+    and `client_secret` pair, which was previously obtained through client registration (either static or dynamic) by and bound to an authenticated user. The Client
+    sends a token request to the OP's token endpoint with `grant_type=client_credentials` and the `webid` scope.
+</div>
+
+NOTE: [[!RFC7523]] (Section 2.2) presents another way to handle authentication using JWTs.
+
+## Token Instantiation ## {#client-credentials-token-instantiation}
+
+During Token Instantiation [[#tokens]], if the [Client Credentials
+Grant](https://www.rfc-editor.org/rfc/rfc6749#section-4.4) is used, the OP MUST validate the client's authentication
+credentials.
+
+## Solid-OIDC Conformance Discovery ## {#client-credentials-discovery}
+
+For non-interactive use cases such as scripts, automated agents, and server-to-server communication, this specification
+also requires that an OpenID Provider that conforms to the Solid-OIDC specification MUST advertise its support for the
+[Client Credentials Grant](https://www.rfc-editor.org/rfc/rfc6749#section-4.4) in the OpenID Connect Discovery 1.0
+[OIDC.Discovery] resource by including `client_credentials` in its `grant_types_supported` metadata property.
+
+<div class="example">
+    <pre highlight="json">
+        {
+            "grant_types_supported": ["authorization_code", "refresh_token", "client_credentials"]
+        }
+    </pre>
+</div>
+
 # Security Considerations # {#security}
 
 *This section is non-normative*
