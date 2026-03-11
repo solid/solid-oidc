@@ -8,7 +8,7 @@
   <meta content="Bikeshed version 0ef803fdf, updated Tue Jan 6 11:59:39 2026 -0800" name="generator">
   <link href="https://solidproject.org/TR/oidc" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="c32d177a9b5bc16b1324f879377d6c0d1a4c86a6" name="revision">
+  <meta content="149502dd5d4b513a7eb062e0288d89565f2497a4" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -582,7 +582,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </p>
    <h1 class="no-ref p-name" id="title">Solid-OIDC</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-03-04">4 March 2026</time></p>
+    <time class="dt-updated" datetime="2026-03-11">11 March 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -596,7 +596,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>July 16, 2021
       <dt>Modified:
-      <dd>4 March 2026
+      <dd>11 March 2026
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -679,19 +679,25 @@ for use within the Solid ecosystem.</p>
      </ol>
     <li><a href="#discovery"><span class="secno">11</span> <span class="content">Solid-OIDC Conformance Discovery</span></a>
     <li>
-     <a href="#security"><span class="secno">12</span> <span class="content">Security Considerations</span></a>
+     <a href="#client-credentials"><span class="secno">12</span> <span class="content">Client Credentials Grant</span></a>
      <ol class="toc">
-      <li><a href="#security-tls"><span class="secno">12.1</span> <span class="content">TLS Requirements</span></a>
-      <li><a href="#security-client-ids"><span class="secno">12.2</span> <span class="content">Client IDs</span></a>
-      <li><a href="#security-client-secrets"><span class="secno">12.3</span> <span class="content">Client Secrets</span></a>
-      <li><a href="#security-client-trust"><span class="secno">12.4</span> <span class="content">Client Trust</span></a>
+      <li><a href="#client-credentials-token-instantiation"><span class="secno">12.1</span> <span class="content">Token Instantiation</span></a>
+      <li><a href="#client-credentials-discovery"><span class="secno">12.2</span> <span class="content">Solid-OIDC Conformance Discovery</span></a>
      </ol>
     <li>
-     <a href="#privacy"><span class="secno">13</span> <span class="content">Privacy Considerations</span></a>
+     <a href="#security"><span class="secno">13</span> <span class="content">Security Considerations</span></a>
      <ol class="toc">
-      <li><a href="#privacy-token-reuse"><span class="secno">13.1</span> <span class="content">OIDC ID Token Reuse</span></a>
+      <li><a href="#security-tls"><span class="secno">13.1</span> <span class="content">TLS Requirements</span></a>
+      <li><a href="#security-client-ids"><span class="secno">13.2</span> <span class="content">Client IDs</span></a>
+      <li><a href="#security-client-secrets"><span class="secno">13.3</span> <span class="content">Client Secrets</span></a>
+      <li><a href="#security-client-trust"><span class="secno">13.4</span> <span class="content">Client Trust</span></a>
      </ol>
-    <li><a href="#acknowledgments"><span class="secno">14</span> <span class="content">Acknowledgments</span></a>
+    <li>
+     <a href="#privacy"><span class="secno">14</span> <span class="content">Privacy Considerations</span></a>
+     <ol class="toc">
+      <li><a href="#privacy-token-reuse"><span class="secno">14.1</span> <span class="content">OIDC ID Token Reuse</span></a>
+     </ol>
+    <li><a href="#acknowledgments"><span class="secno">15</span> <span class="content">Acknowledgments</span></a>
     <li><a href="#full-jsonld-context"><span class="secno"></span> <span class="content">Appendix A: Full JSON-LD context</span></a>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
@@ -1053,7 +1059,40 @@ Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidc-discovery" title="Op
 <c- p>}</c->
 </pre>
    </div>
-   <h2 class="heading settled" data-level="12" id="security"><span class="secno">12. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
+   <h2 class="heading settled" data-level="12" id="client-credentials"><span class="secno">12. </span><span class="content">Client Credentials Grant</span><a class="self-link" href="#client-credentials"></a></h2>
+   <p class="note" role="note"><span class="marker">NOTE:</span> This sections borrows concepts from OAuth 2.0 <a data-link-type="biblio" href="#biblio-rfc6749" title="The OAuth 2.0 Authorization Framework">[RFC6749]</a>, while the rest of Solid-OIDC builds on top of OpenID
+Connect Core 1.0 <a data-link-type="biblio" href="#biblio-oidc-core" title="OpenID Connect Core 1.0">[OIDC-CORE]</a>. The section is likely to be extracted into a separate specification in the future.</p>
+   <p>Authorization Servers MUST support the OAuth 2.0 Client Credentials Grant <a data-link-type="biblio" href="#biblio-rfc6749" title="The OAuth 2.0 Authorization Framework">[RFC6749]</a> (Section 4.4) to enable
+non-interactive authentication for scripts, automated agents, and server-to-server communication.</p>
+   <p class="note" role="note"><span class="marker">NOTE:</span> Scripts and bots can also use Solid-OIDC without Client Credentials via the <a href="https://www.rfc-editor.org/rfc/rfc6749#section-1.5">refresh token
+flow</a>, when supported by the server.</p>
+   <p>When using the Client Credentials Grant, the Authorization Server must bind the <code>client_id</code> to the user who registered it and use that
+user’s WebID for the value of <code>webid</code> claim in the ID token.</p>
+   <p><em>This section is non-normative</em></p>
+   <div class="example" id="example-23a9aa23"><a class="self-link" href="#example-23a9aa23"></a>
+    When using the Client Credentials Grant, a Client could authenticate with the OP using a <code>client_id</code>
+    and <code>client_secret</code> pair, which was previously obtained through client registration (either static or dynamic) by and bound to an authenticated user. The Client
+    sends a token request to the OP’s token endpoint with <code>grant_type=client_credentials</code> and the <code>webid</code> scope.
+</div>
+   <p class="note" role="note"><span class="marker">NOTE:</span> <a data-link-type="biblio" href="#biblio-rfc7523" title="JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants">[RFC7523]</a> (Section 2.2) presents another way to handle authentication using JWTs.</p>
+   <h3 class="heading settled" data-level="12.1" id="client-credentials-token-instantiation"><span class="secno">12.1. </span><span class="content">Token Instantiation</span><a class="self-link" href="#client-credentials-token-instantiation"></a></h3>
+   <p>During Token Instantiation <a href="#tokens">§ 9 Token Instantiation</a>, if the <a href="https://www.rfc-editor.org/rfc/rfc6749#section-4.4">Client Credentials
+Grant</a> is used, the OP MUST validate the client’s authentication
+credentials.</p>
+   <h3 class="heading settled" data-level="12.2" id="client-credentials-discovery"><span class="secno">12.2. </span><span class="content">Solid-OIDC Conformance Discovery</span><a class="self-link" href="#client-credentials-discovery"></a></h3>
+   <p>For non-interactive use cases such as scripts, automated agents, and server-to-server communication, this specification
+also requires that an OpenID Provider that conforms to the Solid-OIDC specification MUST advertise its support for the
+<a href="https://www.rfc-editor.org/rfc/rfc6749#section-4.4">Client Credentials Grant</a> in the OpenID Connect Discovery 1.0
+[OIDC.Discovery] resource by including <code>client_credentials</code> in its <code>grant_types_supported</code> metadata property.</p>
+   <div class="example" id="example-2fc25b0a">
+    <a class="self-link" href="#example-2fc25b0a"></a>
+    
+<pre class="highlight"><c- p>{</c->
+    <c- f>"grant_types_supported"</c-><c- p>:</c-> <c- p>[</c-><c- u>"authorization_code"</c-><c- p>,</c-> <c- u>"refresh_token"</c-><c- p>,</c-> <c- u>"client_credentials"</c-><c- p>]</c->
+<c- p>}</c->
+</pre>
+   </div>
+   <h2 class="heading settled" data-level="13" id="security"><span class="secno">13. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
    <p><em>This section is non-normative</em></p>
    <p>As this specification builds upon existing web standards, security considerations from OAuth, OIDC,
 PKCE, and the DPoP specifications may also apply unless otherwise indicated. The following
@@ -1064,30 +1103,30 @@ time. It is advised to monitor these documents, as such changes might have
 security implications.</p>
    <p>In addition to above considerations, implementors should consider the Security
 Considerations in context of the Solid Protocol <a data-link-type="biblio" href="#biblio-solid-protocol" title="Solid Protocol">[SOLID-PROTOCOL]</a>.</p>
-   <h3 class="heading settled" data-level="12.1" id="security-tls"><span class="secno">12.1. </span><span class="content">TLS Requirements</span><a class="self-link" href="#security-tls"></a></h3>
+   <h3 class="heading settled" data-level="13.1" id="security-tls"><span class="secno">13.1. </span><span class="content">TLS Requirements</span><a class="self-link" href="#security-tls"></a></h3>
    <p>All TLS requirements outlined in <a data-link-type="biblio" href="#biblio-bcp195" title="Best Current Practice 195">[BCP195]</a> apply to this
 specification.</p>
    <p>All tokens, Client, and User credentials MUST only be transmitted over TLS.</p>
-   <h3 class="heading settled" data-level="12.2" id="security-client-ids"><span class="secno">12.2. </span><span class="content">Client IDs</span><a class="self-link" href="#security-client-ids"></a></h3>
+   <h3 class="heading settled" data-level="13.2" id="security-client-ids"><span class="secno">13.2. </span><span class="content">Client IDs</span><a class="self-link" href="#security-client-ids"></a></h3>
    <p>An AS SHOULD assign a fixed set of low trust policies to any client identified as anonymous.</p>
    <p>Implementors SHOULD expire ephemeral Client IDs that are kept in server storage to mitigate the
 potential for a bad actor to fill server storage with unexpired or otherwise useless Client IDs.</p>
-   <h3 class="heading settled" data-level="12.3" id="security-client-secrets"><span class="secno">12.3. </span><span class="content">Client Secrets</span><a class="self-link" href="#security-client-secrets"></a></h3>
+   <h3 class="heading settled" data-level="13.3" id="security-client-secrets"><span class="secno">13.3. </span><span class="content">Client Secrets</span><a class="self-link" href="#security-client-secrets"></a></h3>
    <p>Client secrets SHOULD NOT be stored in browser local storage. Doing so will increase the risk of
 data leaks should an attacker gain access to Client credentials.</p>
-   <h3 class="heading settled" data-level="12.4" id="security-client-trust"><span class="secno">12.4. </span><span class="content">Client Trust</span><a class="self-link" href="#security-client-trust"></a></h3>
+   <h3 class="heading settled" data-level="13.4" id="security-client-trust"><span class="secno">13.4. </span><span class="content">Client Trust</span><a class="self-link" href="#security-client-trust"></a></h3>
    <p><em>This section is non-normative</em></p>
    <p>Clients are ephemeral, client registration is optional, and most Clients cannot keep secrets. These,
 among other factors, are what makes Client trust challenging.</p>
-   <h2 class="heading settled" data-level="13" id="privacy"><span class="secno">13. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
-   <h3 class="heading settled" data-level="13.1" id="privacy-token-reuse"><span class="secno">13.1. </span><span class="content">OIDC ID Token Reuse</span><a class="self-link" href="#privacy-token-reuse"></a></h3>
+   <h2 class="heading settled" data-level="14" id="privacy"><span class="secno">14. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
+   <h3 class="heading settled" data-level="14.1" id="privacy-token-reuse"><span class="secno">14.1. </span><span class="content">OIDC ID Token Reuse</span><a class="self-link" href="#privacy-token-reuse"></a></h3>
    <p><em>This section is non-normative</em></p>
    <p>With JWTs being extendable by design, there is potential for a privacy breach if OIDC ID Tokens get
 reused across multiple authorization servers. It is not unimaginable that a custom claim is added to the
 OIDC ID Token on instantiation. This addition may unintentionally give other authorization servers
 consuming the OIDC ID Token information about the user that they may not wish to share outside of the
 intended AS.</p>
-   <h2 class="heading settled" data-level="14" id="acknowledgments"><span class="secno">14. </span><span class="content">Acknowledgments</span><a class="self-link" href="#acknowledgments"></a></h2>
+   <h2 class="heading settled" data-level="15" id="acknowledgments"><span class="secno">15. </span><span class="content">Acknowledgments</span><a class="self-link" href="#acknowledgments"></a></h2>
    <p><em>This section is non-normative</em></p>
    <p>The Solid Community Group would like to thank the following individuals for reviewing and providing
 feedback on the specification (in alphabetical order):</p>
@@ -1221,6 +1260,8 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
    <dd>M. Jones. <a href="https://www.rfc-editor.org/rfc/rfc7517"><cite>JSON Web Key (JWK)</cite></a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7517">https://www.rfc-editor.org/rfc/rfc7517</a>
    <dt id="biblio-rfc7519">[RFC7519]
    <dd>M. Jones; J. Bradley; N. Sakimura. <a href="https://www.rfc-editor.org/rfc/rfc7519"><cite>JSON Web Token (JWT)</cite></a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>
+   <dt id="biblio-rfc7523">[RFC7523]
+   <dd>M. Jones; B. Campbell; C. Mortimore. <a href="https://www.rfc-editor.org/rfc/rfc7523"><cite>JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants</cite></a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7523">https://www.rfc-editor.org/rfc/rfc7523</a>
    <dt id="biblio-rfc7591">[RFC7591]
    <dd>J. Richer, Ed.; et al. <a href="https://www.rfc-editor.org/rfc/rfc7591"><cite>OAuth 2.0 Dynamic Client Registration Protocol</cite></a>. July 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7591">https://www.rfc-editor.org/rfc/rfc7591</a>
    <dt id="biblio-rfc7636">[RFC7636]
