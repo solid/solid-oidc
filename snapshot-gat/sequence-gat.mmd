@@ -1,0 +1,30 @@
+sequenceDiagram
+  participant WebID as 👩 End-User's WebID Document
+  participant OP as 👩 OpenID Provider
+  participant ClientID as ⚙️ Client's ID Document
+  participant C as ⚙️ Client
+  participant RS as ☁️ Resource Server
+
+  C ->> RS: unauthenticated request
+  RS ->> C: 401 with a WWW-Authenticate HTTP header
+  Note over C: 👩 User provides their WebID ⌨️
+  C ->> WebID: get WebID document to discover OpenID Provider
+  WebID ->> C: WebID document
+  C ->> OP: start Authorization Code grant
+  OP->> ClientID: get Client ID document
+  ClientID->> OP: ClientID document
+  Note over OP: compare redirect_uri
+  OP ->> C: return Authorization Code
+  C ->> OP: present Authorization Code and DPoP proof
+  Note over OP:  ⚙️ Client is authenticated ✅
+  OP ->> C: return DPoP bound Access Token and OIDC ID Token
+  Note over C: ⚙️ Client validates OP 
+  Note over C: 👩 User is authenticated ✅
+  C ->> RS: request with DPOP-bound Access Token and DPoP Token
+  RS ->> WebID: get WebID document to verify OpenID Provider
+  WebID ->> RS: WebID document
+  RS ->> OP: get OP's public key to verify ID Token (JWS)
+  OP ->> RS: JWKS
+Note over RS: ☁️ RS verify DPoP-bound Access Token and DPoP Token
+  Note over RS: 👩 User and ⚙️ Client are authenticated ✅
+  RS ->> C: resource representation
