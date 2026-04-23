@@ -443,7 +443,7 @@ Discovery 1.0 [[!OIDC-DISCOVERY]] resource by including `webid` in its `scopes_s
 NOTE: This sections borrows concepts from OAuth 2.0 [[!RFC6749]], while the rest of Solid-OIDC builds on top of OpenID
 Connect Core 1.0 [[!OIDC-CORE]]. The section is likely to be extracted into a separate specification in the future.
 
-Authorization Servers MUST support the OAuth 2.0 Client Credentials Grant [[!RFC6749]] (Section 4.4) to enable
+Authorization Servers SHOULD support the OAuth 2.0 Client Credentials Grant [[!RFC6749]] (Section 4.4) to enable
 non-interactive authentication for scripts, automated agents, and server-to-server communication.
 
 NOTE: Scripts and bots can also use Solid-OIDC without Client Credentials via the [refresh token
