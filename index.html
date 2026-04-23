@@ -5,10 +5,10 @@
   <title>Solid-OIDC</title>
   <meta content="CG-DRAFT" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 0ef803fdf, updated Tue Jan 6 11:59:39 2026 -0800" name="generator">
+  <meta content="Bikeshed version 5d4d5b9a8, updated Fri Apr 17 13:49:40 2026 -0700" name="generator">
   <link href="https://solidproject.org/TR/oidc" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="149502dd5d4b513a7eb062e0288d89565f2497a4" name="revision">
+  <meta content="7353ed33bd993580c6683aa46e155cca70c523f6" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -304,7 +304,7 @@ pre .property::before, pre .property::after {
 </style>
 <style>/* Boilerplate: style-counters */
 body {
-    counter-reset: example figure issue;
+    counter-reset: example figure issue table;
 }
 .issue {
     counter-increment: issue;
@@ -329,6 +329,13 @@ figcaption {
 }
 figcaption:not(.no-marker)::before {
     content: "Figure " counter(figure) " ";
+}
+
+figure.table figcaption {
+    counter-increment: table;
+}
+figure.table figcaption:not(.no-marker)::before {
+    content: "Table " counter(table) " ";
 }
 </style>
 <style>/* Boilerplate: style-issues */
@@ -573,6 +580,30 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     c-[vm] { color: #cb4b16 } /* Name.Variable.Magic */
     c-[il] { color: #657b83 } /* Literal.Number.Integer.Long */
 }
+
+@media print {
+    /* Darken colors for print that would otherwise print too faintly */
+    c-[c]  { color: #555555 } /* Comment */
+    c-[d]  { color: #555555 } /* Comment.Multiline */
+    c-[cp] { color: #555555 } /* Comment.Preproc */
+    c-[c1] { color: #555555 } /* Comment.Single */
+    c-[cs] { color: #555555 } /* Comment.Special */
+    c-[o]  { color: #222222 } /* Operator */
+    c-[p]  { color: #222222 } /* Punctuation */
+    c-[ow] { color: #222222 } /* Operator.Word */
+    c-[s]  { color: #664400 } /* Literal.String */
+    c-[t]  { color: #664400 } /* Literal.String.Single */
+    c-[u]  { color: #664400 } /* Literal.String.Double */
+    c-[sb] { color: #664400 } /* Literal.String.Backtick */
+    c-[sc] { color: #664400 } /* Literal.String.Char */
+    c-[sd] { color: #664400 } /* Literal.String.Doc */
+    c-[se] { color: #664400 } /* Literal.String.Escape */
+    c-[sh] { color: #664400 } /* Literal.String.Heredoc */
+    c-[si] { color: #664400 } /* Literal.String.Interpol */
+    c-[sx] { color: #664400 } /* Literal.String.Other */
+    c-[sr] { color: #664400 } /* Literal.String.Regex */
+    c-[ss] { color: #664400 } /* Literal.String.Symbol */
+}
 </style>
  <body class="h-entry">
   <div class="head">
@@ -582,7 +613,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </p>
    <h1 class="no-ref p-name" id="title">Solid-OIDC</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-03-11">11 March 2026</time></p>
+    <time class="dt-updated" datetime="2026-04-23">23 April 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -596,7 +627,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>July 16, 2021
       <dt>Modified:
-      <dd>11 March 2026
+      <dd>23 April 2026
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -708,7 +739,7 @@ for use within the Solid ecosystem.</p>
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
       <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
-      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Non-Normative References</span></a>
      </ol>
    </ol>
   </nav>
@@ -1062,7 +1093,7 @@ Discovery 1.0 <a data-link-type="biblio" href="#biblio-oidc-discovery" title="Op
    <h2 class="heading settled" data-level="12" id="client-credentials"><span class="secno">12. </span><span class="content">Client Credentials Grant</span><a class="self-link" href="#client-credentials"></a></h2>
    <p class="note" role="note"><span class="marker">NOTE:</span> This sections borrows concepts from OAuth 2.0 <a data-link-type="biblio" href="#biblio-rfc6749" title="The OAuth 2.0 Authorization Framework">[RFC6749]</a>, while the rest of Solid-OIDC builds on top of OpenID
 Connect Core 1.0 <a data-link-type="biblio" href="#biblio-oidc-core" title="OpenID Connect Core 1.0">[OIDC-CORE]</a>. The section is likely to be extracted into a separate specification in the future.</p>
-   <p>Authorization Servers MUST support the OAuth 2.0 Client Credentials Grant <a data-link-type="biblio" href="#biblio-rfc6749" title="The OAuth 2.0 Authorization Framework">[RFC6749]</a> (Section 4.4) to enable
+   <p>Authorization Servers SHOULD support the OAuth 2.0 Client Credentials Grant <a data-link-type="biblio" href="#biblio-rfc6749" title="The OAuth 2.0 Authorization Framework">[RFC6749]</a> (Section 4.4) to enable
 non-interactive authentication for scripts, automated agents, and server-to-server communication.</p>
    <p class="note" role="note"><span class="marker">NOTE:</span> Scripts and bots can also use Solid-OIDC without Client Credentials via the <a href="https://www.rfc-editor.org/rfc/rfc6749#section-1.5">refresh token
 flow</a>, when supported by the server.</p>
@@ -1080,10 +1111,10 @@ user’s WebID for the value of <code>webid</code> claim in the ID token.</p>
 Grant</a> is used, the OP MUST validate the client’s authentication
 credentials.</p>
    <h3 class="heading settled" data-level="12.2" id="client-credentials-discovery"><span class="secno">12.2. </span><span class="content">Solid-OIDC Conformance Discovery</span><a class="self-link" href="#client-credentials-discovery"></a></h3>
-   <p>For non-interactive use cases such as scripts, automated agents, and server-to-server communication, this specification
-also requires that an OpenID Provider that conforms to the Solid-OIDC specification MUST advertise its support for the
-<a href="https://www.rfc-editor.org/rfc/rfc6749#section-4.4">Client Credentials Grant</a> in the OpenID Connect Discovery 1.0
-[OIDC.Discovery] resource by including <code>client_credentials</code> in its <code>grant_types_supported</code> metadata property.</p>
+   <p>For non-interactive use cases such as scripts, automated agents, and server-to-server communication, an OpenID Provider
+that supports the <a href="https://www.rfc-editor.org/rfc/rfc6749#section-4.4">Client Credentials Grant</a> MUST advertise that
+support in the OpenID Connect Discovery 1.0 [OIDC.Discovery] resource by including <code>client_credentials</code> in its
+<code>grant_types_supported</code> metadata property.</p>
    <div class="example" id="example-2fc25b0a">
     <a class="self-link" href="#example-2fc25b0a"></a>
     
@@ -1277,7 +1308,7 @@ Verborgh, Ricky White, Paul Worrall, Dmitri Zagidulin.</p>
    <dt id="biblio-webid">[WEBID]
    <dd>Andrei Sambra; Henry Story; Tim Berners-Lee. <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/"><cite>WebID 1.0</cite></a>. URL: <a href="https://www.w3.org/2005/Incubator/webid/spec/identity/">https://www.w3.org/2005/Incubator/webid/spec/identity/</a>
   </dl>
-  <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Non-Normative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-bcp195">[BCP195]
    <dd><a href="https://www.rfc-editor.org/info/bcp195"><cite>Best Current Practice 195</cite></a>. URL: <a href="https://www.rfc-editor.org/info/bcp195">https://www.rfc-editor.org/info/bcp195</a>
