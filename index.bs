@@ -525,6 +525,24 @@ data leaks should an attacker gain access to Client credentials.
 Clients are ephemeral, client registration is optional, and most Clients cannot keep secrets. These,
 among other factors, are what makes Client trust challenging.
 
+## Issuer Trust ## {#security-issuer-trust}
+
+*This section is non-normative*
+
+A Solid-OIDC user's identity is asserted by the OpenID Provider listed in their WebID Profile via
+`solid:oidcIssuer`. Implementers and end-users should consider the trust they place in that issuer:
+
+* **Issuer trust is unconditional.** Every assertion of the user's identity comes from the issuer.
+    The user is fully reliant on it; a compromised, malicious, or unavailable issuer can deny access
+    to all of the user's data, impersonate the user, or selectively rewrite the WebID's
+    identity-related claims. A high degree of trust in the chosen issuer is therefore necessary.
+
+* **Many agents on a single issuer is a single point of failure.** Where many agents share a single
+    issuer, that issuer is a concentration point: a single compromise, outage, or service-level
+    decision affects every agent that depends on it. Attacks tend to focus on major centralisations,
+    so concentration risk grows with the issuer's user base. Implementations offering accounts under
+    a shared issuer should plan for this risk.
+
 # Privacy Considerations # {#privacy}
 
 ## OIDC ID Token Reuse ## {#privacy-token-reuse}
