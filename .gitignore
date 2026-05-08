@@ -3,3 +3,6 @@
 *.mmd.svg
 publish
 node_modules
+!solospec/index.html
+solospec/.spec-issues-cache.json
+solospec/dist

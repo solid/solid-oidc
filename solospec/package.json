@@ -1,0 +1,17 @@
+{
+  "name": "solid-oidc",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "lint": "speculator-lint"
+  },
+  "dependencies": {
+    "@openuji/solospec": "latest",
+    "mermaid": "^11.12.3"
+  },
+  "devDependencies": {
+    "vite": "^6.1.1"
+  }
+}
