@@ -4,8 +4,9 @@ Boilerplate: issues-index no
 Boilerplate: omit conformance
 Shortname: solid-oidc-primer
 Level: 1
-Status: CG-DRAFT
+Org: W3C
 Group: solidcg
+Status: CG-DRAFT
 ED: https://solid.github.io/solid-oidc/primer/
 TR: https://solidproject.org/TR/oidc-primer
 !Created: March 28, 2022

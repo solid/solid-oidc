@@ -3,8 +3,9 @@ Title: Solid-OIDC
 Boilerplate: issues-index no
 Shortname: solid-oidc
 Level: 1
-Status: CG-DRAFT
+Org: W3C
 Group: solidcg
+Status: CG-DRAFT
 ED: https://solid.github.io/solid-oidc/
 TR: https://solidproject.org/TR/oidc
 !Created: July 16, 2021
