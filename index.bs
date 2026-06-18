@@ -13,12 +13,12 @@ Repository: https://github.com/solid/solid-oidc
 Inline Github Issues: title
 Markup Shorthands: markdown yes
 Max ToC Depth: 2
-Editor: [Aaron Coburn](https://people.apache.org/~acoburn/#i) ([Inrupt](https://inrupt.com))
-Editor: [elf Pavlik](https://elf-pavlik.hackers4peace.net)
-Editor: Christoph Braun (Forschungszentrum Informatik (FZI))
-Former Editor: [Dmitri Zagidulin](http://computingjoy.com/)
-Former Editor: [Adam Migus](https://migusgroup.com/about/) ([The Migus Group](https://migusgroup.com/))
-Former Editor: [Ricky White](https://rickywhite.net) ([The Migus Group](https://migusgroup.com/))
+Editor: Aaron Coburn, Inrupt https://inrupt.com, https://github.com/acoburn
+Editor: elf Pavlik, https://elf-pavlik.hackers4peace.net
+Editor: Christoph Braun, Forschungszentrum Informatik (FZI) https://www.fzi.de, https://github.com/uvdsl
+Former Editor: Dmitri Zagidulin, http://computingjoy.com/
+Former Editor: Adam Migus, The Migus Group https://migusgroup.com, https://migusgroup.com/about/
+Former Editor: Ricky White, The Migus Group https://migusgroup.com/, https://rickywhite.net
 Test Suite: https://solid-contrib.github.io/solid-oidc-tests/
 Metadata Order: This version, Latest published version, Test Suite, Created, Modified, *, !*
 Abstract:

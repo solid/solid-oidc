@@ -13,11 +13,11 @@ TR: https://solidproject.org/TR/oidc-primer
 Repository: https://github.com/solid/solid-oidc
 Markup Shorthands: markdown yes
 Max ToC Depth: 2
-Editor: [Jackson Morgan](https://github.com/jaxoncreed)
-Editor: [Aaron Coburn](https://github.com/acoburn)
-Editor: [Matthieu Bosquet](https://github.com/matthieubosquet)
-Editor: [elf Pavlik](https://elf-pavlik.hackers4peace.net)
-Editor: Christoph Braun (Forschungszentrum Informatik (FZI))
+Editor: Jackson Morgan, https://github.com/jaxoncreed
+Editor: Aaron Coburn, https://github.com/acoburn
+Editor: Matthieu Bosquet, https://github.com/matthieubosquet
+Editor: elf Pavlik, https://elf-pavlik.hackers4peace.net
+Editor: Christoph Braun, Forschungszentrum Informatik (FZI) https://www.fzi.de, https://github.com/uvdsl
 Metadata Order: This version, Latest published version, Test Suite, Created, Modified, *, !*
 Abstract:
   The Solid OpenID Connect (Solid-OIDC) specification defines how resource servers
