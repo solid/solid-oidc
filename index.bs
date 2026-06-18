@@ -536,12 +536,10 @@ A Solid-OIDC user's identity is asserted by the OpenID Provider listed in their 
     The user is fully reliant on it; a compromised, malicious, or unavailable issuer can deny access
     to all of the user's data, impersonate the user, or selectively rewrite the WebID's
     identity-related claims. A high degree of trust in the chosen issuer is therefore necessary.
-
-* **Many agents on a single issuer is a single point of failure.** Where many agents share a single
-    issuer, that issuer is a concentration point: a single compromise, outage, or service-level
-    decision affects every agent that depends on it. Attacks tend to focus on major centralisations,
-    so concentration risk grows with the issuer's user base. Implementations offering accounts under
-    a shared issuer should plan for this risk.
+The authorization server has to choose to trust the identity provider selected by the user before granting access. This choice may be to delegate the choice completely to users, or to restrict the set of identity providers to a specific trust list.
+* **Identity Provider as a Single Point of Failure.** When an agent has only one identity provider, only that single identity provider is able to assert the identity of the agent. In case this identity provider is unavailable, the agent is unable to authenticate itself.
+Agents may have multiple identity providers. Having multiple identity providers can provide redundancy in the event of an outage of one identity provider service. The trade-off is that this increases the attack surface of malicious identity providers.
+Where many agents share a single identity provider, that identity provider is a concentration point: a single compromise, outage, or service-level decision affects every agent that depends on it. Attacks tend to focus on major centralization, so concentration risk grows with the issuer's user base. Implementations offering accounts under a shared issuer should plan for this risk.
 
 # Privacy Considerations # {#privacy}
 
