@@ -5,10 +5,10 @@
   <title>Solid-OIDC Primer</title>
   <meta content="CG-DRAFT" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 5d4d5b9a8, updated Fri Apr 17 13:49:40 2026 -0700" name="generator">
+  <meta content="Bikeshed version d113b2e81, updated Tue Jun 9 14:57:55 2026 -0700" name="generator">
   <link href="https://solidproject.org/TR/oidc-primer" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="7353ed33bd993580c6683aa46e155cca70c523f6" name="revision">
+  <meta content="96c8f1339fa91509139da54d5c37e4a51bf26e23" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -726,7 +726,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </p>
    <h1 class="no-ref p-name" id="title">Solid-OIDC Primer</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-04-23">23 April 2026</time></p>
+    <time class="dt-updated" datetime="2026-06-18">18 June 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -738,7 +738,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>March 28, 2022
       <dt>Modified:
-      <dd>23 April 2026
+      <dd>18 June 2026
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -1263,7 +1263,7 @@ the following (you can decrypt the token with <a href="https://jwt.io/#debugger-
 <pre class="highlight language-json"><c- p>{</c->
     <c- f>"sub"</c-><c- p>:</c-> <c- u>"https://alice.coolpod.example/profile/card#me"</c-><c- p>,</c->
     <c- f>"aud"</c-><c- p>:</c-> <c- p>[</c-> <c- u>"solid"</c-><c- p>,</c-> <c- u>"https://decentphotos.example/client_id"</c-><c- p>],</c->
-    <c- f>"azp"</c-><c- p>:</c-> <c- f>"https://decentphotos.example/client_id"</c->
+    <c- f>"azp"</c-><c- p>:</c-> <c- u>"https://decentphotos.example/client_id"</c-><c- p>,</c->
     <c- f>"webid"</c-><c- p>:</c-> <c- u>"https://alice.coolpod.example/profile/card#me"</c-><c- p>,</c->
     <c- f>"iss"</c-><c- p>:</c-> <c- u>"https://secureauth.example"</c-><c- p>,</c->
     <c- f>"jti"</c-><c- p>:</c-> <c- u>"844a095c-9cdb-47e5-9510-1dba987c0a5f"</c-><c- p>,</c->
