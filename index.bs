@@ -526,6 +526,20 @@ data leaks should an attacker gain access to Client credentials.
 Clients are ephemeral, client registration is optional, and most Clients cannot keep secrets. These,
 among other factors, are what makes Client trust challenging.
 
+## Issuer Trust ## {#security-issuer-trust}
+
+*This section is non-normative*
+
+A Solid-OIDC user's identity is asserted by the OpenID Provider listed in their WebID Profile via
+`solid:oidcIssuer`. Implementers and end-users should consider the trust they place in that issuer:
+
+* **User trusts identity provider to be honest.** The user's chosen identity provider is able to assert the identity of the user in an issued identity token. The user relies on the identity provider to obtain such identity token and trusts the identity provider not to issue such token of the user's identity to a different user or to use that token themselves. A compromised or malicious identity provider is able to let other malicious agents impersonate the user or to impersonate the user themself. If the user's identity provider is unavailable, the  user is unable to obtain an identity token, which might lead the user to be unable to access data that requires authentication and thereby implicitly denying access to data. A high degree of trust in the chosen identity provider is therefore necessary.
+    The authorization server has to choose to trust the identity provider selected by the user before granting access. This choice may be to delegate the choice completely to users, or to restrict the set of identity providers to a specific trust list.
+
+* **Identity Provider as a Single Point of Failure.** When an agent has only one identity provider, only that single identity provider is able to assert the identity of the agent. In case this identity provider is unavailable, the agent is unable to authenticate itself.
+    Agents may have multiple identity providers. Having multiple identity providers can provide redundancy in the event of an outage of one identity provider service. The trade-off is that this increases the attack surface of malicious identity providers.
+    Where many agents share a single identity provider, that identity provider is a concentration point: a single compromise, outage, or service-level decision affects every agent that depends on it. Attacks tend to focus on major centralization, so concentration risk grows with the issuer's user base. Implementations offering accounts under a shared issuer should plan for this risk.
+
 # Privacy Considerations # {#privacy}
 
 ## OIDC ID Token Reuse ## {#privacy-token-reuse}
