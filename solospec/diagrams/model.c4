@@ -1,0 +1,360 @@
+specification {
+  element security
+  element role
+}
+
+model {
+  security App 'App Provider' 'decentphotos.example' {
+    style {
+      color: amber
+    }
+    role Client 'Client' 'decentphotos.example' {
+      style {
+        color: amber
+      }
+    }
+    role ClientID 'ClientID' 'decentphotos.example/id' {
+      style {
+        color: gray
+      }
+    }
+  }
+  security EU 'End-user' 'alice.example' {
+    style {
+      color: green
+    }
+    role WebID 'WebID' 'id.alice.example' {
+      style {
+        color: gray
+      }
+    }
+    role UAS 'User Authorization Server' 'uas.alice.example' {
+      style {
+        color: green
+      }
+    }
+  }
+  security RO 'Resource Owner (self and each social graph peer)' 'bob.example' {
+    style {
+      color: blue
+    }
+    role RAS 'Resource Authorization Server' 'ras.bob.example' {
+      style {
+        color: indigo
+      }
+    }
+    role RS 'Resource Server' 'pod.bob.example' {
+      style {
+        color: blue
+      }
+    }
+  }
+}
+
+views {
+  dynamic view oidc {
+    title: 'OIDC'
+    include EU, App, RO
+    include WebID, UAS, ClientID, Client, RAS, RS
+
+    Client -> UAS 'User SSO' {
+      notes'''
+      Could involve [Web Authentication API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API)
+      and [Federated Credential Management API](https://www.w3.org/TR/fedcm/)
+
+      [Identity Assertion JWT Authorization Grant - 4.2. User Authentication](https://www.ietf.org/archive/id/draft-ietf-oauth-identity-assertion-authz-grant-01.html#name-user-authentication)
+      ```
+        302 Redirect
+        Location: https://uas.alice.example/authorize
+          ?response_type=code
+          &scope=openid offline_access
+          &client_id=https://decentphotos.example/id
+          &redirect_uri=https://decentphotos.example/callback
+      ```
+      '''
+    }
+    UAS -> ClientID 'Fetch client metadata' {
+      notes'''
+      Fetch URL from `client_id` query parameter
+      ```http
+      GET /id HTTP/1.1
+      Host: decentphotos.example
+      ```
+      '''
+    }
+    ClientID -> UAS 'ClientID Document' {
+      notes'''
+      [LWS Authentication Suite: OpenID Connect - Security Considerations](https://github.com/w3c/lws-protocol/pull/43/files#diff-e71b10a2096fa8cb25a080740269fdb3c3d91ac55fcdfb450be98e1a78122621R190-R192)
+
+      🛡️ check if `redirect_uris` includes `redirect_uri`
+      
+      [OAuth Client ID Metadata Document](https://www.ietf.org/archive/id/draft-parecki-oauth-client-id-metadata-document-03.html#name-client-identifier)
+      ```http
+        HTTP/2 200 OK
+        Content-Type: application/json
+      ```
+      ```json{4}
+        {
+          "client_id": "https://decentphotos.example/id",
+          "client_name": "DecentPhotos",
+          "redirect_uris": [ "https://decentphotos.example/callback" ],
+          "post_logout_redirect_uris": [ "https://decentphotos.example/logout" ],
+          "client_uri": "https://decentphotos.example",
+          "logo_uri": "https://decentphotos.example/logo.png",
+          "tos_uri": "https://decentphotos.example/tos.html",
+          "scope": "openid offline_access",
+          "grant_types": [ "refresh_token", "authorization_code" ],
+          "response_types": [ "code" ],
+          "default_max_age": 3600,
+          "require_auth_time": true
+        }
+      ```
+      '''
+    }
+    UAS -> Client 'ID Token & Refresh token' {
+      notes'''
+      ID Token
+      🛡️ `aud` includes client and OP
+      ```{8}
+        {
+            "alg": "ES256",
+            "typ": "JWT",
+            "kid": "Xu68Q0ZfwDiRfWOb2UE8N77GoEQQ7q58_3gl1wsKENs"
+        }
+        .
+        {
+          "sub": "https://id.alice.example",
+          "aud": [ "https://uas.alice.example", "https://decentphotos.example/id"],
+          "azp": "https://decentphotos.example/id"
+          "iss": "https://uas.alice.example",
+          "jti": "844a095c-9cdb-47e5-9510-1dba987c0a5f",
+          "iat": 1603370641,
+          "exp": 1603371241,
+        }
+        .
+        signature
+      ```
+      '''
+    }
+    Client -> RS 'Resource Request' {
+      notes'''
+      [5.2.1 Authorization Server Discovery](https://pr-preview.s3.amazonaws.com/w3c/lws-protocol/pull/45.html#authorization-server-discovery)
+      ```http
+      GET /garfield.png HTTP/1.1
+      Host: pod.bob.example
+      ```
+      '''
+    }
+    RS -> Client '401 WWW-Authenticate' {
+      notes'''
+      [5.2.1 Authorization Server Discovery](https://pr-preview.s3.amazonaws.com/w3c/lws-protocol/pull/45.html#authorization-server-discovery)
+      ```http
+        HTTP/2 401 Unauthorized
+        WWW-Authenticate: Bearer
+          as_uri="https://ras.bob.example",
+          realm="https://pod.bob.example"
+      ```
+      '''
+    }
+    Client -> UAS 'Token exchange' {
+      notes'''
+      [Identity Assertion JWT Authorization Grant - 4.3. Token Exchange](https://www.ietf.org/archive/id/draft-ietf-oauth-identity-assertion-authz-grant-01.html#name-token-exchange)
+      ```http
+        POST /token HTTP/1.1
+        Host: uas.alice.example
+        Content-Type: application/x-www-form-urlencoded
+
+        grant_type=urn:ietf:params:oauth:grant-type:token-exchange
+        &requested_token_type=urn:ietf:params:oauth:token-type:id-jag
+        &resource=https://ras.bob.example
+        &subject_token=eyJraWQiOiJzMTZ0cVNtODhwREo4VGZCXzdrSEtQ...
+        &subject_token_type=urn:ietf:params:oauth:token-type:id_token
+        &client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+        &client_assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6IjIyIn0...
+      ```
+      '''
+    }
+    UAS -> Client 'ID-JAG' {
+      notes'''
+      ```http
+        HTTP/1.1 200 OK
+        Content-Type: application/json
+      ```
+      ```json
+        {
+          "issued_token_type": "urn:ietf:params:oauth:token-type:id-jag",
+          "access_token": "eyJhbGciOiJIUzI1NiIsI...",
+          "token_type": "N_A",
+          "expires_in": 300
+        }
+      ```
+      🛡️ `aud` same as `as_uri` from `WWW-Authenticate`
+      ```
+        {
+          "typ": "oauth-id-jag+jwt"
+        }
+        .
+        {
+          "jti": "9e43f81b64a33f20116179",
+          "iss": "https://uas.alice.example",
+          "sub": "https://id.alice.example",
+          "aud": "https://ras.bob.example",
+          "client_id": "https://decentphotos.example/id",
+          "exp": 1311281970,
+          "iat": 1311280970,
+          "auth_time": 1311280970,
+          "amr": [
+            "mfa",
+            "phrh",
+            "hwk",
+            "user"
+          ]
+        }
+        .
+        signature
+      ```
+      '''
+      }
+    Client -> RAS 'Present ID-JAG' {
+      notes'''
+      [LWS - 5.2.3 Token Exchange](https://pr-preview.s3.amazonaws.com/w3c/lws-protocol/pull/45.html#authorization-token-exchange)
+      ```http
+        POST /token HTTP/1.1
+        Host: ras.bob.example
+        Content-Type: application/x-www-form-urlencoded
+
+        grant_type=urn:ietf:params:oauth:grant-type:token-exchange
+        &resource=https://pod.bob.example
+        &subject_token=eyJ0eXAiOiJhcytqd3QiLCJhbGciO...fiK51VwhsxJ-siBMR-YFiA
+        &subject_token_type=urn:ietf:params:oauth:token-type:id-jag
+      ```
+
+      [Identity Assertion JWT Authorization Grant - 4.4. Access Token Request](https://www.ietf.org/archive/id/draft-ietf-oauth-identity-assertion-authz-grant-01.html#name-access-token-request)
+
+      it uses `grant-type:jwt-bearer`
+
+      TODO: client authentication
+      '''
+      }
+    RAS -> WebID 'Fetch WebID' {
+      notes'''
+      ```http
+      GET / HTTP/1.1
+      Host: id.alice.example
+      ```
+      '''
+    }
+    WebID -> RAS 'WebID Document' {
+      notes'''
+      ```http
+        HTTP/2 303 See Other
+        Location: https://id.example/alice
+      ```
+      ```http
+        GET /alice HTTP/1.1
+        Host: id.example
+      ```
+      🛡️ `solid:oidcIssuer` is the same as `iss` in ID-JAG
+      ```http
+        HTTP/2 200 OK
+        Content-Type: text/turtle
+      ```
+      ```ttl{14}
+        PREFIX solid: <http://www.w3.org/ns/solid/terms#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX schema: <http://schema.org/>
+
+        <https://id.alice.example>
+          a foaf:Person, a schema:Person ;
+          foaf:name "Alice" ;
+          solid:oidcIssuer <https://uas.alice.example> ;
+      ```
+      '''
+    }
+    RAS -> UAS 'Fetch server configuration' {
+      notes'''
+      ```http
+        GET /.well-known/oauth-authorization-server HTTP/1.1
+        Host: uas.alice.example
+      ```
+      '''
+    }
+    UAS -> RAS 'Server metadata' {
+      notes'''
+      🛡️ validate token signature using keys in `jwks_uri`
+      ```json
+      ```
+      '''
+    }
+    RAS -> Client 'Access Token' {
+      notes'''
+      ```http
+        HTTP/1.1 200 OK
+        Content-Type: application/json
+      ```
+      ```json
+        {
+            "access_token":"eyJ0eXAiOiJhcytqd3QiLCJhbGciOiJFUzI1NiIs...DeWt4QuZXso",
+            "token_type":"Bearer",
+            "expires_in":3600
+        }
+      ```
+      decoded
+      ```
+        {
+          "kid": "ec51c6b2",
+          "kty": "EC",
+          "alg": "ES256",
+          "crv": "P-256",
+          "typ": "at+jwt"
+        }
+        .
+        {
+          "sub": "https://id.alice.example",
+          "iss": "https://ras.bob.example",
+          "client_id": "https://decentphotos.example/id",
+          "aud": "https://pod.bob.example",
+          "exp": 1735686300,
+          "iat": 1735686000,
+          "jti": "550e8400-e29b-41d4-a716-446655440000"
+        }
+        .
+        signature
+      ```
+      '''
+    }
+    Client -> RS 'Resource Request with Access Token' {
+      notes'''
+      ```http
+      GET /garfield.png HTTP/1.1
+      Host: pod.bob.example
+      Authorization: Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9
+      ```
+      '''
+    }
+    RS -> Client 'Representation' {
+      notes'''
+      [LWS - 5.2.4 Token Validation by a Storage Server](https://pr-preview.s3.amazonaws.com/w3c/lws-protocol/pull/45.html#authorization-token-validation)
+      ```http
+      HTTP/2 200 OK
+      Content-Type: image/png
+      ```
+      ![garfield](https://upload.wikimedia.org/wikipedia/en/thumb/4/46/Garfieldand_friends.png/250px-Garfieldand_friends.png)
+      '''
+    }
+  }
+
+  view includesOnly {
+    title "Includes Only"
+
+    
+    description """
+      This diagram shows the **high-level**
+      components and interactions.
+    """
+
+    include WebID, UAS, ClientID, Client, RAS, RS
+  }
+
+
+}
