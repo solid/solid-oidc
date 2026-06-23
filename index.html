@@ -8,7 +8,7 @@
   <meta content="Bikeshed version d113b2e81, updated Tue Jun 9 14:57:55 2026 -0700" name="generator">
   <link href="https://solidproject.org/TR/oidc" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="836ae03a735d5647af00eda786099fd268d389ea" name="revision">
+  <meta content="b7f75f9f80b1f4e28180840c4bd7054b55b95ffb" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -613,7 +613,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </p>
    <h1 class="no-ref p-name" id="title">Solid-OIDC</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-06-22">22 June 2026</time></p>
+    <time class="dt-updated" datetime="2026-06-23">23 June 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -627,7 +627,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>July 16, 2021
       <dt>Modified:
-      <dd>22 June 2026
+      <dd>23 June 2026
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -722,6 +722,7 @@ for use within the Solid ecosystem.</p>
       <li><a href="#security-client-ids"><span class="secno">13.2</span> <span class="content">Client IDs</span></a>
       <li><a href="#security-client-secrets"><span class="secno">13.3</span> <span class="content">Client Secrets</span></a>
       <li><a href="#security-client-trust"><span class="secno">13.4</span> <span class="content">Client Trust</span></a>
+      <li><a href="#security-issuer-trust"><span class="secno">13.5</span> <span class="content">Issuer Trust</span></a>
      </ol>
     <li>
      <a href="#privacy"><span class="secno">14</span> <span class="content">Privacy Considerations</span></a>
@@ -1149,6 +1150,19 @@ data leaks should an attacker gain access to Client credentials.</p>
    <p><em>This section is non-normative</em></p>
    <p>Clients are ephemeral, client registration is optional, and most Clients cannot keep secrets. These,
 among other factors, are what makes Client trust challenging.</p>
+   <h3 class="heading settled" data-level="13.5" id="security-issuer-trust"><span class="secno">13.5. </span><span class="content">Issuer Trust</span><a class="self-link" href="#security-issuer-trust"></a></h3>
+   <p><em>This section is non-normative</em></p>
+   <p>A Solid-OIDC user’s identity is asserted by the OpenID Provider listed in their WebID Profile via
+<code>solid:oidcIssuer</code>. Implementers and end-users should consider the trust they place in that issuer:</p>
+   <ul>
+    <li data-md>
+     <p><strong>User trusts identity provider to be honest.</strong> The user’s chosen identity provider is able to assert the identity of the user in an issued identity token. The user relies on the identity provider to obtain such identity token and trusts the identity provider not to issue such token of the user’s identity to a different user or to use that token themselves. A compromised or malicious identity provider is able to let other malicious agents impersonate the user or to impersonate the user themself. If the user’s identity provider is unavailable, the  user is unable to obtain an identity token, which might lead the user to be unable to access data that requires authentication and thereby implicitly denying access to data. A high degree of trust in the chosen identity provider is therefore necessary.
+The authorization server has to choose to trust the identity provider selected by the user before granting access. This choice may be to delegate the choice completely to users, or to restrict the set of identity providers to a specific trust list.</p>
+    <li data-md>
+     <p><strong>Identity Provider as a Single Point of Failure.</strong> When an agent has only one identity provider, only that single identity provider is able to assert the identity of the agent. In case this identity provider is unavailable, the agent is unable to authenticate itself.
+Agents may have multiple identity providers. Having multiple identity providers can provide redundancy in the event of an outage of one identity provider service. The trade-off is that this increases the attack surface of malicious identity providers.
+Where many agents share a single identity provider, that identity provider is a concentration point: a single compromise, outage, or service-level decision affects every agent that depends on it. Attacks tend to focus on major centralization, so concentration risk grows with the issuer’s user base. Implementations offering accounts under a shared issuer should plan for this risk.</p>
+   </ul>
    <h2 class="heading settled" data-level="14" id="privacy"><span class="secno">14. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
    <h3 class="heading settled" data-level="14.1" id="privacy-token-reuse"><span class="secno">14.1. </span><span class="content">OIDC ID Token Reuse</span><a class="self-link" href="#privacy-token-reuse"></a></h3>
    <p><em>This section is non-normative</em></p>
