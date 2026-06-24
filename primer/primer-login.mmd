@@ -17,13 +17,14 @@ sequenceDiagram
   note over OP: 8. Validates redirect url with Client ID Document
   note over OP: 9. Alice Logs In
   note over OP: 10. Generates an authorization code
-  OP->>Client: 11. Send authorization code to redirect url
-  note over Client: 12. Generates DPoP Client Key Pair
-  note over Client: 13. Generates a DPoP Header
-  Client->>OP: 14. Token request with code and code verifier
-  note over OP: 15. Validates code verifier
-  note over OP: 16. Validates DPoP Token signature
-  note over OP: 17. Converts the DPoP public key to a JWK thumbprint
+  OP->>Client: 11. Send authorization code and iss parameter to redirect url
+  note over Client: 12 Validates that the returned iss matches the expected OP issuer
+  note over Client: 13. Generates DPoP Client Key Pair
+  note over Client: 14. Generates a DPoP Header
+  Client->>OP: 15. Token request with code and code verifier
+  note over OP: 16. Validates code verifier
+  note over OP: 17. Validates DPoP Token signature
+  note over OP: 18. Converts the DPoP public key to a JWK thumbprint
   note over OP: 19. Generates id token
   note over OP: 20. Generates refresh token
   OP->>Client: 21. Send tokens

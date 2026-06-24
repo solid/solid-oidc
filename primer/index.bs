@@ -360,18 +360,27 @@ id, the [=code challenge=], the user's webid, their desired response types, and 
 }
 ```
 
-<h4 id="authorization-code-pkce-flow-step-11" class="no-num">11. Send authorization code to redirect url</h4>
+<h4 id="authorization-code-pkce-flow-step-11" class="no-num">11. Send authorization code and `iss` parameter to redirect url</h4>
 
 Once Alice successfully logs in, the OP redirects back to the application via the provided
-redirect uri, including useful information with it:
+redirect uri. The OP includes the authorization code as well as its own issuer identifier as the iss parameter to protect against mix-up attacks:
 
 ```http
-302 redirect to: https://decentphotos.example/callback?code=m-OrTPHdRsm8W_e9P0J2Bt
+302 redirect to: https://decentphotos.example/callback?code=m-OrTPHdRsm8W_e9P0J2Bt&iss=https%3A%2F%2Fsecureauth.example
 ```
 
-This redirect gives decentphotos the [=authorization code=] that it will exchange for requested tokens.
+This redirect gives decentphotos the [=authorization code=] that it will exchange for requested tokens, along with the issuer identifier required for the next validation step.
 
-<h4 id="authorization-code-pkce-flow-step-12" class="no-num">12. Generates a DPoP Client Key Pair</h4>
+<h4 id="authorization-code-pkce-flow-step-12" class="no-num">12. Validate `iss` Parameter</h4>
+
+Before proceeding to exchange the code for tokens, decentphotos must verify the `iss` parameter. 
+This ensures the application is receiving the code from the exact OP it intended to communicate with.
+
+The application checks that the `iss` value (`https://secureauth.example`) matches the issuer URL it resolved in Step 3. 
+If the `iss` parameter is missing or does not match the expected OP, decentphotos must reject the response, abort the authentication flow, and optionally display an error to Alice. 
+In our example, the issuer matches, so we may safely continue.
+
+<h4 id="authorization-code-pkce-flow-step-13" class="no-num">13. Generates a DPoP Client Key Pair</h4>
 
 Solid-OIDC depends on
 [Demonstration of Proof-of-Possession (DPoP) tokens](https://tools.ietf.org/html/draft-ietf-oauth-dpop).
@@ -410,7 +419,7 @@ The public key looks like:
 }
 ```
 
-<h4 id="authorization-code-pkce-flow-step-13" class="no-num">13. Generates a DPoP Header</h4>
+<h4 id="authorization-code-pkce-flow-step-14" class="no-num">14. Generates a DPoP Header</h4>
 
 Now that we generated a private key for the client, we need to generate the DPoP header. To do
 so, we create a [JSON Web Token](https://jwt.io/introduction/) and sign it using the key we
@@ -459,7 +468,7 @@ Token Body:
     that can optionally be used by the server to defend against replay attacks
 - `"iat": 1603306128`: The date the token was issued, in this case October 21, 2020 15:52:33 GMT.
 
-<h4 id="authorization-code-pkce-flow-step-14" class="no-num">14. Token request with code and code verifier</h4>
+<h4 id="authorization-code-pkce-flow-step-15" class="no-num">15. Token request with code and code verifier</h4>
 
 Now, we have everything we need to make an auth request. No need to redirect the web browser
 for this one. We only need to make an AJAX request to the `token` endpoint as defined in the
@@ -495,7 +504,7 @@ Body:
 
 Once this request is completed decentphotos can remove the code verifier from session storage.
 
-<h4 id="authorization-code-pkce-flow-step-15" class="no-num">15. Validate code verifier</h4>
+<h4 id="authorization-code-pkce-flow-step-16" class="no-num">16. Validate code verifier</h4>
 
 The OP looks up the [=authorization code=] that was saved earlier in a keystore. It checks to see that the client
 id in the keystore corresponds to the client id from the request. If it does not, it must
@@ -511,13 +520,13 @@ BASE64URL-ENCODE(SHA256(ASCII(code_verifier))) == code_challenge
 If they do not correspond the OP must reject the request with a 400 HTTP status and `invalid_grant`
 error code.
 
-<h4 id="authorization-code-pkce-flow-step-16" class="no-num">16. Validates DPoP Token Signature</h4>
+<h4 id="authorization-code-pkce-flow-step-17" class="no-num">17. Validates DPoP Token Signature</h4>
 
 The OP extracts the client's public key from the DPoP header (at header.jwk). It confirms that
 the DPoP token has a valid signature. If not, the OP must reject the request with a 400 HTTP
 status and `invalid_dpop_proof` error code.
 
-<h4 id="authorization-code-pkce-flow-step-17" class="no-num">17. Converts the DPoP public key to a JWK thumbprint</h4>
+<h4 id="authorization-code-pkce-flow-step-18" class="no-num">18. Converts the DPoP public key to a JWK thumbprint</h4>
 
 Currently the DPoP token contains a JWK public key, but before we place it inside the access
 token, it needs to be converted into a [JWK thumbprint](https://tools.ietf.org/html/rfc7638).
