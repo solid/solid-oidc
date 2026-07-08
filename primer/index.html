@@ -8,7 +8,7 @@
   <meta content="Bikeshed version d113b2e81, updated Tue Jun 9 14:57:55 2026 -0700" name="generator">
   <link href="https://solidproject.org/TR/oidc-primer" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="b7f75f9f80b1f4e28180840c4bd7054b55b95ffb" name="revision">
+  <meta content="ec0bd4b148028e875df80f3742a387a05c4c60b5" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -726,7 +726,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </p>
    <h1 class="no-ref p-name" id="title">Solid-OIDC Primer</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#CG-DRAFT">Draft Community Group Report</a>,
-    <time class="dt-updated" datetime="2026-06-23">23 June 2026</time></p>
+    <time class="dt-updated" datetime="2026-07-08">8 July 2026</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -738,7 +738,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
       <dt>Created:
       <dd>March 28, 2022
       <dt>Modified:
-      <dd>23 June 2026
+      <dd>8 July 2026
       <dt>Feedback:
       <dd><a href="https://github.com/solid/solid-oidc/issues/">GitHub</a>
       <dt class="editor">Editors:
@@ -1092,13 +1092,19 @@ id, the <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challeng
   <c- p>}</c->
 <c- p>}</c->
 </pre>
-   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-11"><span class="content">11. Send authorization code to redirect url</span><a class="self-link" href="#authorization-code-pkce-flow-step-11"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-11"><span class="content">11. Send authorization code and <code>iss</code> parameter to redirect url</span><a class="self-link" href="#authorization-code-pkce-flow-step-11"></a></h4>
    <p>Once Alice successfully logs in, the OP redirects back to the application via the provided
-redirect uri, including useful information with it:</p>
-<pre class="highlight language-http">302 redirect to: https://decentphotos.example/callback?code=m-OrTPHdRsm8W_e9P0J2Bt
+redirect uri. The OP includes the authorization code as well as its own issuer identifier as the iss parameter to protect against mix-up attacks:</p>
+<pre class="highlight language-http">302 redirect to: https://decentphotos.example/callback?code=m-OrTPHdRsm8W_e9P0J2Bt&amp;iss=https%3A%2F%2Fsecureauth.example
 </pre>
-   <p>This redirect gives decentphotos the <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code①">authorization code</a> that it will exchange for requested tokens.</p>
-   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-12"><span class="content">12. Generates a DPoP Client Key Pair</span><a class="self-link" href="#authorization-code-pkce-flow-step-12"></a></h4>
+   <p>This redirect gives decentphotos the <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code①">authorization code</a> that it will exchange for requested tokens, along with the issuer identifier required for the next validation step.</p>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-12"><span class="content">12. Validate <code>iss</code> Parameter</span><a class="self-link" href="#authorization-code-pkce-flow-step-12"></a></h4>
+   <p>Before proceeding to exchange the code for tokens, decentphotos must verify the <code>iss</code> parameter.
+This ensures the application is receiving the code from the exact OP it intended to communicate with.</p>
+   <p>The application checks that the <code>iss</code> value (<code>https://secureauth.example</code>) matches the issuer URL it resolved in Step 3.
+If the <code>iss</code> parameter is missing or does not match the expected OP, decentphotos must reject the response, abort the authentication flow, and optionally display an error to Alice. 
+In our example, the issuer matches, so we may safely continue.</p>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-13"><span class="content">13. Generates a DPoP Client Key Pair</span><a class="self-link" href="#authorization-code-pkce-flow-step-13"></a></h4>
    <p>Solid-OIDC depends on
 <a href="https://tools.ietf.org/html/draft-ietf-oauth-dpop">Demonstration of Proof-of-Possession (DPoP) tokens</a>.
 DPoP tokens ensure that third-party web applications can send requests to any number of
@@ -1129,7 +1135,7 @@ like:</p>
     <c- f>"y"</c-><c- p>:</c-> <c- u>"ay9qDOrFGdGe_3hAivW5HnqHYdnYUkXJJevHOBU4z5s"</c->
 <c- p>}</c->
 </pre>
-   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-13"><span class="content">13. Generates a DPoP Header</span><a class="self-link" href="#authorization-code-pkce-flow-step-13"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-14"><span class="content">14. Generates a DPoP Header</span><a class="self-link" href="#authorization-code-pkce-flow-step-14"></a></h4>
    <p>Now that we generated a private key for the client, we need to generate the DPoP header. To do
 so, we create a <a href="https://jwt.io/introduction/">JSON Web Token</a> and sign it using the key we
 generated.</p>
@@ -1179,7 +1185,7 @@ that can optionally be used by the server to defend against replay attacks</p>
     <li data-md>
      <p><code>"iat": 1603306128</code>: The date the token was issued, in this case October 21, 2020 15:52:33 GMT.</p>
    </ul>
-   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-14"><span class="content">14. Token request with code and code verifier</span><a class="self-link" href="#authorization-code-pkce-flow-step-14"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-15"><span class="content">15. Token request with code and code verifier</span><a class="self-link" href="#authorization-code-pkce-flow-step-15"></a></h4>
    <p>Now, we have everything we need to make an auth request. No need to redirect the web browser
 for this one. We only need to make an AJAX request to the <code>token</code> endpoint as defined in the
 OP’s <code>openid-configuration</code> file, in our case <code>https://secureauth.example/token</code></p>
@@ -1218,21 +1224,21 @@ doing an AJAX request.</p>
      <p><code>body.client_id=https%3A%2F%2Fdecentphotos.example%client_id</code>: The app’s client id.</p>
    </ul>
    <p>Once this request is completed decentphotos can remove the code verifier from session storage.</p>
-   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-15"><span class="content">15. Validate code verifier</span><a class="self-link" href="#authorization-code-pkce-flow-step-15"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-16"><span class="content">16. Validate code verifier</span><a class="self-link" href="#authorization-code-pkce-flow-step-16"></a></h4>
    <p>The OP looks up the <a data-link-type="dfn" href="#authorization-code" id="ref-for-authorization-code③">authorization code</a> that was saved earlier in a keystore. It checks to see that the client
 id in the keystore corresponds to the client id from the request. If it does not, it must
 reject the request with a 400 HTTP status and <code>invalid_grant</code> error code.</p>
    <p>The OP then verifies that the <a data-link-type="dfn" href="#code-verifier" id="ref-for-code-verifier③">code verifier</a> corresponds with the <a data-link-type="dfn" href="#code-challenge" id="ref-for-code-challenge③">code challenge</a>
-stored in the keystore. <a href="https://www.rfc-editor.org/rfc/rfc7636#section-4.6">Proof Key for Code Exchange by OAuth Public Clients § section-4.6</a></p>
+stored in the keystore. <a href="https://www.rfc-editor.org/info/rfc7636/#section-4.6">Proof Key for Code Exchange by OAuth Public Clients § section-4.6</a></p>
 <pre class="highlight language-bash">BASE64URL-ENCODE<c- o>(</c->SHA256<c- o>(</c->ASCII<c- o>(</c->code_verifier<c- o>)))</c-> <c- o>==</c-> code_challenge
 </pre>
    <p>If they do not correspond the OP must reject the request with a 400 HTTP status and <code>invalid_grant</code>
 error code.</p>
-   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-16"><span class="content">16. Validates DPoP Token Signature</span><a class="self-link" href="#authorization-code-pkce-flow-step-16"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-17"><span class="content">17. Validates DPoP Token Signature</span><a class="self-link" href="#authorization-code-pkce-flow-step-17"></a></h4>
    <p>The OP extracts the client’s public key from the DPoP header (at header.jwk). It confirms that
 the DPoP token has a valid signature. If not, the OP must reject the request with a 400 HTTP
 status and <code>invalid_dpop_proof</code> error code.</p>
-   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-17"><span class="content">17. Converts the DPoP public key to a JWK thumbprint</span><a class="self-link" href="#authorization-code-pkce-flow-step-17"></a></h4>
+   <h4 class="heading no-num settled" id="authorization-code-pkce-flow-step-18"><span class="content">18. Converts the DPoP public key to a JWK thumbprint</span><a class="self-link" href="#authorization-code-pkce-flow-step-18"></a></h4>
    <p>Currently the DPoP token contains a JWK public key, but before we place it inside the access
 token, it needs to be converted into a <a href="https://tools.ietf.org/html/rfc7638">JWK thumbprint</a>.
 Our JWK thumbprint looks more like:</p>
@@ -1567,7 +1573,7 @@ OP’s public keys.</p>
    <h4 class="heading no-num settled" id="request-flow-step-12"><span class="content">12. Checks ID token signature validity</span><a class="self-link" href="#request-flow-step-12"></a></h4>
    <p>Using the <code>kid</code> value in the ID token, the AS searches the OP public keys for one that matches the
 one used to sign the ID token. If no public key is found, the AS must reject the request.</p>
-   <p>Details about the <code>kid</code> can be found in the <a href="https://www.rfc-editor.org/rfc/rfc7515#section-4.1.4">JSON Web Signature (JWS) § section-4.1.4</a>.</p>
+   <p>Details about the <code>kid</code> can be found in the <a href="https://www.rfc-editor.org/info/rfc7515/#section-4.1.4">JSON Web Signature (JWS) § section-4.1.4</a>.</p>
    <h4 class="heading no-num settled" id="request-flow-step-13"><span class="content">13. Access Token Response</span><a class="self-link" href="#request-flow-step-13"></a></h4>
    <p>Now that the AS has performed all of its checks, we can trust that the agent in the <code>webid</code>
 claim (<code>https://alice.coolpod.example/profile/card#me</code>) is the same agent on whose behalf the
@@ -1603,9 +1609,9 @@ Headers: {
   <h3 class="heading no-num no-ref settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-rfc7515">[RFC7515]
-   <dd>M. Jones; J. Bradley; N. Sakimura. <a href="https://www.rfc-editor.org/rfc/rfc7515"><cite>JSON Web Signature (JWS)</cite></a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7515">https://www.rfc-editor.org/rfc/rfc7515</a>
+   <dd>M. Jones; J. Bradley; N. Sakimura. <a href="https://www.rfc-editor.org/info/rfc7515/"><cite>JSON Web Signature (JWS)</cite></a>. May 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/info/rfc7515/">https://www.rfc-editor.org/info/rfc7515/</a>
    <dt id="biblio-rfc7636">[RFC7636]
-   <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/rfc/rfc7636"><cite>Proof Key for Code Exchange by OAuth Public Clients</cite></a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7636">https://www.rfc-editor.org/rfc/rfc7636</a>
+   <dd>N. Sakimura, Ed.; J. Bradley; N. Agarwal. <a href="https://www.rfc-editor.org/info/rfc7636/"><cite>Proof Key for Code Exchange by OAuth Public Clients</cite></a>. September 2015. Proposed Standard. URL: <a href="https://www.rfc-editor.org/info/rfc7636/">https://www.rfc-editor.org/info/rfc7636/</a>
   </dl>
   <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Non-Normative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
@@ -1614,9 +1620,9 @@ Headers: {
    <dt id="biblio-rdf11-concepts">[RDF11-CONCEPTS]
    <dd>Richard Cyganiak; David Wood; Markus Lanthaler. <a href="https://w3c.github.io/rdf-concepts/spec/"><cite>RDF 1.1 Concepts and Abstract Syntax</cite></a>. URL: <a href="https://w3c.github.io/rdf-concepts/spec/">https://w3c.github.io/rdf-concepts/spec/</a>
    <dt id="biblio-rfc6749">[RFC6749]
-   <dd>D. Hardt, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc6749"><cite>The OAuth 2.0 Authorization Framework</cite></a>. October 2012. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>
+   <dd>D. Hardt, Ed.. <a href="https://www.rfc-editor.org/info/rfc6749/"><cite>The OAuth 2.0 Authorization Framework</cite></a>. October 2012. Proposed Standard. URL: <a href="https://www.rfc-editor.org/info/rfc6749/">https://www.rfc-editor.org/info/rfc6749/</a>
    <dt id="biblio-rfc8414">[RFC8414]
-   <dd>M. Jones; N. Sakimura; J. Bradley. <a href="https://www.rfc-editor.org/rfc/rfc8414"><cite>OAuth 2.0 Authorization Server Metadata</cite></a>. June 2018. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>
+   <dd>M. Jones; N. Sakimura; J. Bradley. <a href="https://www.rfc-editor.org/info/rfc8414/"><cite>OAuth 2.0 Authorization Server Metadata</cite></a>. June 2018. Proposed Standard. URL: <a href="https://www.rfc-editor.org/info/rfc8414/">https://www.rfc-editor.org/info/rfc8414/</a>
    <dt id="biblio-solid-oidc">[SOLID-OIDC]
    <dd>Aaron Coburn; elf Pavlik; Dmitri Zagidulin. <a href="https://solid.github.io/solid-oidc/"><cite>Solid-OIDC</cite></a>. URL: <a href="https://solid.github.io/solid-oidc/">https://solid.github.io/solid-oidc/</a>
    <dt id="biblio-solid-protocol">[SOLID-PROTOCOL]
@@ -1824,9 +1830,9 @@ function parseHTML(markup) {
 "use strict";
 {
 let dfnPanelData = {
-"authorization-code": {"dfnID":"authorization-code","dfnText":"authorization code","external":false,"refSections":[{"refs":[{"id":"ref-for-authorization-code"}],"title":"10. Generate an authorization code"},{"refs":[{"id":"ref-for-authorization-code\u2460"}],"title":"11. Send authorization code to redirect url"},{"refs":[{"id":"ref-for-authorization-code\u2461"}],"title":"14. Token request with code and code verifier"},{"refs":[{"id":"ref-for-authorization-code\u2462"}],"title":"15. Validate code verifier"}],"url":"#authorization-code"},
-"code-challenge": {"dfnID":"code-challenge","dfnText":"code challenge","external":false,"refSections":[{"refs":[{"id":"ref-for-code-challenge"}],"title":"4. Generates PKCE code verifier and code challenge"},{"refs":[{"id":"ref-for-code-challenge\u2460"}],"title":"6. Authorization request"},{"refs":[{"id":"ref-for-code-challenge\u2461"}],"title":"10. Generate an authorization code"},{"refs":[{"id":"ref-for-code-challenge\u2462"}],"title":"15. Validate code verifier"}],"url":"#code-challenge"},
-"code-verifier": {"dfnID":"code-verifier","dfnText":"code verifier","external":false,"refSections":[{"refs":[{"id":"ref-for-code-verifier"}],"title":"4. Generates PKCE code verifier and code challenge"},{"refs":[{"id":"ref-for-code-verifier\u2460"}],"title":"5. Saved code verifier to session storage"},{"refs":[{"id":"ref-for-code-verifier\u2461"}],"title":"14. Token request with code and code verifier"},{"refs":[{"id":"ref-for-code-verifier\u2462"}],"title":"15. Validate code verifier"}],"url":"#code-verifier"},
+"authorization-code": {"dfnID":"authorization-code","dfnText":"authorization code","external":false,"refSections":[{"refs":[{"id":"ref-for-authorization-code"}],"title":"10. Generate an authorization code"},{"refs":[{"id":"ref-for-authorization-code\u2460"}],"title":"11. Send authorization code and iss parameter to redirect url"},{"refs":[{"id":"ref-for-authorization-code\u2461"}],"title":"15. Token request with code and code verifier"},{"refs":[{"id":"ref-for-authorization-code\u2462"}],"title":"16. Validate code verifier"}],"url":"#authorization-code"},
+"code-challenge": {"dfnID":"code-challenge","dfnText":"code challenge","external":false,"refSections":[{"refs":[{"id":"ref-for-code-challenge"}],"title":"4. Generates PKCE code verifier and code challenge"},{"refs":[{"id":"ref-for-code-challenge\u2460"}],"title":"6. Authorization request"},{"refs":[{"id":"ref-for-code-challenge\u2461"}],"title":"10. Generate an authorization code"},{"refs":[{"id":"ref-for-code-challenge\u2462"}],"title":"16. Validate code verifier"}],"url":"#code-challenge"},
+"code-verifier": {"dfnID":"code-verifier","dfnText":"code verifier","external":false,"refSections":[{"refs":[{"id":"ref-for-code-verifier"}],"title":"4. Generates PKCE code verifier and code challenge"},{"refs":[{"id":"ref-for-code-verifier\u2460"}],"title":"5. Saved code verifier to session storage"},{"refs":[{"id":"ref-for-code-verifier\u2461"}],"title":"15. Token request with code and code verifier"},{"refs":[{"id":"ref-for-code-verifier\u2462"}],"title":"16. Validate code verifier"}],"url":"#code-verifier"},
 };
 
 document.addEventListener("DOMContentLoaded", ()=>{
