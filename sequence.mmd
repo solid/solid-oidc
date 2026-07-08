@@ -14,7 +14,8 @@ sequenceDiagram
   OP->> ClientID: get Client ID document
   ClientID->> OP: ClientID document
   Note over OP: compare redirect_uri
-  OP ->> C: return Authorization Code
+  OP ->> C: return Authorization Code and iss parameter
+  Note over C: Validate iss matches expected OP
   C ->> OP: present Authorization Code and DPoP proof
   Note over OP:  ⚙️ Client is authenticated ✅
   OP ->> C: return DPoP bound OIDC ID Token
